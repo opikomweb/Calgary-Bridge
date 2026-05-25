@@ -25,7 +25,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -75,19 +74,8 @@ fun CalgaryOnboarding(
             .background(Color(0xFF0F172A)) // Dark slate background for cinematic contrast
     ) {
         // Blurred organic gradient background circles
-        val infiniteTransition = rememberInfiniteTransition(label = "pulse_bg")
-        val circleShift1 by infiniteTransition.animateFloat(
-            initialValue = -50f,
-            targetValue = 50f,
-            animationSpec = infiniteRepeatable(tween(8000, easing = EaseInOutSine), RepeatMode.Reverse),
-            label = "blur_1"
-        )
-        val circleShift2 by infiniteTransition.animateFloat(
-            initialValue = 50f,
-            targetValue = -50f,
-            animationSpec = infiniteRepeatable(tween(10000, easing = EaseInOutSine), RepeatMode.Reverse),
-            label = "blur_2"
-        )
+        val circleShift1 = 0f
+        val circleShift2 = 0f
 
         // Light glows behind content
         Box(
@@ -95,7 +83,6 @@ fun CalgaryOnboarding(
                 .offset(x = (-100).dp + circleShift1.dp, y = (-100).dp)
                 .size(350.dp)
                 .background(Color(0xFFE11D48).copy(alpha = 0.15f), CircleShape)
-                .blur(80.dp)
         )
         Box(
             modifier = Modifier
@@ -103,7 +90,6 @@ fun CalgaryOnboarding(
                 .offset(x = 100.dp + circleShift2.dp, y = 100.dp)
                 .size(400.dp)
                 .background(Color(0xFF0284C7).copy(alpha = 0.2f), CircleShape)
-                .blur(100.dp)
         )
 
         AnimatedContent(

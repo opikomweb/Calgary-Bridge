@@ -47,17 +47,7 @@ fun EmergencyDashboard(
     var activeEmergencyTopicAdvice by remember { mutableStateOf("") }
     var activeEmergencyTopicTitle by remember { mutableStateOf("") }
 
-    // Pulse animation for critical background accents
-    val infiniteTransition = rememberInfiniteTransition(label = "emergency_pulse")
-    val pulseAlpha by infiniteTransition.animateFloat(
-        initialValue = 0.3f,
-        targetValue = 0.8f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(1200, easing = EaseInOutCubic),
-            repeatMode = RepeatMode.Reverse
-        ),
-        label = "pulse"
-    )
+    val pulseAlpha = 0.8f
 
     Column(
         modifier = Modifier
