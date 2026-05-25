@@ -1,0 +1,6 @@
+{
+  "name": "Calgary Bridge",
+  "description": "An interactive, multilingual assistant and resource navigator helping seniors, newcomers, NGOs, business owners, and creators navigate Calgary's unique challenges.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
