@@ -12,8 +12,20 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.graphics.asComposePath
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.ui.composed
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -131,69 +143,108 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
     // Dropdown visibility for language switcher
     var langMenuExpanded by remember { mutableStateOf(false) }
 
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        containerColor = NaturalBg,
-        bottomBar = {
-            NavigationBar(
-                modifier = Modifier.fillMaxWidth(),
-                containerColor = NavBg,
-                tonalElevation = 0.dp
-            ) {
-                val navItemColors = androidx.compose.material3.NavigationBarItemDefaults.colors(
-                    selectedIconColor = DarkText,
-                    selectedTextColor = DarkText,
-                    indicatorColor = SoftDivider,
-                    unselectedIconColor = MutedText,
-                    unselectedTextColor = MutedText
-                )
-                NavigationBarItem(
-                    selected = currentTab == "resources",
-                    onClick = { currentTab = "resources" },
-                    label = { Text(Localization.getString("nav_explore", activeLang), fontSize = 11.sp, fontWeight = FontWeight.Bold) },
-                    icon = { Icon(Icons.Default.Home, contentDescription = "Resources") },
-                    colors = navItemColors,
-                    modifier = Modifier.testTag("tab_explore")
-                )
-                NavigationBarItem(
-                    selected = currentTab == "ai",
-                    onClick = { currentTab = "ai" },
-                    label = { Text(Localization.getString("nav_ai", activeLang), fontSize = 11.sp, fontWeight = FontWeight.Bold) },
-                    icon = { Icon(Icons.Default.Face, contentDescription = "AI Guide") },
-                    colors = navItemColors,
-                    modifier = Modifier.testTag("tab_ai")
-                )
-                NavigationBarItem(
-                    selected = currentTab == "shortlist",
-                    onClick = { currentTab = "shortlist" },
-                    label = { Text(Localization.getString("nav_bookmarks", activeLang), fontSize = 11.sp, fontWeight = FontWeight.Bold) },
-                    colors = navItemColors,
-                    icon = {
-                        Box {
-                            Icon(Icons.Default.Favorite, contentDescription = "Shortlist")
-                            if (userSavedShortlist.isNotEmpty()) {
-                                Box(
-                                    modifier = Modifier
-                                        .size(14.dp)
-                                        .background(ClayRed, CircleShape)
-                                        .align(Alignment.TopEnd)
-                                ) {
-                                    Text(
-                                        text = userSavedShortlist.size.toString(),
-                                        color = Color.White,
-                                        fontSize = 9.sp,
-                                        fontWeight = FontWeight.Bold,
-                                        modifier = Modifier.align(Alignment.Center)
-                                    )
-                                }
-                            }
-                        }
-                    },
-                    modifier = Modifier.testTag("tab_shortlist")
-                )
-            }
+    var appState by remember { mutableStateOf("splash") } // "splash", "onboarding", "main"
+    var emergencyModeActive by remember { mutableStateOf(false) }
+    var selectedOnboardingRole by remember { mutableStateOf("") }
+    var selectedOnboardingNeeds by remember { mutableStateOf(setOf<String>()) }
+
+    when (appState) {
+        "splash" -> {
+            CalgarySplash(onSplashComplete = {
+                appState = "onboarding"
+            })
         }
-    ) { innerPadding ->
+        "onboarding" -> {
+            CalgaryOnboarding(
+                activeLang = activeLang,
+                onOnboardingComplete = { role, needs ->
+                    selectedOnboardingRole = role
+                    selectedOnboardingNeeds = needs
+                    if (role == "emergency") {
+                        emergencyModeActive = true
+                        viewModel.setGroup("newcomer")
+                    } else if (role == "newcomer" || role == "senior" || role == "business" || role == "ngo") {
+                        viewModel.setGroup(role)
+                    } else {
+                        viewModel.setGroup("newcomer")
+                    }
+                    appState = "main"
+                }
+            )
+        }
+        "main" -> {
+            Scaffold(
+                modifier = Modifier.fillMaxSize(),
+                containerColor = if (emergencyModeActive) Color(0xFF1E0E0E) else NaturalBg,
+                bottomBar = {
+                    if (!emergencyModeActive) {
+                        NavigationBar(
+                            modifier = Modifier.fillMaxWidth(),
+                            containerColor = NavBg,
+                            tonalElevation = 0.dp
+                        ) {
+                            val navItemColors = androidx.compose.material3.NavigationBarItemDefaults.colors(
+                                selectedIconColor = DarkText,
+                                selectedTextColor = DarkText,
+                                indicatorColor = SoftDivider,
+                                unselectedIconColor = MutedText,
+                                unselectedTextColor = MutedText
+                            )
+                            NavigationBarItem(
+                                selected = currentTab == "resources",
+                                onClick = { currentTab = "resources" },
+                                label = { Text(Localization.getString("nav_explore", activeLang), fontSize = 11.sp, fontWeight = FontWeight.Bold) },
+                                icon = { Icon(Icons.Default.Home, contentDescription = "Resources") },
+                                colors = navItemColors,
+                                modifier = Modifier.testTag("tab_explore")
+                            )
+                            NavigationBarItem(
+                                selected = currentTab == "ai",
+                                onClick = { currentTab = "ai" },
+                                label = { Text(Localization.getString("nav_ai", activeLang), fontSize = 11.sp, fontWeight = FontWeight.Bold) },
+                                icon = { Icon(Icons.Default.Face, contentDescription = "AI Guide") },
+                                colors = navItemColors,
+                                modifier = Modifier.testTag("tab_ai")
+                            )
+                            NavigationBarItem(
+                                selected = currentTab == "shortlist",
+                                onClick = { currentTab = "shortlist" },
+                                label = { Text(Localization.getString("nav_bookmarks", activeLang), fontSize = 11.sp, fontWeight = FontWeight.Bold) },
+                                colors = navItemColors,
+                                icon = {
+                                    Box {
+                                        Icon(Icons.Default.Favorite, contentDescription = "Shortlist")
+                                        if (userSavedShortlist.isNotEmpty()) {
+                                            Box(
+                                                modifier = Modifier
+                                                    .size(14.dp)
+                                                    .background(ClayRed, CircleShape)
+                                                    .align(Alignment.TopEnd)
+                                            ) {
+                                                Text(
+                                                    text = userSavedShortlist.size.toString(),
+                                                    color = Color.White,
+                                                    fontSize = 9.sp,
+                                                    fontWeight = FontWeight.Bold,
+                                                    modifier = Modifier.align(Alignment.Center)
+                                                )
+                                            }
+                                        }
+                                    }
+                                },
+                                modifier = Modifier.testTag("tab_shortlist")
+                            )
+                        }
+                    }
+                }
+            ) { innerPadding ->
+                if (emergencyModeActive) {
+                    EmergencyDashboard(
+                        activeLang = activeLang,
+                        viewModel = viewModel,
+                        onExit = { emergencyModeActive = false }
+                    )
+                } else {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -420,7 +471,8 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
 
                             val filteredList = Localization.ResourcesList.filter { res ->
                                 res.category == activeGroup &&
-                                        (res.titles[activeLang] ?: res.titles["en"] ?: "").contains(searchVal, ignoreCase = true)
+                                        ((res.titles[activeLang] ?: res.titles["en"] ?: "").contains(searchVal, ignoreCase = true) ||
+                                                (res.descriptions[activeLang] ?: res.descriptions["en"] ?: "").contains(searchVal, ignoreCase = true))
                             }
 
                             if (filteredList.isEmpty()) {
@@ -551,8 +603,12 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                                                     if (res.phone.isNotEmpty()) {
                                                         OutlinedButton(
                                                             onClick = {
-                                                                val dialIntent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:${res.phone}"))
-                                                                context.startActivity(dialIntent)
+                                                                try {
+                                                                    val dialIntent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:${res.phone}"))
+                                                                    context.startActivity(dialIntent)
+                                                                } catch (e: Exception) {
+                                                                    Toast.makeText(context, "No dialing app found", Toast.LENGTH_SHORT).show()
+                                                                }
                                                             },
                                                             modifier = Modifier.height(36.dp),
                                                             colors = ButtonDefaults.outlinedButtonColors(
@@ -582,8 +638,12 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
 
                                                     Button(
                                                         onClick = {
-                                                            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(res.webUrl))
-                                                            context.startActivity(browserIntent)
+                                                            try {
+                                                                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(res.webUrl))
+                                                                context.startActivity(browserIntent)
+                                                            } catch (e: Exception) {
+                                                                Toast.makeText(context, "No web browser found", Toast.LENGTH_SHORT).show()
+                                                            }
                                                         },
                                                         colors = ButtonDefaults.buttonColors(
                                                             containerColor = cardAccentColor,
@@ -965,3 +1025,7 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
         }
     }
 }
+}
+}
+}
+

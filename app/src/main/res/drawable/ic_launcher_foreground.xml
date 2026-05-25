@@ -1,30 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:aapt="http://schemas.android.com/aapt"
     android:width="108dp"
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <path android:pathData="M31,63.928c0,0 6.4,-11 12.1,-13.1c7.2,-2.6 26,-1.4 26,-1.4l38.1,38.1L107,108.928l-32,-1L31,63.928z">
-        <aapt:attr name="android:fillColor">
-            <gradient
-                android:endX="85.84757"
-                android:endY="92.4963"
-                android:startX="42.9492"
-                android:startY="49.59793"
-                android:type="linear">
-                <item
-                    android:color="#44000000"
-                    android:offset="0.0" />
-                <item
-                    android:color="#00000000"
-                    android:offset="1.0" />
-            </gradient>
-        </aapt:attr>
-    </path>
+
+    <!-- Calgary Tower Group (Behind the Bridge) -->
+    <!-- Tower Needle Antenna -->
     <path
-        android:fillColor="#FFFFFF"
-        android:fillType="nonZero"
-        android:pathData="M 24,54 C 24,37 40,24 54,24 C 68,24 84,37 84,54 L 80,54 C 80,40 68,30 54,30 C 40,30 28,40 28,54 Z M 20,62 L 88,62 L 88,58 L 20,58 Z"
-        android:strokeWidth="1"
-        android:strokeColor="#00000000" />
+        android:pathData="M54,12 L54,26"
+        android:strokeWidth="1.5"
+        android:strokeColor="#FFFFFF"
+        android:strokeLineCap="round" />
+
+    <!-- Upper Cupola Dome of the Tower -->
+    <path
+        android:pathData="M50,26 L58,26 L56,29 L52,29 Z"
+        android:fillColor="#E2E8F0" />
+
+    <!-- Red Saucer (Observation Deck top half) -->
+    <path
+        android:pathData="M40,29 C40,26 68,26 68,29 L66,33 C66,35 42,35 42,33 Z"
+        android:fillColor="#F43F5E" />
+
+    <!-- Cyan Ribbon Window Line of the Saucer -->
+    <path
+        android:pathData="M42,32 H66 L65,34 H43 Z"
+        android:fillColor="#0EA5E9" />
+
+    <!-- Lower Saucer Ring (Silver/White base) -->
+    <path
+        android:pathData="M43,34 C43,38 65,38 65,34 Z"
+        android:fillColor="#E2E8F0" />
+
+    <!-- Calgary Tower Structural Legs and Iconic Red Core Shaft -->
+    <!-- Red Inner Core Column -->
+    <path
+        android:pathData="M53,35 L55,35 L55,82 L53,82 Z"
+        android:fillColor="#F43F5E" />
+
+    <!-- Left Concrete Outrigger Pillar -->
+    <path
+        android:pathData="M49,35 H51 L48,82 H45 Z"
+        android:fillColor="#94A3B8" />
+
+    <!-- Right Concrete Outrigger Pillar -->
+    <path
+        android:pathData="M57,35 H59 L63,82 H60 Z"
+        android:fillColor="#94A3B8" />
+
+
+    <!-- Peace Bridge Group (In Front of the Tower) -->
+    <!-- Red Tubular Outer Bridge Arch -->
+    <path
+        android:pathData="M16,74 C16,74 24,53 54,53 C84,53 92,74 92,74"
+        android:strokeWidth="4"
+        android:strokeColor="#F43F5E"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000" />
+
+    <!-- Metallic Flat Roadway Deck -->
+    <path
+        android:pathData="M10,72 L98,72"
+        android:strokeWidth="1.8"
+        android:strokeColor="#E2E8F0" />
+
+    <!-- Criss-Cross Helical Tube Ribs of Peace Bridge (Right-slanted) -->
+    <path
+        android:pathData="M24,71 L32,57 M36,71 L44,55 M48,71 L56,53 M60,71 L68,55 M72,71 L80,57 M84,71 L88,64"
+        android:strokeWidth="1.2"
+        android:strokeColor="#FFFFFF"
+        android:strokeAlpha="0.75" />
+
+    <!-- Criss-Cross Helical Tube Ribs of Peace Bridge (Left-slanted) -->
+    <path
+        android:pathData="M32,71 L24,59 M44,71 L36,55 M56,71 L48,53 M68,71 L60,55 M80,71 L72,57 M88,71 L84,64"
+        android:strokeWidth="1.2"
+        android:strokeColor="#FFFFFF"
+        android:strokeAlpha="0.75" />
+
 </vector>
