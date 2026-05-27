@@ -180,15 +180,15 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                     if (!emergencyModeActive) {
                         NavigationBar(
                             modifier = Modifier.fillMaxWidth(),
-                            containerColor = NavBg,
+                            containerColor = Color(0xFF0F172A),
                             tonalElevation = 0.dp
                         ) {
                             val navItemColors = androidx.compose.material3.NavigationBarItemDefaults.colors(
-                                selectedIconColor = DarkText,
-                                selectedTextColor = DarkText,
-                                indicatorColor = SoftDivider,
-                                unselectedIconColor = MutedText,
-                                unselectedTextColor = MutedText
+                                selectedIconColor = Color(0xFF38BDF8),
+                                selectedTextColor = Color(0xFF38BDF8),
+                                indicatorColor = Color.White.copy(alpha = 0.1f),
+                                unselectedIconColor = Color.White.copy(alpha = 0.5f),
+                                unselectedTextColor = Color.White.copy(alpha = 0.5f)
                             )
                             NavigationBarItem(
                                 selected = currentTab == "resources",
@@ -218,7 +218,7 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                                             Box(
                                                 modifier = Modifier
                                                     .size(14.dp)
-                                                    .background(ClayRed, CircleShape)
+                                                    .background(Color(0xFFE11D48), CircleShape)
                                                     .align(Alignment.TopEnd)
                                             ) {
                                                 Text(
@@ -245,104 +245,122 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                         onExit = { emergencyModeActive = false }
                     )
                 } else {
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(
                     Brush.verticalGradient(
                         colors = listOf(
-                            MaterialTheme.colorScheme.primary.copy(alpha = 0.08f),
-                            MaterialTheme.colorScheme.background
+                            Color(0xFF0F172A), // Dark slate
+                            Color(0xFF0B1021)
                         )
                     )
                 )
-                .padding(innerPadding)
         ) {
-            // -- SPONSOR ACCENT BAR --
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.primary)
-                    .padding(horizontal = 16.dp, vertical = 6.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = Localization.getString("sponsor", activeLang).uppercase(),
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    fontSize = 11.sp,
-                    fontWeight = FontWeight.Bold,
-                    letterSpacing = 1.sp
-                )
-                Text(
-                    text = "Calgary, AB",
-                    color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.8f),
-                    fontSize = 11.sp,
+            // Elegant background shapes
+            androidx.compose.foundation.Canvas(modifier = Modifier.fillMaxSize()) {
+                drawCircle(
+                    brush = Brush.radialGradient(
+                        colors = listOf(Color(0xFFE11D48).copy(alpha = 0.08f), Color.Transparent),
+                        center = androidx.compose.ui.geometry.Offset(size.width, 0f),
+                        radius = size.width * 0.7f
+                    ),
+                    radius = size.width * 0.7f,
+                    center = androidx.compose.ui.geometry.Offset(size.width, 0f)
                 )
             }
-
-            // -- APP BAR (Brand Header + Language Selector) --
-            Row(
+            
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+                    .fillMaxSize()
+                    .padding(innerPadding)
             ) {
-                Column(modifier = Modifier.weight(1f)) {
+                // -- SPONSOR ACCENT BAR --
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(Color(0xFFE11D48).copy(alpha = 0.8f))
+                        .padding(horizontal = 16.dp, vertical = 6.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
                     Text(
-                        text = Localization.getString("app_title", activeLang),
-                        fontSize = 26.sp,
+                        text = Localization.getString("sponsor", activeLang).uppercase(),
+                        color = Color.White,
+                        fontSize = 11.sp,
                         fontWeight = FontWeight.Bold,
-                        color = DarkText,
-                        letterSpacing = (-0.5).sp
+                        letterSpacing = 1.sp
                     )
                     Text(
-                        text = Localization.getString("welcome_statement", activeLang),
-                        fontSize = 12.sp,
-                        color = MutedText,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis,
-                        lineHeight = 16.sp,
-                        fontWeight = FontWeight.Medium
+                        text = "Calgary, AB",
+                        color = Color.White.copy(alpha = 0.8f),
+                        fontSize = 11.sp,
                     )
                 }
 
-                Spacer(modifier = Modifier.width(12.dp))
-
-                // Language Button Dropdown
-                Box {
-                    val currentLangObj = Localization.ListOfLanguages.find { it.code == activeLang }
-                        ?: Localization.ListOfLanguages[0]
-                    Surface(
-                        onClick = { langMenuExpanded = true },
-                        shape = RoundedCornerShape(24.dp),
-                        color = MaterialTheme.colorScheme.primaryContainer,
-                        modifier = Modifier
-                            .testTag("language_selector")
-                            .sizeIn(minWidth = 48.dp, minHeight = 48.dp),
-                        shadowElevation = 1.dp
-                    ) {
-                        Row(
-                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = "${currentLangObj.flag}  ${currentLangObj.name.take(3).uppercase()}",
-                                fontSize = 13.sp,
-                                fontWeight = FontWeight.SemiBold,
-                                color = MaterialTheme.colorScheme.onPrimaryContainer
-                            )
-                            Icon(
-                                imageVector = Icons.Default.KeyboardArrowDown,
-                                contentDescription = "Languages List",
-                                tint = MaterialTheme.colorScheme.onPrimaryContainer,
-                                modifier = Modifier.size(16.dp)
-                            )
-                        }
+                // -- APP BAR (Brand Header + Language Selector) --
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = Localization.getString("app_title", activeLang),
+                            fontSize = 28.sp,
+                            fontWeight = FontWeight.Black,
+                            color = Color.White, // changed for darkness
+                            letterSpacing = (-0.5).sp
+                        )
+                        Text(
+                            text = Localization.getString("welcome_statement", activeLang),
+                            fontSize = 12.sp,
+                            color = Color(0xFFE2E8F0),
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis,
+                            lineHeight = 16.sp,
+                            fontWeight = FontWeight.Medium
+                        )
                     }
 
-                    DropdownMenu(
+                    Spacer(modifier = Modifier.width(12.dp))
+
+                    // Language Button Dropdown
+                    Box {
+                        val currentLangObj = Localization.ListOfLanguages.find { it.code == activeLang }
+                            ?: Localization.ListOfLanguages[0]
+                        Surface(
+                            onClick = { langMenuExpanded = true },
+                            shape = RoundedCornerShape(24.dp),
+                            color = Color.White.copy(alpha = 0.1f),
+                            border = BorderStroke(1.dp, Color.White.copy(alpha = 0.2f)),
+                            modifier = Modifier
+                                .testTag("language_selector")
+                                .sizeIn(minWidth = 48.dp, minHeight = 48.dp),
+                            shadowElevation = 0.dp
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = "${currentLangObj.flag}  ${currentLangObj.name.take(3).uppercase()}",
+                                    fontSize = 13.sp,
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = Color.White
+                                )
+                                Icon(
+                                    imageVector = Icons.Default.KeyboardArrowDown,
+                                    contentDescription = "Languages List",
+                                    tint = Color.White,
+                                    modifier = Modifier.size(16.dp)
+                                )
+                            }
+                        }
+
+                        DropdownMenu(
                         expanded = langMenuExpanded,
                         onDismissRequest = { langMenuExpanded = false }
                     ) {
@@ -375,7 +393,7 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                     text = Localization.getString("select_group", activeLang).uppercase(),
                     fontSize = 10.sp,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
+                    color = Color.White.copy(alpha = 0.6f),
                     letterSpacing = 1.sp,
                     modifier = Modifier.padding(bottom = 6.dp)
                 )
@@ -413,11 +431,17 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                                 }
                                 Text(em, fontSize = 14.sp)
                             },
+                            border = FilterChipDefaults.filterChipBorder(
+                                enabled = true,
+                                selected = isSelected,
+                                borderColor = Color.White.copy(alpha = 0.2f),
+                                selectedBorderColor = Color(0xFFE11D48).copy(alpha = 0.6f)
+                            ),
                             colors = FilterChipDefaults.filterChipColors(
-                                selectedContainerColor = ForestGreen,
+                                selectedContainerColor = Color(0xFFE11D48).copy(alpha = 0.2f),
                                 selectedLabelColor = Color.White,
-                                containerColor = SoftBeige,
-                                labelColor = DarkText
+                                containerColor = Color.White.copy(alpha = 0.05f),
+                                labelColor = Color.White.copy(alpha = 0.8f)
                             )
                         )
                     }
@@ -456,14 +480,14 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                                 singleLine = true,
                                 shape = RoundedCornerShape(16.dp),
                                 colors = OutlinedTextFieldDefaults.colors(
-                                    focusedBorderColor = ForestGreen,
-                                    unfocusedBorderColor = SoftDivider,
-                                    focusedContainerColor = SoftBeige,
-                                    unfocusedContainerColor = SoftBeige.copy(alpha = 0.7f),
-                                    focusedTextColor = DarkText,
-                                    unfocusedTextColor = DarkText,
-                                    focusedLeadingIconColor = MutedText,
-                                    unfocusedLeadingIconColor = MutedText
+                                    focusedBorderColor = Color(0xFF38BDF8),
+                                    unfocusedBorderColor = Color.White.copy(alpha = 0.2f),
+                                    focusedContainerColor = Color.White.copy(alpha = 0.1f),
+                                    unfocusedContainerColor = Color.White.copy(alpha = 0.05f),
+                                    focusedTextColor = Color.White,
+                                    unfocusedTextColor = Color.White,
+                                    focusedLeadingIconColor = Color.White.copy(alpha = 0.8f),
+                                    unfocusedLeadingIconColor = Color.White.copy(alpha = 0.6f)
                                 )
                             )
 
@@ -487,14 +511,14 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                                     Icon(
                                         imageVector = Icons.Default.Warning,
                                         contentDescription = "No results found",
-                                        tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
+                                        tint = Color.White.copy(alpha = 0.4f),
                                         modifier = Modifier.size(48.dp)
                                     )
                                     Spacer(modifier = Modifier.height(12.dp))
                                     Text(
                                         text = "No direct listings fit your query.\nTry switching community groups above!",
                                         fontSize = 14.sp,
-                                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f),
+                                        color = Color(0xFF94A3B8),
                                         textAlign = TextAlign.Center
                                     )
                                 }
@@ -508,34 +532,13 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                                         val descText = res.descriptions[activeLang] ?: res.descriptions["en"] ?: ""
                                         val isBookmarked = userSavedShortlist.any { it.id == res.id }
 
-                                        val cardBaseColor = when (res.category) {
-                                            "newcomer" -> CardNewcomersBg
-                                            "senior" -> CardSeniorsBg
-                                            "business" -> CardCreatorsBg
-                                            "ngo" -> CardNgoBg
-                                            else -> CardCreatorsBg
-                                        }
-                                        val cardAccentColor = when (res.category) {
-                                            "newcomer" -> ForestGreen
-                                            "senior" -> WarmSand
-                                            "business" -> ClayRed
-                                            "ngo" -> IceBlue
-                                            else -> ClayRed
-                                        }
-                                        val cardTextColor = when (res.category) {
-                                            "newcomer" -> Color(0xFF414D3F)
-                                            "senior" -> Color(0xFF5C5340)
-                                            "business" -> Color(0xFF63453D)
-                                            "ngo" -> Color(0xFF414D5C)
-                                            else -> Color(0xFF63453D)
-                                        }
-
                                         Card(
                                             shape = RoundedCornerShape(24.dp),
                                             colors = CardDefaults.cardColors(
-                                                containerColor = cardBaseColor
+                                                containerColor = Color.White.copy(alpha = 0.05f)
                                             ),
-                                            elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+                                            border = BorderStroke(1.dp, Color.White.copy(alpha = 0.15f)),
+                                            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
                                             modifier = Modifier.fillMaxWidth()
                                         ) {
                                             Column(modifier = Modifier.padding(18.dp)) {
@@ -549,13 +552,13 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                                                             text = titleText,
                                                             fontSize = 17.sp,
                                                             fontWeight = FontWeight.Bold,
-                                                            color = DarkText
+                                                            color = Color.White
                                                         )
                                                         Text(
-                                                            text = "Web: ${res.webUrl.replace("https://", "")}",
+                                                            text = "✅ Official Source: ${res.webUrl.replace("https://", "")}",
                                                             fontSize = 11.sp,
                                                             fontWeight = FontWeight.Bold,
-                                                            color = cardAccentColor
+                                                            color = Color(0xFF38BDF8)
                                                         )
                                                     }
                                                     
@@ -577,7 +580,7 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                                                         Icon(
                                                             imageVector = if (isBookmarked) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                                                             contentDescription = "Save to plan",
-                                                            tint = if (isBookmarked) ClayRed else cardTextColor.copy(alpha = 0.6f)
+                                                            tint = if (isBookmarked) Color(0xFFE11D48) else Color.White.copy(alpha = 0.4f)
                                                         )
                                                     }
                                                 }
@@ -587,10 +590,11 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                                                 Text(
                                                     text = descText,
                                                     fontSize = 13.sp,
-                                                    color = cardTextColor,
+                                                    color = Color(0xFFE2E8F0),
                                                     lineHeight = 18.sp,
                                                     fontWeight = FontWeight.Medium
                                                 )
+
 
                                                 Spacer(modifier = Modifier.height(12.dp))
 
@@ -612,11 +616,11 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                                                             },
                                                             modifier = Modifier.height(36.dp),
                                                             colors = ButtonDefaults.outlinedButtonColors(
-                                                                contentColor = cardAccentColor
+                                                                contentColor = Color(0xFF38BDF8)
                                                             ),
                                                             border = androidx.compose.foundation.BorderStroke(
                                                                 1.dp,
-                                                                cardAccentColor.copy(alpha = 0.5f)
+                                                                Color(0xFF38BDF8).copy(alpha = 0.5f)
                                                             ),
                                                             contentPadding = PaddingValues(horizontal = 12.dp),
                                                             shape = RoundedCornerShape(12.dp)
@@ -646,8 +650,8 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                                                             }
                                                         },
                                                         colors = ButtonDefaults.buttonColors(
-                                                            containerColor = cardAccentColor,
-                                                            contentColor = Color.White
+                                                            containerColor = Color(0xFF38BDF8),
+                                                            contentColor = Color(0xFF0B1021)
                                                         ),
                                                         modifier = Modifier.height(36.dp),
                                                         contentPadding = PaddingValues(horizontal = 12.dp),
@@ -673,7 +677,7 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                             Text(
                                 text = Localization.getString("ai_intro", activeLang),
                                 fontSize = 13.sp,
-                                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.8f),
+                                color = Color(0xFFE2E8F0),
                                 lineHeight = 18.sp,
                                 fontWeight = FontWeight.Medium
                             )
@@ -707,7 +711,7 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                                     text = "💡 QUICK PRESETS:",
                                     fontSize = 10.sp,
                                     fontWeight = FontWeight.Bold,
-                                    color = MaterialTheme.colorScheme.primary,
+                                    color = Color(0xFF38BDF8),
                                     modifier = Modifier.padding(bottom = 4.dp)
                                 )
 
@@ -721,14 +725,15 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                                                 viewModel.applyPresetAiPrompt(preset)
                                             },
                                             shape = RoundedCornerShape(16.dp),
-                                            color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.8f),
+                                            color = Color.White.copy(alpha = 0.1f),
+                                            border = BorderStroke(1.dp, Color.White.copy(alpha = 0.15f)),
                                             modifier = Modifier.testTag("preset_${preset.replace(" ", "_").lowercase()}")
                                         ) {
                                             Text(
                                                 text = preset,
                                                 fontSize = 11.sp,
                                                 fontWeight = FontWeight.SemiBold,
-                                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                                color = Color.White,
                                                 modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp)
                                             )
                                         }
@@ -744,7 +749,7 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                                 OutlinedTextField(
                                     value = aiPromptInput,
                                     onValueChange = { viewModel.setAiInput(it) },
-                                    placeholder = { Text(Localization.getString("ai_prompt_hint", activeLang), fontSize = 12.sp, color = MutedText) },
+                                    placeholder = { Text(Localization.getString("ai_prompt_hint", activeLang), fontSize = 12.sp, color = Color.White.copy(alpha = 0.5f)) },
                                     modifier = Modifier
                                         .weight(1f)
                                         .testTag("ai_input_field"),
@@ -752,12 +757,12 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                                     maxLines = 4,
                                     shape = RoundedCornerShape(16.dp),
                                     colors = OutlinedTextFieldDefaults.colors(
-                                        focusedBorderColor = ForestGreen,
-                                        unfocusedBorderColor = SoftDivider,
-                                        focusedContainerColor = SoftBeige,
-                                        unfocusedContainerColor = SoftBeige.copy(alpha = 0.7f),
-                                        focusedTextColor = DarkText,
-                                        unfocusedTextColor = DarkText
+                                        focusedBorderColor = Color(0xFF38BDF8),
+                                        unfocusedBorderColor = Color.White.copy(alpha = 0.2f),
+                                        focusedContainerColor = Color.White.copy(alpha = 0.1f),
+                                        unfocusedContainerColor = Color.White.copy(alpha = 0.05f),
+                                        focusedTextColor = Color.White,
+                                        unfocusedTextColor = Color.White
                                     ),
                                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                                     keyboardActions = KeyboardActions(onDone = {
@@ -774,7 +779,7 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                                         viewModel.getCalgaryAiAdvice()
                                     },
                                     colors = ButtonDefaults.buttonColors(
-                                        containerColor = ForestGreen,
+                                        containerColor = Color(0xFFE11D48),
                                         contentColor = Color.White
                                     ),
                                     modifier = Modifier
@@ -797,8 +802,9 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                             Card(
                                 shape = RoundedCornerShape(24.dp),
                                 colors = CardDefaults.cardColors(
-                                    containerColor = SoftBeige.copy(alpha = 0.8f)
+                                    containerColor = Color.White.copy(alpha = 0.05f)
                                 ),
+                                border = BorderStroke(1.dp, Color.White.copy(alpha = 0.15f)),
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .weight(1f)
@@ -813,9 +819,9 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                                             modifier = Modifier.align(Alignment.Center),
                                             horizontalAlignment = Alignment.CenterHorizontally
                                         ) {
-                                            CircularProgressIndicator()
+                                            CircularProgressIndicator(color = Color(0xFF38BDF8))
                                             Spacer(modifier = Modifier.height(10.dp))
-                                            Text(text = "Calgary AI Advisor compiling solutions...", fontSize = 12.sp)
+                                            Text(text = "Calgary AI Advisor compiling solutions...", fontSize = 12.sp, color = Color.White.copy(alpha = 0.8f))
                                         }
                                     } else if (aiResponseOutput != null) {
                                         LazyColumn(modifier = Modifier.fillMaxSize()) {
@@ -830,10 +836,10 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                                                             text = Localization.getString("ai_advisor_header", activeLang),
                                                             fontWeight = FontWeight.Bold,
                                                             fontSize = 15.sp,
-                                                            color = MaterialTheme.colorScheme.primary
+                                                            color = Color(0xFF38BDF8)
                                                         )
                                                         IconButton(onClick = { viewModel.clearAiOutput() }) {
-                                                            Icon(Icons.Default.Clear, contentDescription = "Clear result")
+                                                            Icon(Icons.Default.Clear, contentDescription = "Clear result", tint = Color.White.copy(alpha = 0.6f))
                                                         }
                                                     }
                                                     Spacer(modifier = Modifier.height(8.dp))
@@ -841,7 +847,7 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                                                         text = aiResponseOutput!!,
                                                         fontSize = 14.sp,
                                                         lineHeight = 20.sp,
-                                                        color = MaterialTheme.colorScheme.onSurface
+                                                        color = Color(0xFFF8FAFC)
                                                     )
                                                     Spacer(modifier = Modifier.height(16.dp))
                                                     Text(
@@ -884,7 +890,7 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                                 text = Localization.getString("saved_notes_title", activeLang),
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.primary,
+                                color = Color.White,
                                 modifier = Modifier.padding(bottom = 8.dp)
                             )
 
@@ -899,14 +905,14 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                                     Icon(
                                         imageVector = Icons.Default.FavoriteBorder,
                                         contentDescription = "No Saved Items",
-                                        tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
+                                        tint = Color.White.copy(alpha = 0.4f),
                                         modifier = Modifier.size(48.dp)
                                     )
                                     Spacer(modifier = Modifier.height(12.dp))
                                     Text(
                                         text = Localization.getString("no_bookmarks_yet", activeLang),
                                         fontSize = 13.sp,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        color = Color(0xFF94A3B8),
                                         textAlign = TextAlign.Center,
                                         lineHeight = 18.sp
                                     )
@@ -921,12 +927,13 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                                             shape = RoundedCornerShape(16.dp),
                                             colors = CardDefaults.cardColors(
                                                 containerColor = if (bookmark.isCompleted) {
-                                                    MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
+                                                    Color.White.copy(alpha = 0.02f)
                                                 } else {
-                                                    MaterialTheme.colorScheme.surface
+                                                    Color.White.copy(alpha = 0.05f)
                                                 }
                                             ),
-                                            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+                                            border = BorderStroke(1.dp, Color.White.copy(alpha = if (bookmark.isCompleted) 0.05f else 0.15f)),
+                                            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
                                             modifier = Modifier.fillMaxWidth()
                                         ) {
                                             Column(modifier = Modifier.padding(14.dp)) {
@@ -952,7 +959,7 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                                                             Icon(
                                                                 imageVector = if (bookmark.isCompleted) Icons.Default.CheckCircle else Icons.Default.Done,
                                                                 contentDescription = "Complete task",
-                                                                tint = if (bookmark.isCompleted) Color(0xFF2E7D32) else MaterialTheme.colorScheme.outline
+                                                                tint = if (bookmark.isCompleted) Color(0xFF10B981) else Color.White.copy(alpha = 0.5f)
                                                             )
                                                         }
                                                         Spacer(modifier = Modifier.width(4.dp))
@@ -961,9 +968,9 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                                                             fontSize = 15.sp,
                                                             fontWeight = FontWeight.Bold,
                                                             color = if (bookmark.isCompleted) {
-                                                                MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+                                                                Color.White.copy(alpha = 0.4f)
                                                             } else {
-                                                                MaterialTheme.colorScheme.onSurface
+                                                                Color.White
                                                             }
                                                         )
                                                     }
@@ -972,7 +979,7 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                                                         Icon(
                                                             imageVector = Icons.Default.Delete,
                                                             contentDescription = "Delete from plan",
-                                                            tint = MaterialTheme.colorScheme.error
+                                                            tint = Color(0xFFE11D48)
                                                         )
                                                     }
                                                 }
@@ -990,16 +997,18 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                                                             newText
                                                         )
                                                     },
-                                                    label = { Text(Localization.getString("add_note_placeholder", activeLang), fontSize = 11.sp) },
+                                                    label = { Text(Localization.getString("add_note_placeholder", activeLang), fontSize = 11.sp, color = Color.White.copy(alpha = 0.5f)) },
                                                     modifier = Modifier
                                                         .fillMaxWidth()
                                                         .padding(horizontal = 4.dp),
-                                                    textStyle = MaterialTheme.typography.bodyMedium,
+                                                    textStyle = androidx.compose.ui.text.TextStyle(color = Color.White, fontSize = 13.sp),
                                                     singleLine = false,
                                                     maxLines = 2,
                                                     colors = OutlinedTextFieldDefaults.colors(
-                                                        focusedBorderColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f),
-                                                        unfocusedBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.2f)
+                                                        focusedBorderColor = Color(0xFF38BDF8),
+                                                        unfocusedBorderColor = Color.White.copy(alpha = 0.2f),
+                                                        focusedContainerColor = Color.Transparent,
+                                                        unfocusedContainerColor = Color.Transparent
                                                     )
                                                 )
                                                 
@@ -1010,7 +1019,7 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                                                     Text(
                                                         text = if (isSavingNotes) Localization.getString("saving_notes", activeLang) else "",
                                                         fontSize = 10.sp,
-                                                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f)
+                                                        color = Color(0xFF94A3B8)
                                                     )
                                                 }
                                             }
@@ -1024,6 +1033,7 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
             }
         }
     }
+}
 }
 }
 }

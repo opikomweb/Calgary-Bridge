@@ -71,26 +71,36 @@ fun CalgaryOnboarding(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF0F172A)) // Dark slate background for cinematic contrast
+            .background(
+                Brush.verticalGradient(
+                    colors = listOf(
+                        Color(0xFF0F172A),
+                        Color(0xFF0B1021)
+                    )
+                )
+            )
     ) {
-        // Blurred organic gradient background circles
-        val circleShift1 = 0f
-        val circleShift2 = 0f
-
-        // Light glows behind content
-        Box(
-            modifier = Modifier
-                .offset(x = (-100).dp + circleShift1.dp, y = (-100).dp)
-                .size(350.dp)
-                .background(Color(0xFFE11D48).copy(alpha = 0.15f), CircleShape)
-        )
-        Box(
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .offset(x = 100.dp + circleShift2.dp, y = 100.dp)
-                .size(400.dp)
-                .background(Color(0xFF0284C7).copy(alpha = 0.2f), CircleShape)
-        )
+        // High quality blurry organic gradient background circles
+        androidx.compose.foundation.Canvas(modifier = Modifier.fillMaxSize()) {
+            drawCircle(
+                brush = Brush.radialGradient(
+                    colors = listOf(Color(0xFFE11D48).copy(alpha = 0.15f), Color.Transparent),
+                    center = androidx.compose.ui.geometry.Offset(0f, 0f),
+                    radius = size.width * 0.8f
+                ),
+                radius = size.width * 0.8f,
+                center = androidx.compose.ui.geometry.Offset(0f, 0f)
+            )
+            drawCircle(
+                brush = Brush.radialGradient(
+                    colors = listOf(Color(0xFF0284C7).copy(alpha = 0.2f), Color.Transparent),
+                    center = androidx.compose.ui.geometry.Offset(size.width, size.height),
+                    radius = size.width * 0.9f
+                ),
+                radius = size.width * 0.9f,
+                center = androidx.compose.ui.geometry.Offset(size.width, size.height)
+            )
+        }
 
         AnimatedContent(
             targetState = step,
@@ -148,53 +158,81 @@ fun WelcomeStep(activeLang: String, onStart: () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        // Logo Arc
+        // Modern Glassmorphic Logo
         Box(
             modifier = Modifier
-                .size(100.dp)
-                .background(Color.White.copy(alpha = 0.05f), CircleShape)
-                .border(1.dp, Color.White.copy(alpha = 0.15f), CircleShape),
+                .size(120.dp)
+                .background(
+                    Brush.linearGradient(
+                        colors = listOf(
+                            Color.White.copy(alpha = 0.1f),
+                            Color.White.copy(alpha = 0.02f)
+                        )
+                    ),
+                    CircleShape
+                )
+                .border(1.dp, Color.White.copy(alpha = 0.2f), CircleShape)
+                .padding(16.dp),
             contentAlignment = Alignment.Center
         ) {
-            Text("🏔️", fontSize = 42.sp)
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(
+                        Brush.radialGradient(
+                            colors = listOf(Color(0xFFE11D48).copy(alpha = 0.4f), Color.Transparent)
+                        ),
+                        CircleShape
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Text("🏔️", fontSize = 56.sp)
+            }
         }
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(40.dp))
 
         Text(
-            text = "Welcome to \nCalgary Bridge",
-            fontSize = 32.sp,
+            text = "Calgary Bridge.",
+            fontSize = 42.sp,
             fontWeight = FontWeight.Black,
             color = Color.White,
             textAlign = TextAlign.Center,
-            lineHeight = 38.sp
+            letterSpacing = (-1).sp,
+            lineHeight = 44.sp
         )
-
-        Spacer(modifier = Modifier.height(16.dp))
+        
+        Spacer(modifier = Modifier.height(12.dp))
 
         Text(
-            text = "Everything you need to live, find help, protect your rights, and navigate Calgary - built seamlessly in one single super-app.",
-            fontSize = 15.sp,
-            color = Color(0xFF94A3B8),
+            text = "Your digital environment for finding help, protecting rights, and navigating Calgary safely.",
+            fontSize = 16.sp,
+            color = Color(0xFFE2E8F0),
             textAlign = TextAlign.Center,
-            lineHeight = 22.sp,
-            modifier = Modifier.padding(horizontal = 12.dp)
+            lineHeight = 24.sp,
+            modifier = Modifier.padding(horizontal = 16.dp)
         )
 
         Spacer(modifier = Modifier.height(48.dp))
 
-        Button(
-            onClick = onStart,
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .bounceClickable(onStart)
                 .height(56.dp)
-                .testTag("onboarding_start_button"),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFFF43F5E), // Wildrose Crimson
-                contentColor = Color.White
-            ),
-            shape = RoundedCornerShape(16.dp)
+                .bounceClickable(onStart)
+                .background(
+                    brush = Brush.horizontalGradient(
+                        colors = listOf(Color(0xFFF43F5E), Color(0xFFE11D48))
+                    ),
+                    shape = RoundedCornerShape(16.dp)
+                )
+                .border(
+                    width = 1.dp,
+                    color = Color.White.copy(alpha = 0.4f),
+                    shape = RoundedCornerShape(16.dp)
+                )
+                .clip(RoundedCornerShape(16.dp)),
+            contentAlignment = Alignment.Center
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -202,7 +240,8 @@ fun WelcomeStep(activeLang: String, onStart: () -> Unit) {
             ) {
                 Text(
                     text = "Start in 30 seconds",
-                    fontSize = 16.sp,
+                    fontSize = 18.sp,
+                    color = Color.White,
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.width(8.dp))
@@ -404,24 +443,31 @@ fun PrioritiesStep(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Button(
-            onClick = onContinue,
-            enabled = selectedNeeds.isNotEmpty(),
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .bounceClickable(onContinue)
                 .height(56.dp)
-                .testTag("onboarding_needs_continue"),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF0EA5E9),
-                contentColor = Color.White,
-                disabledContainerColor = Color(0xFF1E293B)
-            ),
-            shape = RoundedCornerShape(16.dp)
+                .bounceClickable {
+                    if (selectedNeeds.isNotEmpty()) onContinue()
+                }
+                .background(
+                    brush = Brush.horizontalGradient(
+                        colors = listOf(Color(0xFF0EA5E9).copy(alpha = if (selectedNeeds.isNotEmpty()) 0.8f else 0.4f), Color(0xFF0284C7).copy(alpha = if (selectedNeeds.isNotEmpty()) 0.8f else 0.4f))
+                    ),
+                    shape = RoundedCornerShape(16.dp)
+                )
+                .border(
+                    width = 1.dp,
+                    color = Color.White.copy(alpha = if (selectedNeeds.isNotEmpty()) 0.4f else 0.1f),
+                    shape = RoundedCornerShape(16.dp)
+                )
+                .clip(RoundedCornerShape(16.dp)),
+            contentAlignment = Alignment.Center
         ) {
             Text(
                 text = "Continue (${selectedNeeds.size}/3 selected)",
-                fontSize = 16.sp,
+                fontSize = 18.sp,
+                color = if (selectedNeeds.isNotEmpty()) Color.White else Color.White.copy(alpha = 0.5f),
                 fontWeight = FontWeight.Bold
             )
         }
@@ -440,11 +486,11 @@ fun ValueRevealStep(
 ) {
     val revealDetails = remember {
         listOf(
-            "🏠 Calgary Rent Protection Schemes & Tenant Shield system activated.",
-            "🎟️ Low-Income bus passes & City Concession fare estimators matched.",
-            "🍎 Fast routing for NGOs, food hampers, and mobile warmth depots.",
-            "🏪 Micro-coupons and free small business promo toolkits registered.",
-            "🤖 Contextual Multi-Agent AI Advisor synced for Albertan legislation."
+            "🏠 Rent Protection activated (Source: Residential Tenancies Act Alberta).",
+            "🎟️ Low-Income bus passes & fare estimators matched (Source: Calgary Transit).",
+            "🍎 Fast routing for NGOs & food hampers (Source: Calgary Food Bank & Mustard Seed).",
+            "🏪 Small business promo toolkits registered (Source: Calgary Chamber of Commerce).",
+            "🤖 Multi-Agent AI Advisor synced to latest local municipal & provincial data."
         )
     }
 
@@ -466,17 +512,17 @@ fun ValueRevealStep(
     ) {
         Text(
             text = "Match Analysis Complete",
-            fontSize = 24.sp,
+            fontSize = 26.sp,
             fontWeight = FontWeight.Black,
             color = Color(0xFF38BDF8)
         )
-        Spacer(modifier = Modifier.height(6.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = "We configured your super-app and pre-loaded immediate municipal resources you may already qualify for in Calgary:",
-            fontSize = 13.sp,
-            color = Color(0xFF94A3B8),
+            text = "Your digital environment is securely provisioned with trusted municipal sources directly from Calgary agencies and provincial APIs.",
+            fontSize = 14.sp,
+            color = Color(0xFFE2E8F0),
             textAlign = TextAlign.Center,
-            modifier = Modifier.padding(horizontal = 12.dp)
+            modifier = Modifier.padding(horizontal = 8.dp)
         )
 
         Spacer(modifier = Modifier.height(28.dp))
@@ -495,8 +541,8 @@ fun ValueRevealStep(
                 ) {
                     Surface(
                         shape = RoundedCornerShape(16.dp),
-                        color = Color(0xFF131D31),
-                        border = BorderStroke(1.dp, Color.White.copy(alpha = 0.05f)),
+                        color = Color(0xFF1E293B).copy(alpha = 0.5f),
+                        border = BorderStroke(1.dp, Color.White.copy(alpha = 0.15f)),
                         modifier = Modifier
                             .fillMaxWidth()
                             .graphicsLayer {
@@ -510,13 +556,17 @@ fun ValueRevealStep(
                             Box(
                                 modifier = Modifier
                                     .size(32.dp)
-                                    .background(Color(0xFF38BDF8).copy(alpha = 0.1f), CircleShape),
+                                    .background(
+                                        Brush.linearGradient(
+                                            colors = listOf(Color(0xFF38BDF8), Color(0xFF0284C7))
+                                        ), CircleShape
+                                    ),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.Star,
                                     contentDescription = null,
-                                    tint = Color(0xFF38BDF8),
+                                    tint = Color.White,
                                     modifier = Modifier.size(16.dp)
                                 )
                             }
@@ -524,7 +574,7 @@ fun ValueRevealStep(
                             Text(
                                 text = text,
                                 fontSize = 13.sp,
-                                color = Color.White,
+                                color = Color(0xFFF8FAFC),
                                 fontWeight = FontWeight.Medium,
                                 lineHeight = 18.sp
                             )
@@ -536,23 +586,31 @@ fun ValueRevealStep(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Button(
-            onClick = onContinue,
-            enabled = visibleCount >= revealDetails.size,
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .bounceClickable(onContinue)
                 .height(56.dp)
-                .testTag("onboarding_value_continue"),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF10B981), // Green for success
-                contentColor = Color.White
-            ),
-            shape = RoundedCornerShape(16.dp)
+                .bounceClickable {
+                    if (visibleCount >= revealDetails.size) onContinue()
+                }
+                .background(
+                    brush = Brush.horizontalGradient(
+                        colors = listOf(Color(0xFF10B981).copy(alpha = if (visibleCount >= revealDetails.size) 0.8f else 0.4f), Color(0xFF059669).copy(alpha = if (visibleCount >= revealDetails.size) 0.8f else 0.4f))
+                    ),
+                    shape = RoundedCornerShape(16.dp)
+                )
+                .border(
+                    width = 1.dp,
+                    color = Color.White.copy(alpha = if (visibleCount >= revealDetails.size) 0.4f else 0.1f),
+                    shape = RoundedCornerShape(16.dp)
+                )
+                .clip(RoundedCornerShape(16.dp)),
+            contentAlignment = Alignment.Center
         ) {
             Text(
                 text = "Activate My Account",
-                fontSize = 16.sp,
+                fontSize = 18.sp,
+                color = if (visibleCount >= revealDetails.size) Color.White else Color.White.copy(alpha = 0.5f),
                 fontWeight = FontWeight.Bold
             )
         }
@@ -605,22 +663,29 @@ fun AIActivationStep(
 
         Spacer(modifier = Modifier.height(48.dp))
 
-        Button(
-            onClick = onExplore,
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .bounceClickable(onExplore)
                 .height(56.dp)
-                .testTag("onboarding_activation_primary"),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFFF43F5E),
-                contentColor = Color.White
-            ),
-            shape = RoundedCornerShape(16.dp)
+                .bounceClickable(onExplore)
+                .background(
+                    brush = Brush.horizontalGradient(
+                        colors = listOf(Color(0xFFF43F5E), Color(0xFFBE123C))
+                    ),
+                    shape = RoundedCornerShape(16.dp)
+                )
+                .border(
+                    width = 1.dp,
+                    color = Color.White.copy(alpha = 0.4f),
+                    shape = RoundedCornerShape(16.dp)
+                )
+                .clip(RoundedCornerShape(16.dp)),
+            contentAlignment = Alignment.Center
         ) {
             Text(
                 text = "Enter Calgary Bridge",
-                fontSize = 16.sp,
+                fontSize = 18.sp,
+                color = Color.White,
                 fontWeight = FontWeight.Bold
             )
         }
