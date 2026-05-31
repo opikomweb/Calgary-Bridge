@@ -19,13 +19,18 @@ import {
   Sparkles,
   CheckCircle,
   Calendar,
-  Users
+  Users,
+  Flag,
+  Building2,
+  MoreHorizontal
 } from "lucide-react";
 
 interface ResourceCardProps {
   resource: Resource;
   showNotes?: boolean;
   variant?: "default" | "compact" | "detailed";
+  onReport?: (resourceId: string) => void;
+  onClaimBusiness?: (resourceId: string) => void;
 }
 
 const costLabels: Record<string, { label: string; color: string }> = {
@@ -35,8 +40,9 @@ const costLabels: Record<string, { label: string; color: string }> = {
   "paid": { label: "Paid", color: "text-slate-400 bg-slate-500/15" },
 };
 
-export default function ResourceCard({ resource, showNotes = false, variant = "default" }: ResourceCardProps) {
+export default function ResourceCard({ resource, showNotes = false, variant = "default", onReport, onClaimBusiness }: ResourceCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
   const {
     activeLanguage,
     bookmarkedResources,
@@ -124,6 +130,50 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
             >
               <Heart className={`h-6 w-6 ${isBookmarked ? "fill-current" : ""}`} />
             </motion.button>
+
+            {/* More Options Menu */}
+            <div className="relative">
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={() => setShowMenu(!showMenu)}
+                className="flex-shrink-0 rounded-2xl p-4 bg-white/[0.06] text-[var(--foreground-muted)] hover:text-white hover:bg-white/[0.1] transition-all"
+              >
+                <MoreHorizontal className="h-6 w-6" />
+              </motion.button>
+              
+              <AnimatePresence>
+                {showMenu && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95, y: -8 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.95, y: -8 }}
+                    className="absolute right-0 top-full mt-2 w-56 rounded-2xl bg-[#0a1628] border border-white/[0.1] shadow-2xl overflow-hidden z-20"
+                  >
+                    <button
+                      onClick={() => {
+                        onClaimBusiness?.(resource.id);
+                        setShowMenu(false);
+                      }}
+                      className="w-full flex items-center gap-3 px-5 py-4 text-left text-sm text-white/70 hover:bg-white/[0.06] hover:text-white transition-colors"
+                    >
+                      <Building2 className="w-4 h-4" />
+                      Claim this business
+                    </button>
+                    <button
+                      onClick={() => {
+                        onReport?.(resource.id);
+                        setShowMenu(false);
+                      }}
+                      className="w-full flex items-center gap-3 px-5 py-4 text-left text-sm text-white/70 hover:bg-white/[0.06] hover:text-white transition-colors border-t border-white/[0.06]"
+                    >
+                      <Flag className="w-4 h-4" />
+                      Report an issue
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
 
           {/* Quick Action Buttons */}

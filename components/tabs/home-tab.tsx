@@ -1,13 +1,18 @@
 "use client";
 
+import React from "react";
 import { motion } from "framer-motion";
 import { useAppStore } from "@/lib/store";
 import { resources } from "@/lib/data";
 import { Search, ArrowRight, Sparkles, MapPin, ChevronRight, Home, Briefcase, Heart, Users } from "lucide-react";
 import ResourceCard from "../resource-card";
+import Footer from "../footer";
+import BusinessSubmission from "../business-submission";
 
 export default function HomeTab() {
   const { activeLanguage, searchQuery, setSearchQuery, setActiveTab } = useAppStore();
+  const [showBusinessModal, setShowBusinessModal] = React.useState(false);
+  const [businessModalMode, setBusinessModalMode] = React.useState<"submit" | "featured">("submit");
 
   const featuredResources = resources.filter((r) => r.featured).slice(0, 4);
   const hiddenGems = resources.filter((r) => r.hiddenGem).slice(0, 3);
@@ -426,6 +431,25 @@ export default function HomeTab() {
           </section>
         </>
       )}
+
+      {/* Footer */}
+      <Footer 
+        onOpenSubmitBusiness={() => {
+          setBusinessModalMode("submit");
+          setShowBusinessModal(true);
+        }}
+        onOpenGetFeatured={() => {
+          setBusinessModalMode("featured");
+          setShowBusinessModal(true);
+        }}
+      />
+
+      {/* Business Submission Modal */}
+      <BusinessSubmission 
+        isOpen={showBusinessModal}
+        onClose={() => setShowBusinessModal(false)}
+        mode={businessModalMode}
+      />
     </div>
   );
 }
