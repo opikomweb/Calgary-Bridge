@@ -174,17 +174,33 @@ export default function LandingPage() {
             />
           </div>
           
-          {/* Stars */}
+          {/* Stars — fixed positions to avoid hydration mismatch */}
           <div className="absolute inset-0">
-            {[...Array(30)].map((_, i) => (
+            {[
+              { left: 5, top: 8, delay: 0, duration: 4 },
+              { left: 12, top: 15, delay: 1.2, duration: 5 },
+              { left: 23, top: 5, delay: 0.5, duration: 6 },
+              { left: 31, top: 22, delay: 2, duration: 4.5 },
+              { left: 45, top: 12, delay: 0.8, duration: 5.5 },
+              { left: 52, top: 28, delay: 1.5, duration: 4 },
+              { left: 67, top: 8, delay: 0.3, duration: 6.5 },
+              { left: 74, top: 18, delay: 2.2, duration: 5 },
+              { left: 82, top: 32, delay: 1, duration: 4.5 },
+              { left: 91, top: 14, delay: 0.7, duration: 5.5 },
+              { left: 8, top: 35, delay: 1.8, duration: 6 },
+              { left: 38, top: 6, delay: 0.4, duration: 4 },
+              { left: 58, top: 38, delay: 2.5, duration: 5 },
+              { left: 78, top: 4, delay: 1.3, duration: 6 },
+              { left: 95, top: 25, delay: 0.9, duration: 4.5 },
+            ].map((star, i) => (
               <motion.div
                 key={i}
                 animate={{ opacity: [0.2, 0.8, 0.2] }}
-                transition={{ duration: 3 + Math.random() * 4, repeat: Infinity, delay: Math.random() * 3 }}
+                transition={{ duration: star.duration, repeat: Infinity, delay: star.delay }}
                 className="absolute w-1 h-1 bg-white rounded-full"
                 style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 40}%`,
+                  left: `${star.left}%`,
+                  top: `${star.top}%`,
                 }}
               />
             ))}
