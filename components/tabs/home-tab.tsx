@@ -149,7 +149,7 @@ export default function HomeTab() {
 
       {/* ========== HERO SEARCH ========== */}
       <section className="relative pt-16 pb-16 md:pt-24 md:pb-20 lg:pt-32 lg:pb-28">
-        <div className="max-w-[720px] mx-auto px-5 md:px-8 relative z-10 text-center">
+        <div className="max-w-[720px] mx-auto px-6 md:px-8 lg:px-12 relative z-10 text-center">
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -209,7 +209,7 @@ export default function HomeTab() {
 
       {/* Search results */}
       {searchQuery && (
-        <section className="px-5 md:px-8 pb-16 md:pb-20 max-w-[1200px] mx-auto relative z-10">
+        <section className="px-6 md:px-8 lg:px-12 pb-16 md:pb-20 max-w-[1200px] mx-auto relative z-10">
           {/* Professional search results header container */}
           <div className="glass-card rounded-2xl md:rounded-3xl p-5 md:p-6 mb-6 md:mb-8">
             <div className="flex flex-col sm:flex-row sm:items-center gap-4">
@@ -268,7 +268,7 @@ export default function HomeTab() {
       {!searchQuery && (
         <>
           {/* ========== SOLUTION PATHWAYS ========== */}
-          <section className="px-5 md:px-8 pb-16 md:pb-24 max-w-[1200px] mx-auto relative z-10">
+          <section className="px-6 md:px-8 lg:px-12 pb-16 md:pb-24 max-w-[1200px] mx-auto relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -341,7 +341,7 @@ export default function HomeTab() {
           </section>
 
           {/* ========== AI GUIDE BANNER ========== */}
-          <section className="px-5 md:px-8 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
+          <section className="px-6 md:px-8 lg:px-12 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
             <motion.button
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -383,7 +383,7 @@ export default function HomeTab() {
           </section>
 
           {/* ========== SPECIALIZED PATHWAYS ========== */}
-          <section className="px-5 md:px-8 pt-8 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
+          <section className="px-6 md:px-8 lg:px-12 pt-8 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -417,7 +417,7 @@ export default function HomeTab() {
           </section>
 
           {/* ========== FEATURED RESOURCES ========== */}
-          <section className="px-5 md:px-8 pt-8 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
+          <section className="px-6 md:px-8 lg:px-12 pt-8 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
             <div className="mb-6 md:mb-10 text-center">
               <p className="text-xs font-bold text-[#FBBF24] uppercase tracking-[0.15em] mb-2">Recommended</p>
               <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">Top resources this month.</h2>
@@ -445,7 +445,7 @@ export default function HomeTab() {
 
           {/* ========== HIDDEN GEMS ========== */}
           {hiddenGems.length > 0 && (
-            <section className="px-5 md:px-8 pt-8 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
+            <section className="px-6 md:px-8 lg:px-12 pt-8 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
               <div className="mb-6 md:mb-10 text-center">
                 <p className="text-xs font-bold text-[#a855f7] uppercase tracking-[0.15em] mb-2">Hidden Gems</p>
                 <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">Programs most people miss.</h2>
@@ -473,7 +473,7 @@ export default function HomeTab() {
           )}
 
           {/* ========== NEAR YOU ========== */}
-          <section className="px-5 md:px-8 pb-24 md:pb-32 max-w-[1200px] mx-auto relative z-10">
+          <section className="px-6 md:px-8 lg:px-12 pb-24 md:pb-32 max-w-[1200px] mx-auto relative z-10">
             <div className="mb-6 md:mb-10">
               <div className="flex items-center gap-2 mb-2">
                 <MapPin className="w-4 h-4 text-emerald-400" />
