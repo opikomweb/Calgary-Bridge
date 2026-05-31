@@ -73,78 +73,16 @@ export default function HomeTab() {
   ];
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
-      
-      {/* ========== ANIMATED CALGARY BACKGROUND ========== */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        {/* Aurora borealis effect */}
-        <motion.div
-          animate={{
-            opacity: [0.3, 0.5, 0.3],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-0 left-1/4 w-[600px] h-[400px] bg-gradient-radial from-sky-500/20 via-sky-500/5 to-transparent rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{
-            opacity: [0.2, 0.4, 0.2],
-            scale: [1.1, 1, 1.1],
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute top-20 right-1/4 w-[500px] h-[300px] bg-gradient-radial from-cyan-500/15 via-cyan-500/5 to-transparent rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{
-            opacity: [0.15, 0.3, 0.15],
-          }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 4 }}
-          className="absolute bottom-1/3 left-1/3 w-[400px] h-[400px] bg-gradient-radial from-amber-500/10 via-amber-500/5 to-transparent rounded-full blur-3xl"
-        />
-        
-        {/* Floating particles */}
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            initial={{ 
-              x: `${(i * 5) % 100}%`, 
-              y: "100%",
-              opacity: 0 
-            }}
-            animate={{ 
-              y: "-10%",
-              opacity: [0, 0.6, 0.4, 0],
-            }}
-            transition={{ 
-              duration: 15 + (i % 10),
-              repeat: Infinity,
-              delay: i * 0.8,
-              ease: "linear"
-            }}
-            className="absolute w-1 h-1 bg-sky-400/60 rounded-full"
-            style={{ left: `${(i * 5.2) % 95}%` }}
-          />
-        ))}
-        
-        {/* Subtle grid pattern */}
-        <div 
-          className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-            backgroundSize: '60px 60px'
-          }}
-        />
-      </div>
+    <div className="min-h-screen relative">
 
       {/* ========== HERO SEARCH ========== */}
-      <section className="relative pt-20 pb-28 md:pt-28 md:pb-36">
-        <div className="max-w-[900px] mx-auto px-8 lg:px-12 relative z-10 text-center">
+      <section className="relative pt-24 pb-32 md:pt-32 md:pb-40">
+        <div className="max-w-[900px] mx-auto px-10 lg:px-14 relative z-10 text-center">
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="text-[clamp(40px,10vw,64px)] font-bold tracking-[-0.03em] leading-[1.05] mb-8"
+            className="text-[clamp(44px,11vw,72px)] font-bold tracking-[-0.03em] leading-[1.02] mb-10"
           >
             What do you need?
           </motion.h1>
@@ -153,7 +91,7 @@ export default function HomeTab() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.6 }}
-            className="text-xl md:text-2xl text-[var(--foreground-muted)] mb-14 max-w-2xl mx-auto leading-relaxed"
+            className="text-xl md:text-2xl text-white/50 mb-16 max-w-2xl mx-auto leading-relaxed"
           >
             Search for housing, jobs, healthcare, or ask the AI anything about Calgary.
           </motion.p>
@@ -165,13 +103,13 @@ export default function HomeTab() {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="relative max-w-2xl mx-auto"
           >
-            <Search className="absolute left-8 top-1/2 -translate-y-1/2 w-7 h-7 text-[var(--foreground-muted)]" />
+            <Search className="absolute left-9 top-1/2 -translate-y-1/2 w-7 h-7 text-white/40" />
             <input
               type="text"
               placeholder="My landlord won't fix the heat..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full h-[88px] bg-white/[0.06] hover:bg-white/[0.08] border border-white/10 hover:border-white/15 focus:border-[#38BDF8]/50 focus:bg-white/[0.08] rounded-[28px] text-xl md:text-2xl text-white placeholder:text-[var(--foreground-muted)]/60 pl-[76px] pr-10 outline-none transition-all duration-300 focus:shadow-[0_0_0_4px_rgba(56,189,248,0.12),0_24px_48px_-12px_rgba(0,0,0,0.5)]"
+              className="w-full h-[96px] bg-white/[0.04] hover:bg-white/[0.06] border border-white/[0.08] hover:border-white/[0.12] focus:border-[#38BDF8]/40 focus:bg-white/[0.06] rounded-[32px] text-xl md:text-2xl text-white placeholder:text-white/30 pl-20 pr-12 outline-none transition-all duration-300 focus:shadow-[0_0_0_4px_rgba(56,189,248,0.08),0_32px_64px_-16px_rgba(0,0,0,0.6)]"
             />
           </motion.div>
 
@@ -181,13 +119,13 @@ export default function HomeTab() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
-              className="flex flex-wrap justify-center gap-4 mt-10"
+              className="flex flex-wrap justify-center gap-4 mt-12"
             >
               {["I need childcare", "Jobs hiring now", "Family activities"].map((q) => (
                 <button
                   key={q}
                   onClick={() => setSearchQuery(q)}
-                  className="px-6 py-4 rounded-2xl bg-white/[0.04] border border-white/[0.08] text-base text-[var(--foreground-muted)] hover:bg-white/[0.08] hover:border-white/[0.15] hover:text-white transition-all duration-300"
+                  className="px-7 py-4 rounded-2xl bg-white/[0.03] border border-white/[0.06] text-base text-white/50 hover:bg-white/[0.06] hover:border-white/[0.12] hover:text-white/80 transition-all duration-300"
                 >
                   {q}
                 </button>
