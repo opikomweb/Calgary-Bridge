@@ -6,8 +6,8 @@ import { useAppStore } from "@/lib/store";
 import { resources, categoryLabels } from "@/lib/data";
 import { 
   Send, Sparkles, User, ArrowRight, Phone, ExternalLink, 
-  Home, Briefcase, Heart, Users, Scale, Bus, MapPin, 
-  CloudSnow, Calendar, TrendingUp, Building2, Waves
+  Home, Briefcase, Heart, Users, Scale, Bus, 
+  CloudSnow, Calendar, TrendingUp
 } from "lucide-react";
 import type { Resource } from "@/lib/types";
 
@@ -378,15 +378,22 @@ export default function AITab() {
         {/* Right Side - Calgary Intelligence Panel (40%) - Desktop Only */}
         <div className="hidden lg:flex w-[40%] border-l border-[var(--border)] bg-gradient-to-b from-[var(--background)] to-[var(--background-secondary)] flex-col">
           <div className="flex-1 overflow-y-auto px-10 py-12">
-            {/* Calgary Insights Header */}
-            <div className="mb-10">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-xl bg-[#38BDF8]/20 flex items-center justify-center">
-                  <MapPin className="w-5 h-5 text-[#38BDF8]" />
+            {/* Calgary Insights Header - Calgary Tower Icon */}
+            <div className="mb-12">
+              <div className="flex items-center gap-4 mb-4">
+                {/* Calgary Tower Icon */}
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#38BDF8]/20 to-[#0284c7]/10 flex items-center justify-center border border-[#38BDF8]/20">
+                  <svg className="w-7 h-7" viewBox="0 0 24 40" fill="none">
+                    <path d="M10 40 L10 15 L7 15 L12 0 L17 15 L14 15 L14 40 Z" fill="#38BDF8" opacity="0.9" />
+                    <ellipse cx="12" cy="12" rx="5" ry="2.5" fill="#FBBF24" />
+                    <circle cx="12" cy="2" r="1.5" fill="#FBBF24" className="animate-pulse" />
+                  </svg>
                 </div>
-                <h2 className="text-2xl font-bold">Calgary Pulse</h2>
+                <div>
+                  <h2 className="text-2xl font-bold tracking-tight">Calgary Pulse</h2>
+                  <p className="text-base text-white/50 mt-1">Live insights from your city</p>
+                </div>
               </div>
-              <p className="text-[var(--foreground-muted)]">Live insights from your city</p>
             </div>
 
             {/* Weather/Alert Card */}
@@ -394,18 +401,18 @@ export default function AITab() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="glass-card rounded-2xl p-6 mb-6"
+              className="glass-card rounded-2xl p-7 mb-8"
             >
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center">
-                  <CloudSnow className="w-6 h-6 text-blue-400" />
+              <div className="flex items-center gap-5 mb-5">
+                <div className="w-14 h-14 rounded-2xl bg-blue-500/20 flex items-center justify-center">
+                  <CloudSnow className="w-7 h-7 text-blue-400" />
                 </div>
                 <div>
-                  <p className="font-semibold text-lg">Winter Weather</p>
-                  <p className="text-sm text-[var(--foreground-muted)]">-8°C, light snow expected</p>
+                  <p className="font-bold text-xl">Winter Weather</p>
+                  <p className="text-base text-white/50 mt-1">-8C, light snow expected</p>
                 </div>
               </div>
-              <p className="text-sm text-[var(--foreground-muted)]">
+              <p className="text-base text-white/60 leading-relaxed">
                 Dress warmly! Free warming centers available at downtown shelters.
               </p>
             </motion.div>
@@ -415,12 +422,12 @@ export default function AITab() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="space-y-4 mb-10"
+              className="space-y-4 mb-12"
             >
               {calgaryInsights.map((insight, i) => (
-                <div key={i} className="flex items-center gap-4 p-4 rounded-xl bg-white/[0.03] border border-white/5">
-                  <insight.icon className={`w-5 h-5 ${insight.color}`} />
-                  <span className="text-sm font-medium">{insight.label}</span>
+                <div key={i} className="flex items-center gap-5 p-5 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
+                  <insight.icon className={`w-6 h-6 ${insight.color}`} />
+                  <span className="text-base font-medium">{insight.label}</span>
                 </div>
               ))}
             </motion.div>
@@ -430,18 +437,18 @@ export default function AITab() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="mb-10"
+              className="mb-12"
             >
-              <h3 className="text-lg font-semibold mb-5 flex items-center gap-2">
-                <TrendingUp className="w-5 h-5 text-[#FBBF24]" />
+              <h3 className="text-xl font-bold mb-6 flex items-center gap-3">
+                <TrendingUp className="w-6 h-6 text-[#FBBF24]" />
                 Popular This Week
               </h3>
-              <div className="space-y-3">
+              <div className="space-y-4">
                 {popularQuestions.map((question, i) => (
                   <button
                     key={i}
                     onClick={() => handleSuggestionClick(question)}
-                    className="w-full text-left p-4 rounded-xl bg-white/[0.03] border border-white/5 hover:bg-white/[0.06] hover:border-white/10 transition-all text-sm text-[var(--foreground-muted)] hover:text-white"
+                    className="w-full text-left p-5 rounded-2xl bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.06] hover:border-white/[0.12] transition-all text-base text-white/60 hover:text-white leading-relaxed"
                   >
                     {question}
                   </button>
@@ -449,27 +456,28 @@ export default function AITab() {
               </div>
             </motion.div>
 
-            {/* Calgary Tower Decorative Element */}
+            {/* Calgary Tower Decorative - More Iconic */}
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
-              className="flex flex-col items-center py-8 opacity-40"
+              className="flex flex-col items-center py-10"
             >
-              <svg className="w-16 h-40" viewBox="0 0 60 150">
-                <path d="M25 150 L25 60 L20 60 L30 0 L40 60 L35 60 L35 150 Z" fill="none" stroke="currentColor" strokeWidth="1" className="text-white/30" />
-                <ellipse cx="30" cy="45" rx="10" ry="5" fill="none" stroke="currentColor" strokeWidth="1" className="text-[#38BDF8]/50" />
+              <svg className="w-20 h-48 opacity-30" viewBox="0 0 60 150">
+                {/* Tower body */}
+                <path d="M25 150 L25 55 L20 55 L30 0 L40 55 L35 55 L35 150 Z" fill="none" stroke="#38BDF8" strokeWidth="1.5" />
+                {/* Observation deck */}
+                <ellipse cx="30" cy="42" rx="12" ry="6" fill="none" stroke="#38BDF8" strokeWidth="1.5" />
+                {/* Beacon glow */}
+                <circle cx="30" cy="5" r="3" fill="#FBBF24" className="animate-pulse" />
+                <circle cx="30" cy="5" r="6" fill="#FBBF24" opacity="0.3" className="animate-pulse" />
               </svg>
-              <div className="flex items-center gap-2 mt-4">
-                <Building2 className="w-4 h-4 text-[var(--foreground-muted)]" />
-                <span className="text-xs text-[var(--foreground-muted)]">Calgary Connect</span>
-              </div>
             </motion.div>
 
             {/* Bow River Decorative Line */}
-            <div className="mt-auto pt-8">
-              <svg className="w-full h-8 opacity-20" viewBox="0 0 300 30" preserveAspectRatio="none">
-                <path d="M0,15 Q75,0 150,15 T300,15" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#38BDF8]" />
+            <div className="mt-auto pt-6">
+              <svg className="w-full h-10 opacity-25" viewBox="0 0 300 30" preserveAspectRatio="none">
+                <path d="M0,15 Q75,0 150,15 T300,15" fill="none" stroke="#38BDF8" strokeWidth="2" />
               </svg>
             </div>
           </div>
@@ -487,43 +495,43 @@ function AIResourceCard({ resource }: { resource: Resource }) {
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="glass-card rounded-xl p-5"
+      className="glass-card rounded-2xl p-7"
     >
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex items-start justify-between gap-5">
         <div className="flex-1 min-w-0">
-          <div className="flex gap-2 mb-3">
+          <div className="flex gap-3 mb-4">
             {resource.category.slice(0, 2).map((cat) => (
               <span
                 key={cat}
-                className="px-3 py-1 rounded-full text-xs font-medium bg-[#3B82F6]/15 text-[#3B82F6]"
+                className="px-4 py-2 rounded-full text-sm font-medium bg-[#3B82F6]/15 text-[#3B82F6]"
               >
                 {categoryLabels[cat]?.[activeLanguage] || cat}
               </span>
             ))}
           </div>
-          <h4 className="font-semibold text-white text-lg mb-2">
+          <h4 className="font-bold text-white text-xl mb-3 leading-snug">
             {resource.title[activeLanguage]}
           </h4>
-          <p className="text-sm text-[var(--foreground-muted)] line-clamp-2">
+          <p className="text-base text-white/60 leading-relaxed line-clamp-2">
             {resource.summary?.[activeLanguage] || resource.description[activeLanguage]}
           </p>
         </div>
         <button
           onClick={() => toggleBookmark(resource.id)}
-          className="text-sm text-[#3B82F6] font-medium flex items-center gap-1 whitespace-nowrap"
+          className="text-base text-[#3B82F6] font-semibold flex items-center gap-2 whitespace-nowrap hover:text-[#60A5FA] transition-colors"
         >
           {isBookmarked ? "Saved" : "Save"}
-          <ArrowRight className="w-4 h-4" />
+          <ArrowRight className="w-5 h-5" />
         </button>
       </div>
       
-      <div className="mt-4 flex flex-wrap gap-4">
+      <div className="mt-6 flex flex-wrap gap-5">
         {resource.phone && (
           <a
             href={`tel:${resource.phone}`}
-            className="flex items-center gap-2 text-sm text-[#3B82F6] hover:underline"
+            className="flex items-center gap-3 text-base font-semibold text-[#3B82F6] hover:text-[#60A5FA] transition-colors"
           >
-            <Phone className="w-4 h-4" />
+            <Phone className="w-5 h-5" />
             {resource.phone}
           </a>
         )}
@@ -532,10 +540,10 @@ function AIResourceCard({ resource }: { resource: Resource }) {
             href={resource.website}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-sm text-[#3B82F6] hover:underline"
+            className="flex items-center gap-3 text-base font-bold text-[#3B82F6] hover:text-[#60A5FA] transition-colors underline underline-offset-4"
           >
-            <ExternalLink className="w-4 h-4" />
-            Website
+            <ExternalLink className="w-5 h-5" />
+            Visit Website
           </a>
         )}
       </div>
