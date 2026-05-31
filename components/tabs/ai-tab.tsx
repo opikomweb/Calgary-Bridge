@@ -101,7 +101,7 @@ export default function AITab() {
       addChatMessage({
         role: "assistant",
         content: text,
-        resources: relevantResources,
+        resources: relevantResources.map(r => r.id),
       });
       setIsTyping(false);
     }, 1200);
@@ -174,9 +174,10 @@ export default function AITab() {
                       <p className="text-xs font-medium text-[var(--foreground-muted)] uppercase tracking-wider">
                         Recommended Resources
                       </p>
-                      {message.resources.map((resource) => (
-                        <AIResourceCard key={resource.id} resource={resource} />
-                      ))}
+                      {message.resources.map((resourceId) => {
+                        const resource = resources.find(r => r.id === resourceId);
+                        return resource ? <AIResourceCard key={resourceId} resource={resource} /> : null;
+                      })}
                     </div>
                   )}
                 </div>

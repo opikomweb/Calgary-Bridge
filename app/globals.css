@@ -268,45 +268,49 @@ h1, h2, h3, h4, h5, h6 {
   transform: scale(0.98);
 }
 
-/* Premium card system - 24-32px padding, large radius */
+/* =============================================
+   PREMIUM CARD SYSTEM
+   Internal padding: 32-40px | Radius: 24px | Gaps: 32-48px
+   ============================================= */
 .premium-card {
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.6) 100%);
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.92) 0%, rgba(15, 23, 42, 0.58) 100%);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 24px;
-  padding: 28px;
+  padding: 36px;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .premium-card:hover {
   transform: translateY(-6px);
   box-shadow: 
-    0 30px 60px -15px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(255, 255, 255, 0.12),
-    0 0 50px -10px rgba(56, 189, 248, 0.15);
-  border-color: rgba(255, 255, 255, 0.15);
+    0 32px 64px -16px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.13),
+    0 0 56px -12px rgba(56, 189, 248, 0.18);
+  border-color: rgba(255, 255, 255, 0.14);
 }
 
-/* Quick action cards - large tiles as specified */
+/* Action cards — large category tiles, 220-280px min height */
 .action-card {
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.7) 100%);
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.96) 0%, rgba(15, 23, 42, 0.72) 100%);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 24px;
-  padding: 32px 28px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 28px;
+  padding: 40px 36px;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
+  min-height: 260px;
 }
 
 .action-card:hover {
-  transform: translateY(-8px);
-  background: linear-gradient(135deg, rgba(15, 23, 42, 1) 0%, rgba(15, 23, 42, 0.85) 100%);
-  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-10px);
+  background: linear-gradient(135deg, rgba(15, 23, 42, 1) 0%, rgba(15, 23, 42, 0.88) 100%);
+  border-color: rgba(255, 255, 255, 0.16);
   box-shadow: 
-    0 35px 70px -18px rgba(0, 0, 0, 0.5),
-    0 0 60px -12px var(--card-glow, rgba(56, 189, 248, 0.2));
+    0 40px 80px -20px rgba(0, 0, 0, 0.55),
+    0 0 70px -15px var(--card-glow, rgba(56, 189, 248, 0.22));
 }
 
 /* Card glow colors */
@@ -323,25 +327,29 @@ h1, h2, h3, h4, h5, h6 {
   outline-offset: 2px;
 }
 
-/* PREMIUM SPACING UTILITIES - Luxury spacing as specified */
-/* Hero: 120-160px */
+/* =============================================
+   PREMIUM SPACING SYSTEM
+   Hero: 140-180px | Sections: 100-160px | Cards: 32-40px
+   ============================================= */
+
+/* Hero sections */
 .section-hero {
-  padding-top: clamp(120px, 18vw, 180px);
-  padding-bottom: clamp(100px, 15vw, 160px);
+  padding-top: clamp(140px, 18vw, 180px);
+  padding-bottom: clamp(120px, 15vw, 160px);
 }
 
-/* Sections: 80-120px */
+/* Standard sections — 100-160px breathing room */
 .section-spacing {
-  padding-top: clamp(80px, 12vw, 140px);
-  padding-bottom: clamp(80px, 12vw, 140px);
+  padding-top: clamp(100px, 12vw, 160px);
+  padding-bottom: clamp(100px, 12vw, 160px);
 }
 
 .section-spacing-sm {
-  padding-top: clamp(60px, 10vw, 100px);
-  padding-bottom: clamp(60px, 10vw, 100px);
+  padding-top: clamp(72px, 10vw, 120px);
+  padding-bottom: clamp(72px, 10vw, 120px);
 }
 
-/* Content max-width */
+/* Content max-width containers */
 .container-narrow {
   max-width: 720px;
   margin-left: auto;
@@ -350,6 +358,13 @@ h1, h2, h3, h4, h5, h6 {
 
 .container-wide {
   max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Full bleed container — matches landing page max-width */
+.container-full {
+  max-width: 1440px;
   margin-left: auto;
   margin-right: auto;
 }

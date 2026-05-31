@@ -21,12 +21,12 @@ export default function MainApp() {
   const t = (key: string) => translations[key]?.[activeLanguage] || translations[key]?.en || key;
 
   const navItems = [
-    { id: "home", icon: Home, label: "Home" },
-    { id: "explore", icon: Compass, label: "Explore" },
-    { id: "ai", icon: MessageCircle, label: "AI Guide", highlight: true },
-    { id: "shortlist", icon: Heart, label: "Saved" },
-    { id: "profile", icon: User, label: "Profile" },
-  ] as const;
+    { id: "home" as const, icon: Home, label: "Home", highlight: false },
+    { id: "explore" as const, icon: Compass, label: "Explore", highlight: false },
+    { id: "ai" as const, icon: MessageCircle, label: "AI Guide", highlight: true },
+    { id: "shortlist" as const, icon: Heart, label: "Saved", highlight: false },
+    { id: "profile" as const, icon: User, label: "Profile", highlight: false },
+  ];
 
   return (
     <div className="min-h-screen bg-[var(--background)]">

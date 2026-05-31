@@ -41,7 +41,7 @@ export default function EmergencyHub({ onClose }: EmergencyHubProps) {
         <div className="space-y-3">
           {emergencyContacts.map((contact) => (
             <a
-              key={contact.id}
+              key={contact.name}
               href={`tel:${contact.number}`}
               className="flex items-center gap-4 rounded-xl bg-white/10 p-4 transition-all active:scale-95"
             >
@@ -51,7 +51,7 @@ export default function EmergencyHub({ onClose }: EmergencyHubProps) {
               <div className="flex-1">
                 <h3 className="font-semibold text-white">{contact.name}</h3>
                 <p className="text-sm text-white/70">
-                  {contact.description[activeLanguage]}
+                  {contact.description}
                 </p>
               </div>
               <span className="text-lg font-bold text-white">{contact.number}</span>

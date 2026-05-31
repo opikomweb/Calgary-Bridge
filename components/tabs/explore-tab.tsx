@@ -31,20 +31,20 @@ export default function ExploreTab() {
     <div className="min-h-screen">
       {/* Page Header */}
       <div className="border-b border-[var(--border)] bg-[var(--background)]">
-        <div className="px-8 lg:px-16 py-12 max-w-7xl">
+        <div className="px-8 lg:px-14 pt-14 pb-12 max-w-[1200px]">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <h1 className="text-4xl lg:text-5xl font-bold mb-4">Explore Resources</h1>
+            <h1 className="text-4xl lg:text-5xl font-bold mb-4 tracking-tight">Explore Resources</h1>
             <p className="text-xl text-[var(--foreground-muted)] max-w-2xl">
-              Browse all available resources and services in Calgary
+              Every verified Calgary service and program, searchable and filterable.
             </p>
           </motion.div>
         </div>
       </div>
 
-      <div className="px-8 lg:px-16 py-10 max-w-7xl">
+      <div className="px-8 lg:px-14 py-12 max-w-[1200px]">
 
       {/* Search and Filter */}
       <motion.div
@@ -168,21 +168,21 @@ export default function ExploreTab() {
         {activeCategory !== "all" && ` in ${categoryLabels[activeCategory as ResourceCategory]?.[activeLanguage] || activeCategory}`}
       </motion.p>
 
-      {/* Resources Grid - 2 columns on desktop */}
-      <div className="grid lg:grid-cols-2 gap-6 pb-8">
+      {/* Resources Grid — 2 columns desktop, 32px gap */}
+      <div className="grid lg:grid-cols-2 gap-8 pb-16">
         {filteredResources.length > 0 ? (
           filteredResources.map((resource, index) => (
             <motion.div
               key={resource.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.03 }}
+              transition={{ delay: index * 0.025 }}
             >
               <ResourceCard resource={resource} />
             </motion.div>
           ))
         ) : (
-          <div className="col-span-2 text-center py-24">
+          <div className="col-span-2 text-center py-28">
             <div className="w-24 h-24 rounded-full bg-[var(--surface)] flex items-center justify-center mx-auto mb-8">
               <Search className="w-12 h-12 text-[var(--foreground-muted)]" />
             </div>

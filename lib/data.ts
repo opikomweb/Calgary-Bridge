@@ -264,6 +264,38 @@ export const categoryLabels: Record<ResourceCategory, Record<Language, string>> 
     ar: "المجتمع",
     zh: "社区",
   },
+  lgbtq: {
+    en: "LGBTQ+ Support",
+    fr: "Soutien LGBTQ+",
+    tl: "LGBTQ+ Support",
+    es: "Apoyo LGBTQ+",
+    ar: "دعم LGBTQ+",
+    zh: "LGBTQ+ 支持",
+  },
+  indigenous: {
+    en: "Indigenous Support",
+    fr: "Soutien aux Autochtones",
+    tl: "Indigenous Support",
+    es: "Apoyo Indígena",
+    ar: "دعم السكان الأصليين",
+    zh: "土著支持",
+  },
+  youth: {
+    en: "Youth",
+    fr: "Jeunesse",
+    tl: "Kabataan",
+    es: "Juventud",
+    ar: "الشباب",
+    zh: "青年",
+  },
+  arts: {
+    en: "Arts & Culture",
+    fr: "Arts et Culture",
+    tl: "Sining at Kultura",
+    es: "Artes y Cultura",
+    ar: "الفنون والثقافة",
+    zh: "艺术和文化",
+  },
 };
 
 export const languageNames: Record<Language, string> = {
