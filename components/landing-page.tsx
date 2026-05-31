@@ -1,73 +1,23 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ArrowRight, Sparkles, Home, Briefcase, Heart, Users, GraduationCap, Clock, AlertTriangle, Scale, Search, Shield, TrendingUp, MapPin, Zap } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ArrowRight, Sparkles, Search } from "lucide-react";
 import { useAppStore } from "@/lib/store";
+import { useRef } from "react";
 
 export default function LandingPage() {
   const { setCurrentPage, setActiveTab, setHasOnboarded } = useAppStore();
+  const heroRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"]
+  });
+  
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const heroScale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95]);
+  const heroY = useTransform(scrollYProgress, [0, 0.5], [0, 100]);
 
-  // MAINSTREAM FIRST — the services every Calgarian needs
-  const primaryCategories = [
-    {
-      icon: Home,
-      title: "Housing & Rent",
-      description: "Affordable rentals, subsidized programs, rental assistance",
-      stat: "12 programs",
-      color: "from-sky-400/25 to-sky-600/10",
-      border: "hover:border-sky-400/40",
-      glow: "hover:shadow-sky-500/20",
-      iconColor: "text-sky-400",
-    },
-    {
-      icon: Briefcase,
-      title: "Jobs & Career",
-      description: "Employment services, job training, resume help",
-      stat: "8 services",
-      color: "from-amber-400/25 to-amber-600/10",
-      border: "hover:border-amber-400/40",
-      glow: "hover:shadow-amber-500/20",
-      iconColor: "text-amber-400",
-    },
-    {
-      icon: Heart,
-      title: "Health & Wellness",
-      description: "Walk-in clinics, family doctors, mental health support",
-      stat: "6 providers",
-      color: "from-emerald-400/25 to-emerald-600/10",
-      border: "hover:border-emerald-400/40",
-      glow: "hover:shadow-emerald-500/20",
-      iconColor: "text-emerald-400",
-    },
-    {
-      icon: GraduationCap,
-      title: "New to Calgary",
-      description: "Settlement services, ESL classes, newcomer programs",
-      stat: "10 organizations",
-      color: "from-cyan-400/25 to-cyan-600/10",
-      border: "hover:border-cyan-400/40",
-      glow: "hover:shadow-cyan-500/20",
-      iconColor: "text-cyan-400",
-    },
-  ];
-
-  // SPECIALIZED — for specific situations
-  const secondaryCategories = [
-    { icon: Scale, title: "Tenant Rights", description: "Lease help, rent disputes, eviction rules", color: "text-red-400", bg: "bg-red-400/10" },
-    { icon: Users, title: "Family & Kids", description: "Daycare, youth programs, family activities", color: "text-purple-400", bg: "bg-purple-400/10" },
-    { icon: Clock, title: "Seniors", description: "Home care, transportation, senior programs", color: "text-blue-400", bg: "bg-blue-400/10" },
-    { icon: AlertTriangle, title: "Emergency Help", description: "Crisis lines, shelters, urgent assistance", color: "text-orange-400", bg: "bg-orange-400/10" },
-    { icon: Shield, title: "Legal Aid", description: "Free legal advice, immigration, family law", color: "text-violet-400", bg: "bg-violet-400/10" },
-  ];
-
-  const aiExamples = [
-    "Can my landlord increase rent mid-lease?",
-    "Where do I find free ESL classes?",
-    "How do I get a family doctor in Calgary?",
-    "What housing programs am I eligible for?",
-  ];
-
-  const handleExploreDirectly = () => {
+  const handleExplore = () => {
     setHasOnboarded(true);
     setCurrentPage("main");
     setActiveTab("home");
@@ -79,344 +29,361 @@ export default function LandingPage() {
     setActiveTab("ai");
   };
 
-  const handleGetStarted = () => {
-    setCurrentPage("onboarding");
-  };
+  // Immersive pathways — solutions first, not organizations
+  const pathways = [
+    {
+      id: "housing",
+      solution: "Find Housing & Rent Support",
+      preview: ["Affordable rentals", "Subsidized programs", "Tenant help"],
+      image: "linear-gradient(135deg, #0c4a6e 0%, #0369a1 50%, #075985 100%)",
+      accent: "#38BDF8",
+    },
+    {
+      id: "jobs",
+      solution: "Looking for Work?",
+      preview: ["Resume help", "Hiring companies", "Job fairs"],
+      image: "linear-gradient(135deg, #78350f 0%, #b45309 50%, #92400e 100%)",
+      accent: "#FBBF24",
+    },
+    {
+      id: "health",
+      solution: "Get Healthcare Access",
+      preview: ["Walk-in clinics", "Family doctors", "Mental health"],
+      image: "linear-gradient(135deg, #064e3b 0%, #047857 50%, #065f46 100%)",
+      accent: "#34D399",
+    },
+    {
+      id: "newcomer",
+      solution: "New to Calgary?",
+      preview: ["Settlement services", "Language classes", "Community connections"],
+      image: "linear-gradient(135deg, #164e63 0%, #0891b2 50%, #155e75 100%)",
+      accent: "#22D3EE",
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-[#07111F] overflow-x-hidden">
 
-      {/* === NAV === */}
-      <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/5">
-        <div className="max-w-[1440px] mx-auto px-8 lg:px-16 py-5 flex items-center justify-between">
+      {/* ========== HERO — 90vh IMMERSIVE ========== */}
+      <section 
+        ref={heroRef}
+        className="relative min-h-[90vh] flex items-center justify-center overflow-hidden"
+      >
+        {/* Animated Calgary environment */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          
+          {/* Sky gradient — deep blue to warm horizon */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0a1628] via-[#07111F] to-[#0d1a2d]" />
+          
+          {/* Aurora / northern lights effect */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            className="flex items-center gap-4"
-          >
-            <div className="relative">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#38BDF8] to-[#0284c7] flex items-center justify-center shadow-lg shadow-sky-500/30">
-                <svg width="28" height="28" viewBox="0 0 64 64" fill="none" className="text-white">
-                  <path d="M32 6L26 18H38L32 6Z" fill="currentColor" />
-                  <rect x="28" y="18" width="8" height="6" fill="currentColor" />
-                  <path d="M24 24H40V28L38 32H26L24 28V24Z" fill="currentColor" />
-                  <rect x="27" y="32" width="10" height="6" rx="1" fill="currentColor" />
-                  <rect x="29" y="38" width="6" height="18" fill="currentColor" />
-                  <ellipse cx="32" cy="58" rx="8" ry="2" fill="currentColor" opacity="0.3" />
-                </svg>
-              </div>
-              <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[#FBBF24] border-2 border-[#07111F]" />
-            </div>
-            <div>
-              <span className="text-lg font-bold tracking-tight">Calgary Connect</span>
-              <span className="hidden sm:block text-xs text-[var(--foreground-muted)] leading-none mt-0.5">Your city, simplified</span>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            className="flex items-center gap-3"
-          >
-            <button
-              onClick={handleExploreDirectly}
-              className="hidden sm:block px-5 py-2.5 rounded-xl text-sm font-medium text-[var(--foreground-muted)] hover:text-white transition-colors"
-            >
-              Browse Resources
-            </button>
-            <button
-              onClick={handleGetStarted}
-              className="btn-primary px-6 py-3 rounded-xl text-sm"
-            >
-              Get Started
-            </button>
-          </motion.div>
-        </div>
-      </nav>
-
-      {/* === HERO === */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-
-        {/* Background atmosphere */}
-        <div className="absolute inset-0 pointer-events-none">
-          {/* Primary glow — sky blue from top */}
-          <motion.div
-            animate={{ opacity: [0.12, 0.22, 0.12] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] bg-[#38BDF8]/20 rounded-full blur-[180px]"
+            animate={{ 
+              opacity: [0.15, 0.25, 0.15],
+              scale: [1, 1.1, 1],
+            }}
+            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-0 left-1/4 w-[800px] h-[400px] bg-gradient-to-r from-[#38BDF8]/20 via-[#06b6d4]/15 to-transparent rounded-full blur-[120px] -rotate-12"
           />
-          {/* Warm amber glow — bottom right, city lights */}
+          
+          {/* Warm city glow — bottom */}
           <motion.div
-            animate={{ opacity: [0.06, 0.14, 0.06] }}
-            transition={{ duration: 13, repeat: Infinity, ease: "easeInOut", delay: 3 }}
-            className="absolute bottom-0 right-0 w-[700px] h-[500px] bg-[#FBBF24]/10 rounded-full blur-[160px]"
+            animate={{ opacity: [0.1, 0.18, 0.1] }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+            className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[1200px] h-[300px] bg-gradient-to-t from-[#FBBF24]/8 via-[#f97316]/5 to-transparent blur-[100px]"
           />
-          {/* Deep blue left accent */}
-          <motion.div
-            animate={{ opacity: [0.08, 0.16, 0.08] }}
-            transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 6 }}
-            className="absolute top-1/3 left-0 w-[500px] h-[400px] bg-[#0284c7]/15 rounded-full blur-[120px]"
-          />
-
-          {/* Calgary skyline silhouette — very subtle, low opacity */}
-          <div className="absolute bottom-0 left-0 right-0 h-72 opacity-[0.07]">
-            <svg viewBox="0 0 1440 288" className="w-full h-full" preserveAspectRatio="xMidYMax slice">
-              {/* Bow River */}
-              <ellipse cx="720" cy="285" rx="1440" ry="12" fill="#38BDF8" opacity="0.5" />
-              {/* Mountains — Rockies backdrop */}
-              <path d="M0,288 L0,180 L160,80 L280,140 L420,60 L560,120 L700,40 L840,100 L980,50 L1120,110 L1260,70 L1440,100 L1440,288 Z" fill="#38BDF8" opacity="0.4" />
-              {/* Downtown skyline */}
-              <path d="M200,288 L200,240 L240,240 L240,200 L260,200 L260,170 L280,170 L280,140 L300,140 L300,100 L320,100 L320,80 L330,60 L340,80 L340,100 L360,100 L360,140 L380,140 L380,170 L400,170 L400,200 L420,200 L420,240 L460,240 L460,210 L490,210 L490,180 L510,180 L510,155 L530,155 L530,130 L550,130 L550,110 L570,110 L570,90 L590,70 L600,55 L610,70 L620,90 L620,110 L640,110 L640,130 L660,130 L660,155 L680,155 L680,180 L700,180 L700,210 L720,210 L720,240 L760,240 L760,200 L790,200 L790,170 L810,170 L810,190 L840,190 L840,240 L880,240 L880,210 L910,210 L910,180 L940,180 L940,200 L970,200 L970,240 L1000,240 L1000,200 L1030,200 L1030,220 L1060,220 L1060,240 L1100,240 L1100,220 L1140,220 L1140,240 L1200,240 L1200,288 L200,288 Z" fill="#e2e8f0" />
-              {/* Calgary Tower — prominent */}
-              <rect x="596" y="20" width="8" height="6" fill="#38BDF8" />
-              <path d="M588,26 L612,26 L614,36 L586,36 Z" fill="#38BDF8" />
-              <rect x="592" y="36" width="16" height="55" fill="#e2e8f0" />
+          
+          {/* Mountain silhouettes — Rockies backdrop */}
+          <div className="absolute bottom-0 left-0 right-0 h-[35vh]">
+            <svg viewBox="0 0 1440 400" className="w-full h-full" preserveAspectRatio="xMidYMax slice">
+              {/* Far mountains — very subtle */}
+              <path 
+                d="M0,400 L0,280 L120,200 L240,260 L360,180 L480,240 L600,140 L720,200 L840,120 L960,180 L1080,140 L1200,190 L1320,150 L1440,180 L1440,400 Z" 
+                fill="#1e293b" 
+                opacity="0.4"
+              />
+              {/* Mid mountains */}
+              <path 
+                d="M0,400 L0,320 L180,240 L300,290 L450,200 L600,260 L720,180 L840,230 L960,170 L1100,220 L1260,180 L1440,240 L1440,400 Z" 
+                fill="#0f172a" 
+                opacity="0.7"
+              />
             </svg>
           </div>
-
-          {/* Bow River shimmer line */}
-          <div className="absolute bottom-16 left-0 right-0 h-px overflow-hidden opacity-30">
+          
+          {/* Downtown Calgary skyline */}
+          <div className="absolute bottom-0 left-0 right-0 h-[28vh]">
+            <svg viewBox="0 0 1440 320" className="w-full h-full" preserveAspectRatio="xMidYMax slice">
+              {/* Building silhouettes */}
+              <g fill="#0f172a" opacity="0.9">
+                {/* Left buildings */}
+                <rect x="80" y="240" width="60" height="80" />
+                <rect x="160" y="200" width="50" height="120" />
+                <rect x="230" y="220" width="70" height="100" />
+                <rect x="320" y="180" width="55" height="140" />
+                
+                {/* Center — Calgary Tower area */}
+                <rect x="450" y="160" width="40" height="160" />
+                <rect x="510" y="140" width="60" height="180" />
+                <rect x="590" y="120" width="50" height="200" />
+                
+                {/* Calgary Tower */}
+                <g>
+                  <rect x="680" y="80" width="16" height="240" fill="#1e293b" />
+                  <ellipse cx="688" cy="65" rx="20" ry="12" fill="#1e293b" />
+                  <ellipse cx="688" cy="65" rx="14" ry="8" fill="#38BDF8" opacity="0.6" />
+                </g>
+                
+                <rect x="720" y="130" width="55" height="190" />
+                <rect x="800" y="150" width="65" height="170" />
+                <rect x="890" y="170" width="50" height="150" />
+                <rect x="960" y="190" width="70" height="130" />
+                <rect x="1050" y="210" width="55" height="110" />
+                <rect x="1130" y="230" width="60" height="90" />
+                <rect x="1210" y="250" width="50" height="70" />
+                <rect x="1280" y="260" width="70" height="60" />
+              </g>
+              
+              {/* Building windows — sparse warm lights */}
+              <g fill="#FBBF24" opacity="0.4">
+                <rect x="95" y="260" width="4" height="4" />
+                <rect x="110" y="280" width="4" height="4" />
+                <rect x="180" y="220" width="4" height="4" />
+                <rect x="175" y="250" width="4" height="4" />
+                <rect x="250" y="240" width="4" height="4" />
+                <rect x="340" y="200" width="4" height="4" />
+                <rect x="530" y="160" width="4" height="4" />
+                <rect x="540" y="200" width="4" height="4" />
+                <rect x="610" y="150" width="4" height="4" />
+                <rect x="740" y="160" width="4" height="4" />
+                <rect x="830" y="180" width="4" height="4" />
+                <rect x="905" y="200" width="4" height="4" />
+                <rect x="990" y="220" width="4" height="4" />
+              </g>
+              
+              {/* Bow River */}
+              <ellipse cx="720" cy="320" rx="1440" ry="15" fill="#38BDF8" opacity="0.15" />
+            </svg>
+          </div>
+          
+          {/* River shimmer animation */}
+          <div className="absolute bottom-0 left-0 right-0 h-8 overflow-hidden">
             <motion.div
               animate={{ x: ["-100%", "100%"] }}
-              transition={{ duration: 14, repeat: Infinity, ease: "linear" }}
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-sky-400 to-transparent"
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-[#38BDF8]/30 to-transparent"
             />
           </div>
-        </div>
-
-        {/* Hero content — left-heavy asymmetric layout on desktop */}
-        <div className="max-w-[1440px] mx-auto px-8 lg:px-16 w-full relative z-10">
-          <div className="grid lg:grid-cols-[1fr_420px] xl:grid-cols-[1fr_480px] gap-16 xl:gap-24 items-center">
-
-            {/* LEFT: Headline + search */}
-            <motion.div
-              initial={{ opacity: 0, y: 60 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            >
-              {/* Eyebrow */}
-              <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-[#38BDF8]/10 border border-[#38BDF8]/20 mb-10">
-                <div className="w-2 h-2 rounded-full bg-[#38BDF8] animate-pulse" />
-                <span className="text-sm font-medium text-[#38BDF8]">Calgary&apos;s civic intelligence platform</span>
-              </div>
-
-              {/* Headline — 72px desktop */}
-              <h1 className="text-hero mb-8 text-balance">
-                Calgary,
-                <br />
-                <span className="text-gradient-blue">Connected.</span>
-              </h1>
-
-              <p className="text-xl lg:text-2xl text-[var(--foreground-muted)] leading-relaxed mb-14 max-w-2xl">
-                Housing, jobs, healthcare, newcomer services, legal rights, and community — all verified, all in one place. No more searching dozens of sites.
-              </p>
-
-              {/* Hero search bar — 80px height, conversational */}
-              <div className="relative mb-8 max-w-2xl">
-                <Search className="absolute left-7 top-1/2 -translate-y-1/2 w-6 h-6 text-[var(--foreground-muted)]" />
-                <input
-                  type="text"
-                  placeholder={`"Can my landlord increase rent mid-lease?"`}
-                  className="w-full bg-white/6 border border-white/10 rounded-2xl text-lg text-white placeholder:text-[var(--foreground-muted)] focus:outline-none focus:border-[#38BDF8]/50 focus:bg-white/8 focus:shadow-[0_0_0_4px_rgba(56,189,248,0.12)] transition-all cursor-pointer"
-                  style={{ height: "80px", paddingLeft: "72px", paddingRight: "32px" }}
-                  onFocus={handleAskAI}
-                  readOnly
-                />
-              </div>
-
-              {/* Quick example pills */}
-              <div className="flex flex-wrap gap-3 mb-14">
-                {aiExamples.map((ex) => (
-                  <button
-                    key={ex}
-                    onClick={handleAskAI}
-                    className="px-4 py-2.5 rounded-full bg-white/5 border border-white/8 text-sm text-[var(--foreground-muted)] hover:border-white/16 hover:text-white transition-all"
-                  >
-                    {ex}
-                  </button>
-                ))}
-              </div>
-
-              {/* CTAs */}
-              <div className="flex flex-col sm:flex-row items-start gap-4">
-                <motion.button
-                  whileHover={{ scale: 1.03, y: -2 }}
-                  whileTap={{ scale: 0.97 }}
-                  onClick={handleExploreDirectly}
-                  className="btn-primary px-10 py-5 rounded-2xl flex items-center gap-3 text-lg font-semibold"
-                >
-                  Explore Calgary
-                  <ArrowRight className="w-5 h-5" />
-                </motion.button>
-                <motion.button
-                  whileHover={{ scale: 1.03, y: -2 }}
-                  whileTap={{ scale: 0.97 }}
-                  onClick={handleAskAI}
-                  className="btn-secondary px-10 py-5 rounded-2xl flex items-center gap-3 text-lg font-semibold"
-                >
-                  <Sparkles className="w-5 h-5 text-[#FBBF24]" />
-                  Ask the AI
-                </motion.button>
-              </div>
-            </motion.div>
-
-            {/* RIGHT: Floating intelligence panel — desktop only */}
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.9, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="hidden lg:flex flex-col gap-4"
-            >
-              {/* Calgary Pulse Card */}
-              <div className="glass rounded-2xl p-6 border border-white/8">
-                <div className="flex items-center gap-3 mb-5">
-                  <div className="w-8 h-8 rounded-lg bg-[#38BDF8]/15 flex items-center justify-center">
-                    <Zap className="w-4 h-4 text-[#38BDF8]" />
-                  </div>
-                  <span className="text-sm font-semibold text-white">Calgary Pulse</span>
-                  <div className="ml-auto flex items-center gap-1.5">
-                    <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                    <span className="text-xs text-emerald-400">Live</span>
-                  </div>
-                </div>
-                <div className="space-y-3">
-                  {[
-                    { label: "Housing Programs", value: "12 active", color: "text-sky-400" },
-                    { label: "Job Openings", value: "340+", color: "text-amber-400" },
-                    { label: "Emergency Lines", value: "24/7 open", color: "text-emerald-400" },
-                    { label: "Newcomer Services", value: "10 orgs", color: "text-cyan-400" },
-                  ].map((item) => (
-                    <div key={item.label} className="flex items-center justify-between py-2 border-b border-white/5 last:border-0">
-                      <span className="text-sm text-[var(--foreground-muted)]">{item.label}</span>
-                      <span className={`text-sm font-semibold ${item.color}`}>{item.value}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Life Navigator teaser */}
-              <div className="glass rounded-2xl p-6 border border-white/8">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-8 h-8 rounded-lg bg-[#FBBF24]/15 flex items-center justify-center">
-                    <TrendingUp className="w-4 h-4 text-[#FBBF24]" />
-                  </div>
-                  <span className="text-sm font-semibold text-white">Life Navigator</span>
-                </div>
-                <p className="text-sm text-[var(--foreground-muted)] mb-4">Tell us your situation and get a step-by-step path forward.</p>
-                <div className="space-y-2.5">
-                  {[
-                    "I just moved to Calgary",
-                    "I need affordable housing",
-                    "I lost my job",
-                  ].map((situation) => (
-                    <button
-                      key={situation}
-                      onClick={handleAskAI}
-                      className="w-full text-left px-4 py-3 rounded-xl bg-white/4 border border-white/6 text-sm text-[var(--foreground-muted)] hover:border-[#38BDF8]/30 hover:text-white transition-all"
-                    >
-                      {situation}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Hyperlocal card */}
-              <div className="glass rounded-2xl p-6 border border-white/8">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-8 h-8 rounded-lg bg-emerald-400/15 flex items-center justify-center">
-                    <MapPin className="w-4 h-4 text-emerald-400" />
-                  </div>
-                  <span className="text-sm font-semibold text-white">Near You</span>
-                </div>
-                <div className="space-y-2">
-                  {[
-                    { name: "Calgary Food Bank", dist: "0.8 km", tag: "Free" },
-                    { name: "Centre for Newcomers", dist: "1.2 km", tag: "Free" },
-                    { name: "Alpha House", dist: "1.6 km", tag: "24/7" },
-                  ].map((place) => (
-                    <div key={place.name} className="flex items-center justify-between py-2 border-b border-white/5 last:border-0">
-                      <div>
-                        <p className="text-sm font-medium text-white">{place.name}</p>
-                        <p className="text-xs text-[var(--foreground-muted)]">{place.dist} away</p>
-                      </div>
-                      <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-400/10 text-emerald-400">{place.tag}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
+          
+          {/* Stars */}
+          <div className="absolute inset-0">
+            {[...Array(30)].map((_, i) => (
+              <motion.div
+                key={i}
+                animate={{ opacity: [0.2, 0.8, 0.2] }}
+                transition={{ duration: 3 + Math.random() * 4, repeat: Infinity, delay: Math.random() * 3 }}
+                className="absolute w-1 h-1 bg-white rounded-full"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 40}%`,
+                }}
+              />
+            ))}
           </div>
         </div>
 
-        {/* Scroll cue */}
+        {/* Hero content */}
+        <motion.div 
+          style={{ opacity: heroOpacity, scale: heroScale, y: heroY }}
+          className="relative z-10 max-w-[1200px] mx-auto px-8 text-center"
+        >
+          {/* Eyebrow */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 mb-10"
+          >
+            <div className="w-2 h-2 rounded-full bg-[#38BDF8] animate-pulse" />
+            <span className="text-sm font-medium text-[#38BDF8]">Calgary&apos;s civic intelligence platform</span>
+          </motion.div>
+
+          {/* Main headline — 72px, centered */}
+          <motion.h1
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="text-[clamp(48px,10vw,80px)] font-bold tracking-[-0.03em] leading-[1.02] mb-8"
+          >
+            Everything Calgary.
+            <br />
+            <span className="text-gradient-blue">One Place.</span>
+          </motion.h1>
+
+          {/* Subheadline */}
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.45, duration: 0.7 }}
+            className="text-xl md:text-2xl text-[var(--foreground-muted)] leading-relaxed max-w-3xl mx-auto mb-14"
+          >
+            Housing, jobs, tenant support, local life, businesses, events, trusted services, and AI guidance—all intelligently connected.
+          </motion.p>
+
+          {/* Giant search — Apple Spotlight style, 80px */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.7 }}
+            className="max-w-3xl mx-auto mb-8"
+          >
+            <div className="relative group">
+              <Search className="absolute left-8 top-1/2 -translate-y-1/2 w-7 h-7 text-[var(--foreground-muted)] group-focus-within:text-[#38BDF8] transition-colors" />
+              <input
+                type="text"
+                placeholder="My landlord won't fix the heat..."
+                className="w-full h-20 bg-white/[0.06] hover:bg-white/[0.08] border border-white/10 hover:border-white/15 focus:border-[#38BDF8]/50 focus:bg-white/[0.08] rounded-3xl text-xl text-white placeholder:text-[var(--foreground-muted)]/70 pl-20 pr-8 outline-none transition-all duration-300 focus:shadow-[0_0_0_4px_rgba(56,189,248,0.12),0_25px_50px_-12px_rgba(0,0,0,0.5)]"
+                onFocus={handleAskAI}
+                readOnly
+              />
+            </div>
+          </motion.div>
+
+          {/* Example queries */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.75 }}
+            className="flex flex-wrap justify-center gap-3 mb-14"
+          >
+            {[
+              "I need childcare",
+              "Jobs hiring this week",
+              "Cheap family activities",
+              "How do I get a family doctor?"
+            ].map((query) => (
+              <button
+                key={query}
+                onClick={handleAskAI}
+                className="px-5 py-3 rounded-full bg-white/[0.04] border border-white/[0.08] text-sm text-[var(--foreground-muted)] hover:bg-white/[0.08] hover:border-white/[0.15] hover:text-white transition-all duration-300"
+              >
+                {query}
+              </button>
+            ))}
+          </motion.div>
+
+          {/* CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.9 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          >
+            <motion.button
+              whileHover={{ scale: 1.03, y: -2 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={handleExplore}
+              className="btn-primary px-10 py-5 rounded-2xl flex items-center gap-3 text-lg font-semibold"
+            >
+              Explore Calgary
+              <ArrowRight className="w-5 h-5" />
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.03, y: -2 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={handleAskAI}
+              className="btn-secondary px-10 py-5 rounded-2xl flex items-center gap-3 text-lg font-semibold"
+            >
+              <Sparkles className="w-5 h-5 text-[#FBBF24]" />
+              Ask the AI Guide
+            </motion.button>
+          </motion.div>
+        </motion.div>
+
+        {/* Scroll indicator */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2"
         >
           <motion.div
-            animate={{ y: [0, 10, 0] }}
+            animate={{ y: [0, 12, 0] }}
             transition={{ duration: 2.5, repeat: Infinity }}
-            className="w-6 h-10 rounded-full border-2 border-white/15 flex items-start justify-center p-1.5"
+            className="w-6 h-12 rounded-full border-2 border-white/20 flex items-start justify-center p-2"
           >
-            <div className="w-1 h-2.5 bg-white/30 rounded-full" />
+            <div className="w-1.5 h-3 bg-white/40 rounded-full" />
           </motion.div>
         </motion.div>
       </section>
 
-      {/* === SECTION 2: MAINSTREAM CATEGORIES === */}
-      {/* These are the 4 most-used categories. Every Calgarian needs at least one. */}
-      <section className="section-spacing relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#38BDF8]/3 to-transparent pointer-events-none" />
-        <div className="max-w-[1440px] mx-auto px-8 lg:px-16 relative z-10">
+      {/* ========== IMMERSIVE PATHWAYS — Solutions First ========== */}
+      <section className="relative py-32 md:py-40">
+        <div className="max-w-[1400px] mx-auto px-8">
+          
+          {/* Section header */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            className="mb-16"
+            viewport={{ once: true, margin: "-100px" }}
+            className="text-center mb-20"
           >
-            <p className="text-sm font-semibold text-[#38BDF8] uppercase tracking-widest mb-4">Start Here</p>
-            <h2 className="text-display max-w-2xl text-balance">
-              What most Calgarians need first.
+            <h2 className="text-[clamp(32px,5vw,48px)] font-bold tracking-tight mb-6">
+              What do you need?
             </h2>
+            <p className="text-xl text-[var(--foreground-muted)] max-w-2xl mx-auto">
+              Start with your situation. We&apos;ll show you the path forward.
+            </p>
           </motion.div>
 
-          {/* 4-column primary grid — tall cards, 260px minimum height */}
-          <div className="grid sm:grid-cols-2 xl:grid-cols-4 gap-6 lg:gap-8">
-            {primaryCategories.map((cat, index) => (
+          {/* Pathway cards — large horizontal premium experiences */}
+          <div className="space-y-8">
+            {pathways.map((pathway, index) => (
               <motion.button
-                key={cat.title}
-                initial={{ opacity: 0, y: 50 }}
+                key={pathway.id}
+                initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                whileHover={{ y: -10, scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={handleExploreDirectly}
-                className={`group relative text-left rounded-3xl bg-gradient-to-br ${cat.color} border border-white/8 ${cat.border} p-10 transition-all duration-400 hover:shadow-2xl ${cat.glow} overflow-hidden`}
-                style={{ minHeight: "280px" }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ delay: index * 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ scale: 1.01, y: -4 }}
+                whileTap={{ scale: 0.99 }}
+                onClick={handleExplore}
+                className="group w-full relative overflow-hidden rounded-3xl text-left"
+                style={{ minHeight: "200px" }}
               >
-                {/* Hover glow overlay */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-white/5 to-transparent rounded-3xl" />
-
-                <div className="relative z-10 flex flex-col h-full">
-                  <div className={`w-16 h-16 rounded-2xl bg-white/8 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300`}>
-                    <cat.icon className={`w-8 h-8 ${cat.iconColor}`} />
-                  </div>
-
-                  <div className="flex-1">
-                    <h3 className="text-2xl font-bold mb-3 text-white">{cat.title}</h3>
-                    <p className="text-[var(--foreground-muted)] leading-relaxed text-base">{cat.description}</p>
-                  </div>
-
-                  <div className="mt-8 flex items-center justify-between">
-                    <span className={`text-sm font-semibold ${cat.iconColor}`}>{cat.stat}</span>
-                    <div className={`w-9 h-9 rounded-xl bg-white/8 flex items-center justify-center group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300`}>
-                      <ArrowRight className={`w-4 h-4 ${cat.iconColor}`} />
+                {/* Background gradient */}
+                <div 
+                  className="absolute inset-0 transition-all duration-500 group-hover:scale-105"
+                  style={{ background: pathway.image }}
+                />
+                
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent" />
+                
+                {/* Content */}
+                <div className="relative z-10 p-10 md:p-14 flex flex-col md:flex-row md:items-center justify-between h-full">
+                  <div className="mb-6 md:mb-0">
+                    <h3 className="text-3xl md:text-4xl font-bold mb-4 text-white">
+                      {pathway.solution}
+                    </h3>
+                    <div className="flex flex-wrap gap-3">
+                      {pathway.preview.map((item) => (
+                        <span 
+                          key={item}
+                          className="px-4 py-2 rounded-full text-sm font-medium"
+                          style={{ 
+                            backgroundColor: `${pathway.accent}20`,
+                            color: pathway.accent,
+                          }}
+                        >
+                          {item}
+                        </span>
+                      ))}
                     </div>
+                  </div>
+                  
+                  <div className="flex items-center gap-3 text-white/80 group-hover:text-white transition-colors">
+                    <span className="text-lg font-medium">Explore</span>
+                    <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
                   </div>
                 </div>
               </motion.button>
@@ -425,200 +392,125 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* === SECTION 3: AI GUIDE === */}
-      <section className="section-spacing">
-        <div className="max-w-[1440px] mx-auto px-8 lg:px-16">
-          <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-            {/* Left: copy */}
+      {/* ========== AI SECTION — Conversational Preview ========== */}
+      <section className="relative py-32 md:py-40 overflow-hidden">
+        {/* Background glow */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#38BDF8]/5 to-transparent" />
+        
+        <div className="max-w-[1200px] mx-auto px-8 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            
+            {/* Left — copy */}
             <motion.div
               initial={{ opacity: 0, x: -40 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ ease: [0.16, 1, 0.3, 1] }}
+              viewport={{ once: true }}
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FBBF24]/10 border border-[#FBBF24]/20 mb-10">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FBBF24]/10 border border-[#FBBF24]/20 mb-8">
                 <Sparkles className="w-4 h-4 text-[#FBBF24]" />
-                <span className="text-sm font-medium text-[#FBBF24]">Calgary Bridge AI</span>
+                <span className="text-sm font-medium text-[#FBBF24]">AI-Powered Guidance</span>
               </div>
-              <h2 className="text-display mb-8 text-balance">
-                Ask Calgary <span className="text-gradient-gold">anything.</span>
+              
+              <h2 className="text-[clamp(32px,5vw,48px)] font-bold tracking-tight mb-6">
+                Ask anything about living in Calgary.
               </h2>
-              <p className="text-xl text-[var(--foreground-muted)] leading-relaxed mb-12">
-                Get specific, step-by-step guidance. Not just links — real answers with real next steps for your situation in Calgary.
+              
+              <p className="text-xl text-[var(--foreground-muted)] leading-relaxed mb-10">
+                Not just links. Real answers, step-by-step guidance, and resources matched to your specific situation.
               </p>
+              
               <motion.button
                 whileHover={{ scale: 1.03, y: -2 }}
                 whileTap={{ scale: 0.97 }}
                 onClick={handleAskAI}
-                className="btn-primary px-10 py-5 rounded-2xl flex items-center gap-3 text-lg font-semibold"
+                className="btn-primary px-8 py-4 rounded-2xl flex items-center gap-3 text-lg font-semibold"
               >
                 <Sparkles className="w-5 h-5" />
-                Start a Conversation
+                Try the AI Guide
               </motion.button>
             </motion.div>
-
-            {/* Right: AI chat preview */}
+            
+            {/* Right — chat preview */}
             <motion.div
               initial={{ opacity: 0, x: 40 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-              className="glass rounded-3xl p-8 border border-white/8"
+              viewport={{ once: true }}
+              className="relative"
             >
-              {/* Fake chat bubble — user */}
-              <div className="flex justify-end mb-5">
-                <div className="bg-[#38BDF8] text-[#07111F] rounded-2xl rounded-tr-sm px-5 py-4 max-w-xs text-sm font-medium">
-                  Can my landlord increase rent without notice?
-                </div>
-              </div>
-              {/* Fake chat bubble — AI */}
-              <div className="flex gap-3 mb-6">
-                <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#38BDF8] to-[#0284c7] flex items-center justify-center flex-shrink-0 mt-1">
-                  <Sparkles className="w-4 h-4 text-white" />
-                </div>
-                <div className="glass-card rounded-2xl rounded-tl-sm px-5 py-4 text-sm leading-relaxed border border-white/6 flex-1">
-                  <p className="text-white mb-3">In Alberta, landlords must give <strong>3 months written notice</strong> before increasing rent, and increases are limited by the Residential Tenancies Act.</p>
-                  <div className="space-y-1.5">
-                    <div className="flex items-center gap-2 text-[var(--foreground-muted)]">
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#38BDF8]" />
-                      <span>Service Alberta: 1-877-427-4088</span>
+              <div className="glass rounded-3xl p-8 border border-white/10">
+                {/* Chat messages */}
+                <div className="space-y-6 mb-8">
+                  {/* User message */}
+                  <div className="flex justify-end">
+                    <div className="bg-[#38BDF8] text-[#07111F] px-5 py-3 rounded-2xl rounded-br-md max-w-[280px] text-[15px] font-medium">
+                      Can my landlord raise rent mid-lease?
                     </div>
-                    <div className="flex items-center gap-2 text-[var(--foreground-muted)]">
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#38BDF8]" />
-                      <span>File a dispute via RTDRS online</span>
+                  </div>
+                  
+                  {/* AI response */}
+                  <div className="flex gap-3">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#38BDF8] to-[#0284c7] flex-shrink-0 flex items-center justify-center">
+                      <Sparkles className="w-4 h-4 text-white" />
+                    </div>
+                    <div className="bg-white/[0.06] px-5 py-4 rounded-2xl rounded-bl-md max-w-[320px]">
+                      <p className="text-[15px] text-white/90 leading-relaxed mb-3">
+                        In Alberta, your landlord cannot increase rent during a fixed-term lease unless the lease specifically allows it.
+                      </p>
+                      <p className="text-[15px] text-white/90 leading-relaxed">
+                        For periodic (month-to-month) tenancies, they must give you at least 3 months written notice.
+                      </p>
                     </div>
                   </div>
                 </div>
+                
+                {/* Input preview */}
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder="Ask a follow-up question..."
+                    className="w-full h-14 bg-white/[0.04] border border-white/10 rounded-xl text-[15px] text-white placeholder:text-white/40 pl-5 pr-14 outline-none"
+                    onClick={handleAskAI}
+                    readOnly
+                  />
+                  <button className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-lg bg-[#38BDF8] flex items-center justify-center">
+                    <ArrowRight className="w-5 h-5 text-[#07111F]" />
+                  </button>
+                </div>
               </div>
-              {/* Input area */}
-              <div
-                onClick={handleAskAI}
-                className="mt-2 flex items-center gap-3 bg-white/5 border border-white/8 rounded-2xl px-5 py-4 cursor-pointer hover:border-[#38BDF8]/30 transition-colors"
-              >
-                <Search className="w-5 h-5 text-[var(--foreground-muted)]" />
-                <span className="text-sm text-[var(--foreground-muted)]">Ask your question...</span>
-              </div>
+              
+              {/* Decorative glow */}
+              <div className="absolute -inset-4 bg-gradient-to-r from-[#38BDF8]/20 via-transparent to-[#FBBF24]/10 rounded-3xl blur-2xl -z-10" />
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* === SECTION 4: SPECIALIZED + HIDDEN GEMS === */}
-      {/* Specialized categories — for specific situations */}
-      <section className="section-spacing">
-        <div className="max-w-[1440px] mx-auto px-8 lg:px-16">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            className="mb-14"
-          >
-            <p className="text-sm font-semibold text-[var(--foreground-muted)] uppercase tracking-widest mb-4">Specialized Support</p>
-            <h2 className="text-display text-balance">For your specific situation.</h2>
-          </motion.div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
-            {secondaryCategories.map((cat, index) => (
-              <motion.button
-                key={cat.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.06 }}
-                whileHover={{ y: -6, scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={handleExploreDirectly}
-                className="text-left glass rounded-2xl p-7 border border-white/6 hover:border-white/14 transition-all duration-300 group"
-              >
-                <div className={`w-12 h-12 rounded-xl ${cat.bg} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                  <cat.icon className={`w-6 h-6 ${cat.color}`} />
-                </div>
-                <h3 className="text-lg font-bold mb-2 text-white">{cat.title}</h3>
-                <p className="text-sm text-[var(--foreground-muted)] leading-relaxed">{cat.description}</p>
-              </motion.button>
-            ))}
-          </div>
-
-          {/* Hidden Gem teaser — "what most people don't know exists" */}
+      {/* ========== FOOTER CTA ========== */}
+      <section className="relative py-32 md:py-40">
+        <div className="max-w-[900px] mx-auto px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mt-8 glass rounded-2xl p-8 border border-[#FBBF24]/20 bg-[#FBBF24]/3"
           >
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-              <div className="flex items-center gap-5">
-                <div className="w-12 h-12 rounded-xl bg-[#FBBF24]/15 flex items-center justify-center flex-shrink-0">
-                  <Sparkles className="w-6 h-6 text-[#FBBF24]" />
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-[#FBBF24] mb-1">Hidden Gems</p>
-                  <p className="text-lg font-bold text-white">Programs most Calgarians don&apos;t know exist</p>
-                  <p className="text-sm text-[var(--foreground-muted)] mt-1">Free legal clinics, emergency grants, specialty services, lesser-known community programs</p>
-                </div>
-              </div>
-              <button
-                onClick={handleExploreDirectly}
-                className="flex-shrink-0 btn-primary px-7 py-4 rounded-xl flex items-center gap-2 text-sm font-semibold"
-              >
-                Discover them <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
+            <h2 className="text-[clamp(32px,5vw,48px)] font-bold tracking-tight mb-6">
+              Calgary, finally connected.
+            </h2>
+            <p className="text-xl text-[var(--foreground-muted)] mb-12 max-w-xl mx-auto">
+              Join thousands of Calgarians who have found the help they need.
+            </p>
+            <motion.button
+              whileHover={{ scale: 1.03, y: -2 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={handleExplore}
+              className="btn-primary px-12 py-5 rounded-2xl flex items-center gap-3 text-lg font-semibold mx-auto"
+            >
+              Get Started
+              <ArrowRight className="w-5 h-5" />
+            </motion.button>
           </motion.div>
         </div>
       </section>
-
-      {/* === SECTION 5: FINAL CTA === */}
-      <section className="section-spacing">
-        <div className="max-w-[1440px] mx-auto px-8 lg:px-16">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ ease: [0.16, 1, 0.3, 1] }}
-            className="relative overflow-hidden rounded-3xl glass border border-white/10 text-center py-24 px-8"
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-[#38BDF8]/10 via-transparent to-[#FBBF24]/5 pointer-events-none" />
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-[#38BDF8]/10 rounded-full blur-[120px] pointer-events-none" />
-            <div className="relative z-10">
-              <h2 className="text-display mb-6 text-balance">Ready to discover your Calgary?</h2>
-              <p className="text-xl text-[var(--foreground-muted)] mb-12 max-w-xl mx-auto">
-                Join thousands of Calgarians who found the help they needed.
-              </p>
-              <motion.button
-                whileHover={{ scale: 1.04, y: -3 }}
-                whileTap={{ scale: 0.97 }}
-                onClick={handleGetStarted}
-                className="btn-primary px-14 py-5 rounded-2xl inline-flex items-center gap-3 text-lg font-semibold"
-              >
-                Get Started Free
-                <ArrowRight className="w-5 h-5" />
-              </motion.button>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="py-12 border-t border-white/5">
-        <div className="max-w-[1440px] mx-auto px-8 lg:px-16 flex flex-col md:flex-row items-center justify-between gap-5">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#38BDF8] to-[#0284c7] flex items-center justify-center">
-              <svg width="20" height="20" viewBox="0 0 64 64" fill="none" className="text-white">
-                <path d="M32 6L26 18H38L32 6Z" fill="currentColor" />
-                <rect x="28" y="18" width="8" height="6" fill="currentColor" />
-                <path d="M24 24H40V28L38 32H26L24 28V24Z" fill="currentColor" />
-                <rect x="27" y="32" width="10" height="6" rx="1" fill="currentColor" />
-                <rect x="29" y="38" width="6" height="18" fill="currentColor" />
-              </svg>
-            </div>
-            <span className="text-sm text-[var(--foreground-muted)]">Calgary Connect — Built for Calgarians</span>
-          </div>
-          <p className="text-sm text-[var(--foreground-muted)]">
-            Calgary&apos;s civic intelligence platform.
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }
