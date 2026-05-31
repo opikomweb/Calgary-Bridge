@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAppStore } from "@/lib/store";
 import { resources, categoryLabels } from "@/lib/data";
@@ -378,20 +379,15 @@ export default function AITab() {
         {/* Right Side - Calgary Intelligence Panel (40%) - Desktop Only */}
         <div className="hidden lg:flex w-[40%] border-l border-[var(--border)] bg-gradient-to-b from-[var(--background)] to-[var(--background-secondary)] flex-col">
           <div className="flex-1 overflow-y-auto px-10 py-12">
-            {/* Calgary Insights Header - Calgary Tower Icon */}
-            <div className="mb-12">
-              <div className="flex items-center gap-4 mb-4">
-                {/* Calgary Tower Icon */}
+            {/* Calgary Insights Header - Clean Icon */}
+            <div className="mb-14">
+              <div className="flex items-center gap-5 mb-3">
                 <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#38BDF8]/20 to-[#0284c7]/10 flex items-center justify-center border border-[#38BDF8]/20">
-                  <svg className="w-7 h-7" viewBox="0 0 24 40" fill="none">
-                    <path d="M10 40 L10 15 L7 15 L12 0 L17 15 L14 15 L14 40 Z" fill="#38BDF8" opacity="0.9" />
-                    <ellipse cx="12" cy="12" rx="5" ry="2.5" fill="#FBBF24" />
-                    <circle cx="12" cy="2" r="1.5" fill="#FBBF24" className="animate-pulse" />
-                  </svg>
+                  <TrendingUp className="w-7 h-7 text-[#38BDF8]" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold tracking-tight">Calgary Pulse</h2>
-                  <p className="text-base text-white/50 mt-1">Live insights from your city</p>
+                  <h2 className="text-2xl font-bold tracking-tight leading-tight">Calgary Pulse</h2>
+                  <p className="text-base text-white/50 mt-2 leading-relaxed">Live insights from your city</p>
                 </div>
               </div>
             </div>
@@ -401,18 +397,18 @@ export default function AITab() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="glass-card rounded-2xl p-7 mb-8"
+              className="glass-card rounded-2xl p-8 mb-10"
             >
-              <div className="flex items-center gap-5 mb-5">
+              <div className="flex items-center gap-5 mb-6">
                 <div className="w-14 h-14 rounded-2xl bg-blue-500/20 flex items-center justify-center">
                   <CloudSnow className="w-7 h-7 text-blue-400" />
                 </div>
                 <div>
-                  <p className="font-bold text-xl">Winter Weather</p>
-                  <p className="text-base text-white/50 mt-1">-8C, light snow expected</p>
+                  <p className="font-bold text-xl leading-tight">Winter Weather</p>
+                  <p className="text-base text-white/50 mt-2 leading-relaxed">-8C, light snow expected</p>
                 </div>
               </div>
-              <p className="text-base text-white/60 leading-relaxed">
+              <p className="text-base text-white/60 leading-[1.8]">
                 Dress warmly! Free warming centers available at downtown shelters.
               </p>
             </motion.div>
@@ -422,12 +418,12 @@ export default function AITab() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="space-y-4 mb-12"
+              className="space-y-5 mb-14"
             >
               {calgaryInsights.map((insight, i) => (
-                <div key={i} className="flex items-center gap-5 p-5 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
+                <div key={i} className="flex items-center gap-5 p-6 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
                   <insight.icon className={`w-6 h-6 ${insight.color}`} />
-                  <span className="text-base font-medium">{insight.label}</span>
+                  <span className="text-base font-medium leading-relaxed">{insight.label}</span>
                 </div>
               ))}
             </motion.div>
@@ -437,18 +433,18 @@ export default function AITab() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="mb-12"
+              className="mb-14"
             >
-              <h3 className="text-xl font-bold mb-6 flex items-center gap-3">
+              <h3 className="text-xl font-bold mb-8 flex items-center gap-4">
                 <TrendingUp className="w-6 h-6 text-[#FBBF24]" />
                 Popular This Week
               </h3>
-              <div className="space-y-4">
+              <div className="space-y-5">
                 {popularQuestions.map((question, i) => (
                   <button
                     key={i}
                     onClick={() => handleSuggestionClick(question)}
-                    className="w-full text-left p-5 rounded-2xl bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.06] hover:border-white/[0.12] transition-all text-base text-white/60 hover:text-white leading-relaxed"
+                    className="w-full text-left p-6 rounded-2xl bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.06] hover:border-white/[0.12] transition-all text-base text-white/60 hover:text-white leading-[1.7]"
                   >
                     {question}
                   </button>
@@ -456,30 +452,22 @@ export default function AITab() {
               </div>
             </motion.div>
 
-            {/* Calgary Tower Decorative - More Iconic */}
+            {/* Calgary Skyline Image Decoration */}
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
-              className="flex flex-col items-center py-10"
+              className="mt-auto pt-8"
             >
-              <svg className="w-20 h-48 opacity-30" viewBox="0 0 60 150">
-                {/* Tower body */}
-                <path d="M25 150 L25 55 L20 55 L30 0 L40 55 L35 55 L35 150 Z" fill="none" stroke="#38BDF8" strokeWidth="1.5" />
-                {/* Observation deck */}
-                <ellipse cx="30" cy="42" rx="12" ry="6" fill="none" stroke="#38BDF8" strokeWidth="1.5" />
-                {/* Beacon glow */}
-                <circle cx="30" cy="5" r="3" fill="#FBBF24" className="animate-pulse" />
-                <circle cx="30" cy="5" r="6" fill="#FBBF24" opacity="0.3" className="animate-pulse" />
-              </svg>
+              <div className="relative w-full h-24 rounded-xl overflow-hidden opacity-30">
+                <Image
+                  src="/calgary-skyline-bg.png"
+                  alt=""
+                  fill
+                  className="object-cover object-bottom"
+                />
+              </div>
             </motion.div>
-
-            {/* Bow River Decorative Line */}
-            <div className="mt-auto pt-6">
-              <svg className="w-full h-10 opacity-25" viewBox="0 0 300 30" preserveAspectRatio="none">
-                <path d="M0,15 Q75,0 150,15 T300,15" fill="none" stroke="#38BDF8" strokeWidth="2" />
-              </svg>
-            </div>
           </div>
         </div>
       </div>
