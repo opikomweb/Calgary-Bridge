@@ -148,13 +148,13 @@ export default function HomeTab() {
     <div className="min-h-screen relative">
 
       {/* ========== HERO SEARCH ========== */}
-      <section className="relative pt-24 pb-32 md:pt-32 md:pb-40">
-        <div className="max-w-[900px] mx-auto px-10 lg:px-14 relative z-10 text-center">
+      <section className="relative pt-28 pb-36 md:pt-36 md:pb-44">
+        <div className="max-w-[900px] mx-auto px-8 lg:px-12 relative z-10 text-center">
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="text-[clamp(44px,11vw,72px)] font-bold tracking-[-0.03em] leading-[1.02] mb-10"
+            className="text-[clamp(48px,10vw,80px)] font-bold tracking-[-0.03em] leading-[1.05] mb-8"
           >
             What do you need?
           </motion.h1>
@@ -163,7 +163,7 @@ export default function HomeTab() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.6 }}
-            className="text-xl md:text-2xl text-white/50 mb-16 max-w-2xl mx-auto leading-relaxed"
+            className="text-xl md:text-2xl text-white/50 mb-16 max-w-xl mx-auto leading-[1.6]"
           >
             Search for housing, jobs, healthcare, or ask the AI anything about Calgary.
           </motion.p>
@@ -181,7 +181,7 @@ export default function HomeTab() {
               placeholder="My landlord won't fix the heat..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full h-[96px] bg-white/[0.04] hover:bg-white/[0.06] border border-white/[0.08] hover:border-white/[0.12] focus:border-[#38BDF8]/40 focus:bg-white/[0.06] rounded-[32px] text-xl md:text-2xl text-white placeholder:text-white/30 pl-20 pr-12 outline-none transition-all duration-300 focus:shadow-[0_0_0_4px_rgba(56,189,248,0.08),0_32px_64px_-16px_rgba(0,0,0,0.6)]"
+              className="w-full h-[88px] bg-white/[0.04] hover:bg-white/[0.06] border border-white/[0.08] hover:border-white/[0.12] focus:border-[#38BDF8]/40 focus:bg-white/[0.06] rounded-[28px] text-xl md:text-2xl text-white placeholder:text-white/30 pl-20 pr-12 outline-none transition-all duration-300 focus:shadow-[0_0_0_4px_rgba(56,189,248,0.08),0_32px_64px_-16px_rgba(0,0,0,0.6)]"
             />
           </motion.div>
 
@@ -191,7 +191,7 @@ export default function HomeTab() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
-              className="flex flex-wrap justify-center gap-4 mt-12"
+              className="flex flex-wrap justify-center gap-4 mt-10"
             >
               {["I need childcare", "Jobs hiring now", "Family activities"].map((q) => (
                 <button
