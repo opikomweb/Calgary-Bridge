@@ -42,7 +42,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   userScalable: true,
-  themeColor: "#0B1020",
+  themeColor: "#07111F",
 };
 
 export default function RootLayout({
@@ -51,7 +51,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="bg-[#0B1020]">
+    <html lang="en" className="bg-[#07111F]">
       <body
         className={`${inter.variable} ${plusJakarta.variable} font-sans antialiased`}
       >

@@ -62,7 +62,7 @@ export default function ExploreTab() {
           onClick={() => setShowFilters(!showFilters)}
           className={`flex items-center gap-2 px-4 py-3 rounded-xl transition-all ${
             showFilters || activeCategory !== "all"
-              ? "bg-[#0ea5e9] text-white"
+              ? "bg-[#3B82F6] text-white"
               : "bg-[var(--surface)] border border-[var(--border)]"
           }`}
         >
@@ -84,7 +84,7 @@ export default function ExploreTab() {
             {activeCategory !== "all" && (
               <button
                 onClick={() => setActiveCategory("all")}
-                className="text-sm text-[#0ea5e9] flex items-center gap-1"
+                className="text-sm text-[#3B82F6] flex items-center gap-1"
               >
                 Clear filters <X className="w-4 h-4" />
               </button>
@@ -95,7 +95,7 @@ export default function ExploreTab() {
               onClick={() => setActiveCategory("all")}
               className={`rounded-full px-4 py-2 text-sm font-medium transition-all ${
                 activeCategory === "all"
-                  ? "bg-[#0ea5e9] text-white"
+                  ? "bg-[#3B82F6] text-white"
                   : "bg-[var(--surface)] border border-[var(--border)] hover:border-[var(--border-hover)]"
               }`}
             >
@@ -107,7 +107,7 @@ export default function ExploreTab() {
                 onClick={() => setActiveCategory(category)}
                 className={`rounded-full px-4 py-2 text-sm font-medium transition-all ${
                   activeCategory === category
-                    ? "bg-[#0ea5e9] text-white"
+                    ? "bg-[#3B82F6] text-white"
                     : "bg-[var(--surface)] border border-[var(--border)] hover:border-[var(--border-hover)]"
                 }`}
               >
@@ -130,7 +130,7 @@ export default function ExploreTab() {
               onClick={() => setActiveCategory("all")}
               className={`flex-shrink-0 rounded-full px-4 py-2 text-sm font-medium transition-all ${
                 activeCategory === "all"
-                  ? "bg-[#0ea5e9] text-white"
+                  ? "bg-[#3B82F6] text-white"
                   : "bg-[var(--surface)] border border-[var(--border)]"
               }`}
             >
@@ -142,7 +142,7 @@ export default function ExploreTab() {
                 onClick={() => setActiveCategory(category)}
                 className={`flex-shrink-0 rounded-full px-4 py-2 text-sm font-medium transition-all ${
                   activeCategory === category
-                    ? "bg-[#0ea5e9] text-white"
+                    ? "bg-[#3B82F6] text-white"
                     : "bg-[var(--surface)] border border-[var(--border)]"
                 }`}
               >

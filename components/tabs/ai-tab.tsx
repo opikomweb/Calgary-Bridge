@@ -119,7 +119,7 @@ export default function AITab() {
             animate={{ opacity: 1, y: 0 }}
             className="flex flex-col items-center justify-center py-12 text-center"
           >
-            <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-[#0ea5e9] to-[#0284c7] shadow-xl shadow-[#0ea5e9]/25">
+            <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-[#3B82F6] to-[#1d4ed8] shadow-xl shadow-[#3B82F6]/25">
               <Sparkles className="h-10 w-10 text-white" />
             </div>
             <h2 className="mb-3 text-2xl font-bold">
@@ -145,8 +145,8 @@ export default function AITab() {
                 <div
                   className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl ${
                     message.role === "user"
-                      ? "bg-[#0ea5e9]"
-                      : "bg-gradient-to-br from-[#0ea5e9] to-[#0284c7]"
+                      ? "bg-[#3B82F6]"
+                      : "bg-gradient-to-br from-[#3B82F6] to-[#1d4ed8]"
                   }`}
                 >
                   {message.role === "user" ? (
@@ -159,7 +159,7 @@ export default function AITab() {
                   <div
                     className={`max-w-[85%] rounded-2xl px-5 py-4 ${
                       message.role === "user"
-                        ? "bg-[#0ea5e9] text-white"
+                        ? "bg-[#3B82F6] text-white"
                         : "glass-card"
                     }`}
                   >
@@ -188,7 +188,7 @@ export default function AITab() {
               animate={{ opacity: 1, y: 0 }}
               className="flex gap-3"
             >
-              <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#0ea5e9] to-[#0284c7]">
+              <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#3B82F6] to-[#1d4ed8]">
                 <Sparkles className="h-5 w-5 text-white" />
               </div>
               <div className="glass-card rounded-2xl px-5 py-4">
@@ -250,7 +250,7 @@ export default function AITab() {
             whileTap={{ scale: 0.95 }}
             onClick={() => handleSend(input)}
             disabled={!input.trim() || isTyping}
-            className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#0ea5e9] text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#3B82F6] text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Send className="h-5 w-5" />
           </motion.button>
@@ -276,7 +276,7 @@ function AIResourceCard({ resource }: { resource: Resource }) {
             {resource.category.slice(0, 2).map((cat) => (
               <span
                 key={cat}
-                className="px-2 py-0.5 rounded-full text-xs font-medium bg-[#0ea5e9]/15 text-[#0ea5e9]"
+                className="px-2 py-0.5 rounded-full text-xs font-medium bg-[#3B82F6]/15 text-[#3B82F6]"
               >
                 {categoryLabels[cat]?.[activeLanguage] || cat}
               </span>
@@ -291,7 +291,7 @@ function AIResourceCard({ resource }: { resource: Resource }) {
         </div>
         <button
           onClick={() => toggleBookmark(resource.id)}
-          className="text-xs text-[#0ea5e9] font-medium flex items-center gap-1"
+          className="text-xs text-[#3B82F6] font-medium flex items-center gap-1"
         >
           {isBookmarked ? "Saved" : "Save"}
           <ArrowRight className="w-3 h-3" />
@@ -302,7 +302,7 @@ function AIResourceCard({ resource }: { resource: Resource }) {
         {resource.phone && (
           <a
             href={`tel:${resource.phone}`}
-            className="flex items-center gap-1 text-xs text-[#0ea5e9] hover:underline"
+            className="flex items-center gap-1 text-xs text-[#3B82F6] hover:underline"
           >
             <Phone className="w-3 h-3" />
             {resource.phone}
@@ -313,7 +313,7 @@ function AIResourceCard({ resource }: { resource: Resource }) {
             href={resource.website}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1 text-xs text-[#0ea5e9] hover:underline"
+            className="flex items-center gap-1 text-xs text-[#3B82F6] hover:underline"
           >
             <ExternalLink className="w-3 h-3" />
             Website
