@@ -25,47 +25,43 @@ export default function HomeTab() {
       )
     : [];
 
-  // Solution-first pathways with icons
+  // Solution-first pathways with icons - GLASSY PREMIUM
   const pathways = [
     {
       id: "housing",
       icon: Home,
       solution: "Find Housing & Rent Support",
       description: "Affordable rentals, subsidized programs, rent supplements, and tenant assistance",
-      gradient: "from-sky-600/90 via-sky-700/80 to-sky-900/90",
+      bgGradient: "from-[#0c2d4d]/70 to-[#071a2e]/85",
       accent: "#38BDF8",
       stats: "12 programs",
-      glow: "shadow-sky-500/20",
     },
     {
       id: "jobs",
       icon: Briefcase,
       solution: "Looking for Work?",
       description: "Resume building, job fairs, skills training, career counseling, and hiring companies",
-      gradient: "from-amber-500/90 via-amber-600/80 to-amber-800/90",
+      bgGradient: "from-[#2d2408]/70 to-[#1a1505]/85",
       accent: "#FBBF24",
       stats: "340+ openings",
-      glow: "shadow-amber-500/20",
     },
     {
       id: "health",
       icon: Heart,
       solution: "Get Healthcare Access",
       description: "Walk-in clinics, family doctors, mental health support, and Alberta Health registration",
-      gradient: "from-emerald-500/90 via-emerald-600/80 to-emerald-800/90",
+      bgGradient: "from-[#0d2d24]/70 to-[#071a16]/85",
       accent: "#34D399",
       stats: "24/7 available",
-      glow: "shadow-emerald-500/20",
     },
     {
       id: "newcomer",
       icon: Users,
       solution: "New to Calgary?",
       description: "Settlement services, language classes, community connections, and integration support",
-      gradient: "from-cyan-500/90 via-cyan-600/80 to-cyan-800/90",
+      bgGradient: "from-[#082d36]/70 to-[#051a20]/85",
       accent: "#22D3EE",
       stats: "10 orgs",
-      glow: "shadow-cyan-500/20",
     },
   ];
 
@@ -194,8 +190,8 @@ export default function HomeTab() {
               <h2 className="text-4xl md:text-5xl font-bold tracking-tight">What most Calgarians need.</h2>
             </motion.div>
 
-            {/* 2x2 grid of large pathway cards */}
-            <div className="grid md:grid-cols-2 gap-8">
+            {/* 2x2 grid of large pathway cards - GLASSY PREMIUM */}
+            <div className="grid md:grid-cols-2 gap-9">
               {pathways.map((pathway, index) => {
                 const Icon = pathway.icon;
                 return (
@@ -207,47 +203,46 @@ export default function HomeTab() {
                     whileHover={{ scale: 1.02, y: -8 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => setActiveTab("explore")}
-                    className={`group relative overflow-hidden rounded-[32px] text-left bg-gradient-to-br ${pathway.gradient} border border-white/[0.1] hover:border-white/[0.2] transition-all duration-500 shadow-2xl ${pathway.glow}`}
-                    style={{ minHeight: "280px" }}
+                    className={`group relative overflow-hidden rounded-[32px] text-left bg-gradient-to-br ${pathway.bgGradient} backdrop-blur-xl border border-white/[0.06] hover:border-white/[0.12] transition-all duration-500`}
+                    style={{ 
+                      minHeight: "320px",
+                      boxShadow: `0 0 80px -20px ${pathway.accent}15`
+                    }}
                   >
-                    {/* Animated glow on hover */}
+                    {/* Accent glow */}
                     <div 
-                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
-                      style={{ background: `radial-gradient(circle at 20% 50%, ${pathway.accent}25 0%, transparent 60%)` }}
-                    />
-                    
-                    {/* Subtle pattern overlay */}
-                    <div className="absolute inset-0 opacity-10"
-                      style={{
-                        backgroundImage: `radial-gradient(circle at 2px 2px, white 1px, transparent 0)`,
-                        backgroundSize: '32px 32px'
-                      }}
+                      className="absolute -top-24 -right-24 w-48 h-48 rounded-full opacity-20 blur-3xl transition-opacity group-hover:opacity-35"
+                      style={{ background: pathway.accent }}
                     />
 
-                    <div className="relative z-10 p-10 md:p-12 h-full flex flex-col">
+                    <div className="relative z-10 p-12 md:p-14 h-full flex flex-col">
                       {/* Icon */}
                       <div 
-                        className="w-16 h-16 rounded-2xl flex items-center justify-center mb-8 transition-transform group-hover:scale-110"
-                        style={{ backgroundColor: `${pathway.accent}30` }}
+                        className="w-[72px] h-[72px] rounded-[20px] flex items-center justify-center mb-10 border border-white/[0.08] backdrop-blur-sm transition-transform group-hover:scale-110"
+                        style={{ backgroundColor: `${pathway.accent}15` }}
                       >
-                        <Icon className="w-8 h-8" style={{ color: pathway.accent }} />
+                        <Icon className="w-9 h-9" style={{ color: pathway.accent }} />
                       </div>
                       
                       <div className="flex-1">
-                        <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">{pathway.solution}</h3>
-                        <p className="text-lg text-white/80 leading-relaxed">{pathway.description}</p>
+                        <h3 className="text-[32px] md:text-[38px] font-bold text-white mb-6 leading-[1.2] tracking-[-0.01em]">{pathway.solution}</h3>
+                        <p className="text-lg text-white/55 leading-[1.75]">{pathway.description}</p>
                       </div>
                       
-                      <div className="flex items-center justify-between mt-10">
+                      <div className="flex items-center justify-between mt-12">
                         <span 
-                          className="text-base font-bold px-5 py-2.5 rounded-full"
-                          style={{ backgroundColor: `${pathway.accent}25`, color: pathway.accent }}
+                          className="text-sm font-semibold px-5 py-3 rounded-full border"
+                          style={{ 
+                            backgroundColor: `${pathway.accent}12`, 
+                            borderColor: `${pathway.accent}25`,
+                            color: pathway.accent 
+                          }}
                         >
                           {pathway.stats}
                         </span>
-                        <div className="flex items-center gap-2 text-white/70 group-hover:text-white transition-colors">
-                          <span className="text-base font-semibold">Explore</span>
-                          <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
+                        <div className="flex items-center gap-3 text-white/50 group-hover:text-white transition-colors">
+                          <span className="text-base font-medium">Explore</span>
+                          <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
                         </div>
                       </div>
                     </div>

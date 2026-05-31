@@ -38,23 +38,16 @@ export default function MainApp() {
       {/* Desktop Sidebar */}
       <aside className="hidden lg:flex lg:w-[340px] lg:flex-col lg:fixed lg:inset-y-0 lg:z-50">
         <div className="flex grow flex-col overflow-y-auto border-r border-white/[0.06] bg-[#050B14]/70 backdrop-blur-3xl">
-          {/* Logo Section - More Breathing Room */}
-          <div className="px-10 pt-12 pb-10">
-            <div className="flex items-center gap-6">
-              <div className="relative w-20 h-20 flex-shrink-0 rounded-2xl overflow-hidden bg-gradient-to-br from-[#0c1829] to-[#071119] p-1 border border-white/10 shadow-2xl shadow-sky-500/10">
-                <Image
-                  src="/calgary-connect-logo.png"
-                  alt="Calgary Connect"
-                  fill
-                  className="object-contain p-1"
-                  priority
-                />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold tracking-tight text-white">Calgary</h1>
-                <h1 className="text-2xl font-bold tracking-tight text-[#38BDF8]">Connect</h1>
-                <p className="text-sm text-white/40 mt-1.5 tracking-wide">Your civic navigator</p>
-              </div>
+          {/* Logo Section - Clean Logo Only */}
+          <div className="px-10 pt-10 pb-8 flex justify-center">
+            <div className="relative w-[140px] h-[140px] flex-shrink-0 rounded-3xl overflow-hidden bg-gradient-to-br from-[#0c1829] to-[#050B14] p-2 border border-white/[0.08] shadow-2xl shadow-sky-500/10">
+              <Image
+                src="/calgary-connect-logo.png"
+                alt="Calgary Connect"
+                fill
+                className="object-contain p-2"
+                priority
+              />
             </div>
           </div>
 
