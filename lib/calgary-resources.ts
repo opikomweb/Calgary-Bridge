@@ -369,7 +369,7 @@ export const calgaryResources: Resource[] = [
       tl: "Bow Valley College Career Services",
       es: "Servicios de Carrera de Bow Valley College",
       ar: "خدمات التوظيف في كلية باو فالي",
-      zh: "博瓦利学院职业服务",
+      zh: "博瓦��学院职业服务",
     },
     description: {
       en: "Free career counseling, resume writing workshops, interview preparation, and job search support for all Calgarians - not just students. Includes access to job postings and employer events.",
