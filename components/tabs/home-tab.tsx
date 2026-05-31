@@ -273,14 +273,14 @@ export default function HomeTab() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="mb-16 md:mb-20 lg:mb-24 text-center"
+              className="mb-20 md:mb-24 lg:mb-28 text-center"
             >
               <p className="text-xs font-semibold text-[#38BDF8] uppercase tracking-[0.15em] mb-3">Start Here</p>
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight">What most Calgarians need.</h2>
             </motion.div>
 
             {/* 2x2 grid of large pathway cards - GLASSY PREMIUM */}
-            <div className="grid grid-cols-2 gap-4 md:gap-6">
+            <div className="grid grid-cols-2 gap-4 md:gap-6 pt-4">
               {pathways.map((pathway, index) => {
                 const Icon = pathway.icon;
                 return (
