@@ -430,6 +430,18 @@ h1, h2, h3, h4, h5, h6 {
   100% { transform: translateX(100%); opacity: 0; }
 }
 
+@keyframes ambient-glow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.05); }
+}
+
+@keyframes particle-drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  25% { opacity: 0.6; }
+  75% { opacity: 0.4; }
+  100% { transform: translateY(-100px) translateX(20px); opacity: 0; }
+}
+
 .skyline-element {
   animation: skyline-float 8s ease-in-out infinite;
 }
@@ -440,6 +452,31 @@ h1, h2, h3, h4, h5, h6 {
 
 .river-flow {
   animation: river-shimmer 12s ease-in-out infinite;
+}
+
+.ambient-glow {
+  animation: ambient-glow 6s ease-in-out infinite;
+}
+
+/* Living dark mode radial gradient helper */
+.bg-gradient-radial {
+  background: radial-gradient(circle, var(--tw-gradient-stops));
+}
+
+/* Calgary ambient background system */
+.calgary-ambient {
+  position: relative;
+}
+
+.calgary-ambient::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse 80% 60% at 80% 20%, rgba(56, 189, 248, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 50% at 20% 80%, rgba(251, 191, 36, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* Smooth page transitions */

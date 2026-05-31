@@ -4,7 +4,11 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAppStore } from "@/lib/store";
 import { resources, categoryLabels } from "@/lib/data";
-import { Send, Sparkles, User, ArrowRight, Phone, ExternalLink, Home, Briefcase, Heart, Users, Scale, Bus } from "lucide-react";
+import { 
+  Send, Sparkles, User, ArrowRight, Phone, ExternalLink, 
+  Home, Briefcase, Heart, Users, Scale, Bus, MapPin, 
+  CloudSnow, Calendar, TrendingUp, Building2, Waves
+} from "lucide-react";
 import type { Resource } from "@/lib/types";
 
 const conversationStarters = [
@@ -50,6 +54,19 @@ const conversationStarters = [
     color: "from-cyan-500/20 to-cyan-600/10",
     iconColor: "text-cyan-400",
   },
+];
+
+const popularQuestions = [
+  "How do I apply for rental assistance?",
+  "Where can I get free tax help?",
+  "What programs help with childcare costs?",
+  "How do I find ESL classes near me?",
+];
+
+const calgaryInsights = [
+  { icon: TrendingUp, label: "340+ jobs posted this week", color: "text-emerald-400" },
+  { icon: Home, label: "12 housing programs available", color: "text-blue-400" },
+  { icon: Calendar, label: "Free tax clinics open now", color: "text-amber-400" },
 ];
 
 export default function AITab() {
@@ -151,181 +168,310 @@ export default function AITab() {
   };
 
   return (
-    <div className="flex h-[calc(100vh-140px)] flex-col">
-      <div className="flex-1 overflow-y-auto">
-        {chatMessages.length === 0 ? (
-          /* Empty State - Immersive Welcome */
-          <div className="flex flex-col items-center justify-center min-h-full px-6 py-12">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-center max-w-2xl mx-auto"
-            >
-              {/* AI Avatar */}
-              <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 0.1, type: "spring", stiffness: 200 }}
-                className="mb-8 flex h-24 w-24 items-center justify-center rounded-3xl bg-gradient-to-br from-[#3B82F6] to-[#1d4ed8] shadow-2xl shadow-[#3B82F6]/30 mx-auto"
-              >
-                <Sparkles className="h-12 w-12 text-white" />
-              </motion.div>
-
-              {/* Headline */}
-              <motion.h1
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="text-4xl lg:text-5xl font-bold mb-4 tracking-tight"
-              >
-                Calgary Bridge AI
-              </motion.h1>
-              
-              <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="text-xl text-[var(--foreground-muted)] mb-12 max-w-lg mx-auto leading-relaxed"
-              >
-                Your personal guide to every resource and service in Calgary. Ask me anything.
-              </motion.p>
-
-              {/* Conversation Starters - Large Cards */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="grid grid-cols-2 lg:grid-cols-3 gap-4 max-w-3xl mx-auto"
-              >
-                {conversationStarters.map((starter, index) => (
-                  <motion.button
-                    key={starter.label}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5 + index * 0.08 }}
-                    whileHover={{ scale: 1.03, y: -4 }}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={() => handleSuggestionClick(starter.query)}
-                    className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br ${starter.color} border border-white/10 p-6 text-left transition-all hover:border-white/20 hover:shadow-xl`}
-                  >
-                    <div className={`mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 ${starter.iconColor}`}>
-                      <starter.icon className="h-6 w-6" />
-                    </div>
-                    <h3 className="font-semibold text-white mb-2">{starter.label}</h3>
-                    <p className="text-sm text-white/60 line-clamp-2">{starter.query}</p>
-                    <ArrowRight className="absolute bottom-4 right-4 w-5 h-5 text-white/30 group-hover:text-white/60 transition-colors" />
-                  </motion.button>
-                ))}
-              </motion.div>
-            </motion.div>
-          </div>
-        ) : (
-          /* Chat Messages */
-          <div className="max-w-3xl mx-auto px-6 py-8">
-            <div className="flex flex-col gap-6">
-              <AnimatePresence>
-                {chatMessages.map((message) => (
-                  <motion.div
-                    key={message.id}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className={`flex gap-4 ${
-                      message.role === "user" ? "flex-row-reverse" : ""
-                    }`}
-                  >
-                    <div
-                      className={`flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl ${
-                        message.role === "user"
-                          ? "bg-[#3B82F6]"
-                          : "bg-gradient-to-br from-[#3B82F6] to-[#1d4ed8]"
-                      }`}
-                    >
-                      {message.role === "user" ? (
-                        <User className="h-5 w-5 text-white" />
-                      ) : (
-                        <Sparkles className="h-5 w-5 text-white" />
-                      )}
-                    </div>
-                    <div className={`flex-1 ${message.role === "user" ? "flex justify-end" : ""}`}>
-                      <div
-                        className={`max-w-[85%] rounded-2xl px-5 py-4 ${
-                          message.role === "user"
-                            ? "bg-[#3B82F6] text-white"
-                            : "glass-card"
-                        }`}
-                      >
-                        <div className="text-[15px] leading-relaxed whitespace-pre-line">
-                          {message.content.split(/(\*\*.*?\*\*)/).map((part, i) => {
-                            if (part.startsWith("**") && part.endsWith("**")) {
-                              return <strong key={i} className="font-semibold">{part.slice(2, -2)}</strong>;
-                            }
-                            return part;
-                          })}
-                        </div>
-                      </div>
-                      
-                      {/* Resource Cards */}
-                      {message.role === "assistant" && message.resources && message.resources.length > 0 && (
-                        <div className="mt-4 space-y-3">
-                          <p className="text-xs font-medium text-[var(--foreground-muted)] uppercase tracking-wider">
-                            Recommended Resources
-                          </p>
-                          {message.resources.map((resourceId) => {
-                            const resource = resources.find(r => r.id === resourceId);
-                            return resource ? <AIResourceCard key={resourceId} resource={resource} /> : null;
-                          })}
-                        </div>
-                      )}
-                    </div>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-
-              {isTyping && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="flex gap-4"
-                >
-                  <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#3B82F6] to-[#1d4ed8]">
-                    <Sparkles className="h-5 w-5 text-white" />
-                  </div>
-                  <div className="glass-card rounded-2xl px-5 py-4">
-                    <div className="flex gap-1.5">
-                      <span className="h-2 w-2 animate-bounce rounded-full bg-[var(--foreground-muted)]" style={{ animationDelay: "0ms" }} />
-                      <span className="h-2 w-2 animate-bounce rounded-full bg-[var(--foreground-muted)]" style={{ animationDelay: "150ms" }} />
-                      <span className="h-2 w-2 animate-bounce rounded-full bg-[var(--foreground-muted)]" style={{ animationDelay: "300ms" }} />
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-              <div ref={messagesEndRef} />
-            </div>
-          </div>
-        )}
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Calgary Ambient Background */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Radial gradients */}
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-radial from-[#38BDF8]/8 via-transparent to-transparent" />
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-radial from-[#FBBF24]/5 via-transparent to-transparent" />
+        
+        {/* Calgary Tower silhouette - right side */}
+        <svg className="absolute right-16 top-1/4 w-24 h-64 opacity-[0.04]" viewBox="0 0 60 200">
+          <path d="M25 200 L25 80 L20 80 L30 0 L40 80 L35 80 L35 200 Z" fill="currentColor" className="text-white" />
+          <ellipse cx="30" cy="60" rx="12" ry="6" fill="currentColor" className="text-white" />
+        </svg>
+        
+        {/* Bow River wave - bottom */}
+        <svg className="absolute bottom-0 left-0 right-0 h-32 opacity-[0.03]" viewBox="0 0 1440 128" preserveAspectRatio="none">
+          <path d="M0,64 Q360,128 720,64 T1440,64 L1440,128 L0,128 Z" fill="currentColor" className="text-[#38BDF8]" />
+        </svg>
+        
+        {/* Mountain silhouette - top right */}
+        <svg className="absolute top-0 right-0 w-full h-48 opacity-[0.02]" viewBox="0 0 1440 200" preserveAspectRatio="none">
+          <path d="M1440,200 L1440,100 L1300,50 L1200,80 L1100,30 L1000,70 L900,20 L800,60 L700,40 L600,80 L500,50 L400,90 L300,60 L200,100 L100,70 L0,120 L0,200 Z" fill="currentColor" className="text-white" />
+        </svg>
       </div>
 
-      {/* Input - Always at Bottom */}
-      <div className="border-t border-[var(--border)] bg-[var(--background)]/80 backdrop-blur-xl">
-        <div className="max-w-3xl mx-auto px-6 py-5">
-          <div className="glass-card flex items-center gap-3 rounded-2xl p-2">
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleSend(input)}
-              placeholder="Ask about housing, jobs, healthcare, transit..."
-              className="flex-1 bg-transparent px-4 py-3 text-white placeholder:text-[var(--foreground-muted)] focus:outline-none text-[15px]"
-            />
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => handleSend(input)}
-              disabled={!input.trim() || isTyping}
-              className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#3B82F6] text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+      {/* Split Layout - Chat Left, Intelligence Right */}
+      <div className="flex h-[calc(100vh-100px)]">
+        {/* Left Side - AI Conversation (60%) */}
+        <div className="flex-1 flex flex-col min-w-0 lg:max-w-[60%]">
+          <div className="flex-1 overflow-y-auto">
+            {chatMessages.length === 0 ? (
+              /* Empty State */
+              <div className="flex flex-col items-center justify-center min-h-full px-10 lg:px-16 py-16">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-center w-full max-w-xl"
+                >
+                  {/* AI Avatar */}
+                  <motion.div
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: 0.1, type: "spring", stiffness: 200 }}
+                    className="mb-10 flex h-28 w-28 items-center justify-center rounded-3xl bg-gradient-to-br from-[#3B82F6] to-[#1d4ed8] shadow-2xl shadow-[#3B82F6]/30 mx-auto"
+                  >
+                    <Sparkles className="h-14 w-14 text-white" />
+                  </motion.div>
+
+                  {/* Headline */}
+                  <motion.h1
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="text-5xl lg:text-6xl font-bold mb-5 tracking-tight"
+                  >
+                    Calgary Bridge AI
+                  </motion.h1>
+                  
+                  <motion.p
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className="text-xl text-[var(--foreground-muted)] mb-14 leading-relaxed"
+                  >
+                    Your personal guide to every resource and service in Calgary. Ask me anything.
+                  </motion.p>
+
+                  {/* Conversation Starters - 2x3 Grid */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                    className="grid grid-cols-2 gap-5"
+                  >
+                    {conversationStarters.map((starter, index) => (
+                      <motion.button
+                        key={starter.label}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.5 + index * 0.08 }}
+                        whileHover={{ scale: 1.02, y: -4 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => handleSuggestionClick(starter.query)}
+                        className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br ${starter.color} border border-white/10 p-6 text-left transition-all hover:border-white/20 hover:shadow-xl`}
+                      >
+                        <div className={`mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 ${starter.iconColor}`}>
+                          <starter.icon className="h-6 w-6" />
+                        </div>
+                        <h3 className="font-semibold text-white text-lg mb-2">{starter.label}</h3>
+                        <p className="text-sm text-white/60 line-clamp-2">{starter.query}</p>
+                        <ArrowRight className="absolute bottom-5 right-5 w-5 h-5 text-white/30 group-hover:text-white/60 transition-colors" />
+                      </motion.button>
+                    ))}
+                  </motion.div>
+                </motion.div>
+              </div>
+            ) : (
+              /* Chat Messages */
+              <div className="px-10 lg:px-16 py-10">
+                <div className="flex flex-col gap-8">
+                  <AnimatePresence>
+                    {chatMessages.map((message) => (
+                      <motion.div
+                        key={message.id}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className={`flex gap-5 ${
+                          message.role === "user" ? "flex-row-reverse" : ""
+                        }`}
+                      >
+                        <div
+                          className={`flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl ${
+                            message.role === "user"
+                              ? "bg-[#3B82F6]"
+                              : "bg-gradient-to-br from-[#3B82F6] to-[#1d4ed8]"
+                          }`}
+                        >
+                          {message.role === "user" ? (
+                            <User className="h-6 w-6 text-white" />
+                          ) : (
+                            <Sparkles className="h-6 w-6 text-white" />
+                          )}
+                        </div>
+                        <div className={`flex-1 ${message.role === "user" ? "flex justify-end" : ""}`}>
+                          <div
+                            className={`max-w-[90%] rounded-2xl px-6 py-5 ${
+                              message.role === "user"
+                                ? "bg-[#3B82F6] text-white"
+                                : "glass-card"
+                            }`}
+                          >
+                            <div className="text-base leading-relaxed whitespace-pre-line">
+                              {message.content.split(/(\*\*.*?\*\*)/).map((part, i) => {
+                                if (part.startsWith("**") && part.endsWith("**")) {
+                                  return <strong key={i} className="font-semibold">{part.slice(2, -2)}</strong>;
+                                }
+                                return part;
+                              })}
+                            </div>
+                          </div>
+                          
+                          {/* Resource Cards */}
+                          {message.role === "assistant" && message.resources && message.resources.length > 0 && (
+                            <div className="mt-5 space-y-4">
+                              <p className="text-sm font-medium text-[var(--foreground-muted)] uppercase tracking-wider">
+                                Recommended Resources
+                              </p>
+                              {message.resources.map((resourceId) => {
+                                const resource = resources.find(r => r.id === resourceId);
+                                return resource ? <AIResourceCard key={resourceId} resource={resource} /> : null;
+                              })}
+                            </div>
+                          )}
+                        </div>
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
+
+                  {isTyping && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="flex gap-5"
+                    >
+                      <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#3B82F6] to-[#1d4ed8]">
+                        <Sparkles className="h-6 w-6 text-white" />
+                      </div>
+                      <div className="glass-card rounded-2xl px-6 py-5">
+                        <div className="flex gap-2">
+                          <span className="h-2.5 w-2.5 animate-bounce rounded-full bg-[var(--foreground-muted)]" style={{ animationDelay: "0ms" }} />
+                          <span className="h-2.5 w-2.5 animate-bounce rounded-full bg-[var(--foreground-muted)]" style={{ animationDelay: "150ms" }} />
+                          <span className="h-2.5 w-2.5 animate-bounce rounded-full bg-[var(--foreground-muted)]" style={{ animationDelay: "300ms" }} />
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                  <div ref={messagesEndRef} />
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Input - Docked at Bottom */}
+          <div className="border-t border-[var(--border)] bg-[var(--background)]/80 backdrop-blur-xl">
+            <div className="px-10 lg:px-16 py-6">
+              <div className="glass-card flex items-center gap-4 rounded-2xl p-3">
+                <input
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && handleSend(input)}
+                  placeholder="Ask about housing, jobs, healthcare, transit..."
+                  className="flex-1 bg-transparent px-5 py-4 text-white placeholder:text-[var(--foreground-muted)] focus:outline-none text-lg"
+                />
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => handleSend(input)}
+                  disabled={!input.trim() || isTyping}
+                  className="flex h-14 w-14 items-center justify-center rounded-xl bg-[#3B82F6] text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-[#3B82F6]/30"
+                >
+                  <Send className="h-6 w-6" />
+                </motion.button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Side - Calgary Intelligence Panel (40%) - Desktop Only */}
+        <div className="hidden lg:flex w-[40%] border-l border-[var(--border)] bg-gradient-to-b from-[var(--background)] to-[var(--background-secondary)] flex-col">
+          <div className="flex-1 overflow-y-auto px-10 py-12">
+            {/* Calgary Insights Header */}
+            <div className="mb-10">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-xl bg-[#38BDF8]/20 flex items-center justify-center">
+                  <MapPin className="w-5 h-5 text-[#38BDF8]" />
+                </div>
+                <h2 className="text-2xl font-bold">Calgary Pulse</h2>
+              </div>
+              <p className="text-[var(--foreground-muted)]">Live insights from your city</p>
+            </div>
+
+            {/* Weather/Alert Card */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="glass-card rounded-2xl p-6 mb-6"
             >
-              <Send className="h-5 w-5" />
-            </motion.button>
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center">
+                  <CloudSnow className="w-6 h-6 text-blue-400" />
+                </div>
+                <div>
+                  <p className="font-semibold text-lg">Winter Weather</p>
+                  <p className="text-sm text-[var(--foreground-muted)]">-8°C, light snow expected</p>
+                </div>
+              </div>
+              <p className="text-sm text-[var(--foreground-muted)]">
+                Dress warmly! Free warming centers available at downtown shelters.
+              </p>
+            </motion.div>
+
+            {/* Live Stats */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="space-y-4 mb-10"
+            >
+              {calgaryInsights.map((insight, i) => (
+                <div key={i} className="flex items-center gap-4 p-4 rounded-xl bg-white/[0.03] border border-white/5">
+                  <insight.icon className={`w-5 h-5 ${insight.color}`} />
+                  <span className="text-sm font-medium">{insight.label}</span>
+                </div>
+              ))}
+            </motion.div>
+
+            {/* Popular Questions */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="mb-10"
+            >
+              <h3 className="text-lg font-semibold mb-5 flex items-center gap-2">
+                <TrendingUp className="w-5 h-5 text-[#FBBF24]" />
+                Popular This Week
+              </h3>
+              <div className="space-y-3">
+                {popularQuestions.map((question, i) => (
+                  <button
+                    key={i}
+                    onClick={() => handleSuggestionClick(question)}
+                    className="w-full text-left p-4 rounded-xl bg-white/[0.03] border border-white/5 hover:bg-white/[0.06] hover:border-white/10 transition-all text-sm text-[var(--foreground-muted)] hover:text-white"
+                  >
+                    {question}
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Calgary Tower Decorative Element */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="flex flex-col items-center py-8 opacity-40"
+            >
+              <svg className="w-16 h-40" viewBox="0 0 60 150">
+                <path d="M25 150 L25 60 L20 60 L30 0 L40 60 L35 60 L35 150 Z" fill="none" stroke="currentColor" strokeWidth="1" className="text-white/30" />
+                <ellipse cx="30" cy="45" rx="10" ry="5" fill="none" stroke="currentColor" strokeWidth="1" className="text-[#38BDF8]/50" />
+              </svg>
+              <div className="flex items-center gap-2 mt-4">
+                <Building2 className="w-4 h-4 text-[var(--foreground-muted)]" />
+                <span className="text-xs text-[var(--foreground-muted)]">Calgary Connect</span>
+              </div>
+            </motion.div>
+
+            {/* Bow River Decorative Line */}
+            <div className="mt-auto pt-8">
+              <svg className="w-full h-8 opacity-20" viewBox="0 0 300 30" preserveAspectRatio="none">
+                <path d="M0,15 Q75,0 150,15 T300,15" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#38BDF8]" />
+              </svg>
+            </div>
           </div>
         </div>
       </div>
@@ -341,43 +487,43 @@ function AIResourceCard({ resource }: { resource: Resource }) {
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="glass-card rounded-xl p-4"
+      className="glass-card rounded-xl p-5"
     >
-      <div className="flex items-start justify-between gap-3">
+      <div className="flex items-start justify-between gap-4">
         <div className="flex-1 min-w-0">
-          <div className="flex gap-1.5 mb-2">
+          <div className="flex gap-2 mb-3">
             {resource.category.slice(0, 2).map((cat) => (
               <span
                 key={cat}
-                className="px-2 py-0.5 rounded-full text-xs font-medium bg-[#3B82F6]/15 text-[#3B82F6]"
+                className="px-3 py-1 rounded-full text-xs font-medium bg-[#3B82F6]/15 text-[#3B82F6]"
               >
                 {categoryLabels[cat]?.[activeLanguage] || cat}
               </span>
             ))}
           </div>
-          <h4 className="font-semibold text-white mb-1">
+          <h4 className="font-semibold text-white text-lg mb-2">
             {resource.title[activeLanguage]}
           </h4>
-          <p className="text-xs text-[var(--foreground-muted)] line-clamp-2">
+          <p className="text-sm text-[var(--foreground-muted)] line-clamp-2">
             {resource.summary?.[activeLanguage] || resource.description[activeLanguage]}
           </p>
         </div>
         <button
           onClick={() => toggleBookmark(resource.id)}
-          className="text-xs text-[#3B82F6] font-medium flex items-center gap-1"
+          className="text-sm text-[#3B82F6] font-medium flex items-center gap-1 whitespace-nowrap"
         >
           {isBookmarked ? "Saved" : "Save"}
-          <ArrowRight className="w-3 h-3" />
+          <ArrowRight className="w-4 h-4" />
         </button>
       </div>
       
-      <div className="mt-3 flex flex-wrap gap-3">
+      <div className="mt-4 flex flex-wrap gap-4">
         {resource.phone && (
           <a
             href={`tel:${resource.phone}`}
-            className="flex items-center gap-1.5 text-xs text-[#3B82F6] hover:underline"
+            className="flex items-center gap-2 text-sm text-[#3B82F6] hover:underline"
           >
-            <Phone className="w-3.5 h-3.5" />
+            <Phone className="w-4 h-4" />
             {resource.phone}
           </a>
         )}
@@ -386,9 +532,9 @@ function AIResourceCard({ resource }: { resource: Resource }) {
             href={resource.website}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-xs text-[#3B82F6] hover:underline"
+            className="flex items-center gap-2 text-sm text-[#3B82F6] hover:underline"
           >
-            <ExternalLink className="w-3.5 h-3.5" />
+            <ExternalLink className="w-4 h-4" />
             Website
           </a>
         )}
