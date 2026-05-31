@@ -46,27 +46,35 @@ export default function LandingPage() {
     <div className="min-h-screen bg-hero">
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 glass">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-5 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-8 lg:px-16 py-6 flex items-center justify-between">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            className="flex items-center gap-3"
+            className="flex items-center gap-4"
           >
-            {/* Premium Logo - Calgary Tower inspired */}
+            {/* Premium Logo - Iconic Calgary Tower */}
             <div className="relative">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#38BDF8] to-[#0284c7] flex items-center justify-center shadow-lg shadow-sky-500/30">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" className="text-white">
-                  <path d="M12 2L8 8H16L12 2Z" fill="currentColor" />
-                  <rect x="10" y="8" width="4" height="12" fill="currentColor" />
-                  <rect x="8" y="18" width="8" height="4" rx="1" fill="currentColor" />
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#38BDF8] to-[#0284c7] flex items-center justify-center shadow-xl shadow-sky-500/30">
+                <svg width="32" height="32" viewBox="0 0 64 64" fill="none" className="text-white">
+                  {/* Calgary Tower - Iconic silhouette with observation deck */}
+                  <path d="M32 6L26 18H38L32 6Z" fill="currentColor" />
+                  <rect x="28" y="18" width="8" height="6" fill="currentColor" />
+                  <path d="M24 24H40V28L38 32H26L24 28V24Z" fill="currentColor" />
+                  <rect x="27" y="32" width="10" height="6" rx="1" fill="currentColor" />
+                  <rect x="29" y="38" width="6" height="18" fill="currentColor" />
+                  <ellipse cx="32" cy="58" rx="8" ry="2" fill="currentColor" opacity="0.4" />
+                  {/* Observation deck windows */}
+                  <rect x="26" y="25" width="2" height="2" rx="0.5" fill="#07111F" opacity="0.5" />
+                  <rect x="30" y="25" width="2" height="2" rx="0.5" fill="#07111F" opacity="0.5" />
+                  <rect x="34" y="25" width="2" height="2" rx="0.5" fill="#07111F" opacity="0.5" />
                 </svg>
               </div>
-              <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[#FBBF24] border-2 border-[#07111F]" />
+              <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-[#FBBF24] border-2 border-[#07111F]" />
             </div>
             <div>
               <span className="text-xl font-bold tracking-tight">Calgary Connect</span>
-              <span className="hidden sm:block text-sm text-[var(--foreground-muted)]">Your city, simplified</span>
+              <span className="hidden sm:block text-sm text-[var(--foreground-muted)] mt-1">Your city, simplified</span>
             </div>
           </motion.div>
 
@@ -77,7 +85,7 @@ export default function LandingPage() {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={handleGetStarted}
-            className="btn-primary px-7 py-3 rounded-full"
+            className="btn-primary px-8 py-4 rounded-full text-lg"
           >
             Get Started
           </motion.button>
@@ -116,21 +124,21 @@ export default function LandingPage() {
           </div>
         </div>
 
-        <div className="max-w-5xl mx-auto px-6 lg:px-10 text-center relative z-10">
+        <div className="max-w-5xl mx-auto px-8 lg:px-16 text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           >
-            {/* Hero headline - 56-72px */}
-            <h1 className="text-hero mb-8">
+            {/* Hero headline - 56-72px with generous line height */}
+            <h1 className="text-hero mb-10">
               Everything Calgary.
               <br />
               <span className="text-gradient-blue">One Place.</span>
             </h1>
 
-            {/* Subheadline - 20px */}
-            <p className="text-body-large text-[var(--foreground-muted)] max-w-3xl mx-auto mb-14 leading-relaxed">
+            {/* Subheadline - 20px with proper spacing */}
+            <p className="text-body-large text-[var(--foreground-muted)] max-w-3xl mx-auto mb-16 leading-relaxed">
               Find housing support, jobs, newcomer services, tenant help, mental health support, 
               businesses, local programs, verified information, and trusted guidance — all in one place.
             </p>
@@ -198,7 +206,7 @@ export default function LandingPage() {
 
       {/* SECTION 2: Quick Help - Large premium tiles */}
       <section className="section-spacing bg-section">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        <div className="max-w-7xl mx-auto px-8 lg:px-16">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -244,7 +252,7 @@ export default function LandingPage() {
       <section className="section-spacing relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-sky-500/5 to-transparent pointer-events-none" />
         
-        <div className="max-w-4xl mx-auto px-6 lg:px-10 relative z-10">
+        <div className="max-w-4xl mx-auto px-8 lg:px-16 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -304,7 +312,7 @@ export default function LandingPage() {
 
       {/* SECTION 4: Community Pulse */}
       <section className="section-spacing-sm">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        <div className="max-w-7xl mx-auto px-8 lg:px-16">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}

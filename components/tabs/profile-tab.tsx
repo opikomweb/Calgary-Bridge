@@ -44,46 +44,46 @@ export default function ProfileTab() {
   const roles: UserRole[] = ["newcomer", "senior", "business", "ngo", "creator", "family", "student"];
 
   return (
-    <div className="px-4 py-6 max-w-2xl mx-auto">
+    <div className="px-8 sm:px-12 lg:px-16 py-12 max-w-3xl mx-auto">
       {/* Profile Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-8"
+        className="mb-12"
       >
-        <div className="flex items-center gap-4 mb-6">
-          <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#0ea5e9] to-[#0284c7] flex items-center justify-center">
-            <User className="h-10 w-10 text-white" />
+        <div className="flex items-center gap-6 mb-10">
+          <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[#0ea5e9] to-[#0284c7] flex items-center justify-center shadow-xl shadow-sky-500/30">
+            <User className="h-12 w-12 text-white" />
           </div>
           <div className="flex-1">
             <input
               type="text"
               value={userName}
               onChange={(e) => setUserName(e.target.value)}
-              placeholder={t("yourName") || "Your name"}
-              className="text-xl font-semibold bg-transparent border-none outline-none w-full placeholder:text-[var(--foreground-muted)]"
+              placeholder="Your name"
+              className="text-2xl font-semibold bg-transparent border-none outline-none w-full placeholder:text-[var(--foreground-muted)]"
             />
-            <p className="text-sm text-[var(--foreground-muted)]">
-              {selectedRole ? roleLabels[selectedRole]?.[activeLanguage] || roleLabels[selectedRole]?.en : t("selectRole")}
+            <p className="text-base text-[var(--foreground-muted)] mt-1">
+              {selectedRole ? roleLabels[selectedRole]?.[activeLanguage] || roleLabels[selectedRole]?.en : "Select your role"}
             </p>
           </div>
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-3">
-          <div className="card-glass rounded-2xl p-4 text-center">
-            <p className="text-2xl font-bold text-[#0ea5e9]">{bookmarkedResources.length}</p>
-            <p className="text-xs text-[var(--foreground-muted)]">{t("saved") || "Saved"}</p>
+        <div className="grid grid-cols-3 gap-5">
+          <div className="premium-card p-6 text-center">
+            <p className="text-3xl font-bold text-[#0ea5e9]">{bookmarkedResources.length}</p>
+            <p className="text-sm text-[var(--foreground-muted)] mt-2">Saved</p>
           </div>
-          <div className="card-glass rounded-2xl p-4 text-center">
-            <p className="text-2xl font-bold text-[#22c55e]">{priorities.length}</p>
-            <p className="text-xs text-[var(--foreground-muted)]">{t("priorities") || "Priorities"}</p>
+          <div className="premium-card p-6 text-center">
+            <p className="text-3xl font-bold text-[#22c55e]">{priorities.length}</p>
+            <p className="text-sm text-[var(--foreground-muted)] mt-2">Priorities</p>
           </div>
-          <div className="card-glass rounded-2xl p-4 text-center">
-            <p className="text-2xl font-bold text-[#f59e0b]">
+          <div className="premium-card p-6 text-center">
+            <p className="text-3xl font-bold text-[#f59e0b]">
               {languageNames[activeLanguage]?.slice(0, 2) || "EN"}
             </p>
-            <p className="text-xs text-[var(--foreground-muted)]">{t("language") || "Language"}</p>
+            <p className="text-sm text-[var(--foreground-muted)] mt-2">Language</p>
           </div>
         </div>
       </motion.div>
@@ -93,23 +93,23 @@ export default function ProfileTab() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="mb-6"
+        className="mb-10"
       >
-        <h3 className="text-sm font-medium text-[var(--foreground-muted)] mb-3 px-1">
-          {t("selectLanguage") || "Language"}
+        <h3 className="text-lg font-semibold mb-5">
+          Language
         </h3>
-        <div className="card-glass rounded-2xl overflow-hidden">
+        <div className="premium-card overflow-hidden p-0">
           {languages.map((lang, index) => (
             <button
               key={lang}
               onClick={() => setActiveLanguage(lang)}
-              className={`w-full flex items-center justify-between px-4 py-3 transition-colors hover:bg-white/5 ${
+              className={`w-full flex items-center justify-between px-6 py-4 transition-colors hover:bg-white/5 ${
                 index !== languages.length - 1 ? "border-b border-[var(--border)]" : ""
               }`}
             >
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-4">
                 <Globe className="h-5 w-5 text-[var(--foreground-muted)]" />
-                <span>{languageNames[lang]}</span>
+                <span className="text-base">{languageNames[lang]}</span>
               </div>
               {activeLanguage === lang && (
                 <Check className="h-5 w-5 text-[#0ea5e9]" />
@@ -124,23 +124,23 @@ export default function ProfileTab() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.15 }}
-        className="mb-6"
+        className="mb-10"
       >
-        <h3 className="text-sm font-medium text-[var(--foreground-muted)] mb-3 px-1">
-          {t("selectRole") || "I am a..."}
+        <h3 className="text-lg font-semibold mb-5">
+          I am a...
         </h3>
-        <div className="card-glass rounded-2xl overflow-hidden">
+        <div className="premium-card overflow-hidden p-0">
           {roles.map((role, index) => (
             <button
               key={role}
               onClick={() => setSelectedRole(role)}
-              className={`w-full flex items-center justify-between px-4 py-3 transition-colors hover:bg-white/5 ${
+              className={`w-full flex items-center justify-between px-6 py-4 transition-colors hover:bg-white/5 ${
                 index !== roles.length - 1 ? "border-b border-[var(--border)]" : ""
               }`}
             >
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-4">
                 <User className="h-5 w-5 text-[var(--foreground-muted)]" />
-                <span>{roleLabels[role]?.[activeLanguage] || roleLabels[role]?.en}</span>
+                <span className="text-base">{roleLabels[role]?.[activeLanguage] || roleLabels[role]?.en}</span>
               </div>
               {selectedRole === role && (
                 <Check className="h-5 w-5 text-[#0ea5e9]" />
@@ -155,27 +155,27 @@ export default function ProfileTab() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="mb-6"
+        className="mb-10"
       >
-        <h3 className="text-sm font-medium text-[var(--foreground-muted)] mb-3 px-1">
-          {t("settings") || "Settings"}
+        <h3 className="text-lg font-semibold mb-5">
+          Settings
         </h3>
-        <div className="card-glass rounded-2xl overflow-hidden">
+        <div className="premium-card overflow-hidden p-0">
           <MenuItem
             icon={<Bell className="h-5 w-5" />}
-            label={t("notifications") || "Notifications"}
+            label="Notifications"
           />
           <MenuItem
             icon={<Shield className="h-5 w-5" />}
-            label={t("privacy") || "Privacy"}
+            label="Privacy"
           />
           <MenuItem
             icon={<HelpCircle className="h-5 w-5" />}
-            label={t("helpSupport") || "Help & Support"}
+            label="Help & Support"
           />
           <MenuItem
             icon={<Star className="h-5 w-5" />}
-            label={t("rateApp") || "Rate the App"}
+            label="Rate the App"
             isLast
           />
         </div>
@@ -189,15 +189,15 @@ export default function ProfileTab() {
       >
         <button
           onClick={handleSignOut}
-          className="w-full card-glass rounded-2xl px-4 py-4 flex items-center justify-center gap-2 text-[#ef4444] hover:bg-[#ef4444]/10 transition-colors"
+          className="w-full premium-card px-6 py-5 flex items-center justify-center gap-3 text-[#ef4444] hover:bg-[#ef4444]/10 transition-colors"
         >
           <LogOut className="h-5 w-5" />
-          <span className="font-medium">{t("signOut") || "Sign Out"}</span>
+          <span className="font-semibold text-lg">Sign Out</span>
         </button>
       </motion.div>
 
       {/* App Version */}
-      <p className="text-center text-xs text-[var(--foreground-muted)] mt-6">
+      <p className="text-center text-sm text-[var(--foreground-muted)] mt-10">
         Calgary Connect v1.0.0
       </p>
     </div>
@@ -215,13 +215,13 @@ function MenuItem({
 }) {
   return (
     <button
-      className={`w-full flex items-center justify-between px-4 py-3 transition-colors hover:bg-white/5 ${
+      className={`w-full flex items-center justify-between px-6 py-4 transition-colors hover:bg-white/5 ${
         !isLast ? "border-b border-[var(--border)]" : ""
       }`}
     >
-      <div className="flex items-center gap-3 text-[var(--foreground-muted)]">
+      <div className="flex items-center gap-4 text-[var(--foreground-muted)]">
         {icon}
-        <span className="text-[var(--foreground)]">{label}</span>
+        <span className="text-base text-[var(--foreground)]">{label}</span>
       </div>
       <ChevronRight className="h-5 w-5 text-[var(--foreground-muted)]" />
     </button>
