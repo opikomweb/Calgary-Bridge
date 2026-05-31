@@ -154,7 +154,7 @@ export default function HomeTab() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="text-[clamp(32px,7vw,56px)] font-bold tracking-[-0.02em] leading-[1.1]"
+            className="text-[clamp(32px,7vw,56px)] font-bold tracking-[-0.02em] leading-[1.1] text-center"
           >
             What do you need?
           </motion.h1>
@@ -163,7 +163,7 @@ export default function HomeTab() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15, duration: 0.6 }}
-            className="text-sm md:text-base text-white/40 mt-4 md:mt-6 mb-8 md:mb-10 max-w-sm mx-auto leading-relaxed"
+            className="text-sm md:text-base text-white/40 mt-4 md:mt-6 mb-8 md:mb-10 max-w-sm mx-auto leading-relaxed text-center"
           >
             Search for housing, jobs, healthcare, or ask the AI anything about Calgary.
           </motion.p>
@@ -273,7 +273,7 @@ export default function HomeTab() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="mb-8 md:mb-12 text-center"
+              className="mb-10 md:mb-14 lg:mb-16 text-center"
             >
               <p className="text-xs font-semibold text-[#38BDF8] uppercase tracking-[0.15em] mb-3">Start Here</p>
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight">What most Calgarians need.</h2>
