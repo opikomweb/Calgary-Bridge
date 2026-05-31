@@ -1,8 +1,12 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { Language, UserRole, Priority, ResourceNote, ChatMessage, TabType } from "./types";
+import type { Language, UserRole, Priority, ResourceNote, ChatMessage, TabType, PageType, ResourceCategory } from "./types";
 
 interface AppState {
+  // Page navigation
+  currentPage: PageType;
+  setCurrentPage: (page: PageType) => void;
+
   // Onboarding
   hasOnboarded: boolean;
   setHasOnboarded: (value: boolean) => void;
@@ -14,6 +18,8 @@ interface AppState {
   // User profile
   selectedRole: UserRole | null;
   setSelectedRole: (role: UserRole | null) => void;
+  userName: string;
+  setUserName: (name: string) => void;
   priorities: Priority[];
   setPriorities: (priorities: Priority[]) => void;
   togglePriority: (priority: Priority) => void;
@@ -41,17 +47,25 @@ interface AppState {
   setShowEmergency: (show: boolean) => void;
 
   // Active category filter
-  activeCategory: UserRole | "all";
-  setActiveCategory: (category: UserRole | "all") => void;
+  activeCategory: ResourceCategory | "all";
+  setActiveCategory: (category: ResourceCategory | "all") => void;
 
   // Search
   searchQuery: string;
   setSearchQuery: (query: string) => void;
+
+  // RentShield
+  rentShieldHistory: Array<{ type: string; result: string; date: Date }>;
+  addRentShieldResult: (type: string, result: string) => void;
 }
 
 export const useAppStore = create<AppState>()(
   persist(
     (set) => ({
+      // Page navigation
+      currentPage: "landing",
+      setCurrentPage: (page) => set({ currentPage: page }),
+
       // Onboarding
       hasOnboarded: false,
       setHasOnboarded: (value) => set({ hasOnboarded: value }),
@@ -63,6 +77,8 @@ export const useAppStore = create<AppState>()(
       // User profile
       selectedRole: null,
       setSelectedRole: (role) => set({ selectedRole: role }),
+      userName: "",
+      setUserName: (name) => set({ userName: name }),
       priorities: [],
       setPriorities: (priorities) => set({ priorities }),
       togglePriority: (priority) =>
@@ -135,6 +151,16 @@ export const useAppStore = create<AppState>()(
       // Search
       searchQuery: "",
       setSearchQuery: (query) => set({ searchQuery: query }),
+
+      // RentShield
+      rentShieldHistory: [],
+      addRentShieldResult: (type, result) =>
+        set((state) => ({
+          rentShieldHistory: [
+            ...state.rentShieldHistory,
+            { type, result, date: new Date() },
+          ],
+        })),
     }),
     {
       name: "calgary-connect-storage",
@@ -142,9 +168,11 @@ export const useAppStore = create<AppState>()(
         hasOnboarded: state.hasOnboarded,
         activeLanguage: state.activeLanguage,
         selectedRole: state.selectedRole,
+        userName: state.userName,
         priorities: state.priorities,
         bookmarkedResources: state.bookmarkedResources,
         resourceNotes: state.resourceNotes,
+        rentShieldHistory: state.rentShieldHistory,
       }),
     }
   )

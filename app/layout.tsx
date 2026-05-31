@@ -1,25 +1,48 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
+  display: "swap",
+});
+
+const plusJakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-heading",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Calgary Connect - Your City Resource Guide",
+  title: "Calgary Connect - Everything Calgary. One Place.",
   description:
-    "Navigate Calgary with ease. Find resources, connect with AI guidance, and track your integration journey.",
-  keywords: ["Calgary", "newcomers", "resources", "city services", "immigration"],
+    "Find services, support, opportunities, programs, local businesses, community resources, and trusted guidance—without searching dozens of websites.",
+  keywords: [
+    "Calgary",
+    "newcomers",
+    "resources",
+    "city services",
+    "immigration",
+    "housing",
+    "jobs",
+    "community",
+    "Calgary Bridge AI",
+  ],
+  openGraph: {
+    title: "Calgary Connect - Everything Calgary. One Place.",
+    description:
+      "Find services, support, opportunities, programs, local businesses, community resources, and trusted guidance.",
+    type: "website",
+  },
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
-  themeColor: "#0f172a",
+  maximumScale: 5,
+  userScalable: true,
+  themeColor: "#0B1020",
 };
 
 export default function RootLayout({
@@ -28,8 +51,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="bg-background">
-      <body className={`${inter.variable} font-sans antialiased`}>{children}</body>
+    <html lang="en" className="bg-[#0B1020]">
+      <body
+        className={`${inter.variable} ${plusJakarta.variable} font-sans antialiased`}
+      >
+        {children}
+      </body>
     </html>
   );
 }
