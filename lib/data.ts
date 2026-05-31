@@ -1,0 +1,540 @@
+import { Resource } from "./types";
+
+export const resources: Resource[] = [
+  {
+    id: "immigrant-services",
+    category: ["newcomer"],
+    title: {
+      en: "Immigrant Services Calgary",
+      fr: "Services aux immigrants de Calgary",
+      tl: "Mga Serbisyo sa Imigrante ng Calgary",
+      es: "Servicios de Inmigración Calgary",
+    },
+    description: {
+      en: "Settlement services, language training, and employment support for newcomers to Calgary.",
+      fr: "Services d'établissement, formation linguistique et soutien à l'emploi pour les nouveaux arrivants à Calgary.",
+      tl: "Mga serbisyo sa paninirahan, pagsasanay sa wika, at suporta sa trabaho para sa mga bagong dating sa Calgary.",
+      es: "Servicios de asentamiento, capacitación en idiomas y apoyo laboral para recién llegados a Calgary.",
+    },
+    phone: "403-265-1120",
+    address: "1200 10 Ave SW, Calgary, AB",
+    website: "https://immigrantservicescalgary.ca",
+  },
+  {
+    id: "ccis",
+    category: ["newcomer"],
+    title: {
+      en: "Calgary Catholic Immigration Society (CCIS)",
+      fr: "Société catholique d'immigration de Calgary (CCIS)",
+      tl: "Calgary Catholic Immigration Society (CCIS)",
+      es: "Sociedad Católica de Inmigración de Calgary (CCIS)",
+    },
+    description: {
+      en: "Comprehensive settlement and integration services for immigrants and refugees.",
+      fr: "Services complets d'établissement et d'intégration pour les immigrants et les réfugiés.",
+      tl: "Komprehensibong serbisyo sa paninirahan at integrasyon para sa mga imigrante at refugee.",
+      es: "Servicios integrales de asentamiento e integración para inmigrantes y refugiados.",
+    },
+    phone: "403-262-2006",
+    address: "120 17 Ave SW, Calgary, AB",
+    website: "https://ccis-calgary.ca",
+  },
+  {
+    id: "311",
+    category: ["newcomer", "senior", "business", "ngo", "creator"],
+    title: {
+      en: "City of Calgary 311",
+      fr: "Ville de Calgary 311",
+      tl: "Lungsod ng Calgary 311",
+      es: "Ciudad de Calgary 311",
+    },
+    description: {
+      en: "Access city services, report issues, and get information about municipal programs.",
+      fr: "Accédez aux services municipaux, signalez des problèmes et obtenez des informations sur les programmes municipaux.",
+      tl: "I-access ang mga serbisyo ng lungsod, mag-ulat ng mga isyu, at kumuha ng impormasyon tungkol sa mga programa ng munisipyo.",
+      es: "Acceda a servicios de la ciudad, reporte problemas y obtenga información sobre programas municipales.",
+    },
+    phone: "311",
+    website: "https://www.calgary.ca/311.html",
+  },
+  {
+    id: "kerby-centre",
+    category: ["senior"],
+    title: {
+      en: "Kerby Centre",
+      fr: "Centre Kerby",
+      tl: "Kerby Centre",
+      es: "Centro Kerby",
+    },
+    description: {
+      en: "Comprehensive services for seniors including wellness programs, education, and social activities.",
+      fr: "Services complets pour les aînés, y compris des programmes de bien-être, d'éducation et d'activités sociales.",
+      tl: "Komprehensibong serbisyo para sa mga nakatatanda kabilang ang mga programa sa kalusugan, edukasyon, at mga aktibidad panlipunan.",
+      es: "Servicios integrales para personas mayores, incluyendo programas de bienestar, educación y actividades sociales.",
+    },
+    phone: "403-265-0661",
+    address: "1133 7 Ave SW, Calgary, AB",
+    website: "https://www.kerbycentre.com",
+  },
+  {
+    id: "age-care",
+    category: ["senior"],
+    title: {
+      en: "Age Care Calgary",
+      fr: "Age Care Calgary",
+      tl: "Age Care Calgary",
+      es: "Age Care Calgary",
+    },
+    description: {
+      en: "Senior living communities offering independent living, assisted living, and memory care.",
+      fr: "Communautés de vie pour personnes âgées offrant vie indépendante, vie assistée et soins de la mémoire.",
+      tl: "Mga komunidad ng pamumuhay para sa mga nakatatanda na nag-aalok ng independyenteng pamumuhay, tulong sa pamumuhay, at pangangalaga sa memorya.",
+      es: "Comunidades de vida para personas mayores que ofrecen vida independiente, vida asistida y cuidado de la memoria.",
+    },
+    phone: "403-268-3200",
+    address: "Multiple Locations",
+    website: "https://www.agecare.ca",
+  },
+  {
+    id: "business-link",
+    category: ["business"],
+    title: {
+      en: "Business Link Alberta",
+      fr: "Business Link Alberta",
+      tl: "Business Link Alberta",
+      es: "Business Link Alberta",
+    },
+    description: {
+      en: "Free business advice and resources for entrepreneurs starting or growing a business in Alberta.",
+      fr: "Conseils commerciaux gratuits et ressources pour les entrepreneurs qui démarrent ou développent une entreprise en Alberta.",
+      tl: "Libreng payo sa negosyo at mga mapagkukunan para sa mga entrepreneur na nagsisimula o nagpapalaki ng negosyo sa Alberta.",
+      es: "Asesoramiento empresarial gratuito y recursos para emprendedores que inician o hacen crecer un negocio en Alberta.",
+    },
+    phone: "1-800-272-9675",
+    website: "https://businesslink.ca",
+  },
+  {
+    id: "calgary-chamber",
+    category: ["business"],
+    title: {
+      en: "Calgary Chamber of Commerce",
+      fr: "Chambre de commerce de Calgary",
+      tl: "Kapulungan ng Kalakalan ng Calgary",
+      es: "Cámara de Comercio de Calgary",
+    },
+    description: {
+      en: "Networking, advocacy, and resources for Calgary businesses of all sizes.",
+      fr: "Réseautage, plaidoyer et ressources pour les entreprises de Calgary de toutes tailles.",
+      tl: "Networking, advocacy, at mga mapagkukunan para sa mga negosyo sa Calgary ng lahat ng laki.",
+      es: "Networking, defensa y recursos para empresas de Calgary de todos los tamaños.",
+    },
+    phone: "403-750-0400",
+    address: "600 238 11 Ave SE, Calgary, AB",
+    website: "https://www.calgarychamber.com",
+  },
+  {
+    id: "calgary-foundation",
+    category: ["ngo"],
+    title: {
+      en: "Calgary Foundation",
+      fr: "Fondation de Calgary",
+      tl: "Calgary Foundation",
+      es: "Fundación Calgary",
+    },
+    description: {
+      en: "Community foundation offering grants, scholarships, and resources for nonprofit organizations.",
+      fr: "Fondation communautaire offrant des subventions, des bourses et des ressources pour les organismes sans but lucratif.",
+      tl: "Foundation ng komunidad na nag-aalok ng mga grant, scholarship, at mga mapagkukunan para sa mga nonprofit na organisasyon.",
+      es: "Fundación comunitaria que ofrece subvenciones, becas y recursos para organizaciones sin fines de lucro.",
+    },
+    phone: "403-802-7700",
+    address: "1180 615 Macleod Trail SE, Calgary, AB",
+    website: "https://calgaryfoundation.org",
+  },
+  {
+    id: "united-way",
+    category: ["ngo"],
+    title: {
+      en: "United Way of Calgary",
+      fr: "Centraide de Calgary",
+      tl: "United Way ng Calgary",
+      es: "United Way de Calgary",
+    },
+    description: {
+      en: "Supporting local agencies and initiatives to create lasting change in Calgary communities.",
+      fr: "Soutenir les agences et initiatives locales pour créer un changement durable dans les communautés de Calgary.",
+      tl: "Sumusuporta sa mga lokal na ahensya at inisyatiba upang lumikha ng pangmatagalang pagbabago sa mga komunidad ng Calgary.",
+      es: "Apoyando agencias e iniciativas locales para crear un cambio duradero en las comunidades de Calgary.",
+    },
+    phone: "403-231-6265",
+    address: "600 105 12 Ave SE, Calgary, AB",
+    website: "https://calgaryunitedway.org",
+  },
+  {
+    id: "platform-calgary",
+    category: ["creator", "business"],
+    title: {
+      en: "Platform Calgary",
+      fr: "Platform Calgary",
+      tl: "Platform Calgary",
+      es: "Platform Calgary",
+    },
+    description: {
+      en: "Innovation hub supporting startups, tech companies, and creative entrepreneurs.",
+      fr: "Pôle d'innovation soutenant les startups, les entreprises technologiques et les entrepreneurs créatifs.",
+      tl: "Innovation hub na sumusuporta sa mga startup, tech company, at mga creative na entrepreneur.",
+      es: "Centro de innovación que apoya a startups, empresas tecnológicas y emprendedores creativos.",
+    },
+    phone: "403-218-0447",
+    address: "421 7 Ave SE, Calgary, AB",
+    website: "https://www.platformcalgary.com",
+  },
+  {
+    id: "arts-commons",
+    category: ["creator"],
+    title: {
+      en: "Arts Commons",
+      fr: "Arts Commons",
+      tl: "Arts Commons",
+      es: "Arts Commons",
+    },
+    description: {
+      en: "Performing arts center with venues, programs, and resources for artists and creators.",
+      fr: "Centre des arts de la scène avec des salles, des programmes et des ressources pour les artistes et les créateurs.",
+      tl: "Sentro ng mga performing arts na may mga venue, programa, at mga mapagkukunan para sa mga artista at creator.",
+      es: "Centro de artes escénicas con lugares, programas y recursos para artistas y creadores.",
+    },
+    phone: "403-294-7455",
+    address: "205 8 Ave SE, Calgary, AB",
+    website: "https://artscommons.ca",
+  },
+  {
+    id: "alberta-health",
+    category: ["newcomer", "senior"],
+    title: {
+      en: "Alberta Health Services",
+      fr: "Services de santé de l'Alberta",
+      tl: "Alberta Health Services",
+      es: "Servicios de Salud de Alberta",
+    },
+    description: {
+      en: "Healthcare services, clinics, and health information for Alberta residents.",
+      fr: "Services de soins de santé, cliniques et informations sur la santé pour les résidents de l'Alberta.",
+      tl: "Mga serbisyo sa pangangalagang pangkalusugan, klinika, at impormasyon sa kalusugan para sa mga residente ng Alberta.",
+      es: "Servicios de atención médica, clínicas e información de salud para residentes de Alberta.",
+    },
+    phone: "811",
+    website: "https://www.albertahealthservices.ca",
+  },
+];
+
+export const languageNames: Record<string, string> = {
+  en: "English",
+  fr: "Français",
+  tl: "Tagalog",
+  es: "Español",
+};
+
+export const roleLabels: Record<string, Record<string, string>> = {
+  newcomer: {
+    en: "Newcomer",
+    fr: "Nouvel arrivant",
+    tl: "Bagong Dating",
+    es: "Recién Llegado",
+  },
+  senior: {
+    en: "Senior",
+    fr: "Aîné",
+    tl: "Nakatatanda",
+    es: "Adulto Mayor",
+  },
+  business: {
+    en: "Business Owner",
+    fr: "Propriétaire d'entreprise",
+    tl: "May-ari ng Negosyo",
+    es: "Dueño de Negocio",
+  },
+  ngo: {
+    en: "NGO",
+    fr: "ONG",
+    tl: "NGO",
+    es: "ONG",
+  },
+  creator: {
+    en: "Creator",
+    fr: "Créateur",
+    tl: "Creator",
+    es: "Creador",
+  },
+};
+
+export const priorityLabels: Record<string, Record<string, string>> = {
+  housing: {
+    en: "Housing",
+    fr: "Logement",
+    tl: "Pabahay",
+    es: "Vivienda",
+  },
+  jobs: {
+    en: "Jobs",
+    fr: "Emplois",
+    tl: "Trabaho",
+    es: "Empleos",
+  },
+  volunteering: {
+    en: "Volunteering",
+    fr: "Bénévolat",
+    tl: "Pagboluntaryo",
+    es: "Voluntariado",
+  },
+  healthcare: {
+    en: "Healthcare",
+    fr: "Soins de santé",
+    tl: "Pangangalagang Pangkalusugan",
+    es: "Atención Médica",
+  },
+  education: {
+    en: "Education",
+    fr: "Éducation",
+    tl: "Edukasyon",
+    es: "Educación",
+  },
+  legal: {
+    en: "Legal Aid",
+    fr: "Aide juridique",
+    tl: "Tulong Legal",
+    es: "Asistencia Legal",
+  },
+  community: {
+    en: "Community",
+    fr: "Communauté",
+    tl: "Komunidad",
+    es: "Comunidad",
+  },
+};
+
+export const uiText: Record<string, Record<string, string>> = {
+  welcome: {
+    en: "Welcome to Calgary",
+    fr: "Bienvenue à Calgary",
+    tl: "Maligayang Pagdating sa Calgary",
+    es: "Bienvenido a Calgary",
+  },
+  selectLanguage: {
+    en: "Select your preferred language",
+    fr: "Sélectionnez votre langue préférée",
+    tl: "Piliin ang iyong gustong wika",
+    es: "Seleccione su idioma preferido",
+  },
+  whoAreYou: {
+    en: "Who are you?",
+    fr: "Qui êtes-vous?",
+    tl: "Sino ka?",
+    es: "¿Quién eres?",
+  },
+  selectIdentity: {
+    en: "Tell us about yourself so we can personalize your experience",
+    fr: "Parlez-nous de vous afin que nous puissions personnaliser votre expérience",
+    tl: "Sabihin mo sa amin ang tungkol sa iyong sarili upang ma-personalize namin ang iyong karanasan",
+    es: "Cuéntanos sobre ti para personalizar tu experiencia",
+  },
+  whatMatters: {
+    en: "What matters to you?",
+    fr: "Qu'est-ce qui compte pour vous?",
+    tl: "Ano ang mahalaga sa iyo?",
+    es: "¿Qué te importa?",
+  },
+  selectPriorities: {
+    en: "Select your priorities and we will help you find the right resources",
+    fr: "Sélectionnez vos priorités et nous vous aiderons à trouver les bonnes ressources",
+    tl: "Piliin ang iyong mga prioridad at tutulungan ka naming mahanap ang tamang mga mapagkukunan",
+    es: "Seleccione sus prioridades y le ayudaremos a encontrar los recursos adecuados",
+  },
+  ready: {
+    en: "You are all set!",
+    fr: "Vous êtes prêt!",
+    tl: "Handa ka na!",
+    es: "¡Estás listo!",
+  },
+  getStarted: {
+    en: "Get Started",
+    fr: "Commencer",
+    tl: "Magsimula",
+    es: "Comenzar",
+  },
+  next: {
+    en: "Next",
+    fr: "Suivant",
+    tl: "Susunod",
+    es: "Siguiente",
+  },
+  back: {
+    en: "Back",
+    fr: "Retour",
+    tl: "Bumalik",
+    es: "Atrás",
+  },
+  search: {
+    en: "Search resources...",
+    fr: "Rechercher des ressources...",
+    tl: "Maghanap ng mga mapagkukunan...",
+    es: "Buscar recursos...",
+  },
+  call: {
+    en: "Call",
+    fr: "Appeler",
+    tl: "Tawagan",
+    es: "Llamar",
+  },
+  directions: {
+    en: "Directions",
+    fr: "Itinéraire",
+    tl: "Direksyon",
+    es: "Direcciones",
+  },
+  visitSite: {
+    en: "Visit Site",
+    fr: "Visiter le site",
+    tl: "Bisitahin ang Site",
+    es: "Visitar Sitio",
+  },
+  home: {
+    en: "Home",
+    fr: "Accueil",
+    tl: "Bahay",
+    es: "Inicio",
+  },
+  aiGuide: {
+    en: "AI Guide",
+    fr: "Guide IA",
+    tl: "AI Guide",
+    es: "Guía IA",
+  },
+  shortlist: {
+    en: "Shortlist",
+    fr: "Favoris",
+    tl: "Shortlist",
+    es: "Favoritos",
+  },
+  emergency: {
+    en: "Emergency",
+    fr: "Urgence",
+    tl: "Emergency",
+    es: "Emergencia",
+  },
+  noBookmarks: {
+    en: "No saved resources yet",
+    fr: "Aucune ressource enregistrée",
+    tl: "Wala pang naka-save na mapagkukunan",
+    es: "Sin recursos guardados",
+  },
+  addNotes: {
+    en: "Add personal notes...",
+    fr: "Ajouter des notes personnelles...",
+    tl: "Magdagdag ng mga personal na tala...",
+    es: "Agregar notas personales...",
+  },
+  markDone: {
+    en: "Mark as done",
+    fr: "Marquer comme terminé",
+    tl: "Markahan bilang tapos",
+    es: "Marcar como hecho",
+  },
+  askQuestion: {
+    en: "Ask me anything about Calgary...",
+    fr: "Demandez-moi n'importe quoi sur Calgary...",
+    tl: "Tanungin mo ako ng kahit ano tungkol sa Calgary...",
+    es: "Pregúntame lo que sea sobre Calgary...",
+  },
+};
+
+export const emergencyContacts = [
+  {
+    id: "911",
+    name: "Emergency Services",
+    number: "911",
+    description: {
+      en: "Police, Fire, Ambulance",
+      fr: "Police, Pompiers, Ambulance",
+      tl: "Pulis, Bumbero, Ambulansya",
+      es: "Policía, Bomberos, Ambulancia",
+    },
+  },
+  {
+    id: "211",
+    name: "Community Resources",
+    number: "211",
+    description: {
+      en: "Connect to community services",
+      fr: "Connectez-vous aux services communautaires",
+      tl: "Kumonekta sa mga serbisyo ng komunidad",
+      es: "Conéctese a servicios comunitarios",
+    },
+  },
+  {
+    id: "311",
+    name: "City Services",
+    number: "311",
+    description: {
+      en: "City of Calgary services",
+      fr: "Services de la Ville de Calgary",
+      tl: "Mga serbisyo ng Lungsod ng Calgary",
+      es: "Servicios de la Ciudad de Calgary",
+    },
+  },
+  {
+    id: "811",
+    name: "Health Link",
+    number: "811",
+    description: {
+      en: "24/7 health advice",
+      fr: "Conseils santé 24/7",
+      tl: "24/7 payo sa kalusugan",
+      es: "Consejos de salud 24/7",
+    },
+  },
+  {
+    id: "doap",
+    name: "DOAP Team",
+    number: "403-998-7388",
+    description: {
+      en: "Downtown Outreach Addictions Partnership",
+      fr: "Partenariat de proximité contre les dépendances",
+      tl: "Downtown Outreach Addictions Partnership",
+      es: "Equipo de Asistencia de Adicciones",
+    },
+  },
+];
+
+export const aiSuggestions = [
+  {
+    en: "How do I get a transit pass?",
+    fr: "Comment obtenir un titre de transport?",
+    tl: "Paano ako makakakuha ng transit pass?",
+    es: "¿Cómo obtengo un pase de transporte?",
+  },
+  {
+    en: "Winter clothing advice",
+    fr: "Conseils vestimentaires d'hiver",
+    tl: "Payo sa damit pang-taglamig",
+    es: "Consejos de ropa de invierno",
+  },
+  {
+    en: "Find a family doctor",
+    fr: "Trouver un médecin de famille",
+    tl: "Maghanap ng family doctor",
+    es: "Encontrar un médico familiar",
+  },
+  {
+    en: "Open a bank account",
+    fr: "Ouvrir un compte bancaire",
+    tl: "Magbukas ng bank account",
+    es: "Abrir una cuenta bancaria",
+  },
+  {
+    en: "Register for ESL classes",
+    fr: "S'inscrire aux cours d'ALS",
+    tl: "Mag-enroll sa ESL classes",
+    es: "Inscribirse en clases de ESL",
+  },
+];
