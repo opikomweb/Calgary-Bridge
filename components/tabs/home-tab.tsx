@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { useAppStore } from "@/lib/store";
 import { resources } from "@/lib/data";
-import { Search, ArrowRight, Sparkles, MapPin, ChevronRight } from "lucide-react";
+import { Search, ArrowRight, Sparkles, MapPin, ChevronRight, Home, Briefcase, Heart, Users } from "lucide-react";
 import ResourceCard from "../resource-card";
 
 export default function HomeTab() {
@@ -20,67 +20,131 @@ export default function HomeTab() {
       )
     : [];
 
-  // Solution-first pathways — what users actually need, not organization names
+  // Solution-first pathways with icons
   const pathways = [
     {
       id: "housing",
+      icon: Home,
       solution: "Find Housing & Rent Support",
-      description: "Affordable rentals, subsidized programs, tenant help",
-      gradient: "from-sky-900/80 to-sky-800/60",
+      description: "Affordable rentals, subsidized programs, rent supplements, and tenant assistance",
+      gradient: "from-sky-600/90 via-sky-700/80 to-sky-900/90",
       accent: "#38BDF8",
       stats: "12 programs",
+      glow: "shadow-sky-500/20",
     },
     {
       id: "jobs",
+      icon: Briefcase,
       solution: "Looking for Work?",
-      description: "Resume help, hiring companies, job fairs, training",
-      gradient: "from-amber-900/80 to-amber-800/60",
+      description: "Resume building, job fairs, skills training, career counseling, and hiring companies",
+      gradient: "from-amber-500/90 via-amber-600/80 to-amber-800/90",
       accent: "#FBBF24",
       stats: "340+ openings",
+      glow: "shadow-amber-500/20",
     },
     {
       id: "health",
+      icon: Heart,
       solution: "Get Healthcare Access",
-      description: "Walk-in clinics, family doctors, mental health",
-      gradient: "from-emerald-900/80 to-emerald-800/60",
+      description: "Walk-in clinics, family doctors, mental health support, and Alberta Health registration",
+      gradient: "from-emerald-500/90 via-emerald-600/80 to-emerald-800/90",
       accent: "#34D399",
       stats: "24/7 available",
+      glow: "shadow-emerald-500/20",
     },
     {
       id: "newcomer",
+      icon: Users,
       solution: "New to Calgary?",
-      description: "Settlement services, language classes, community",
-      gradient: "from-cyan-900/80 to-cyan-800/60",
+      description: "Settlement services, language classes, community connections, and integration support",
+      gradient: "from-cyan-500/90 via-cyan-600/80 to-cyan-800/90",
       accent: "#22D3EE",
       stats: "10 orgs",
+      glow: "shadow-cyan-500/20",
     },
   ];
 
-  // Specialized pathways — second tier
+  // Specialized pathways
   const specialized = [
-    { id: "tenant", label: "Tenant Rights", description: "Lease help, rent disputes" },
-    { id: "family", label: "Family & Kids", description: "Daycare, youth programs" },
-    { id: "seniors", label: "Seniors", description: "Home care, transportation" },
-    { id: "emergency", label: "Emergency Help", description: "Crisis lines, shelters" },
+    { id: "tenant", label: "Tenant Rights", description: "Lease help, rent disputes, eviction support", icon: "scale" },
+    { id: "family", label: "Family & Kids", description: "Daycare, youth programs, family activities", icon: "heart" },
+    { id: "seniors", label: "Seniors", description: "Home care, transportation, social programs", icon: "users" },
+    { id: "emergency", label: "Emergency Help", description: "Crisis lines, shelters, urgent support", icon: "alert" },
   ];
 
   return (
-    <div className="min-h-screen bg-[#07111F]">
+    <div className="min-h-screen relative overflow-hidden">
+      
+      {/* ========== ANIMATED CALGARY BACKGROUND ========== */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        {/* Aurora borealis effect */}
+        <motion.div
+          animate={{
+            opacity: [0.3, 0.5, 0.3],
+            scale: [1, 1.1, 1],
+          }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-0 left-1/4 w-[600px] h-[400px] bg-gradient-radial from-sky-500/20 via-sky-500/5 to-transparent rounded-full blur-3xl"
+        />
+        <motion.div
+          animate={{
+            opacity: [0.2, 0.4, 0.2],
+            scale: [1.1, 1, 1.1],
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          className="absolute top-20 right-1/4 w-[500px] h-[300px] bg-gradient-radial from-cyan-500/15 via-cyan-500/5 to-transparent rounded-full blur-3xl"
+        />
+        <motion.div
+          animate={{
+            opacity: [0.15, 0.3, 0.15],
+          }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 4 }}
+          className="absolute bottom-1/3 left-1/3 w-[400px] h-[400px] bg-gradient-radial from-amber-500/10 via-amber-500/5 to-transparent rounded-full blur-3xl"
+        />
+        
+        {/* Floating particles */}
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            initial={{ 
+              x: `${(i * 5) % 100}%`, 
+              y: "100%",
+              opacity: 0 
+            }}
+            animate={{ 
+              y: "-10%",
+              opacity: [0, 0.6, 0.4, 0],
+            }}
+            transition={{ 
+              duration: 15 + (i % 10),
+              repeat: Infinity,
+              delay: i * 0.8,
+              ease: "linear"
+            }}
+            className="absolute w-1 h-1 bg-sky-400/60 rounded-full"
+            style={{ left: `${(i * 5.2) % 95}%` }}
+          />
+        ))}
+        
+        {/* Subtle grid pattern */}
+        <div 
+          className="absolute inset-0 opacity-[0.02]"
+          style={{
+            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+            backgroundSize: '60px 60px'
+          }}
+        />
+      </div>
 
-      {/* ========== HERO SEARCH — Apple Spotlight style ========== */}
-      <section className="relative pt-16 pb-20 md:pt-24 md:pb-28 overflow-hidden">
-        {/* Background atmosphere */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#38BDF8]/10 rounded-full blur-[150px]" />
-        </div>
-
-        <div className="max-w-[900px] mx-auto px-8 relative z-10 text-center">
-          {/* Main headline */}
+      {/* ========== HERO SEARCH ========== */}
+      <section className="relative pt-20 pb-28 md:pt-28 md:pb-36">
+        <div className="max-w-[900px] mx-auto px-8 lg:px-12 relative z-10 text-center">
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="text-[clamp(36px,8vw,56px)] font-bold tracking-[-0.03em] leading-[1.08] mb-6"
+            className="text-[clamp(40px,10vw,64px)] font-bold tracking-[-0.03em] leading-[1.05] mb-8"
           >
             What do you need?
           </motion.h1>
@@ -89,25 +153,25 @@ export default function HomeTab() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.6 }}
-            className="text-xl text-[var(--foreground-muted)] mb-12 max-w-xl mx-auto"
+            className="text-xl md:text-2xl text-[var(--foreground-muted)] mb-14 max-w-2xl mx-auto leading-relaxed"
           >
             Search for housing, jobs, healthcare, or ask the AI anything about Calgary.
           </motion.p>
 
-          {/* Giant search bar — 80px */}
+          {/* Giant search bar */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
             className="relative max-w-2xl mx-auto"
           >
-            <Search className="absolute left-7 top-1/2 -translate-y-1/2 w-6 h-6 text-[var(--foreground-muted)]" />
+            <Search className="absolute left-8 top-1/2 -translate-y-1/2 w-7 h-7 text-[var(--foreground-muted)]" />
             <input
               type="text"
               placeholder="My landlord won't fix the heat..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full h-20 bg-white/[0.06] hover:bg-white/[0.08] border border-white/10 hover:border-white/15 focus:border-[#38BDF8]/50 focus:bg-white/[0.08] rounded-3xl text-xl text-white placeholder:text-[var(--foreground-muted)]/70 pl-[68px] pr-8 outline-none transition-all duration-300 focus:shadow-[0_0_0_4px_rgba(56,189,248,0.12),0_20px_40px_-12px_rgba(0,0,0,0.4)]"
+              className="w-full h-[88px] bg-white/[0.06] hover:bg-white/[0.08] border border-white/10 hover:border-white/15 focus:border-[#38BDF8]/50 focus:bg-white/[0.08] rounded-[28px] text-xl md:text-2xl text-white placeholder:text-[var(--foreground-muted)]/60 pl-[76px] pr-10 outline-none transition-all duration-300 focus:shadow-[0_0_0_4px_rgba(56,189,248,0.12),0_24px_48px_-12px_rgba(0,0,0,0.5)]"
             />
           </motion.div>
 
@@ -117,13 +181,13 @@ export default function HomeTab() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
-              className="flex flex-wrap justify-center gap-3 mt-8"
+              className="flex flex-wrap justify-center gap-4 mt-10"
             >
               {["I need childcare", "Jobs hiring now", "Family activities"].map((q) => (
                 <button
                   key={q}
                   onClick={() => setSearchQuery(q)}
-                  className="px-5 py-3 rounded-full bg-white/[0.04] border border-white/[0.08] text-sm text-[var(--foreground-muted)] hover:bg-white/[0.08] hover:border-white/[0.15] hover:text-white transition-all"
+                  className="px-6 py-4 rounded-2xl bg-white/[0.04] border border-white/[0.08] text-base text-[var(--foreground-muted)] hover:bg-white/[0.08] hover:border-white/[0.15] hover:text-white transition-all duration-300"
                 >
                   {q}
                 </button>
@@ -135,18 +199,18 @@ export default function HomeTab() {
 
       {/* Search results */}
       {searchQuery && (
-        <section className="px-8 pb-20 max-w-[1200px] mx-auto">
-          <div className="flex items-center justify-between mb-10">
-            <h2 className="text-2xl font-bold">Results for &quot;{searchQuery}&quot;</h2>
+        <section className="px-8 lg:px-12 pb-24 max-w-[1400px] mx-auto relative z-10">
+          <div className="flex items-center justify-between mb-12">
+            <h2 className="text-3xl font-bold">Results for &quot;{searchQuery}&quot;</h2>
             <button
               onClick={() => setSearchQuery("")}
-              className="text-[#38BDF8] font-medium hover:underline"
+              className="text-[#38BDF8] text-lg font-semibold hover:underline"
             >
               Clear
             </button>
           </div>
           {filteredResources.length > 0 ? (
-            <div className="grid lg:grid-cols-2 gap-6">
+            <div className="grid lg:grid-cols-2 gap-8">
               {filteredResources.slice(0, 8).map((resource, i) => (
                 <motion.div
                   key={resource.id}
@@ -159,11 +223,11 @@ export default function HomeTab() {
               ))}
             </div>
           ) : (
-            <div className="text-center py-20">
-              <p className="text-xl text-[var(--foreground-muted)]">No results found</p>
+            <div className="text-center py-24">
+              <p className="text-2xl text-[var(--foreground-muted)]">No results found</p>
               <button
                 onClick={() => setActiveTab("ai")}
-                className="mt-6 px-6 py-3 rounded-xl bg-[#38BDF8] text-[#07111F] font-semibold"
+                className="mt-8 px-8 py-4 rounded-2xl bg-[#38BDF8] text-[#07111F] text-lg font-semibold"
               >
                 Ask the AI instead
               </button>
@@ -172,129 +236,154 @@ export default function HomeTab() {
         </section>
       )}
 
-      {/* ========== MAIN CONTENT — only when not searching ========== */}
+      {/* ========== MAIN CONTENT ========== */}
       {!searchQuery && (
         <>
-          {/* ========== SOLUTION PATHWAYS — Immersive cards ========== */}
-          <section className="px-8 pb-24 max-w-[1400px] mx-auto">
+          {/* ========== SOLUTION PATHWAYS ========== */}
+          <section className="px-8 lg:px-12 pb-32 max-w-[1400px] mx-auto relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="mb-12"
+              className="mb-16"
             >
-              <p className="text-sm font-semibold text-[#38BDF8] uppercase tracking-widest mb-3">Start Here</p>
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">What most Calgarians need.</h2>
+              <p className="text-sm font-semibold text-[#38BDF8] uppercase tracking-[0.2em] mb-4">Start Here</p>
+              <h2 className="text-4xl md:text-5xl font-bold tracking-tight">What most Calgarians need.</h2>
             </motion.div>
 
             {/* 2x2 grid of large pathway cards */}
-            <div className="grid md:grid-cols-2 gap-6">
-              {pathways.map((pathway, index) => (
-                <motion.button
-                  key={pathway.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.35 + index * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                  whileHover={{ scale: 1.015, y: -4 }}
-                  whileTap={{ scale: 0.99 }}
-                  onClick={() => setActiveTab("explore")}
-                  className={`group relative overflow-hidden rounded-3xl text-left bg-gradient-to-br ${pathway.gradient} border border-white/[0.08] hover:border-white/[0.15] transition-all duration-400`}
-                  style={{ minHeight: "220px" }}
-                >
-                  {/* Glow effect on hover */}
-                  <div 
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                    style={{ background: `radial-gradient(circle at 30% 50%, ${pathway.accent}15 0%, transparent 60%)` }}
-                  />
-
-                  <div className="relative z-10 p-8 md:p-10 h-full flex flex-col">
-                    <div className="flex-1">
-                      <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">{pathway.solution}</h3>
-                      <p className="text-base text-white/70">{pathway.description}</p>
-                    </div>
+            <div className="grid md:grid-cols-2 gap-8">
+              {pathways.map((pathway, index) => {
+                const Icon = pathway.icon;
+                return (
+                  <motion.button
+                    key={pathway.id}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.35 + index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                    whileHover={{ scale: 1.02, y: -8 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => setActiveTab("explore")}
+                    className={`group relative overflow-hidden rounded-[32px] text-left bg-gradient-to-br ${pathway.gradient} border border-white/[0.1] hover:border-white/[0.2] transition-all duration-500 shadow-2xl ${pathway.glow}`}
+                    style={{ minHeight: "280px" }}
+                  >
+                    {/* Animated glow on hover */}
+                    <div 
+                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                      style={{ background: `radial-gradient(circle at 20% 50%, ${pathway.accent}25 0%, transparent 60%)` }}
+                    />
                     
-                    <div className="flex items-center justify-between mt-8">
-                      <span 
-                        className="text-sm font-semibold px-4 py-2 rounded-full"
-                        style={{ backgroundColor: `${pathway.accent}20`, color: pathway.accent }}
+                    {/* Subtle pattern overlay */}
+                    <div className="absolute inset-0 opacity-10"
+                      style={{
+                        backgroundImage: `radial-gradient(circle at 2px 2px, white 1px, transparent 0)`,
+                        backgroundSize: '32px 32px'
+                      }}
+                    />
+
+                    <div className="relative z-10 p-10 md:p-12 h-full flex flex-col">
+                      {/* Icon */}
+                      <div 
+                        className="w-16 h-16 rounded-2xl flex items-center justify-center mb-8 transition-transform group-hover:scale-110"
+                        style={{ backgroundColor: `${pathway.accent}30` }}
                       >
-                        {pathway.stats}
-                      </span>
-                      <div className="flex items-center gap-2 text-white/60 group-hover:text-white transition-colors">
-                        <span className="text-sm font-medium">Explore</span>
-                        <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                        <Icon className="w-8 h-8" style={{ color: pathway.accent }} />
+                      </div>
+                      
+                      <div className="flex-1">
+                        <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">{pathway.solution}</h3>
+                        <p className="text-lg text-white/80 leading-relaxed">{pathway.description}</p>
+                      </div>
+                      
+                      <div className="flex items-center justify-between mt-10">
+                        <span 
+                          className="text-base font-bold px-5 py-2.5 rounded-full"
+                          style={{ backgroundColor: `${pathway.accent}25`, color: pathway.accent }}
+                        >
+                          {pathway.stats}
+                        </span>
+                        <div className="flex items-center gap-2 text-white/70 group-hover:text-white transition-colors">
+                          <span className="text-base font-semibold">Explore</span>
+                          <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </motion.button>
-              ))}
+                  </motion.button>
+                );
+              })}
             </div>
           </section>
 
           {/* ========== AI GUIDE BANNER ========== */}
-          <section className="px-8 pb-24 max-w-[1400px] mx-auto">
+          <section className="px-8 lg:px-12 pb-32 max-w-[1400px] mx-auto relative z-10">
             <motion.button
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.55 }}
-              whileHover={{ scale: 1.01 }}
+              whileHover={{ scale: 1.01, y: -4 }}
               whileTap={{ scale: 0.99 }}
               onClick={() => setActiveTab("ai")}
-              className="group w-full relative overflow-hidden rounded-3xl text-left"
+              className="group w-full relative overflow-hidden rounded-[32px] text-left shadow-2xl"
             >
-              {/* Background */}
-              <div className="absolute inset-0 bg-gradient-to-r from-[#38BDF8]/20 via-[#0284c7]/15 to-[#FBBF24]/10" />
-              <div className="absolute inset-0 bg-[#07111F]/60" />
+              {/* Animated gradient background */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#0c4a6e] via-[#0369a1] to-[#0284c7]" />
+              <motion.div
+                animate={{ x: ["-100%", "100%"] }}
+                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+              />
               
-              {/* Content */}
-              <div className="relative z-10 p-10 md:p-14 flex flex-col md:flex-row md:items-center gap-8">
-                <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#38BDF8] to-[#0284c7] flex items-center justify-center flex-shrink-0 shadow-2xl shadow-sky-500/30 group-hover:scale-105 transition-transform">
-                  <Sparkles className="w-10 h-10 text-white" />
-                </div>
+              <div className="relative z-10 p-12 md:p-16 flex flex-col md:flex-row md:items-center gap-10">
+                <motion.div 
+                  whileHover={{ rotate: 5 }}
+                  className="w-24 h-24 rounded-3xl bg-gradient-to-br from-[#38BDF8] to-[#0284c7] flex items-center justify-center flex-shrink-0 shadow-2xl shadow-sky-500/40"
+                >
+                  <Sparkles className="w-12 h-12 text-white" />
+                </motion.div>
                 
                 <div className="flex-1">
-                  <p className="text-sm font-semibold text-[#38BDF8] uppercase tracking-widest mb-2">Calgary Bridge AI</p>
-                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
+                  <p className="text-sm font-bold text-sky-200 uppercase tracking-[0.2em] mb-3">Calgary Bridge AI</p>
+                  <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
                     Get personalized guidance for your situation
                   </h3>
-                  <p className="text-lg text-white/70">
+                  <p className="text-xl text-white/80 leading-relaxed">
                     Not just links — real answers, step-by-step instructions, and matched resources.
                   </p>
                 </div>
                 
-                <ArrowRight className="w-8 h-8 text-white/50 flex-shrink-0 group-hover:text-white group-hover:translate-x-2 transition-all" />
+                <ArrowRight className="w-10 h-10 text-white/60 flex-shrink-0 group-hover:text-white group-hover:translate-x-3 transition-all duration-300" />
               </div>
             </motion.button>
           </section>
 
           {/* ========== SPECIALIZED PATHWAYS ========== */}
-          <section className="px-8 pb-24 max-w-[1400px] mx-auto">
+          <section className="px-8 lg:px-12 pb-32 max-w-[1400px] mx-auto relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="mb-10"
+              className="mb-14"
             >
-              <p className="text-sm font-semibold text-[var(--foreground-muted)] uppercase tracking-widest mb-3">Specialized Support</p>
-              <h2 className="text-2xl md:text-3xl font-bold tracking-tight">For specific situations.</h2>
+              <p className="text-sm font-semibold text-[var(--foreground-muted)] uppercase tracking-[0.2em] mb-4">Specialized Support</p>
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">For specific situations.</h2>
             </motion.div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {specialized.map((item, index) => (
                 <motion.button
                   key={item.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.65 + index * 0.05 }}
-                  whileHover={{ y: -4 }}
+                  whileHover={{ y: -6, scale: 1.02 }}
                   onClick={() => setActiveTab("explore")}
-                  className="group text-left p-7 rounded-2xl bg-white/[0.04] border border-white/[0.06] hover:bg-white/[0.07] hover:border-white/[0.12] transition-all"
+                  className="group text-left p-8 rounded-[24px] bg-white/[0.04] border border-white/[0.06] hover:bg-white/[0.08] hover:border-white/[0.15] transition-all duration-300"
                 >
-                  <h3 className="text-lg font-bold text-white mb-2">{item.label}</h3>
-                  <p className="text-sm text-[var(--foreground-muted)] mb-5">{item.description}</p>
-                  <div className="flex items-center gap-1.5 text-[#38BDF8] text-sm font-medium">
+                  <h3 className="text-xl font-bold text-white mb-3">{item.label}</h3>
+                  <p className="text-base text-[var(--foreground-muted)] mb-6 leading-relaxed">{item.description}</p>
+                  <div className="flex items-center gap-2 text-[#38BDF8] text-base font-semibold">
                     <span>View resources</span>
-                    <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    <ChevronRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
                   </div>
                 </motion.button>
               ))}
@@ -302,21 +391,21 @@ export default function HomeTab() {
           </section>
 
           {/* ========== FEATURED RESOURCES ========== */}
-          <section className="px-8 pb-24 max-w-[1400px] mx-auto">
-            <div className="flex items-center justify-between mb-10">
+          <section className="px-8 lg:px-12 pb-32 max-w-[1400px] mx-auto relative z-10">
+            <div className="flex items-center justify-between mb-14">
               <div>
-                <p className="text-sm font-semibold text-[#FBBF24] uppercase tracking-widest mb-3">Recommended</p>
-                <h2 className="text-2xl md:text-3xl font-bold tracking-tight">Top resources this month.</h2>
+                <p className="text-sm font-bold text-[#FBBF24] uppercase tracking-[0.2em] mb-4">Recommended</p>
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Top resources this month.</h2>
               </div>
               <button
                 onClick={() => setActiveTab("explore")}
-                className="text-[#38BDF8] font-semibold flex items-center gap-2 hover:underline"
+                className="text-[#38BDF8] text-lg font-semibold flex items-center gap-2 hover:gap-3 transition-all"
               >
-                View all <ArrowRight className="w-4 h-4" />
+                View all <ArrowRight className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="grid lg:grid-cols-2 gap-6">
+            <div className="grid lg:grid-cols-2 gap-8">
               {featuredResources.map((resource, index) => (
                 <motion.div
                   key={resource.id}
@@ -332,21 +421,21 @@ export default function HomeTab() {
 
           {/* ========== HIDDEN GEMS ========== */}
           {hiddenGems.length > 0 && (
-            <section className="px-8 pb-24 max-w-[1400px] mx-auto">
-              <div className="flex items-center justify-between mb-10">
+            <section className="px-8 lg:px-12 pb-32 max-w-[1400px] mx-auto relative z-10">
+              <div className="flex items-center justify-between mb-14">
                 <div>
-                  <p className="text-sm font-semibold text-[#a855f7] uppercase tracking-widest mb-3">Hidden Gems</p>
-                  <h2 className="text-2xl md:text-3xl font-bold tracking-tight">Programs most people miss.</h2>
+                  <p className="text-sm font-bold text-[#a855f7] uppercase tracking-[0.2em] mb-4">Hidden Gems</p>
+                  <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Programs most people miss.</h2>
                 </div>
                 <button
                   onClick={() => setActiveTab("explore")}
-                  className="text-[#a855f7] font-semibold flex items-center gap-2 hover:underline"
+                  className="text-[#a855f7] text-lg font-semibold flex items-center gap-2 hover:gap-3 transition-all"
                 >
-                  See all <ArrowRight className="w-4 h-4" />
+                  See all <ArrowRight className="w-5 h-5" />
                 </button>
               </div>
 
-              <div className="grid lg:grid-cols-3 gap-6">
+              <div className="grid lg:grid-cols-3 gap-8">
                 {hiddenGems.map((resource, index) => (
                   <motion.div
                     key={resource.id}
@@ -362,16 +451,16 @@ export default function HomeTab() {
           )}
 
           {/* ========== NEAR YOU ========== */}
-          <section className="px-8 pb-32 max-w-[1400px] mx-auto">
-            <div className="mb-10">
-              <div className="flex items-center gap-2 mb-3">
-                <MapPin className="w-4 h-4 text-emerald-400" />
-                <p className="text-sm font-semibold text-emerald-400 uppercase tracking-widest">Near You</p>
+          <section className="px-8 lg:px-12 pb-40 max-w-[1400px] mx-auto relative z-10">
+            <div className="mb-14">
+              <div className="flex items-center gap-3 mb-4">
+                <MapPin className="w-5 h-5 text-emerald-400" />
+                <p className="text-sm font-bold text-emerald-400 uppercase tracking-[0.2em]">Near You</p>
               </div>
-              <h2 className="text-2xl md:text-3xl font-bold tracking-tight">Services in your area.</h2>
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Services in your area.</h2>
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
                 { name: "Calgary Food Bank", distance: "0.8 km", tag: "Free", hours: "Mon-Fri 9-5" },
                 { name: "Centre for Newcomers", distance: "1.2 km", tag: "Free", hours: "Mon-Sat 9-6" },
@@ -382,16 +471,17 @@ export default function HomeTab() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.8 + index * 0.05 }}
-                  className="p-6 rounded-2xl bg-white/[0.04] border border-white/[0.06]"
+                  whileHover={{ y: -4 }}
+                  className="p-8 rounded-[24px] bg-white/[0.04] border border-white/[0.06] hover:bg-white/[0.07] hover:border-white/[0.12] transition-all duration-300"
                 >
-                  <div className="flex items-start justify-between mb-4">
-                    <h3 className="text-lg font-bold text-white">{place.name}</h3>
-                    <span className="text-xs font-semibold px-3 py-1 rounded-full bg-emerald-400/15 text-emerald-400">
+                  <div className="flex items-start justify-between mb-5">
+                    <h3 className="text-xl font-bold text-white">{place.name}</h3>
+                    <span className="text-sm font-bold px-4 py-2 rounded-full bg-emerald-400/15 text-emerald-400">
                       {place.tag}
                     </span>
                   </div>
-                  <p className="text-sm text-[var(--foreground-muted)] mb-1">{place.distance} away</p>
-                  <p className="text-sm text-[var(--foreground-muted)]">{place.hours}</p>
+                  <p className="text-base text-[var(--foreground-muted)] mb-2">{place.distance} away</p>
+                  <p className="text-base text-[var(--foreground-muted)]">{place.hours}</p>
                 </motion.div>
               ))}
             </div>

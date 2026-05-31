@@ -29,10 +29,10 @@ interface ResourceCardProps {
 }
 
 const costLabels: Record<string, { label: string; color: string }> = {
-  "free": { label: "Free", color: "text-emerald-500 bg-emerald-500/10" },
-  "low-cost": { label: "Low Cost", color: "text-[#3B82F6] bg-[#3B82F6]/10" },
-  "sliding-scale": { label: "Sliding Scale", color: "text-[#F5B942] bg-[#F5B942]/10" },
-  "paid": { label: "Paid", color: "text-[var(--foreground-muted)] bg-[var(--surface)]" },
+  "free": { label: "Free", color: "text-emerald-400 bg-emerald-500/15" },
+  "low-cost": { label: "Low Cost", color: "text-sky-400 bg-sky-500/15" },
+  "sliding-scale": { label: "Sliding Scale", color: "text-amber-400 bg-amber-500/15" },
+  "paid": { label: "Paid", color: "text-slate-400 bg-slate-500/15" },
 };
 
 export default function ResourceCard({ resource, showNotes = false, variant = "default" }: ResourceCardProps) {
@@ -59,100 +59,107 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
   if (variant === "compact") {
     return (
       <motion.div
-        whileHover={{ y: -4 }}
-        className={`premium-card transition-all ${isCompleted && showNotes ? "opacity-60" : ""}`}
+        whileHover={{ y: -6 }}
+        transition={{ duration: 0.3 }}
+        className={`group relative overflow-hidden rounded-[28px] bg-gradient-to-br from-slate-900/90 via-slate-900/70 to-slate-800/60 border border-white/[0.08] hover:border-white/[0.15] p-8 md:p-10 transition-all duration-400 ${isCompleted && showNotes ? "opacity-60" : ""}`}
+        style={{
+          boxShadow: "0 4px 24px -8px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.03)",
+        }}
       >
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex-1 min-w-0">
-            {/* Category Tags */}
-            <div className="flex flex-wrap gap-1.5 mb-3">
-              {resource.category.slice(0, 2).map((cat) => (
-                <span
-                  key={cat}
-                  className="px-2.5 py-1 rounded-full text-xs font-medium bg-[#3B82F6]/10 text-[#3B82F6]"
-                >
-                  {categoryLabels[cat]?.[activeLanguage] || cat}
-                </span>
-              ))}
-              {resource.featured && (
-                <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-[#F5B942]/10 text-[#F5B942] flex items-center gap-1">
-                  <Star className="w-3 h-3 fill-current" />
-                  Featured
-                </span>
-              )}
-              {resource.hiddenGem && (
-                <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-purple-500/10 text-purple-400 flex items-center gap-1">
-                  <Sparkles className="w-3 h-3" />
-                  Hidden Gem
+        {/* Hover glow effect */}
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-sky-500/5 via-transparent to-transparent" />
+        
+        <div className="relative z-10">
+          <div className="flex items-start justify-between gap-6">
+            <div className="flex-1 min-w-0">
+              {/* Category Tags */}
+              <div className="flex flex-wrap gap-2.5 mb-5">
+                {resource.category.slice(0, 2).map((cat) => (
+                  <span
+                    key={cat}
+                    className="px-4 py-2 rounded-full text-sm font-semibold bg-sky-500/15 text-sky-400"
+                  >
+                    {categoryLabels[cat]?.[activeLanguage] || cat}
+                  </span>
+                ))}
+                {resource.featured && (
+                  <span className="px-4 py-2 rounded-full text-sm font-semibold bg-amber-500/15 text-amber-400 flex items-center gap-1.5">
+                    <Star className="w-3.5 h-3.5 fill-current" />
+                    Featured
+                  </span>
+                )}
+                {resource.hiddenGem && (
+                  <span className="px-4 py-2 rounded-full text-sm font-semibold bg-purple-500/15 text-purple-400 flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    Hidden Gem
+                  </span>
+                )}
+              </div>
+
+              <h3 className="font-bold text-2xl mb-4 leading-tight text-white">
+                {resource.title[activeLanguage]}
+              </h3>
+              <p className="text-[var(--foreground-muted)] text-base leading-relaxed line-clamp-2 mb-5">
+                {resource.summary?.[activeLanguage] || resource.description[activeLanguage]}
+              </p>
+
+              {/* Cost Badge */}
+              {resource.cost && (
+                <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold ${costLabels[resource.cost]?.color || ""}`}>
+                  <DollarSign className="w-4 h-4" />
+                  {costLabels[resource.cost]?.label || resource.cost}
                 </span>
               )}
             </div>
 
-            <h3 className="font-semibold text-lg mb-2">
-              {resource.title[activeLanguage]}
-            </h3>
-            <p className="text-[var(--foreground-muted)] text-sm leading-relaxed line-clamp-2">
-              {resource.summary?.[activeLanguage] || resource.description[activeLanguage]}
-            </p>
-
-            {/* Cost Badge */}
-            {resource.cost && (
-              <div className="mt-2">
-                <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${costLabels[resource.cost]?.color || ""}`}>
-                  <DollarSign className="w-3 h-3" />
-                  {costLabels[resource.cost]?.label || resource.cost}
-                </span>
-              </div>
-            )}
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={() => toggleBookmark(resource.id)}
+              className={`flex-shrink-0 rounded-2xl p-4 transition-all ${
+                isBookmarked
+                  ? "bg-pink-500/20 text-pink-400"
+                  : "bg-white/[0.06] text-[var(--foreground-muted)] hover:text-white hover:bg-white/[0.1]"
+              }`}
+            >
+              <Heart className={`h-6 w-6 ${isBookmarked ? "fill-current" : ""}`} />
+            </motion.button>
           </div>
 
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={() => toggleBookmark(resource.id)}
-            className={`flex-shrink-0 rounded-2xl p-3 transition-all ${
-              isBookmarked
-                ? "bg-pink-500/15 text-pink-500"
-                : "bg-[var(--surface)] text-[var(--foreground-muted)] hover:text-white hover:bg-[var(--surface-hover)]"
-            }`}
-          >
-            <Heart className={`h-5 w-5 ${isBookmarked ? "fill-current" : ""}`} />
-          </motion.button>
-        </div>
-
-        {/* Quick Action Buttons */}
-        <div className="mt-5 flex flex-wrap gap-2">
-          {resource.phone && (
-            <a
-              href={`tel:${resource.phone}`}
-              className="flex items-center gap-2 rounded-xl bg-[#3B82F6]/10 px-4 py-2.5 text-sm font-medium text-[#3B82F6] transition-all hover:bg-[#3B82F6]/20 active:scale-95"
-            >
-              <Phone className="h-4 w-4" />
-              Call
-            </a>
-          )}
-          {googleMapsUrl && (
-            <a
-              href={googleMapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 rounded-xl bg-[#F5B942]/10 px-4 py-2.5 text-sm font-medium text-[#F5B942] transition-all hover:bg-[#F5B942]/20 active:scale-95"
-            >
-              <MapPin className="h-4 w-4" />
-              Directions
-            </a>
-          )}
-          {resource.website && (
-            <a
-              href={resource.website}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 rounded-xl bg-[var(--surface)] border border-[var(--border)] px-4 py-2.5 text-sm font-medium transition-all hover:bg-[var(--surface-hover)] hover:border-[var(--border-hover)] active:scale-95"
-            >
-              <ExternalLink className="h-4 w-4" />
-              Website
-            </a>
-          )}
+          {/* Quick Action Buttons */}
+          <div className="mt-8 flex flex-wrap gap-3">
+            {resource.phone && (
+              <a
+                href={`tel:${resource.phone}`}
+                className="flex items-center gap-2.5 rounded-2xl bg-sky-500/15 px-6 py-3.5 text-base font-semibold text-sky-400 transition-all hover:bg-sky-500/25 active:scale-95"
+              >
+                <Phone className="h-5 w-5" />
+                Call
+              </a>
+            )}
+            {googleMapsUrl && (
+              <a
+                href={googleMapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2.5 rounded-2xl bg-amber-500/15 px-6 py-3.5 text-base font-semibold text-amber-400 transition-all hover:bg-amber-500/25 active:scale-95"
+              >
+                <MapPin className="h-5 w-5" />
+                Directions
+              </a>
+            )}
+            {resource.website && (
+              <a
+                href={resource.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2.5 rounded-2xl bg-white/[0.06] border border-white/[0.08] px-6 py-3.5 text-base font-semibold transition-all hover:bg-white/[0.1] hover:border-white/[0.15] active:scale-95"
+              >
+                <ExternalLink className="h-5 w-5" />
+                Website
+              </a>
+            )}
+          </div>
         </div>
       </motion.div>
     );
@@ -161,255 +168,264 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
   // Default full variant
   return (
     <motion.div
-      whileHover={{ y: -6 }}
-      className={`premium-card transition-all ${isCompleted && showNotes ? "opacity-60" : ""}`}
+      whileHover={{ y: -8 }}
+      transition={{ duration: 0.3 }}
+      className={`group relative overflow-hidden rounded-[32px] bg-gradient-to-br from-slate-900/95 via-slate-900/80 to-slate-800/70 border border-white/[0.08] hover:border-white/[0.15] p-10 md:p-12 transition-all duration-400 ${isCompleted && showNotes ? "opacity-60" : ""}`}
+      style={{
+        boxShadow: "0 8px 32px -12px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.03)",
+      }}
     >
-      <div className="flex items-start justify-between gap-4">
-        <div className="flex-1 min-w-0">
-          {/* Category Tags */}
-          <div className="flex flex-wrap gap-1.5 mb-4">
-            {resource.category.slice(0, 3).map((cat) => (
-              <span
-                key={cat}
-                className="px-3 py-1.5 rounded-full text-xs font-medium bg-[#3B82F6]/10 text-[#3B82F6]"
-              >
-                {categoryLabels[cat]?.[activeLanguage] || cat}
-              </span>
-            ))}
-            {resource.featured && (
-              <span className="px-3 py-1.5 rounded-full text-xs font-medium bg-[#F5B942]/10 text-[#F5B942] flex items-center gap-1">
-                <Star className="w-3 h-3 fill-current" />
-                Featured
-              </span>
+      {/* Hover glow effect */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-sky-500/5 via-transparent to-transparent" />
+      
+      <div className="relative z-10">
+        <div className="flex items-start justify-between gap-6">
+          <div className="flex-1 min-w-0">
+            {/* Category Tags */}
+            <div className="flex flex-wrap gap-3 mb-6">
+              {resource.category.slice(0, 3).map((cat) => (
+                <span
+                  key={cat}
+                  className="px-4 py-2 rounded-full text-sm font-semibold bg-sky-500/15 text-sky-400"
+                >
+                  {categoryLabels[cat]?.[activeLanguage] || cat}
+                </span>
+              ))}
+              {resource.featured && (
+                <span className="px-4 py-2 rounded-full text-sm font-semibold bg-amber-500/15 text-amber-400 flex items-center gap-2">
+                  <Star className="w-4 h-4 fill-current" />
+                  Featured
+                </span>
+              )}
+              {resource.hiddenGem && (
+                <span className="px-4 py-2 rounded-full text-sm font-semibold bg-purple-500/15 text-purple-400 flex items-center gap-2">
+                  <Sparkles className="w-4 h-4" />
+                  Hidden Gem
+                </span>
+              )}
+            </div>
+
+            <h3 className="font-bold text-2xl md:text-3xl mb-5 leading-tight text-white">
+              {resource.title[activeLanguage]}
+            </h3>
+            <p className="text-[var(--foreground-muted)] text-lg leading-relaxed">
+              {resource.description[activeLanguage]}
+            </p>
+
+            {/* Cost and Hours Row */}
+            {(resource.cost || resource.hours) && (
+              <div className="mt-6 flex flex-wrap items-center gap-4">
+                {resource.cost && (
+                  <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold ${costLabels[resource.cost]?.color || ""}`}>
+                    <DollarSign className="w-4 h-4" />
+                    {costLabels[resource.cost]?.label || resource.cost}
+                  </span>
+                )}
+                {resource.hours && (
+                  <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium bg-white/[0.06] text-[var(--foreground-muted)]">
+                    <Clock className="w-4 h-4" />
+                    {resource.hours}
+                  </span>
+                )}
+              </div>
             )}
-            {resource.hiddenGem && (
-              <span className="px-3 py-1.5 rounded-full text-xs font-medium bg-purple-500/10 text-purple-400 flex items-center gap-1">
-                <Sparkles className="w-3 h-3" />
-                Hidden Gem
-              </span>
+
+            {/* Contact Info */}
+            {(resource.phone || resource.address) && (
+              <div className="mt-6 flex flex-wrap items-center gap-6 text-base text-[var(--foreground-muted)]">
+                {resource.phone && (
+                  <span className="flex items-center gap-2">
+                    <Phone className="w-5 h-5" />
+                    {resource.phone}
+                  </span>
+                )}
+                {resource.address && (
+                  <span className="flex items-center gap-2">
+                    <MapPin className="w-5 h-5 flex-shrink-0" />
+                    <span className="truncate">{resource.address}</span>
+                  </span>
+                )}
+              </div>
             )}
           </div>
 
-          <h3 className="font-semibold text-xl mb-3">
-            {resource.title[activeLanguage]}
-          </h3>
-          <p className="text-[var(--foreground-muted)] leading-relaxed">
-            {resource.description[activeLanguage]}
-          </p>
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={() => toggleBookmark(resource.id)}
+            className={`flex-shrink-0 rounded-2xl p-4 transition-all ${
+              isBookmarked
+                ? "bg-pink-500/20 text-pink-400"
+                : "bg-white/[0.06] text-[var(--foreground-muted)] hover:text-white hover:bg-white/[0.1]"
+            }`}
+          >
+            <Heart className={`h-7 w-7 ${isBookmarked ? "fill-current" : ""}`} />
+          </motion.button>
+        </div>
 
-          {/* Cost and Hours Row */}
-          {(resource.cost || resource.hours) && (
-            <div className="mt-4 flex flex-wrap items-center gap-3">
-              {resource.cost && (
-                <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold ${costLabels[resource.cost]?.color || ""}`}>
-                  <DollarSign className="w-3.5 h-3.5" />
-                  {costLabels[resource.cost]?.label || resource.cost}
-                </span>
+        {/* Expandable Details Section */}
+        {hasExtraDetails && (
+          <>
+            <button
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="mt-6 flex items-center gap-2 text-base text-sky-400 hover:text-sky-300 transition-colors font-semibold"
+            >
+              {isExpanded ? (
+                <>
+                  <ChevronUp className="w-5 h-5" />
+                  Show less
+                </>
+              ) : (
+                <>
+                  <ChevronDown className="w-5 h-5" />
+                  Show more details
+                </>
               )}
-              {resource.hours && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-[var(--surface)] text-[var(--foreground-muted)]">
-                  <Clock className="w-3.5 h-3.5" />
-                  {resource.hours}
-                </span>
+            </button>
+
+            <AnimatePresence>
+              {isExpanded && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="overflow-hidden"
+                >
+                  <div className="mt-6 pt-6 border-t border-white/[0.08] space-y-6">
+                    {/* Services Offered */}
+                    {resource.servicesOffered && resource.servicesOffered.length > 0 && (
+                      <div>
+                        <h4 className="text-base font-bold mb-4 flex items-center gap-2">
+                          <CheckCircle className="w-5 h-5 text-emerald-400" />
+                          Services Offered
+                        </h4>
+                        <div className="flex flex-wrap gap-3">
+                          {resource.servicesOffered.map((service, idx) => (
+                            <span
+                              key={idx}
+                              className="px-4 py-2 rounded-xl text-sm bg-white/[0.06] text-[var(--foreground-muted)] border border-white/[0.06]"
+                            >
+                              {service}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Eligibility */}
+                    {resource.eligibility && (
+                      <div>
+                        <h4 className="text-base font-bold mb-4 flex items-center gap-2">
+                          <Users className="w-5 h-5 text-sky-400" />
+                          Eligibility
+                        </h4>
+                        <p className="text-base text-[var(--foreground-muted)] bg-white/[0.04] rounded-2xl p-5 border border-white/[0.06]">
+                          {resource.eligibility[activeLanguage]}
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Languages Offered */}
+                    {resource.languages && resource.languages.length > 0 && (
+                      <div>
+                        <h4 className="text-base font-bold mb-3">Languages Available</h4>
+                        <p className="text-base text-[var(--foreground-muted)]">
+                          {resource.languages.join(", ")}
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Last Updated & Source */}
+                    {(resource.lastUpdated || resource.source) && (
+                      <div className="flex flex-wrap items-center gap-6 text-sm text-[var(--foreground-muted)]">
+                        {resource.lastUpdated && (
+                          <span className="flex items-center gap-2">
+                            <Calendar className="w-4 h-4" />
+                            Updated: {resource.lastUpdated}
+                          </span>
+                        )}
+                        {resource.source && (
+                          <span>Source: {resource.source}</span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
               )}
-            </div>
+            </AnimatePresence>
+          </>
+        )}
+
+        {/* Action Buttons */}
+        <div className="mt-8 flex flex-wrap gap-4">
+          {resource.phone && (
+            <a
+              href={`tel:${resource.phone}`}
+              className="flex items-center gap-3 rounded-2xl bg-sky-500/15 px-7 py-4 text-base font-bold text-sky-400 transition-all hover:bg-sky-500/25 active:scale-95"
+            >
+              <Phone className="h-5 w-5" />
+              Call
+            </a>
           )}
-
-          {/* Contact Info */}
-          {(resource.phone || resource.address) && (
-            <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-[var(--foreground-muted)]">
-              {resource.phone && (
-                <span className="flex items-center gap-2">
-                  <Phone className="w-4 h-4" />
-                  {resource.phone}
-                </span>
-              )}
-              {resource.address && (
-                <span className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4 flex-shrink-0" />
-                  <span className="truncate">{resource.address}</span>
-                </span>
-              )}
-            </div>
+          {googleMapsUrl && (
+            <a
+              href={googleMapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 rounded-2xl bg-amber-500/15 px-7 py-4 text-base font-bold text-amber-400 transition-all hover:bg-amber-500/25 active:scale-95"
+            >
+              <MapPin className="h-5 w-5" />
+              Directions
+            </a>
+          )}
+          {resource.website && (
+            <a
+              href={resource.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 rounded-2xl bg-white/[0.06] border border-white/[0.08] px-7 py-4 text-base font-bold transition-all hover:bg-white/[0.1] hover:border-white/[0.15] active:scale-95"
+            >
+              <ExternalLink className="h-5 w-5" />
+              Website
+            </a>
           )}
         </div>
 
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={() => toggleBookmark(resource.id)}
-          className={`flex-shrink-0 rounded-2xl p-3.5 transition-all ${
-            isBookmarked
-              ? "bg-pink-500/15 text-pink-500"
-              : "bg-[var(--surface)] text-[var(--foreground-muted)] hover:text-white hover:bg-[var(--surface-hover)]"
-          }`}
-        >
-          <Heart className={`h-6 w-6 ${isBookmarked ? "fill-current" : ""}`} />
-        </motion.button>
-      </div>
-
-      {/* Expandable Details Section */}
-      {hasExtraDetails && (
-        <>
-          <button
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="mt-4 flex items-center gap-2 text-sm text-[#3B82F6] hover:text-[#3B82F6]/80 transition-colors"
-          >
-            {isExpanded ? (
-              <>
-                <ChevronUp className="w-4 h-4" />
-                Show less
-              </>
-            ) : (
-              <>
-                <ChevronDown className="w-4 h-4" />
-                Show more details
-              </>
-            )}
-          </button>
-
-          <AnimatePresence>
-            {isExpanded && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="overflow-hidden"
-              >
-                <div className="mt-4 pt-4 border-t border-[var(--border)] space-y-4">
-                  {/* Services Offered */}
-                  {resource.servicesOffered && resource.servicesOffered.length > 0 && (
-                    <div>
-                      <h4 className="text-sm font-semibold mb-2 flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-emerald-500" />
-                        Services Offered
-                      </h4>
-                      <div className="flex flex-wrap gap-2">
-                        {resource.servicesOffered.map((service, idx) => (
-                          <span
-                            key={idx}
-                            className="px-2.5 py-1 rounded-lg text-xs bg-[var(--surface)] text-[var(--foreground-muted)] border border-[var(--border)]"
-                          >
-                            {service}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Eligibility */}
-                  {resource.eligibility && (
-                    <div>
-                      <h4 className="text-sm font-semibold mb-2 flex items-center gap-2">
-                        <Users className="w-4 h-4 text-[#3B82F6]" />
-                        Eligibility
-                      </h4>
-                      <p className="text-sm text-[var(--foreground-muted)] bg-[var(--surface)] rounded-xl p-3 border border-[var(--border)]">
-                        {resource.eligibility[activeLanguage]}
-                      </p>
-                    </div>
-                  )}
-
-                  {/* Languages Offered */}
-                  {resource.languages && resource.languages.length > 0 && (
-                    <div>
-                      <h4 className="text-sm font-semibold mb-2">Languages Available</h4>
-                      <p className="text-sm text-[var(--foreground-muted)]">
-                        {resource.languages.join(", ")}
-                      </p>
-                    </div>
-                  )}
-
-                  {/* Last Updated & Source */}
-                  {(resource.lastUpdated || resource.source) && (
-                    <div className="flex flex-wrap items-center gap-4 text-xs text-[var(--foreground-muted)]">
-                      {resource.lastUpdated && (
-                        <span className="flex items-center gap-1">
-                          <Calendar className="w-3 h-3" />
-                          Updated: {resource.lastUpdated}
-                        </span>
-                      )}
-                      {resource.source && (
-                        <span>Source: {resource.source}</span>
-                      )}
-                    </div>
-                  )}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </>
-      )}
-
-      {/* Action Buttons */}
-      <div className="mt-6 flex flex-wrap gap-3">
-        {resource.phone && (
-          <a
-            href={`tel:${resource.phone}`}
-            className="flex items-center gap-2 rounded-xl bg-[#3B82F6]/10 px-5 py-3 text-sm font-semibold text-[#3B82F6] transition-all hover:bg-[#3B82F6]/20 active:scale-95"
-          >
-            <Phone className="h-4 w-4" />
-            Call
-          </a>
-        )}
-        {googleMapsUrl && (
-          <a
-            href={googleMapsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 rounded-xl bg-[#F5B942]/10 px-5 py-3 text-sm font-semibold text-[#F5B942] transition-all hover:bg-[#F5B942]/20 active:scale-95"
-          >
-            <MapPin className="h-4 w-4" />
-            Directions
-          </a>
-        )}
-        {resource.website && (
-          <a
-            href={resource.website}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 rounded-xl bg-[var(--surface)] border border-[var(--border)] px-5 py-3 text-sm font-semibold transition-all hover:bg-[var(--surface-hover)] hover:border-[var(--border-hover)] active:scale-95"
-          >
-            <ExternalLink className="h-4 w-4" />
-            Website
-          </a>
-        )}
-      </div>
-
-      {/* Notes Section (only shown in Shortlist) */}
-      {showNotes && (
-        <div className="mt-6 pt-6 border-t border-[var(--border)]">
-          <div className="flex items-center gap-3 mb-4">
-            <button
-              onClick={() => toggleResourceComplete(resource.id)}
-              className={`flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition-all active:scale-95 ${
-                isCompleted
-                  ? "bg-emerald-500/15 text-emerald-500"
-                  : "bg-[var(--surface)] border border-[var(--border)] text-[var(--foreground-muted)] hover:text-white"
-              }`}
-            >
-              <div
-                className={`w-5 h-5 rounded-lg border-2 flex items-center justify-center transition-all ${
+        {/* Notes Section (only shown in Shortlist) */}
+        {showNotes && (
+          <div className="mt-8 pt-8 border-t border-white/[0.08]">
+            <div className="flex items-center gap-4 mb-5">
+              <button
+                onClick={() => toggleResourceComplete(resource.id)}
+                className={`flex items-center gap-3 rounded-2xl px-6 py-4 text-base font-bold transition-all active:scale-95 ${
                   isCompleted
-                    ? "border-emerald-500 bg-emerald-500"
-                    : "border-[var(--foreground-muted)]"
+                    ? "bg-emerald-500/20 text-emerald-400"
+                    : "bg-white/[0.06] border border-white/[0.08] text-[var(--foreground-muted)] hover:text-white"
                 }`}
               >
-                {isCompleted && <Check className="w-3 h-3 text-white" />}
-              </div>
-              Mark as done
-            </button>
+                <div
+                  className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${
+                    isCompleted
+                      ? "border-emerald-400 bg-emerald-400"
+                      : "border-[var(--foreground-muted)]"
+                  }`}
+                >
+                  {isCompleted && <Check className="w-4 h-4 text-white" />}
+                </div>
+                Mark as done
+              </button>
+            </div>
+            <textarea
+              value={note?.note ?? ""}
+              onChange={(e) => setResourceNote(resource.id, e.target.value)}
+              placeholder="Add personal notes..."
+              className="w-full rounded-2xl bg-white/[0.04] border border-white/[0.08] p-5 text-base placeholder:text-[var(--foreground-muted)] focus:outline-none focus:border-sky-500/50 focus:ring-2 focus:ring-sky-500/20 transition-all resize-none"
+              rows={3}
+            />
           </div>
-          <textarea
-            value={note?.note ?? ""}
-            onChange={(e) => setResourceNote(resource.id, e.target.value)}
-            placeholder="Add personal notes..."
-            className="w-full rounded-2xl bg-[var(--surface)] border border-[var(--border)] p-4 text-sm placeholder:text-[var(--foreground-muted)] focus:outline-none focus:border-[#3B82F6] focus:ring-2 focus:ring-[#3B82F6]/20 transition-all resize-none"
-            rows={3}
-          />
-        </div>
-      )}
+        )}
+      </div>
     </motion.div>
   );
 }
