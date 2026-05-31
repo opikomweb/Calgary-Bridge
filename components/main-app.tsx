@@ -95,36 +95,36 @@ export default function MainApp() {
       </aside>
 
       {/* Mobile Header */}
-      <header className="lg:hidden sticky top-0 z-40 bg-[#050B14]/90 backdrop-blur-2xl border-b border-white/[0.06] px-6 py-5">
+      <header className="lg:hidden sticky top-0 z-40 bg-[#050B14]/90 backdrop-blur-2xl border-b border-white/[0.06] px-4 py-3">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="relative w-14 h-14 rounded-xl overflow-hidden bg-gradient-to-br from-[#0c1829] to-[#071119] p-0.5 border border-white/10">
+          <div className="flex items-center gap-3">
+            <div className="relative w-10 h-10 rounded-lg overflow-hidden bg-gradient-to-br from-[#0c1829] to-[#071119] p-0.5 border border-white/10">
               <Image
                 src="/calgary-connect-logo.png"
                 alt="Calgary Connect"
                 fill
-                className="object-contain p-1"
+                className="object-contain p-0.5"
                 priority
               />
             </div>
             <div>
-              <span className="text-xl font-bold text-white">Calgary </span>
-              <span className="text-xl font-bold text-[#38BDF8]">Connect</span>
+              <span className="text-base font-bold text-white">Calgary </span>
+              <span className="text-base font-bold text-[#38BDF8]">Connect</span>
             </div>
           </div>
           
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <button
               onClick={() => setShowEmergency(true)}
-              className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-[#E1251B] to-[#b91c1c] text-white shadow-lg shadow-red-500/30"
+              className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-[#E1251B] to-[#b91c1c] text-white shadow-lg shadow-red-500/30"
             >
-              <AlertTriangle className="h-5 w-5" />
+              <AlertTriangle className="h-4 w-4" />
             </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="flex items-center justify-center w-12 h-12 rounded-xl bg-white/[0.06] border border-white/[0.08] text-white"
+              className="flex items-center justify-center w-10 h-10 rounded-lg bg-white/[0.06] border border-white/[0.08] text-white"
             >
-              {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </button>
           </div>
         </div>
@@ -196,7 +196,7 @@ export default function MainApp() {
       </AnimatePresence>
 
       {/* Main Content Area */}
-      <main className="lg:pl-[340px] relative z-10">
+      <main className="lg:pl-[360px] lg:pr-8 relative z-10">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
@@ -216,12 +216,12 @@ export default function MainApp() {
 
       {/* Mobile Bottom Navigation */}
       <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#050B14]/95 backdrop-blur-2xl border-t border-white/[0.06] safe-area-pb">
-        <div className="flex items-center justify-around px-4 py-4">
+        <div className="flex items-center justify-around px-2 py-2">
           {navItems.map((item) => (
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id)}
-              className={`flex flex-col items-center gap-1.5 rounded-xl px-5 py-3 transition-all ${
+              className={`flex flex-col items-center gap-1 rounded-xl px-3 py-2 transition-all min-w-0 ${
                 activeTab === item.id
                   ? item.highlight
                     ? "bg-gradient-to-br from-[#38BDF8] to-[#0284c7] text-white shadow-lg shadow-sky-500/30"
@@ -229,8 +229,8 @@ export default function MainApp() {
                   : "text-white/40"
               }`}
             >
-              <item.icon className="h-6 w-6" />
-              <span className="text-xs font-medium">{item.label}</span>
+              <item.icon className="h-5 w-5" />
+              <span className="text-[10px] font-medium">{item.label}</span>
             </button>
           ))}
         </div>

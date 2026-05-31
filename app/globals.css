@@ -270,47 +270,59 @@ h1, h2, h3, h4, h5, h6 {
 
 /* =============================================
    PREMIUM CARD SYSTEM
-   Internal padding: 32-40px | Radius: 24px | Gaps: 32-48px
+   Internal padding: 24-32px mobile, 32-40px desktop | Radius: 20-24px | Gaps: 20-32px
    ============================================= */
 .premium-card {
   background: linear-gradient(135deg, rgba(15, 23, 42, 0.92) 0%, rgba(15, 23, 42, 0.58) 100%);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 24px;
-  padding: 36px;
+  border-radius: 20px;
+  padding: 24px;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+@media (min-width: 768px) {
+  .premium-card {
+    border-radius: 24px;
+    padding: 32px;
+  }
+}
+
 .premium-card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-4px);
   box-shadow: 
-    0 32px 64px -16px rgba(0, 0, 0, 0.55),
-    0 0 0 1px rgba(255, 255, 255, 0.13),
-    0 0 56px -12px rgba(56, 189, 248, 0.18);
+    0 24px 48px -12px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.12);
   border-color: rgba(255, 255, 255, 0.14);
 }
 
-/* Action cards — large category tiles, 220-280px min height */
+/* Action cards — large category tiles */
 .action-card {
   background: linear-gradient(135deg, rgba(15, 23, 42, 0.96) 0%, rgba(15, 23, 42, 0.72) 100%);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 28px;
-  padding: 40px 36px;
+  border-radius: 24px;
+  padding: 24px;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
-  min-height: 260px;
+}
+
+@media (min-width: 768px) {
+  .action-card {
+    border-radius: 28px;
+    padding: 32px;
+  }
 }
 
 .action-card:hover {
-  transform: translateY(-10px);
+  transform: translateY(-6px);
   background: linear-gradient(135deg, rgba(15, 23, 42, 1) 0%, rgba(15, 23, 42, 0.88) 100%);
   border-color: rgba(255, 255, 255, 0.16);
   box-shadow: 
-    0 40px 80px -20px rgba(0, 0, 0, 0.55),
-    0 0 70px -15px var(--card-glow, rgba(56, 189, 248, 0.22));
+    0 32px 64px -16px rgba(0, 0, 0, 0.5),
+    0 0 50px -12px var(--card-glow, rgba(56, 189, 248, 0.2));
 }
 
 /* Card glow colors */
@@ -329,44 +341,68 @@ h1, h2, h3, h4, h5, h6 {
 
 /* =============================================
    PREMIUM SPACING SYSTEM
-   Hero: 140-180px | Sections: 100-160px | Cards: 32-40px
+   Mobile-first: compact but breathable | Desktop: generous spacing
    ============================================= */
 
 /* Hero sections */
 .section-hero {
-  padding-top: clamp(140px, 18vw, 180px);
-  padding-bottom: clamp(120px, 15vw, 160px);
+  padding-top: clamp(80px, 12vw, 140px);
+  padding-bottom: clamp(60px, 10vw, 120px);
 }
 
-/* Standard sections — 100-160px breathing room */
+/* Standard sections */
 .section-spacing {
-  padding-top: clamp(100px, 12vw, 160px);
-  padding-bottom: clamp(100px, 12vw, 160px);
+  padding-top: clamp(48px, 8vw, 100px);
+  padding-bottom: clamp(48px, 8vw, 100px);
 }
 
 .section-spacing-sm {
-  padding-top: clamp(72px, 10vw, 120px);
-  padding-bottom: clamp(72px, 10vw, 120px);
+  padding-top: clamp(32px, 6vw, 72px);
+  padding-bottom: clamp(32px, 6vw, 72px);
 }
 
-/* Content max-width containers */
+/* Content max-width containers with consistent horizontal padding */
 .container-narrow {
   max-width: 720px;
   margin-left: auto;
   margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .container-wide {
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
-/* Full bleed container — matches landing page max-width */
+/* Full bleed container */
 .container-full {
-  max-width: 1440px;
+  max-width: 1400px;
   margin-left: auto;
   margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+@media (min-width: 768px) {
+  .container-narrow,
+  .container-wide,
+  .container-full {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-narrow,
+  .container-wide,
+  .container-full {
+    padding-left: 48px;
+    padding-right: 48px;
+  }
 }
 
 /* Premium input styles */
