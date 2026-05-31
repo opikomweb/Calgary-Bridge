@@ -148,13 +148,13 @@ export default function HomeTab() {
     <div className="min-h-screen relative">
 
       {/* ========== HERO SEARCH ========== */}
-      <section className="relative pt-32 pb-40 md:pt-44 md:pb-52">
-        <div className="max-w-[800px] mx-auto px-8 lg:px-12 relative z-10 text-center">
+      <section className="relative pt-16 pb-16 md:pt-24 md:pb-20 lg:pt-32 lg:pb-28">
+        <div className="max-w-[720px] mx-auto px-5 md:px-8 relative z-10 text-center">
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="text-[clamp(40px,8vw,64px)] font-bold tracking-[-0.02em] leading-[1.1]"
+            className="text-[clamp(32px,7vw,56px)] font-bold tracking-[-0.02em] leading-[1.1]"
           >
             What do you need?
           </motion.h1>
@@ -163,7 +163,7 @@ export default function HomeTab() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15, duration: 0.6 }}
-            className="text-base text-white/35 mt-10 mb-14 max-w-sm mx-auto leading-relaxed"
+            className="text-sm md:text-base text-white/40 mt-4 md:mt-6 mb-8 md:mb-10 max-w-sm mx-auto leading-relaxed"
           >
             Search for housing, jobs, healthcare, or ask the AI anything about Calgary.
           </motion.p>
@@ -175,13 +175,13 @@ export default function HomeTab() {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="relative max-w-xl mx-auto"
           >
-            <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
+            <Search className="absolute left-4 md:left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
             <input
               type="text"
               placeholder="My landlord won't fix the heat..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full h-16 bg-white/[0.05] hover:bg-white/[0.07] border border-white/[0.1] hover:border-white/[0.15] focus:border-[#38BDF8]/50 focus:bg-white/[0.07] rounded-2xl text-base text-white placeholder:text-white/30 pl-14 pr-6 outline-none transition-all duration-300 focus:shadow-[0_0_0_3px_rgba(56,189,248,0.1)]"
+              className="w-full h-14 md:h-16 bg-white/[0.05] hover:bg-white/[0.07] border border-white/[0.1] hover:border-white/[0.15] focus:border-[#38BDF8]/50 focus:bg-white/[0.07] rounded-xl md:rounded-2xl text-base text-white placeholder:text-white/30 pl-12 md:pl-14 pr-4 md:pr-6 outline-none transition-all duration-300 focus:shadow-[0_0_0_3px_rgba(56,189,248,0.1)]"
             />
           </motion.div>
 
@@ -191,13 +191,13 @@ export default function HomeTab() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
-              className="flex flex-wrap justify-center gap-3 mt-6"
+              className="flex flex-wrap justify-center gap-2 md:gap-3 mt-4 md:mt-6"
             >
               {["I need childcare", "Jobs hiring now", "Family activities"].map((q) => (
                 <button
                   key={q}
                   onClick={() => setSearchQuery(q)}
-                  className="px-5 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm text-white/50 hover:bg-white/[0.08] hover:border-white/[0.15] hover:text-white/80 transition-all duration-300"
+                  className="px-3 md:px-4 py-2 md:py-2.5 rounded-lg md:rounded-xl bg-white/[0.04] border border-white/[0.08] text-xs md:text-sm text-white/50 hover:bg-white/[0.08] hover:border-white/[0.15] hover:text-white/80 transition-all duration-300"
                 >
                   {q}
                 </button>
@@ -209,19 +209,19 @@ export default function HomeTab() {
 
       {/* Search results */}
       {searchQuery && (
-        <section className="px-8 lg:px-12 pb-24 max-w-[1200px] mx-auto relative z-10">
+        <section className="px-5 md:px-8 pb-16 md:pb-20 max-w-[1200px] mx-auto relative z-10">
           {/* Professional search results header container */}
-          <div className="glass-card rounded-3xl p-8 mb-10">
-            <div className="flex items-center gap-6">
-              <div className="flex-1">
-                <p className="text-sm text-white/50 mb-2 uppercase tracking-wider font-medium">Search Results</p>
-                <h2 className="text-2xl md:text-3xl font-bold leading-tight">
+          <div className="glass-card rounded-2xl md:rounded-3xl p-5 md:p-6 mb-6 md:mb-8">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+              <div className="flex-1 min-w-0">
+                <p className="text-xs text-white/50 mb-1 uppercase tracking-wider font-medium">Search Results</p>
+                <h2 className="text-xl md:text-2xl font-bold leading-tight truncate">
                   &quot;{searchQuery}&quot;
                 </h2>
               </div>
               <button
                 onClick={() => setSearchQuery("")}
-                className="px-6 py-3 rounded-xl bg-white/[0.06] border border-white/[0.08] text-base font-semibold text-white/70 hover:bg-white/[0.1] hover:text-white transition-all"
+                className="px-4 py-2.5 rounded-xl bg-white/[0.06] border border-white/[0.08] text-sm font-semibold text-white/70 hover:bg-white/[0.1] hover:text-white transition-all flex-shrink-0"
               >
                 Clear Search
               </button>
@@ -230,8 +230,8 @@ export default function HomeTab() {
           
           {filteredResources.length > 0 ? (
             <>
-              <p className="text-lg text-white/50 mb-8">{filteredResources.length} resource{filteredResources.length !== 1 ? 's' : ''} found</p>
-              <div className="grid lg:grid-cols-2 gap-8">
+              <p className="text-base text-white/50 mb-5 md:mb-6">{filteredResources.length} resource{filteredResources.length !== 1 ? 's' : ''} found</p>
+              <div className="grid md:grid-cols-2 gap-5 md:gap-6">
                 {filteredResources.slice(0, 8).map((resource, i) => (
                   <motion.div
                     key={resource.id}
@@ -245,17 +245,17 @@ export default function HomeTab() {
               </div>
             </>
           ) : (
-            <div className="glass-card rounded-3xl p-16 text-center">
-              <div className="w-20 h-20 rounded-full bg-white/[0.06] flex items-center justify-center mx-auto mb-8">
-                <Search className="w-10 h-10 text-white/30" />
+            <div className="glass-card rounded-2xl md:rounded-3xl p-10 md:p-12 text-center">
+              <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white/[0.06] flex items-center justify-center mx-auto mb-6">
+                <Search className="w-8 h-8 md:w-10 md:h-10 text-white/30" />
               </div>
-              <h3 className="text-2xl font-bold mb-4">No results found</h3>
-              <p className="text-lg text-white/50 mb-10 max-w-md mx-auto leading-relaxed">
+              <h3 className="text-xl md:text-2xl font-bold mb-3">No results found</h3>
+              <p className="text-base text-white/50 mb-8 max-w-md mx-auto leading-relaxed">
                 We couldn&apos;t find any resources matching your search. Try different keywords or ask our AI assistant.
               </p>
               <button
                 onClick={() => setActiveTab("ai")}
-                className="px-10 py-5 rounded-2xl bg-[#38BDF8] text-[#07111F] text-lg font-bold hover:bg-[#7dd3fc] transition-colors"
+                className="px-8 py-4 rounded-xl md:rounded-2xl bg-[#38BDF8] text-[#07111F] text-base font-bold hover:bg-[#7dd3fc] transition-colors"
               >
                 Ask the AI instead
               </button>
@@ -268,19 +268,19 @@ export default function HomeTab() {
       {!searchQuery && (
         <>
           {/* ========== SOLUTION PATHWAYS ========== */}
-          <section className="px-8 lg:px-12 pb-32 max-w-[1400px] mx-auto relative z-10">
+          <section className="px-5 md:px-8 pb-16 md:pb-24 max-w-[1200px] mx-auto relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="mb-16 text-center"
+              className="mb-8 md:mb-12 text-center"
             >
-              <p className="text-sm font-semibold text-[#38BDF8] uppercase tracking-[0.2em] mb-5">Start Here</p>
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tight">What most Calgarians need.</h2>
+              <p className="text-xs font-semibold text-[#38BDF8] uppercase tracking-[0.15em] mb-3">Start Here</p>
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight">What most Calgarians need.</h2>
             </motion.div>
 
             {/* 2x2 grid of large pathway cards - GLASSY PREMIUM */}
-            <div className="grid md:grid-cols-2 gap-9">
+            <div className="grid grid-cols-2 gap-4 md:gap-6">
               {pathways.map((pathway, index) => {
                 const Icon = pathway.icon;
                 return (
@@ -289,38 +289,37 @@ export default function HomeTab() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.35 + index * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                    whileHover={{ scale: 1.02, y: -8 }}
+                    whileHover={{ scale: 1.02, y: -4 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => setActiveTab("explore")}
-                    className={`group relative overflow-hidden rounded-[32px] bg-gradient-to-br ${pathway.bgGradient} backdrop-blur-xl border border-white/[0.06] hover:border-white/[0.12] transition-all duration-500`}
+                    className={`group relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-br ${pathway.bgGradient} backdrop-blur-xl border border-white/[0.06] hover:border-white/[0.12] transition-all duration-500`}
                     style={{ 
-                      minHeight: "320px",
-                      boxShadow: `0 0 80px -20px ${pathway.accent}15`
+                      boxShadow: `0 0 60px -20px ${pathway.accent}15`
                     }}
                   >
                     {/* Accent glow */}
                     <div 
-                      className="absolute -top-24 -right-24 w-48 h-48 rounded-full opacity-20 blur-3xl transition-opacity group-hover:opacity-35"
+                      className="absolute -top-16 -right-16 w-32 h-32 rounded-full opacity-20 blur-2xl transition-opacity group-hover:opacity-30"
                       style={{ background: pathway.accent }}
                     />
 
-                    <div className="relative z-10 p-12 md:p-14 h-full flex flex-col items-center text-center">
+                    <div className="relative z-10 p-5 md:p-8 lg:p-10 flex flex-col items-center text-center">
                       {/* Icon */}
                       <div 
-                        className="w-[72px] h-[72px] rounded-[20px] flex items-center justify-center mb-8 border border-white/[0.08] backdrop-blur-sm transition-transform group-hover:scale-110"
+                        className="w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-xl md:rounded-2xl flex items-center justify-center mb-4 md:mb-6 border border-white/[0.08] backdrop-blur-sm transition-transform group-hover:scale-110"
                         style={{ backgroundColor: `${pathway.accent}15` }}
                       >
-                        <Icon className="w-9 h-9" style={{ color: pathway.accent }} />
+                        <Icon className="w-6 h-6 md:w-7 md:h-7" style={{ color: pathway.accent }} />
                       </div>
                       
                       <div className="flex-1 flex flex-col items-center">
-                        <h3 className="text-[28px] md:text-[32px] font-bold text-white mb-4 leading-[1.2] tracking-[-0.01em]">{pathway.solution}</h3>
-                        <p className="text-base text-white/55 leading-[1.75] max-w-[90%]">{pathway.description}</p>
+                        <h3 className="text-base md:text-xl lg:text-2xl font-bold text-white mb-2 md:mb-3 leading-tight tracking-[-0.01em]">{pathway.solution}</h3>
+                        <p className="text-xs md:text-sm text-white/50 leading-relaxed line-clamp-2 md:line-clamp-none">{pathway.description}</p>
                       </div>
                       
-                      <div className="flex flex-col items-center gap-5 mt-10">
+                      <div className="flex flex-col items-center gap-3 mt-4 md:mt-6">
                         <span 
-                          className="text-sm font-semibold px-5 py-3 rounded-full border"
+                          className="text-xs font-semibold px-3 py-1.5 md:px-4 md:py-2 rounded-full border"
                           style={{ 
                             backgroundColor: `${pathway.accent}12`, 
                             borderColor: `${pathway.accent}25`,
@@ -329,9 +328,9 @@ export default function HomeTab() {
                         >
                           {pathway.stats}
                         </span>
-                        <div className="flex items-center gap-2 text-white/50 group-hover:text-white transition-colors">
-                          <span className="text-base font-medium">Explore</span>
-                          <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+                        <div className="hidden md:flex items-center gap-2 text-white/50 group-hover:text-white transition-colors">
+                          <span className="text-sm font-medium">Explore</span>
+                          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </div>
                       </div>
                     </div>
@@ -342,15 +341,15 @@ export default function HomeTab() {
           </section>
 
           {/* ========== AI GUIDE BANNER ========== */}
-          <section className="px-8 lg:px-12 pb-32 max-w-[1400px] mx-auto relative z-10">
+          <section className="px-5 md:px-8 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
             <motion.button
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.55 }}
-              whileHover={{ scale: 1.01, y: -4 }}
+              whileHover={{ scale: 1.01, y: -2 }}
               whileTap={{ scale: 0.99 }}
               onClick={() => setActiveTab("ai")}
-              className="group w-full relative overflow-hidden rounded-[32px] text-left shadow-2xl"
+              className="group w-full relative overflow-hidden rounded-2xl md:rounded-3xl text-left shadow-xl"
             >
               {/* Animated gradient background */}
               <div className="absolute inset-0 bg-gradient-to-r from-[#0c4a6e] via-[#0369a1] to-[#0284c7]" />
@@ -360,57 +359,57 @@ export default function HomeTab() {
                 className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
               />
               
-              <div className="relative z-10 p-12 md:p-16 flex flex-col md:flex-row md:items-center gap-10">
+              <div className="relative z-10 p-6 md:p-10 lg:p-12 flex flex-col md:flex-row md:items-center gap-5 md:gap-8">
                 <motion.div 
                   whileHover={{ rotate: 5 }}
-                  className="w-24 h-24 rounded-3xl bg-gradient-to-br from-[#38BDF8] to-[#0284c7] flex items-center justify-center flex-shrink-0 shadow-2xl shadow-sky-500/40"
+                  className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br from-[#38BDF8] to-[#0284c7] flex items-center justify-center flex-shrink-0 shadow-xl shadow-sky-500/30"
                 >
-                  <Sparkles className="w-12 h-12 text-white" />
+                  <Sparkles className="w-8 h-8 md:w-10 md:h-10 text-white" />
                 </motion.div>
                 
-                <div className="flex-1">
-                  <p className="text-sm font-bold text-sky-200 uppercase tracking-[0.2em] mb-3">Calgary Bridge AI</p>
-                  <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
-                    Get personalized guidance for your situation
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-bold text-sky-200 uppercase tracking-[0.15em] mb-2">Calgary Bridge AI</p>
+                  <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2 leading-tight">
+                    Get personalized guidance
                   </h3>
-                  <p className="text-xl text-white/80 leading-relaxed">
+                  <p className="text-sm md:text-base text-white/70 leading-relaxed line-clamp-2">
                     Not just links — real answers, step-by-step instructions, and matched resources.
                   </p>
                 </div>
                 
-                <ArrowRight className="w-10 h-10 text-white/60 flex-shrink-0 group-hover:text-white group-hover:translate-x-3 transition-all duration-300" />
+                <ArrowRight className="hidden md:block w-8 h-8 text-white/60 flex-shrink-0 group-hover:text-white group-hover:translate-x-2 transition-all duration-300" />
               </div>
             </motion.button>
           </section>
 
           {/* ========== SPECIALIZED PATHWAYS ========== */}
-          <section className="px-8 lg:px-12 pt-16 pb-32 max-w-[1400px] mx-auto relative z-10">
+          <section className="px-5 md:px-8 pt-8 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="mb-16 text-center"
+              className="mb-6 md:mb-10 text-center"
             >
-              <p className="text-sm font-semibold text-[var(--foreground-muted)] uppercase tracking-[0.2em] mb-5">Specialized Support</p>
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">For specific situations.</h2>
+              <p className="text-xs font-semibold text-[var(--foreground-muted)] uppercase tracking-[0.15em] mb-2">Specialized Support</p>
+              <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">For specific situations.</h2>
             </motion.div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
               {specialized.map((item, index) => (
                 <motion.button
                   key={item.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.65 + index * 0.05 }}
-                  whileHover={{ y: -6, scale: 1.02 }}
+                  whileHover={{ y: -4, scale: 1.02 }}
                   onClick={() => setActiveTab("explore")}
-                  className="group p-8 rounded-[24px] bg-white/[0.04] border border-white/[0.06] hover:bg-white/[0.08] hover:border-white/[0.15] transition-all duration-300 flex flex-col items-center text-center"
+                  className="group p-4 md:p-6 rounded-xl md:rounded-2xl bg-white/[0.04] border border-white/[0.06] hover:bg-white/[0.08] hover:border-white/[0.15] transition-all duration-300 flex flex-col items-center text-center"
                 >
-                  <h3 className="text-xl font-bold text-white mb-3">{item.label}</h3>
-                  <p className="text-base text-[var(--foreground-muted)] mb-6 leading-relaxed">{item.description}</p>
-                  <div className="flex items-center gap-2 text-[#38BDF8] text-base font-semibold mt-auto">
-                    <span>View resources</span>
-                    <ChevronRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
+                  <h3 className="text-sm md:text-base font-bold text-white mb-1 md:mb-2">{item.label}</h3>
+                  <p className="text-xs md:text-sm text-[var(--foreground-muted)] mb-3 leading-relaxed line-clamp-2">{item.description}</p>
+                  <div className="flex items-center gap-1.5 text-[#38BDF8] text-xs md:text-sm font-semibold mt-auto">
+                    <span>View</span>
+                    <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </motion.button>
               ))}
@@ -418,19 +417,19 @@ export default function HomeTab() {
           </section>
 
           {/* ========== FEATURED RESOURCES ========== */}
-          <section className="px-8 lg:px-12 pt-16 pb-32 max-w-[1400px] mx-auto relative z-10">
-            <div className="mb-16 text-center">
-              <p className="text-sm font-bold text-[#FBBF24] uppercase tracking-[0.2em] mb-5">Recommended</p>
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Top resources this month.</h2>
+          <section className="px-5 md:px-8 pt-8 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
+            <div className="mb-6 md:mb-10 text-center">
+              <p className="text-xs font-bold text-[#FBBF24] uppercase tracking-[0.15em] mb-2">Recommended</p>
+              <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">Top resources this month.</h2>
               <button
                 onClick={() => setActiveTab("explore")}
-                className="text-[#38BDF8] text-base font-semibold inline-flex items-center gap-2 hover:gap-3 transition-all mt-6"
+                className="text-[#38BDF8] text-sm font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all mt-3"
               >
-                View all <ArrowRight className="w-5 h-5" />
+                View all <ArrowRight className="w-4 h-4" />
               </button>
             </div>
 
-            <div className="grid lg:grid-cols-2 gap-8">
+            <div className="grid md:grid-cols-2 gap-4 md:gap-6">
               {featuredResources.map((resource, index) => (
                 <motion.div
                   key={resource.id}
@@ -446,19 +445,19 @@ export default function HomeTab() {
 
           {/* ========== HIDDEN GEMS ========== */}
           {hiddenGems.length > 0 && (
-            <section className="px-8 lg:px-12 pt-16 pb-32 max-w-[1400px] mx-auto relative z-10">
-              <div className="mb-16 text-center">
-                <p className="text-sm font-bold text-[#a855f7] uppercase tracking-[0.2em] mb-5">Hidden Gems</p>
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Programs most people miss.</h2>
+            <section className="px-5 md:px-8 pt-8 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
+              <div className="mb-6 md:mb-10 text-center">
+                <p className="text-xs font-bold text-[#a855f7] uppercase tracking-[0.15em] mb-2">Hidden Gems</p>
+                <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">Programs most people miss.</h2>
                 <button
                   onClick={() => setActiveTab("explore")}
-                  className="text-[#38BDF8] text-base font-semibold inline-flex items-center gap-2 hover:gap-3 transition-all mt-6"
+                  className="text-[#38BDF8] text-sm font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all mt-3"
                 >
-                  View all <ArrowRight className="w-5 h-5" />
+                  View all <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
 
-              <div className="grid lg:grid-cols-3 gap-8">
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                 {hiddenGems.map((resource, index) => (
                   <motion.div
                     key={resource.id}
@@ -474,16 +473,16 @@ export default function HomeTab() {
           )}
 
           {/* ========== NEAR YOU ========== */}
-          <section className="px-8 lg:px-12 pb-40 max-w-[1400px] mx-auto relative z-10">
-            <div className="mb-14">
-              <div className="flex items-center gap-3 mb-4">
-                <MapPin className="w-5 h-5 text-emerald-400" />
-                <p className="text-sm font-bold text-emerald-400 uppercase tracking-[0.2em]">Near You</p>
+          <section className="px-5 md:px-8 pb-24 md:pb-32 max-w-[1200px] mx-auto relative z-10">
+            <div className="mb-6 md:mb-10">
+              <div className="flex items-center gap-2 mb-2">
+                <MapPin className="w-4 h-4 text-emerald-400" />
+                <p className="text-xs font-bold text-emerald-400 uppercase tracking-[0.15em]">Near You</p>
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Services in your area.</h2>
+              <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">Services in your area.</h2>
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
               {[
                 { name: "Calgary Food Bank", distance: "0.8 km", tag: "Free", hours: "Mon-Fri 9-5" },
                 { name: "Centre for Newcomers", distance: "1.2 km", tag: "Free", hours: "Mon-Sat 9-6" },
@@ -494,17 +493,17 @@ export default function HomeTab() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.8 + index * 0.05 }}
-                  whileHover={{ y: -4 }}
-                  className="p-8 rounded-[24px] bg-white/[0.04] border border-white/[0.06] hover:bg-white/[0.07] hover:border-white/[0.12] transition-all duration-300"
+                  whileHover={{ y: -2 }}
+                  className="p-5 md:p-6 rounded-xl md:rounded-2xl bg-white/[0.04] border border-white/[0.06] hover:bg-white/[0.07] hover:border-white/[0.12] transition-all duration-300"
                 >
-                  <div className="flex items-start justify-between mb-5">
-                    <h3 className="text-xl font-bold text-white">{place.name}</h3>
-                    <span className="text-sm font-bold px-4 py-2 rounded-full bg-emerald-400/15 text-emerald-400">
+                  <div className="flex items-start justify-between gap-3 mb-3">
+                    <h3 className="text-base md:text-lg font-bold text-white leading-tight">{place.name}</h3>
+                    <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-400/15 text-emerald-400 flex-shrink-0">
                       {place.tag}
                     </span>
                   </div>
-                  <p className="text-base text-[var(--foreground-muted)] mb-2">{place.distance} away</p>
-                  <p className="text-base text-[var(--foreground-muted)]">{place.hours}</p>
+                  <p className="text-sm text-[var(--foreground-muted)] mb-1">{place.distance} away</p>
+                  <p className="text-sm text-[var(--foreground-muted)]">{place.hours}</p>
                 </motion.div>
               ))}
             </div>

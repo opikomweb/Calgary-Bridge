@@ -194,24 +194,24 @@ export default function AITab() {
       </div>
 
       {/* Split Layout - Chat Left, Intelligence Right */}
-      <div className="flex h-[calc(100vh-100px)]">
-        {/* Left Side - AI Conversation (60%) */}
-        <div className="flex-1 flex flex-col min-w-0 lg:max-w-[60%]">
+      <div className="flex h-[calc(100vh-140px)] lg:h-[calc(100vh-100px)]">
+        {/* Left Side - AI Conversation (full on mobile, 60% on desktop) */}
+        <div className="flex-1 flex flex-col min-w-0 lg:max-w-[65%]">
           <div className="flex-1 overflow-y-auto">
             {chatMessages.length === 0 ? (
               /* Empty State */
-              <div className="flex flex-col items-center justify-center min-h-full px-10 lg:px-16 py-16">
+              <div className="flex flex-col items-center justify-center min-h-full px-5 md:px-8 py-10 md:py-16">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="text-center w-full max-w-xl"
+                  className="text-center w-full max-w-lg"
                 >
                   {/* Headline */}
                   <motion.h1
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
-                    className="text-5xl lg:text-6xl font-bold mb-5 tracking-tight"
+                    className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4 tracking-tight"
                   >
                     Calgary Bridge AI
                   </motion.h1>
@@ -220,7 +220,7 @@ export default function AITab() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
-                    className="text-xl text-[var(--foreground-muted)] mb-14 leading-relaxed"
+                    className="text-base md:text-lg text-[var(--foreground-muted)] mb-8 md:mb-12 leading-relaxed"
                   >
                     Your personal guide to every resource and service in Calgary. Ask me anything.
                   </motion.p>
@@ -230,7 +230,7 @@ export default function AITab() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 }}
-                    className="grid grid-cols-2 gap-5"
+                    className="grid grid-cols-2 gap-3 md:gap-4"
                   >
                     {conversationStarters.map((starter, index) => (
                       <motion.button
@@ -238,17 +238,17 @@ export default function AITab() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.5 + index * 0.08 }}
-                        whileHover={{ scale: 1.02, y: -4 }}
+                        whileHover={{ scale: 1.02, y: -2 }}
                         whileTap={{ scale: 0.98 }}
                         onClick={() => handleSuggestionClick(starter.query)}
-                        className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br ${starter.color} border border-white/10 p-6 text-left transition-all hover:border-white/20 hover:shadow-xl`}
+                        className={`group relative overflow-hidden rounded-xl md:rounded-2xl bg-gradient-to-br ${starter.color} border border-white/10 p-4 md:p-5 text-left transition-all hover:border-white/20 hover:shadow-lg`}
                       >
-                        <div className={`mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 ${starter.iconColor}`}>
-                          <starter.icon className="h-6 w-6" />
+                        <div className={`mb-2 md:mb-3 flex h-10 w-10 md:h-11 md:w-11 items-center justify-center rounded-lg md:rounded-xl bg-white/10 ${starter.iconColor}`}>
+                          <starter.icon className="h-5 w-5" />
                         </div>
-                        <h3 className="font-semibold text-white text-lg mb-2">{starter.label}</h3>
-                        <p className="text-sm text-white/60 line-clamp-2">{starter.query}</p>
-                        <ArrowRight className="absolute bottom-5 right-5 w-5 h-5 text-white/30 group-hover:text-white/60 transition-colors" />
+                        <h3 className="font-semibold text-white text-sm md:text-base mb-1">{starter.label}</h3>
+                        <p className="text-xs md:text-sm text-white/60 line-clamp-2">{starter.query}</p>
+                        <ArrowRight className="absolute bottom-4 right-4 w-4 h-4 text-white/30 group-hover:text-white/60 transition-colors" />
                       </motion.button>
                     ))}
                   </motion.div>
@@ -256,40 +256,40 @@ export default function AITab() {
               </div>
             ) : (
               /* Chat Messages */
-              <div className="px-10 lg:px-16 py-10">
-                <div className="flex flex-col gap-8">
+              <div className="px-5 md:px-8 py-6 md:py-8">
+                <div className="flex flex-col gap-5 md:gap-6">
                   <AnimatePresence>
                     {chatMessages.map((message) => (
                       <motion.div
                         key={message.id}
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className={`flex gap-5 ${
+                        className={`flex gap-3 md:gap-4 ${
                           message.role === "user" ? "flex-row-reverse" : ""
                         }`}
                       >
                         <div
-                          className={`flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl ${
+                          className={`flex h-10 w-10 md:h-11 md:w-11 flex-shrink-0 items-center justify-center rounded-xl md:rounded-2xl ${
                             message.role === "user"
                               ? "bg-[#3B82F6]"
                               : "bg-gradient-to-br from-[#3B82F6] to-[#1d4ed8]"
                           }`}
                         >
                           {message.role === "user" ? (
-                            <User className="h-6 w-6 text-white" />
+                            <User className="h-5 w-5 text-white" />
                           ) : (
-                            <Sparkles className="h-6 w-6 text-white" />
+                            <Sparkles className="h-5 w-5 text-white" />
                           )}
                         </div>
-                        <div className={`flex-1 ${message.role === "user" ? "flex justify-end" : ""}`}>
+                        <div className={`flex-1 min-w-0 ${message.role === "user" ? "flex justify-end" : ""}`}>
                           <div
-                            className={`max-w-[90%] rounded-2xl px-6 py-5 ${
+                            className={`max-w-[90%] rounded-xl md:rounded-2xl px-4 md:px-5 py-3 md:py-4 ${
                               message.role === "user"
                                 ? "bg-[#3B82F6] text-white"
                                 : "glass-card"
                             }`}
                           >
-                            <div className="text-base leading-relaxed whitespace-pre-line">
+                            <div className="text-sm md:text-base leading-relaxed whitespace-pre-line">
                               {message.content.split(/(\*\*.*?\*\*)/).map((part, i) => {
                                 if (part.startsWith("**") && part.endsWith("**")) {
                                   return <strong key={i} className="font-semibold">{part.slice(2, -2)}</strong>;
@@ -301,8 +301,8 @@ export default function AITab() {
                           
                           {/* Resource Cards */}
                           {message.role === "assistant" && message.resources && message.resources.length > 0 && (
-                            <div className="mt-5 space-y-4">
-                              <p className="text-sm font-medium text-[var(--foreground-muted)] uppercase tracking-wider">
+                            <div className="mt-4 space-y-3">
+                              <p className="text-xs font-medium text-[var(--foreground-muted)] uppercase tracking-wider">
                                 Recommended Resources
                               </p>
                               {message.resources.map((resourceId) => {
@@ -320,16 +320,16 @@ export default function AITab() {
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="flex gap-5"
+                      className="flex gap-3 md:gap-4"
                     >
-                      <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#3B82F6] to-[#1d4ed8]">
-                        <Sparkles className="h-6 w-6 text-white" />
+                      <div className="flex h-10 w-10 md:h-11 md:w-11 flex-shrink-0 items-center justify-center rounded-xl md:rounded-2xl bg-gradient-to-br from-[#3B82F6] to-[#1d4ed8]">
+                        <Sparkles className="h-5 w-5 text-white" />
                       </div>
-                      <div className="glass-card rounded-2xl px-6 py-5">
-                        <div className="flex gap-2">
-                          <span className="h-2.5 w-2.5 animate-bounce rounded-full bg-[var(--foreground-muted)]" style={{ animationDelay: "0ms" }} />
-                          <span className="h-2.5 w-2.5 animate-bounce rounded-full bg-[var(--foreground-muted)]" style={{ animationDelay: "150ms" }} />
-                          <span className="h-2.5 w-2.5 animate-bounce rounded-full bg-[var(--foreground-muted)]" style={{ animationDelay: "300ms" }} />
+                      <div className="glass-card rounded-xl md:rounded-2xl px-4 md:px-5 py-3 md:py-4">
+                        <div className="flex gap-1.5">
+                          <span className="h-2 w-2 animate-bounce rounded-full bg-[var(--foreground-muted)]" style={{ animationDelay: "0ms" }} />
+                          <span className="h-2 w-2 animate-bounce rounded-full bg-[var(--foreground-muted)]" style={{ animationDelay: "150ms" }} />
+                          <span className="h-2 w-2 animate-bounce rounded-full bg-[var(--foreground-muted)]" style={{ animationDelay: "300ms" }} />
                         </div>
                       </div>
                     </motion.div>
@@ -342,24 +342,24 @@ export default function AITab() {
 
           {/* Input - Docked at Bottom */}
           <div className="border-t border-[var(--border)] bg-[var(--background)]/80 backdrop-blur-xl">
-            <div className="px-10 lg:px-16 py-6">
-              <div className="glass-card flex items-center gap-4 rounded-2xl p-3">
+            <div className="px-5 md:px-8 py-4 md:py-5">
+              <div className="glass-card flex items-center gap-2 md:gap-3 rounded-xl md:rounded-2xl p-2 md:p-2.5">
                 <input
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSend(input)}
-                  placeholder="Ask about housing, jobs, healthcare, transit..."
-                  className="flex-1 bg-transparent px-5 py-4 text-white placeholder:text-[var(--foreground-muted)] focus:outline-none text-lg"
+                  placeholder="Ask about housing, jobs, healthcare..."
+                  className="flex-1 bg-transparent px-3 md:px-4 py-2.5 md:py-3 text-white placeholder:text-[var(--foreground-muted)] focus:outline-none text-sm md:text-base min-w-0"
                 />
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => handleSend(input)}
                   disabled={!input.trim() || isTyping}
-                  className="flex h-14 w-14 items-center justify-center rounded-xl bg-[#3B82F6] text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-[#3B82F6]/30"
+                  className="flex h-11 w-11 md:h-12 md:w-12 items-center justify-center rounded-lg md:rounded-xl bg-[#3B82F6] text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-[#3B82F6]/30 flex-shrink-0"
                 >
-                  <Send className="h-6 w-6" />
+                  <Send className="h-5 w-5" />
                 </motion.button>
               </div>
             </div>

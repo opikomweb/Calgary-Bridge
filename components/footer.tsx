@@ -471,14 +471,14 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
 
   return (
     <>
-      <footer className="relative mt-20">
+      <footer className="relative mt-12 md:mt-16">
         {/* Footer Separator - Visual Break from Main Content */}
         <div className="relative">
           {/* Gradient Divider Line */}
           <div className="h-px bg-gradient-to-r from-transparent via-sky-500/50 to-transparent" />
           
           {/* Decorative Top Pattern */}
-          <div className="absolute inset-x-0 -top-20 h-40 bg-gradient-to-b from-transparent via-[#020508]/50 to-[#020508] pointer-events-none" />
+          <div className="absolute inset-x-0 -top-16 h-32 bg-gradient-to-b from-transparent via-[#020508]/50 to-[#020508] pointer-events-none" />
         </div>
 
         {/* Footer Background - Distinctly Different */}
@@ -490,67 +490,67 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
           }} />
 
           {/* Trust Banner */}
-          <div className="relative border-b border-white/[0.04] py-8 px-8 lg:px-16 bg-gradient-to-r from-sky-500/[0.03] via-transparent to-cyan-500/[0.03]">
-            <div className="max-w-[1400px] mx-auto">
-              <div className="flex flex-wrap items-center justify-center gap-6 lg:gap-12">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center">
-                    <Shield className="w-5 h-5 text-emerald-400" />
+          <div className="relative border-b border-white/[0.04] py-5 md:py-6 px-5 md:px-8 bg-gradient-to-r from-sky-500/[0.03] via-transparent to-cyan-500/[0.03]">
+            <div className="max-w-[1200px] mx-auto">
+              <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center">
+                    <Shield className="w-4 h-4 text-emerald-400" />
                   </div>
-                  <span className="text-sm font-medium text-white/60">Manually verified</span>
+                  <span className="text-xs font-medium text-white/60">Verified</span>
                 </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-sky-500/10 flex items-center justify-center">
-                    <FileText className="w-5 h-5 text-sky-400" />
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-lg bg-sky-500/10 flex items-center justify-center">
+                    <FileText className="w-4 h-4 text-sky-400" />
                   </div>
-                  <span className="text-sm font-medium text-white/60">Updated monthly</span>
+                  <span className="text-xs font-medium text-white/60">Updated monthly</span>
                 </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
-                    <Users className="w-5 h-5 text-amber-400" />
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center">
+                    <Users className="w-4 h-4 text-amber-400" />
                   </div>
-                  <span className="text-sm font-medium text-white/60">Community-driven</span>
+                  <span className="text-xs font-medium text-white/60">Community-driven</span>
                 </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-pink-500/10 flex items-center justify-center">
-                    <Heart className="w-5 h-5 text-pink-400" />
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-lg bg-pink-500/10 flex items-center justify-center">
+                    <Heart className="w-4 h-4 text-pink-400" />
                   </div>
-                  <span className="text-sm font-medium text-white/60">Free to use</span>
+                  <span className="text-xs font-medium text-white/60">Free to use</span>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Main Footer Content */}
-          <div className="relative py-16 px-8 lg:px-16">
-            <div className="max-w-[1400px] mx-auto">
-              <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-start">
+          <div className="relative py-10 md:py-12 px-5 md:px-8">
+            <div className="max-w-[1200px] mx-auto">
+              <div className="grid md:grid-cols-12 gap-8 md:gap-6 items-start">
                 {/* Brand Column - Logo Only */}
-                <div className="lg:col-span-3 flex flex-col items-center lg:items-start">
-                  <div className="relative w-32 h-32 rounded-3xl overflow-hidden bg-gradient-to-br from-[#0c1829] to-[#050B14] p-2 border border-white/[0.08] shadow-xl shadow-sky-500/5">
+                <div className="md:col-span-3 flex flex-col items-center md:items-start">
+                  <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden bg-gradient-to-br from-[#0c1829] to-[#050B14] p-1.5 border border-white/[0.08] shadow-lg shadow-sky-500/5">
                     <Image
                       src="/calgary-connect-logo.png"
                       alt="Calgary Connect"
                       fill
-                      className="object-contain p-2"
+                      className="object-contain p-1.5"
                     />
                   </div>
-                  <p className="text-sm text-white/30 mt-4 text-center lg:text-left">Everything Calgary. One Place.</p>
+                  <p className="text-xs text-white/30 mt-3 text-center md:text-left">Everything Calgary. One Place.</p>
                 </div>
 
               {/* Link Columns Container */}
-              <div className="lg:col-span-9 grid sm:grid-cols-3 gap-12 lg:gap-8">
+              <div className="md:col-span-9 grid grid-cols-2 sm:grid-cols-3 gap-6 md:gap-6">
                 {/* Resources Column */}
                 <div>
-                  <h4 className="text-lg font-bold text-white mb-6 pb-4 border-b border-white/[0.06]">Resources</h4>
-                  <ul className="space-y-4">
+                  <h4 className="text-sm font-bold text-white mb-4 pb-2 border-b border-white/[0.06]">Resources</h4>
+                  <ul className="space-y-2.5">
                     {resourceLinks.map((link) => (
                       <li key={link.label}>
                         <button
                           onClick={() => openModal(link.key)}
-                          className="text-base text-white/50 hover:text-sky-400 transition-colors text-left flex items-center gap-2 group"
+                          className="text-sm text-white/50 hover:text-sky-400 transition-colors text-left flex items-center gap-1.5 group"
                         >
-                          <ChevronRight className="w-4 h-4 opacity-0 -ml-6 group-hover:opacity-100 group-hover:ml-0 transition-all text-sky-400" />
+                          <ChevronRight className="w-3 h-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-sky-400" />
                           {link.label}
                         </button>
                       </li>
@@ -560,24 +560,24 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
 
                 {/* For Businesses Column */}
                 <div>
-                  <h4 className="text-lg font-bold text-white mb-6 pb-4 border-b border-white/[0.06]">For Businesses</h4>
-                  <ul className="space-y-4">
+                  <h4 className="text-sm font-bold text-white mb-4 pb-2 border-b border-white/[0.06]">For Businesses</h4>
+                  <ul className="space-y-2.5">
                     {businessLinks.map((link) => (
                       <li key={link.label}>
                         {link.onClick ? (
                           <button
                             onClick={link.onClick}
-                            className="text-base text-white/50 hover:text-sky-400 transition-colors text-left flex items-center gap-2 group"
+                            className="text-sm text-white/50 hover:text-sky-400 transition-colors text-left flex items-center gap-1.5 group"
                           >
-                            <ChevronRight className="w-4 h-4 opacity-0 -ml-6 group-hover:opacity-100 group-hover:ml-0 transition-all text-sky-400" />
+                            <ChevronRight className="w-3 h-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-sky-400" />
                             {link.label}
                           </button>
                         ) : (
                           <button
                             onClick={() => openModal(link.key!)}
-                            className="text-base text-white/50 hover:text-sky-400 transition-colors text-left flex items-center gap-2 group"
+                            className="text-sm text-white/50 hover:text-sky-400 transition-colors text-left flex items-center gap-1.5 group"
                           >
-                            <ChevronRight className="w-4 h-4 opacity-0 -ml-6 group-hover:opacity-100 group-hover:ml-0 transition-all text-sky-400" />
+                            <ChevronRight className="w-3 h-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-sky-400" />
                             {link.label}
                           </button>
                         )}
@@ -587,16 +587,16 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
                 </div>
 
                 {/* Community Column */}
-                <div>
-                  <h4 className="text-lg font-bold text-white mb-6 pb-4 border-b border-white/[0.06]">Community</h4>
-                  <ul className="space-y-4">
+                <div className="col-span-2 sm:col-span-1">
+                  <h4 className="text-sm font-bold text-white mb-4 pb-2 border-b border-white/[0.06]">Community</h4>
+                  <ul className="space-y-2.5">
                     {communityLinks.map((link) => (
                       <li key={link.label}>
                         <button
                           onClick={() => openModal(link.key)}
-                          className="text-base text-white/50 hover:text-sky-400 transition-colors text-left flex items-center gap-2 group"
+                          className="text-sm text-white/50 hover:text-sky-400 transition-colors text-left flex items-center gap-1.5 group"
                         >
-                          <ChevronRight className="w-4 h-4 opacity-0 -ml-6 group-hover:opacity-100 group-hover:ml-0 transition-all text-sky-400" />
+                          <ChevronRight className="w-3 h-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-sky-400" />
                           {link.label}
                         </button>
                       </li>
@@ -609,14 +609,14 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
         </div>
 
         {/* Disclaimer Section */}
-        <div className="relative border-t border-white/[0.04] py-12 px-8 lg:px-16">
-          <div className="max-w-[1400px] mx-auto">
-            <div className="flex items-start gap-5 p-8 rounded-2xl bg-gradient-to-r from-amber-500/[0.08] via-amber-500/[0.04] to-transparent border border-amber-500/15">
-              <div className="w-12 h-12 rounded-xl bg-amber-500/15 flex items-center justify-center flex-shrink-0">
-                <AlertCircle className="w-6 h-6 text-amber-400" />
+        <div className="relative border-t border-white/[0.04] py-8 md:py-10 px-5 md:px-8">
+          <div className="max-w-[1200px] mx-auto">
+            <div className="flex items-start gap-3 md:gap-4 p-5 md:p-6 rounded-xl md:rounded-2xl bg-gradient-to-r from-amber-500/[0.08] via-amber-500/[0.04] to-transparent border border-amber-500/15">
+              <div className="w-10 h-10 rounded-lg bg-amber-500/15 flex items-center justify-center flex-shrink-0">
+                <AlertCircle className="w-5 h-5 text-amber-400" />
               </div>
-              <div className="text-base text-white/60 leading-relaxed">
-                <strong className="text-amber-400 text-lg block mb-2">Important Disclaimer</strong>
+              <div className="text-sm text-white/60 leading-relaxed min-w-0">
+                <strong className="text-amber-400 block mb-1">Important Disclaimer</strong>
                 Calgary Connect is an independent platform developed by WilGlobo Inc and is not affiliated with, endorsed by, or connected to the City of Calgary, 
                 the Government of Alberta, or any official government body. Information provided is for general reference only. 
                 Always verify details directly with service providers. For emergencies, call 911.
@@ -626,25 +626,25 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
         </div>
 
         {/* Bottom Bar */}
-        <div className="relative border-t border-white/[0.04] py-8 px-8 lg:px-16 bg-black/30">
-          <div className="max-w-[1400px] mx-auto flex flex-col lg:flex-row items-center justify-between gap-6">
-            <div className="flex flex-wrap items-center justify-center gap-6">
+        <div className="relative border-t border-white/[0.04] py-5 md:py-6 px-5 md:px-8 bg-black/30">
+          <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
               {legalLinks.map((link, index) => (
-                <span key={link.label} className="flex items-center gap-6">
+                <span key={link.label} className="flex items-center gap-4">
                   <button
                     onClick={() => openModal(link.key)}
-                    className="text-sm text-white/40 hover:text-white transition-colors"
+                    className="text-xs text-white/40 hover:text-white transition-colors"
                   >
                     {link.label}
                   </button>
                   {index < legalLinks.length - 1 && (
-                    <span className="text-white/10 hidden lg:inline">|</span>
+                    <span className="text-white/10 hidden md:inline">|</span>
                   )}
                 </span>
               ))}
             </div>
 
-            <p className="text-sm text-white/40 font-medium">
+            <p className="text-xs text-white/40 font-medium">
               &copy; {currentYear} <span className="text-white/60">WilGlobo Inc.</span> All rights reserved.
             </p>
           </div>

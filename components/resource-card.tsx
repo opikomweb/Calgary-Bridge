@@ -65,9 +65,9 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
   if (variant === "compact") {
     return (
       <motion.div
-        whileHover={{ y: -6 }}
+        whileHover={{ y: -4 }}
         transition={{ duration: 0.3 }}
-        className={`group relative overflow-hidden rounded-[28px] bg-gradient-to-br from-slate-900/90 via-slate-900/70 to-slate-800/60 border border-white/[0.08] hover:border-white/[0.15] p-8 md:p-10 transition-all duration-400 ${isCompleted && showNotes ? "opacity-60" : ""}`}
+        className={`group relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-br from-slate-900/90 via-slate-900/70 to-slate-800/60 border border-white/[0.08] hover:border-white/[0.15] p-5 md:p-6 lg:p-8 transition-all duration-400 ${isCompleted && showNotes ? "opacity-60" : ""}`}
         style={{
           boxShadow: "0 4px 24px -8px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.03)",
         }}
@@ -77,38 +77,38 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
         
         <div className="relative z-10">
           {/* Header Row: Tags + Actions */}
-          <div className="flex items-start justify-between gap-4 mb-6">
+          <div className="flex items-start justify-between gap-3 mb-4">
             {/* Category Tags - Horizontal */}
-            <div className="flex flex-wrap gap-2.5">
+            <div className="flex flex-wrap gap-1.5 md:gap-2 min-w-0">
               {resource.category.slice(0, 2).map((cat) => (
                 <span
                   key={cat}
-                  className="px-4 py-2 rounded-full text-sm font-semibold bg-sky-500/15 text-sky-400"
+                  className="px-2.5 py-1 md:px-3 md:py-1.5 rounded-full text-xs font-semibold bg-sky-500/15 text-sky-400 truncate"
                 >
                   {categoryLabels[cat]?.[activeLanguage] || cat}
                 </span>
               ))}
               {resource.hiddenGem && (
-                <span className="px-4 py-2 rounded-full text-sm font-semibold bg-purple-500/15 text-purple-400 flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  Hidden Gem
+                <span className="px-2.5 py-1 md:px-3 md:py-1.5 rounded-full text-xs font-semibold bg-purple-500/15 text-purple-400 flex items-center gap-1">
+                  <Sparkles className="w-3 h-3" />
+                  <span className="hidden sm:inline">Hidden Gem</span>
                 </span>
               )}
             </div>
             
             {/* Action Buttons */}
-            <div className="flex items-center gap-2 flex-shrink-0">
+            <div className="flex items-center gap-1.5 flex-shrink-0">
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => toggleBookmark(resource.id)}
-                className={`rounded-xl p-3 transition-all ${
+                className={`rounded-lg md:rounded-xl p-2 md:p-2.5 transition-all ${
                   isBookmarked
                     ? "bg-pink-500/20 text-pink-400"
                     : "bg-white/[0.06] text-[var(--foreground-muted)] hover:text-white hover:bg-white/[0.1]"
                 }`}
               >
-                <Heart className={`h-5 w-5 ${isBookmarked ? "fill-current" : ""}`} />
+                <Heart className={`h-4 w-4 md:h-5 md:w-5 ${isBookmarked ? "fill-current" : ""}`} />
               </motion.button>
 
               <div className="relative">
@@ -116,9 +116,9 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   onClick={() => setShowMenu(!showMenu)}
-                  className="rounded-xl p-3 bg-white/[0.06] text-[var(--foreground-muted)] hover:text-white hover:bg-white/[0.1] transition-all"
+                  className="rounded-lg md:rounded-xl p-2 md:p-2.5 bg-white/[0.06] text-[var(--foreground-muted)] hover:text-white hover:bg-white/[0.1] transition-all"
                 >
-                  <MoreHorizontal className="h-5 w-5" />
+                  <MoreHorizontal className="h-4 w-4 md:h-5 md:w-5" />
                 </motion.button>
                 
                 <AnimatePresence>
@@ -127,14 +127,14 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
                       initial={{ opacity: 0, scale: 0.95, y: -8 }}
                       animate={{ opacity: 1, scale: 1, y: 0 }}
                       exit={{ opacity: 0, scale: 0.95, y: -8 }}
-                      className="absolute right-0 top-full mt-2 w-56 rounded-2xl bg-[#0a1628] border border-white/[0.1] shadow-2xl overflow-hidden z-20"
+                      className="absolute right-0 top-full mt-2 w-48 md:w-56 rounded-xl md:rounded-2xl bg-[#0a1628] border border-white/[0.1] shadow-2xl overflow-hidden z-20"
                     >
                       <button
                         onClick={() => {
                           onClaimBusiness?.(resource.id);
                           setShowMenu(false);
                         }}
-                        className="w-full flex items-center gap-3 px-5 py-4 text-left text-sm text-white/70 hover:bg-white/[0.06] hover:text-white transition-colors"
+                        className="w-full flex items-center gap-2.5 px-4 py-3 text-left text-sm text-white/70 hover:bg-white/[0.06] hover:text-white transition-colors"
                       >
                         <Building2 className="w-4 h-4" />
                         Claim this business
@@ -144,7 +144,7 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
                           onReport?.(resource.id);
                           setShowMenu(false);
                         }}
-                        className="w-full flex items-center gap-3 px-5 py-4 text-left text-sm text-white/70 hover:bg-white/[0.06] hover:text-white transition-colors border-t border-white/[0.06]"
+                        className="w-full flex items-center gap-2.5 px-4 py-3 text-left text-sm text-white/70 hover:bg-white/[0.06] hover:text-white transition-colors border-t border-white/[0.06]"
                       >
                         <Flag className="w-4 h-4" />
                         Report an issue
@@ -157,31 +157,31 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
           </div>
 
           {/* Title - Full Width */}
-          <h3 className="font-bold text-2xl mb-4 leading-tight text-white">
+          <h3 className="font-bold text-lg md:text-xl lg:text-2xl mb-2 md:mb-3 leading-tight text-white">
             {resource.title[activeLanguage]}
           </h3>
           
           {/* Description - Full Width with Better Line Height */}
-          <p className="text-white/60 text-base leading-[1.75] mb-6">
+          <p className="text-white/60 text-sm md:text-base leading-relaxed mb-4 line-clamp-2 md:line-clamp-3">
             {resource.summary?.[activeLanguage] || resource.description[activeLanguage]}
           </p>
 
           {/* Cost Badge */}
           {resource.cost && (
-            <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold mb-6 ${costLabels[resource.cost]?.color || ""}`}>
-              <DollarSign className="w-4 h-4" />
+            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 md:px-3 md:py-1.5 rounded-full text-xs font-semibold mb-4 ${costLabels[resource.cost]?.color || ""}`}>
+              <DollarSign className="w-3.5 h-3.5" />
               {costLabels[resource.cost]?.label || resource.cost}
             </span>
           )}
 
           {/* Quick Action Buttons - Full Width */}
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-2 md:gap-2.5">
             {resource.phone && (
               <a
                 href={`tel:${resource.phone}`}
-                className="flex items-center gap-2.5 rounded-2xl bg-sky-500/15 px-6 py-3.5 text-base font-semibold text-sky-400 transition-all hover:bg-sky-500/25 active:scale-95"
+                className="flex items-center gap-1.5 md:gap-2 rounded-xl md:rounded-2xl bg-sky-500/15 px-3 md:px-4 py-2 md:py-2.5 text-sm font-semibold text-sky-400 transition-all hover:bg-sky-500/25 active:scale-95"
               >
-                <Phone className="h-5 w-5" />
+                <Phone className="h-4 w-4" />
                 Call
               </a>
             )}
@@ -190,10 +190,11 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
                 href={googleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2.5 rounded-2xl bg-amber-500/15 px-6 py-3.5 text-base font-semibold text-amber-400 transition-all hover:bg-amber-500/25 active:scale-95"
+                className="flex items-center gap-1.5 md:gap-2 rounded-xl md:rounded-2xl bg-amber-500/15 px-3 md:px-4 py-2 md:py-2.5 text-sm font-semibold text-amber-400 transition-all hover:bg-amber-500/25 active:scale-95"
               >
-                <MapPin className="h-5 w-5" />
-                Directions
+                <MapPin className="h-4 w-4" />
+                <span className="hidden sm:inline">Directions</span>
+                <span className="sm:hidden">Map</span>
               </a>
             )}
             {resource.website && (
@@ -201,9 +202,9 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
                 href={resource.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2.5 rounded-2xl bg-white/[0.06] border border-white/[0.08] px-6 py-3.5 text-base font-semibold transition-all hover:bg-white/[0.1] hover:border-white/[0.15] active:scale-95"
+                className="flex items-center gap-1.5 md:gap-2 rounded-xl md:rounded-2xl bg-white/[0.06] border border-white/[0.08] px-3 md:px-4 py-2 md:py-2.5 text-sm font-semibold transition-all hover:bg-white/[0.1] hover:border-white/[0.15] active:scale-95"
               >
-                <ExternalLink className="h-5 w-5" />
+                <ExternalLink className="h-4 w-4" />
                 Website
               </a>
             )}
@@ -216,9 +217,9 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
   // Default full variant
   return (
     <motion.div
-      whileHover={{ y: -8 }}
+      whileHover={{ y: -4 }}
       transition={{ duration: 0.3 }}
-      className={`group relative overflow-hidden rounded-[32px] bg-gradient-to-br from-slate-900/95 via-slate-900/80 to-slate-800/70 border border-white/[0.08] hover:border-white/[0.15] p-10 md:p-12 transition-all duration-400 ${isCompleted && showNotes ? "opacity-60" : ""}`}
+      className={`group relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-br from-slate-900/95 via-slate-900/80 to-slate-800/70 border border-white/[0.08] hover:border-white/[0.15] p-5 md:p-6 lg:p-8 transition-all duration-400 ${isCompleted && showNotes ? "opacity-60" : ""}`}
       style={{
         boxShadow: "0 8px 32px -12px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.03)",
       }}
@@ -228,27 +229,27 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
       
       <div className="relative z-10">
         {/* Header Row: Tags + Heart Icon */}
-        <div className="flex items-start justify-between gap-4 mb-6">
+        <div className="flex items-start justify-between gap-3 mb-4">
           {/* Category Tags */}
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-1.5 md:gap-2 min-w-0">
             {resource.category.slice(0, 3).map((cat) => (
               <span
                 key={cat}
-                className="px-4 py-2 rounded-full text-sm font-semibold bg-sky-500/15 text-sky-400"
+                className="px-2.5 py-1 md:px-3 md:py-1.5 rounded-full text-xs font-semibold bg-sky-500/15 text-sky-400 truncate"
               >
                 {categoryLabels[cat]?.[activeLanguage] || cat}
               </span>
             ))}
             {resource.featured && (
-              <span className="px-4 py-2 rounded-full text-sm font-semibold bg-amber-500/15 text-amber-400 flex items-center gap-2">
-                <Star className="w-4 h-4 fill-current" />
-                Featured
+              <span className="px-2.5 py-1 md:px-3 md:py-1.5 rounded-full text-xs font-semibold bg-amber-500/15 text-amber-400 flex items-center gap-1">
+                <Star className="w-3 h-3 fill-current" />
+                <span className="hidden sm:inline">Featured</span>
               </span>
             )}
             {resource.hiddenGem && (
-              <span className="px-4 py-2 rounded-full text-sm font-semibold bg-purple-500/15 text-purple-400 flex items-center gap-2">
-                <Sparkles className="w-4 h-4" />
-                Hidden Gem
+              <span className="px-2.5 py-1 md:px-3 md:py-1.5 rounded-full text-xs font-semibold bg-purple-500/15 text-purple-400 flex items-center gap-1">
+                <Sparkles className="w-3 h-3" />
+                <span className="hidden sm:inline">Hidden Gem</span>
               </span>
             )}
           </div>
@@ -258,39 +259,39 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => toggleBookmark(resource.id)}
-            className={`flex-shrink-0 rounded-2xl p-3 transition-all ${
+            className={`flex-shrink-0 rounded-lg md:rounded-xl p-2 md:p-2.5 transition-all ${
               isBookmarked
                 ? "bg-pink-500/20 text-pink-400"
                 : "bg-white/[0.06] text-[var(--foreground-muted)] hover:text-white hover:bg-white/[0.1]"
             }`}
           >
-            <Heart className={`h-6 w-6 ${isBookmarked ? "fill-current" : ""}`} />
+            <Heart className={`h-5 w-5 ${isBookmarked ? "fill-current" : ""}`} />
           </motion.button>
         </div>
 
         {/* Title - Full Width */}
-        <h3 className="font-bold text-2xl md:text-3xl mb-5 leading-tight text-white">
+        <h3 className="font-bold text-lg md:text-xl lg:text-2xl mb-3 leading-tight text-white">
           {resource.title[activeLanguage]}
         </h3>
         
         {/* Description - Full Width */}
-        <p className="text-[var(--foreground-muted)] text-lg leading-[1.75]">
+        <p className="text-[var(--foreground-muted)] text-sm md:text-base leading-relaxed">
           {resource.description[activeLanguage]}
         </p>
 
         {/* Cost and Hours Row */}
         {(resource.cost || resource.hours) && (
-          <div className="mt-6 flex flex-wrap items-center gap-4">
+          <div className="mt-4 flex flex-wrap items-center gap-2 md:gap-3">
             {resource.cost && (
-              <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold ${costLabels[resource.cost]?.color || ""}`}>
-                <DollarSign className="w-4 h-4" />
+              <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 md:px-3 md:py-1.5 rounded-full text-xs font-bold ${costLabels[resource.cost]?.color || ""}`}>
+                <DollarSign className="w-3.5 h-3.5" />
                 {costLabels[resource.cost]?.label || resource.cost}
               </span>
             )}
             {resource.hours && (
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium bg-white/[0.06] text-[var(--foreground-muted)]">
-                <Clock className="w-4 h-4" />
-                {resource.hours}
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 md:px-3 md:py-1.5 rounded-full text-xs font-medium bg-white/[0.06] text-[var(--foreground-muted)]">
+                <Clock className="w-3.5 h-3.5" />
+                <span className="truncate max-w-[150px]">{resource.hours}</span>
               </span>
             )}
           </div>
@@ -298,16 +299,16 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
 
         {/* Contact Info */}
         {(resource.phone || resource.address) && (
-          <div className="mt-6 flex flex-wrap items-center gap-6 text-base text-[var(--foreground-muted)]">
+          <div className="mt-4 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2 sm:gap-4 text-sm text-[var(--foreground-muted)]">
             {resource.phone && (
               <span className="flex items-center gap-2">
-                <Phone className="w-5 h-5" />
-                {resource.phone}
+                <Phone className="w-4 h-4 flex-shrink-0" />
+                <span>{resource.phone}</span>
               </span>
             )}
             {resource.address && (
-              <span className="flex items-center gap-2">
-                <MapPin className="w-5 h-5 flex-shrink-0" />
+              <span className="flex items-center gap-2 min-w-0">
+                <MapPin className="w-4 h-4 flex-shrink-0" />
                 <span className="truncate">{resource.address}</span>
               </span>
             )}
