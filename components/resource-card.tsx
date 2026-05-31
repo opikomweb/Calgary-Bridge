@@ -1,18 +1,42 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useAppStore } from "@/lib/store";
 import { categoryLabels } from "@/lib/data";
 import type { Resource } from "@/lib/types";
-import { Heart, Phone, MapPin, ExternalLink, Check, Star } from "lucide-react";
+import { 
+  Heart, 
+  Phone, 
+  MapPin, 
+  ExternalLink, 
+  Check, 
+  Star, 
+  Clock, 
+  DollarSign, 
+  ChevronDown, 
+  ChevronUp,
+  Sparkles,
+  CheckCircle,
+  Calendar,
+  Users
+} from "lucide-react";
 
 interface ResourceCardProps {
   resource: Resource;
   showNotes?: boolean;
-  variant?: "default" | "compact";
+  variant?: "default" | "compact" | "detailed";
 }
 
+const costLabels: Record<string, { label: string; color: string }> = {
+  "free": { label: "Free", color: "text-emerald-500 bg-emerald-500/10" },
+  "low-cost": { label: "Low Cost", color: "text-[#3B82F6] bg-[#3B82F6]/10" },
+  "sliding-scale": { label: "Sliding Scale", color: "text-[#F5B942] bg-[#F5B942]/10" },
+  "paid": { label: "Paid", color: "text-[var(--foreground-muted)] bg-[var(--surface)]" },
+};
+
 export default function ResourceCard({ resource, showNotes = false, variant = "default" }: ResourceCardProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
   const {
     activeLanguage,
     bookmarkedResources,
@@ -29,6 +53,8 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
   const googleMapsUrl = resource.address
     ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(resource.address)}`
     : null;
+
+  const hasExtraDetails = resource.servicesOffered?.length || resource.eligibility || resource.hours || resource.languages?.length;
 
   if (variant === "compact") {
     return (
@@ -54,6 +80,12 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
                   Featured
                 </span>
               )}
+              {resource.hiddenGem && (
+                <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-purple-500/10 text-purple-400 flex items-center gap-1">
+                  <Sparkles className="w-3 h-3" />
+                  Hidden Gem
+                </span>
+              )}
             </div>
 
             <h3 className="font-semibold text-lg mb-2">
@@ -62,6 +94,16 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
             <p className="text-[var(--foreground-muted)] text-sm leading-relaxed line-clamp-2">
               {resource.summary?.[activeLanguage] || resource.description[activeLanguage]}
             </p>
+
+            {/* Cost Badge */}
+            {resource.cost && (
+              <div className="mt-2">
+                <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${costLabels[resource.cost]?.color || ""}`}>
+                  <DollarSign className="w-3 h-3" />
+                  {costLabels[resource.cost]?.label || resource.cost}
+                </span>
+              </div>
+            )}
           </div>
 
           <motion.button
@@ -140,14 +182,38 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
                 Featured
               </span>
             )}
+            {resource.hiddenGem && (
+              <span className="px-3 py-1.5 rounded-full text-xs font-medium bg-purple-500/10 text-purple-400 flex items-center gap-1">
+                <Sparkles className="w-3 h-3" />
+                Hidden Gem
+              </span>
+            )}
           </div>
 
           <h3 className="font-semibold text-xl mb-3">
             {resource.title[activeLanguage]}
           </h3>
           <p className="text-[var(--foreground-muted)] leading-relaxed">
-            {resource.summary?.[activeLanguage] || resource.description[activeLanguage]}
+            {resource.description[activeLanguage]}
           </p>
+
+          {/* Cost and Hours Row */}
+          {(resource.cost || resource.hours) && (
+            <div className="mt-4 flex flex-wrap items-center gap-3">
+              {resource.cost && (
+                <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold ${costLabels[resource.cost]?.color || ""}`}>
+                  <DollarSign className="w-3.5 h-3.5" />
+                  {costLabels[resource.cost]?.label || resource.cost}
+                </span>
+              )}
+              {resource.hours && (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-[var(--surface)] text-[var(--foreground-muted)]">
+                  <Clock className="w-3.5 h-3.5" />
+                  {resource.hours}
+                </span>
+              )}
+            </div>
+          )}
 
           {/* Contact Info */}
           {(resource.phone || resource.address) && (
@@ -181,6 +247,100 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
           <Heart className={`h-6 w-6 ${isBookmarked ? "fill-current" : ""}`} />
         </motion.button>
       </div>
+
+      {/* Expandable Details Section */}
+      {hasExtraDetails && (
+        <>
+          <button
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="mt-4 flex items-center gap-2 text-sm text-[#3B82F6] hover:text-[#3B82F6]/80 transition-colors"
+          >
+            {isExpanded ? (
+              <>
+                <ChevronUp className="w-4 h-4" />
+                Show less
+              </>
+            ) : (
+              <>
+                <ChevronDown className="w-4 h-4" />
+                Show more details
+              </>
+            )}
+          </button>
+
+          <AnimatePresence>
+            {isExpanded && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="overflow-hidden"
+              >
+                <div className="mt-4 pt-4 border-t border-[var(--border)] space-y-4">
+                  {/* Services Offered */}
+                  {resource.servicesOffered && resource.servicesOffered.length > 0 && (
+                    <div>
+                      <h4 className="text-sm font-semibold mb-2 flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4 text-emerald-500" />
+                        Services Offered
+                      </h4>
+                      <div className="flex flex-wrap gap-2">
+                        {resource.servicesOffered.map((service, idx) => (
+                          <span
+                            key={idx}
+                            className="px-2.5 py-1 rounded-lg text-xs bg-[var(--surface)] text-[var(--foreground-muted)] border border-[var(--border)]"
+                          >
+                            {service}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Eligibility */}
+                  {resource.eligibility && (
+                    <div>
+                      <h4 className="text-sm font-semibold mb-2 flex items-center gap-2">
+                        <Users className="w-4 h-4 text-[#3B82F6]" />
+                        Eligibility
+                      </h4>
+                      <p className="text-sm text-[var(--foreground-muted)] bg-[var(--surface)] rounded-xl p-3 border border-[var(--border)]">
+                        {resource.eligibility[activeLanguage]}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Languages Offered */}
+                  {resource.languages && resource.languages.length > 0 && (
+                    <div>
+                      <h4 className="text-sm font-semibold mb-2">Languages Available</h4>
+                      <p className="text-sm text-[var(--foreground-muted)]">
+                        {resource.languages.join(", ")}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Last Updated & Source */}
+                  {(resource.lastUpdated || resource.source) && (
+                    <div className="flex flex-wrap items-center gap-4 text-xs text-[var(--foreground-muted)]">
+                      {resource.lastUpdated && (
+                        <span className="flex items-center gap-1">
+                          <Calendar className="w-3 h-3" />
+                          Updated: {resource.lastUpdated}
+                        </span>
+                      )}
+                      {resource.source && (
+                        <span>Source: {resource.source}</span>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </>
+      )}
 
       {/* Action Buttons */}
       <div className="mt-6 flex flex-wrap gap-3">
