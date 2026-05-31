@@ -196,7 +196,7 @@ export default function MainApp() {
       </AnimatePresence>
 
       {/* Main Content Area */}
-      <main className="lg:pl-[340px] relative z-10">
+      <main className="lg:pl-[360px] lg:pr-8 relative z-10">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
