@@ -394,7 +394,7 @@ export default function HomeTab() {
               <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">For specific situations.</h2>
             </motion.div>
 
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mt-8 md:mt-12">
               {specialized.map((item, index) => (
                 <motion.button
                   key={item.id}
@@ -429,7 +429,7 @@ export default function HomeTab() {
               </button>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-4 md:gap-6">
+            <div className="grid md:grid-cols-2 gap-4 md:gap-6 mt-8 md:mt-12">
               {featuredResources.map((resource, index) => (
                 <motion.div
                   key={resource.id}
@@ -457,7 +457,7 @@ export default function HomeTab() {
                 </button>
               </div>
 
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mt-8 md:mt-12">
                 {hiddenGems.map((resource, index) => (
                   <motion.div
                     key={resource.id}
@@ -482,7 +482,7 @@ export default function HomeTab() {
               <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">Services in your area.</h2>
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 mt-8 md:mt-12">
               {[
                 { name: "Calgary Food Bank", distance: "0.8 km", tag: "Free", hours: "Mon-Fri 9-5" },
                 { name: "Centre for Newcomers", distance: "1.2 km", tag: "Free", hours: "Mon-Sat 9-6" },
