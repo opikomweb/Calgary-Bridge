@@ -29,9 +29,11 @@ export default function EmergencyHub({ onClose }: EmergencyHubProps) {
           </div>
           <div>
             <h2 className="text-xl font-bold text-white">
-              {uiText.emergency[activeLanguage]} Hub
+              {uiText.emergencyTitle?.[activeLanguage] || "Emergency Hub"}
             </h2>
-            <p className="text-sm text-white/70">Critical contacts & winter safety</p>
+            <p className="text-sm text-white/70">
+              {uiText.emergencySubtitle?.[activeLanguage] || "Critical contacts & winter safety"}
+            </p>
           </div>
         </div>
 
@@ -61,7 +63,9 @@ export default function EmergencyHub({ onClose }: EmergencyHubProps) {
         <div className="mt-6 rounded-xl bg-white/10 p-4">
           <div className="mb-3 flex items-center gap-2">
             <Snowflake className="h-5 w-5 text-cyan-300" />
-            <h3 className="font-semibold text-white">Winter Safety Tips</h3>
+            <h3 className="font-semibold text-white">
+              {uiText.winterSafety?.[activeLanguage] || "Winter Safety Tips"}
+            </h3>
           </div>
           <ul className="space-y-2 text-sm text-white/80">
             <li className="flex items-start gap-2">
