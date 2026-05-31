@@ -22,22 +22,29 @@ export default function MainApp() {
   return (
     <div className="flex min-h-screen flex-col pb-24">
       {/* Header */}
-      <header className="glass sticky top-0 z-40 px-5 lg:px-10 py-5">
+      <header className="glass sticky top-0 z-40 px-6 lg:px-12 py-5">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
+            {/* Iconic Calgary Tower Logo */}
             <div className="relative">
-              <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#38BDF8] to-[#0284c7] flex items-center justify-center shadow-lg shadow-sky-500/25">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" className="text-white">
-                  <path d="M12 2L8 8H16L12 2Z" fill="currentColor" />
-                  <rect x="10" y="8" width="4" height="12" fill="currentColor" />
-                  <rect x="8" y="18" width="8" height="4" rx="1" fill="currentColor" />
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#38BDF8] to-[#0284c7] flex items-center justify-center shadow-lg shadow-sky-500/30">
+                <svg width="32" height="32" viewBox="0 0 48 48" fill="none" className="text-white">
+                  {/* Calgary Tower iconic silhouette */}
+                  <path d="M24 4L20 14H28L24 4Z" fill="currentColor" />
+                  <path d="M22 14H26V18H22V14Z" fill="currentColor" />
+                  <path d="M20 18H28L26 24H22L20 18Z" fill="currentColor" />
+                  <rect x="21" y="24" width="6" height="4" fill="currentColor" />
+                  <rect x="22" y="28" width="4" height="14" fill="currentColor" />
+                  <ellipse cx="24" cy="44" rx="6" ry="2" fill="currentColor" opacity="0.3" />
+                  {/* Observation deck detail */}
+                  <rect x="19" y="16" width="10" height="2" rx="1" fill="currentColor" opacity="0.7" />
                 </svg>
               </div>
-              <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-[#FBBF24] border-2 border-[#07111F]" />
+              <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[#FBBF24] border-2 border-[#07111F] shadow-lg shadow-amber-500/30" />
             </div>
             <div>
-              <h1 className="text-xl font-bold tracking-tight">Calgary Connect</h1>
-              <p className="text-sm text-[var(--foreground-muted)]">Your civic navigator</p>
+              <h1 className="text-2xl font-bold tracking-tight">Calgary Connect</h1>
+              <p className="text-sm text-[var(--foreground-muted)] mt-0.5">Your civic navigator</p>
             </div>
           </div>
           
