@@ -76,108 +76,106 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-sky-500/5 via-transparent to-transparent" />
         
         <div className="relative z-10">
-          <div className="flex items-start justify-between gap-6">
-            <div className="flex-1 min-w-0">
-              {/* Category Tags */}
-              <div className="flex flex-wrap gap-2.5 mb-5">
-                {resource.category.slice(0, 2).map((cat) => (
-                  <span
-                    key={cat}
-                    className="px-4 py-2 rounded-full text-sm font-semibold bg-sky-500/15 text-sky-400"
-                  >
-                    {categoryLabels[cat]?.[activeLanguage] || cat}
-                  </span>
-                ))}
-                {resource.featured && (
-                  <span className="px-4 py-2 rounded-full text-sm font-semibold bg-amber-500/15 text-amber-400 flex items-center gap-1.5">
-                    <Star className="w-3.5 h-3.5 fill-current" />
-                    Featured
-                  </span>
-                )}
-                {resource.hiddenGem && (
-                  <span className="px-4 py-2 rounded-full text-sm font-semibold bg-purple-500/15 text-purple-400 flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5" />
-                    Hidden Gem
-                  </span>
-                )}
-              </div>
-
-              <h3 className="font-bold text-2xl mb-4 leading-tight text-white">
-                {resource.title[activeLanguage]}
-              </h3>
-              <p className="text-[var(--foreground-muted)] text-base leading-relaxed line-clamp-2 mb-5">
-                {resource.summary?.[activeLanguage] || resource.description[activeLanguage]}
-              </p>
-
-              {/* Cost Badge */}
-              {resource.cost && (
-                <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold ${costLabels[resource.cost]?.color || ""}`}>
-                  <DollarSign className="w-4 h-4" />
-                  {costLabels[resource.cost]?.label || resource.cost}
+          {/* Header Row: Tags + Actions */}
+          <div className="flex items-start justify-between gap-4 mb-6">
+            {/* Category Tags - Horizontal */}
+            <div className="flex flex-wrap gap-2.5">
+              {resource.category.slice(0, 2).map((cat) => (
+                <span
+                  key={cat}
+                  className="px-4 py-2 rounded-full text-sm font-semibold bg-sky-500/15 text-sky-400"
+                >
+                  {categoryLabels[cat]?.[activeLanguage] || cat}
+                </span>
+              ))}
+              {resource.hiddenGem && (
+                <span className="px-4 py-2 rounded-full text-sm font-semibold bg-purple-500/15 text-purple-400 flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Hidden Gem
                 </span>
               )}
             </div>
-
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={() => toggleBookmark(resource.id)}
-              className={`flex-shrink-0 rounded-2xl p-4 transition-all ${
-                isBookmarked
-                  ? "bg-pink-500/20 text-pink-400"
-                  : "bg-white/[0.06] text-[var(--foreground-muted)] hover:text-white hover:bg-white/[0.1]"
-              }`}
-            >
-              <Heart className={`h-6 w-6 ${isBookmarked ? "fill-current" : ""}`} />
-            </motion.button>
-
-            {/* More Options Menu */}
-            <div className="relative">
+            
+            {/* Action Buttons */}
+            <div className="flex items-center gap-2 flex-shrink-0">
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                onClick={() => setShowMenu(!showMenu)}
-                className="flex-shrink-0 rounded-2xl p-4 bg-white/[0.06] text-[var(--foreground-muted)] hover:text-white hover:bg-white/[0.1] transition-all"
+                onClick={() => toggleBookmark(resource.id)}
+                className={`rounded-xl p-3 transition-all ${
+                  isBookmarked
+                    ? "bg-pink-500/20 text-pink-400"
+                    : "bg-white/[0.06] text-[var(--foreground-muted)] hover:text-white hover:bg-white/[0.1]"
+                }`}
               >
-                <MoreHorizontal className="h-6 w-6" />
+                <Heart className={`h-5 w-5 ${isBookmarked ? "fill-current" : ""}`} />
               </motion.button>
-              
-              <AnimatePresence>
-                {showMenu && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95, y: -8 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.95, y: -8 }}
-                    className="absolute right-0 top-full mt-2 w-56 rounded-2xl bg-[#0a1628] border border-white/[0.1] shadow-2xl overflow-hidden z-20"
-                  >
-                    <button
-                      onClick={() => {
-                        onClaimBusiness?.(resource.id);
-                        setShowMenu(false);
-                      }}
-                      className="w-full flex items-center gap-3 px-5 py-4 text-left text-sm text-white/70 hover:bg-white/[0.06] hover:text-white transition-colors"
+
+              <div className="relative">
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => setShowMenu(!showMenu)}
+                  className="rounded-xl p-3 bg-white/[0.06] text-[var(--foreground-muted)] hover:text-white hover:bg-white/[0.1] transition-all"
+                >
+                  <MoreHorizontal className="h-5 w-5" />
+                </motion.button>
+                
+                <AnimatePresence>
+                  {showMenu && (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.95, y: -8 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.95, y: -8 }}
+                      className="absolute right-0 top-full mt-2 w-56 rounded-2xl bg-[#0a1628] border border-white/[0.1] shadow-2xl overflow-hidden z-20"
                     >
-                      <Building2 className="w-4 h-4" />
-                      Claim this business
-                    </button>
-                    <button
-                      onClick={() => {
-                        onReport?.(resource.id);
-                        setShowMenu(false);
-                      }}
-                      className="w-full flex items-center gap-3 px-5 py-4 text-left text-sm text-white/70 hover:bg-white/[0.06] hover:text-white transition-colors border-t border-white/[0.06]"
-                    >
-                      <Flag className="w-4 h-4" />
-                      Report an issue
-                    </button>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                      <button
+                        onClick={() => {
+                          onClaimBusiness?.(resource.id);
+                          setShowMenu(false);
+                        }}
+                        className="w-full flex items-center gap-3 px-5 py-4 text-left text-sm text-white/70 hover:bg-white/[0.06] hover:text-white transition-colors"
+                      >
+                        <Building2 className="w-4 h-4" />
+                        Claim this business
+                      </button>
+                      <button
+                        onClick={() => {
+                          onReport?.(resource.id);
+                          setShowMenu(false);
+                        }}
+                        className="w-full flex items-center gap-3 px-5 py-4 text-left text-sm text-white/70 hover:bg-white/[0.06] hover:text-white transition-colors border-t border-white/[0.06]"
+                      >
+                        <Flag className="w-4 h-4" />
+                        Report an issue
+                      </button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
           </div>
 
-          {/* Quick Action Buttons */}
-          <div className="mt-8 flex flex-wrap gap-3">
+          {/* Title - Full Width */}
+          <h3 className="font-bold text-2xl mb-4 leading-tight text-white">
+            {resource.title[activeLanguage]}
+          </h3>
+          
+          {/* Description - Full Width with Better Line Height */}
+          <p className="text-white/60 text-base leading-[1.75] mb-6">
+            {resource.summary?.[activeLanguage] || resource.description[activeLanguage]}
+          </p>
+
+          {/* Cost Badge */}
+          {resource.cost && (
+            <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold mb-6 ${costLabels[resource.cost]?.color || ""}`}>
+              <DollarSign className="w-4 h-4" />
+              {costLabels[resource.cost]?.label || resource.cost}
+            </span>
+          )}
+
+          {/* Quick Action Buttons - Full Width */}
+          <div className="flex flex-wrap gap-3">
             {resource.phone && (
               <a
                 href={`tel:${resource.phone}`}

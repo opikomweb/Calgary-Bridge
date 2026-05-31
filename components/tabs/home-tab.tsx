@@ -138,35 +138,53 @@ export default function HomeTab() {
 
       {/* Search results */}
       {searchQuery && (
-        <section className="px-8 lg:px-12 pb-24 max-w-[1400px] mx-auto relative z-10">
-          <div className="flex items-center justify-between mb-12">
-            <h2 className="text-3xl font-bold">Results for &quot;{searchQuery}&quot;</h2>
-            <button
-              onClick={() => setSearchQuery("")}
-              className="text-[#38BDF8] text-lg font-semibold hover:underline"
-            >
-              Clear
-            </button>
-          </div>
-          {filteredResources.length > 0 ? (
-            <div className="grid lg:grid-cols-2 gap-8">
-              {filteredResources.slice(0, 8).map((resource, i) => (
-                <motion.div
-                  key={resource.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.05 }}
-                >
-                  <ResourceCard resource={resource} variant="compact" />
-                </motion.div>
-              ))}
+        <section className="px-8 lg:px-12 pb-24 max-w-[1200px] mx-auto relative z-10">
+          {/* Professional search results header container */}
+          <div className="glass-card rounded-3xl p-8 mb-10">
+            <div className="flex items-center gap-6">
+              <div className="flex-1">
+                <p className="text-sm text-white/50 mb-2 uppercase tracking-wider font-medium">Search Results</p>
+                <h2 className="text-2xl md:text-3xl font-bold leading-tight">
+                  &quot;{searchQuery}&quot;
+                </h2>
+              </div>
+              <button
+                onClick={() => setSearchQuery("")}
+                className="px-6 py-3 rounded-xl bg-white/[0.06] border border-white/[0.08] text-base font-semibold text-white/70 hover:bg-white/[0.1] hover:text-white transition-all"
+              >
+                Clear Search
+              </button>
             </div>
+          </div>
+          
+          {filteredResources.length > 0 ? (
+            <>
+              <p className="text-lg text-white/50 mb-8">{filteredResources.length} resource{filteredResources.length !== 1 ? 's' : ''} found</p>
+              <div className="grid lg:grid-cols-2 gap-8">
+                {filteredResources.slice(0, 8).map((resource, i) => (
+                  <motion.div
+                    key={resource.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.05 }}
+                  >
+                    <ResourceCard resource={resource} variant="compact" />
+                  </motion.div>
+                ))}
+              </div>
+            </>
           ) : (
-            <div className="text-center py-24">
-              <p className="text-2xl text-[var(--foreground-muted)]">No results found</p>
+            <div className="glass-card rounded-3xl p-16 text-center">
+              <div className="w-20 h-20 rounded-full bg-white/[0.06] flex items-center justify-center mx-auto mb-8">
+                <Search className="w-10 h-10 text-white/30" />
+              </div>
+              <h3 className="text-2xl font-bold mb-4">No results found</h3>
+              <p className="text-lg text-white/50 mb-10 max-w-md mx-auto leading-relaxed">
+                We couldn&apos;t find any resources matching your search. Try different keywords or ask our AI assistant.
+              </p>
               <button
                 onClick={() => setActiveTab("ai")}
-                className="mt-8 px-8 py-4 rounded-2xl bg-[#38BDF8] text-[#07111F] text-lg font-semibold"
+                className="px-10 py-5 rounded-2xl bg-[#38BDF8] text-[#07111F] text-lg font-bold hover:bg-[#7dd3fc] transition-colors"
               >
                 Ask the AI instead
               </button>
