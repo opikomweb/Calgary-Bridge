@@ -227,89 +227,92 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-sky-500/5 via-transparent to-transparent" />
       
       <div className="relative z-10">
-        <div className="flex items-start justify-between gap-6">
-          <div className="flex-1 min-w-0">
-            {/* Category Tags */}
-            <div className="flex flex-wrap gap-3 mb-6">
-              {resource.category.slice(0, 3).map((cat) => (
-                <span
-                  key={cat}
-                  className="px-4 py-2 rounded-full text-sm font-semibold bg-sky-500/15 text-sky-400"
-                >
-                  {categoryLabels[cat]?.[activeLanguage] || cat}
-                </span>
-              ))}
-              {resource.featured && (
-                <span className="px-4 py-2 rounded-full text-sm font-semibold bg-amber-500/15 text-amber-400 flex items-center gap-2">
-                  <Star className="w-4 h-4 fill-current" />
-                  Featured
-                </span>
-              )}
-              {resource.hiddenGem && (
-                <span className="px-4 py-2 rounded-full text-sm font-semibold bg-purple-500/15 text-purple-400 flex items-center gap-2">
-                  <Sparkles className="w-4 h-4" />
-                  Hidden Gem
-                </span>
-              )}
-            </div>
-
-            <h3 className="font-bold text-2xl md:text-3xl mb-5 leading-tight text-white">
-              {resource.title[activeLanguage]}
-            </h3>
-            <p className="text-[var(--foreground-muted)] text-lg leading-relaxed">
-              {resource.description[activeLanguage]}
-            </p>
-
-            {/* Cost and Hours Row */}
-            {(resource.cost || resource.hours) && (
-              <div className="mt-6 flex flex-wrap items-center gap-4">
-                {resource.cost && (
-                  <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold ${costLabels[resource.cost]?.color || ""}`}>
-                    <DollarSign className="w-4 h-4" />
-                    {costLabels[resource.cost]?.label || resource.cost}
-                  </span>
-                )}
-                {resource.hours && (
-                  <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium bg-white/[0.06] text-[var(--foreground-muted)]">
-                    <Clock className="w-4 h-4" />
-                    {resource.hours}
-                  </span>
-                )}
-              </div>
+        {/* Header Row: Tags + Heart Icon */}
+        <div className="flex items-start justify-between gap-4 mb-6">
+          {/* Category Tags */}
+          <div className="flex flex-wrap gap-3">
+            {resource.category.slice(0, 3).map((cat) => (
+              <span
+                key={cat}
+                className="px-4 py-2 rounded-full text-sm font-semibold bg-sky-500/15 text-sky-400"
+              >
+                {categoryLabels[cat]?.[activeLanguage] || cat}
+              </span>
+            ))}
+            {resource.featured && (
+              <span className="px-4 py-2 rounded-full text-sm font-semibold bg-amber-500/15 text-amber-400 flex items-center gap-2">
+                <Star className="w-4 h-4 fill-current" />
+                Featured
+              </span>
             )}
-
-            {/* Contact Info */}
-            {(resource.phone || resource.address) && (
-              <div className="mt-6 flex flex-wrap items-center gap-6 text-base text-[var(--foreground-muted)]">
-                {resource.phone && (
-                  <span className="flex items-center gap-2">
-                    <Phone className="w-5 h-5" />
-                    {resource.phone}
-                  </span>
-                )}
-                {resource.address && (
-                  <span className="flex items-center gap-2">
-                    <MapPin className="w-5 h-5 flex-shrink-0" />
-                    <span className="truncate">{resource.address}</span>
-                  </span>
-                )}
-              </div>
+            {resource.hiddenGem && (
+              <span className="px-4 py-2 rounded-full text-sm font-semibold bg-purple-500/15 text-purple-400 flex items-center gap-2">
+                <Sparkles className="w-4 h-4" />
+                Hidden Gem
+              </span>
             )}
           </div>
 
+          {/* Heart Bookmark */}
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => toggleBookmark(resource.id)}
-            className={`flex-shrink-0 rounded-2xl p-4 transition-all ${
+            className={`flex-shrink-0 rounded-2xl p-3 transition-all ${
               isBookmarked
                 ? "bg-pink-500/20 text-pink-400"
                 : "bg-white/[0.06] text-[var(--foreground-muted)] hover:text-white hover:bg-white/[0.1]"
             }`}
           >
-            <Heart className={`h-7 w-7 ${isBookmarked ? "fill-current" : ""}`} />
+            <Heart className={`h-6 w-6 ${isBookmarked ? "fill-current" : ""}`} />
           </motion.button>
         </div>
+
+        {/* Title - Full Width */}
+        <h3 className="font-bold text-2xl md:text-3xl mb-5 leading-tight text-white">
+          {resource.title[activeLanguage]}
+        </h3>
+        
+        {/* Description - Full Width */}
+        <p className="text-[var(--foreground-muted)] text-lg leading-[1.75]">
+          {resource.description[activeLanguage]}
+        </p>
+
+        {/* Cost and Hours Row */}
+        {(resource.cost || resource.hours) && (
+          <div className="mt-6 flex flex-wrap items-center gap-4">
+            {resource.cost && (
+              <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold ${costLabels[resource.cost]?.color || ""}`}>
+                <DollarSign className="w-4 h-4" />
+                {costLabels[resource.cost]?.label || resource.cost}
+              </span>
+            )}
+            {resource.hours && (
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium bg-white/[0.06] text-[var(--foreground-muted)]">
+                <Clock className="w-4 h-4" />
+                {resource.hours}
+              </span>
+            )}
+          </div>
+        )}
+
+        {/* Contact Info */}
+        {(resource.phone || resource.address) && (
+          <div className="mt-6 flex flex-wrap items-center gap-6 text-base text-[var(--foreground-muted)]">
+            {resource.phone && (
+              <span className="flex items-center gap-2">
+                <Phone className="w-5 h-5" />
+                {resource.phone}
+              </span>
+            )}
+            {resource.address && (
+              <span className="flex items-center gap-2">
+                <MapPin className="w-5 h-5 flex-shrink-0" />
+                <span className="truncate">{resource.address}</span>
+              </span>
+            )}
+          </div>
+        )}
 
         {/* Expandable Details Section */}
         {hasExtraDetails && (
