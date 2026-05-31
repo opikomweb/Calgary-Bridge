@@ -292,7 +292,7 @@ export default function HomeTab() {
                     whileHover={{ scale: 1.02, y: -8 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => setActiveTab("explore")}
-                    className={`group relative overflow-hidden rounded-[32px] text-left bg-gradient-to-br ${pathway.bgGradient} backdrop-blur-xl border border-white/[0.06] hover:border-white/[0.12] transition-all duration-500`}
+                    className={`group relative overflow-hidden rounded-[32px] bg-gradient-to-br ${pathway.bgGradient} backdrop-blur-xl border border-white/[0.06] hover:border-white/[0.12] transition-all duration-500`}
                     style={{ 
                       minHeight: "320px",
                       boxShadow: `0 0 80px -20px ${pathway.accent}15`
@@ -304,21 +304,21 @@ export default function HomeTab() {
                       style={{ background: pathway.accent }}
                     />
 
-                    <div className="relative z-10 p-12 md:p-14 h-full flex flex-col">
+                    <div className="relative z-10 p-12 md:p-14 h-full flex flex-col items-center text-center">
                       {/* Icon */}
                       <div 
-                        className="w-[72px] h-[72px] rounded-[20px] flex items-center justify-center mb-10 border border-white/[0.08] backdrop-blur-sm transition-transform group-hover:scale-110"
+                        className="w-[72px] h-[72px] rounded-[20px] flex items-center justify-center mb-8 border border-white/[0.08] backdrop-blur-sm transition-transform group-hover:scale-110"
                         style={{ backgroundColor: `${pathway.accent}15` }}
                       >
                         <Icon className="w-9 h-9" style={{ color: pathway.accent }} />
                       </div>
                       
-                      <div className="flex-1">
-                        <h3 className="text-[32px] md:text-[38px] font-bold text-white mb-6 leading-[1.2] tracking-[-0.01em]">{pathway.solution}</h3>
-                        <p className="text-lg text-white/55 leading-[1.75]">{pathway.description}</p>
+                      <div className="flex-1 flex flex-col items-center">
+                        <h3 className="text-[28px] md:text-[32px] font-bold text-white mb-4 leading-[1.2] tracking-[-0.01em]">{pathway.solution}</h3>
+                        <p className="text-base text-white/55 leading-[1.75] max-w-[90%]">{pathway.description}</p>
                       </div>
                       
-                      <div className="flex items-center justify-between mt-12">
+                      <div className="flex flex-col items-center gap-5 mt-10">
                         <span 
                           className="text-sm font-semibold px-5 py-3 rounded-full border"
                           style={{ 
@@ -329,7 +329,7 @@ export default function HomeTab() {
                         >
                           {pathway.stats}
                         </span>
-                        <div className="flex items-center gap-3 text-white/50 group-hover:text-white transition-colors">
+                        <div className="flex items-center gap-2 text-white/50 group-hover:text-white transition-colors">
                           <span className="text-base font-medium">Explore</span>
                           <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
                         </div>
@@ -404,11 +404,11 @@ export default function HomeTab() {
                   transition={{ delay: 0.65 + index * 0.05 }}
                   whileHover={{ y: -6, scale: 1.02 }}
                   onClick={() => setActiveTab("explore")}
-                  className="group text-left p-8 rounded-[24px] bg-white/[0.04] border border-white/[0.06] hover:bg-white/[0.08] hover:border-white/[0.15] transition-all duration-300"
+                  className="group p-8 rounded-[24px] bg-white/[0.04] border border-white/[0.06] hover:bg-white/[0.08] hover:border-white/[0.15] transition-all duration-300 flex flex-col items-center text-center"
                 >
                   <h3 className="text-xl font-bold text-white mb-3">{item.label}</h3>
                   <p className="text-base text-[var(--foreground-muted)] mb-6 leading-relaxed">{item.description}</p>
-                  <div className="flex items-center gap-2 text-[#38BDF8] text-base font-semibold">
+                  <div className="flex items-center gap-2 text-[#38BDF8] text-base font-semibold mt-auto">
                     <span>View resources</span>
                     <ChevronRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
                   </div>
