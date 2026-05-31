@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { useAppStore } from "@/lib/store";
 import { translations } from "@/lib/data";
 import { Home, Compass, MessageCircle, Heart, User, AlertTriangle, Shield, Menu, X } from "lucide-react";
@@ -12,6 +13,93 @@ import ShortlistTab from "./tabs/shortlist-tab";
 import ProfileTab from "./tabs/profile-tab";
 import EmergencyHub from "./emergency-hub";
 import RentShield from "./rentshield";
+
+// Animated Calgary Background Component
+function CalgaryAmbientBackground() {
+  return (
+    <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+      {/* Aurora Borealis Effect - Top */}
+      <div className="absolute top-0 left-0 right-0 h-[60vh]">
+        <motion.div
+          animate={{
+            opacity: [0.15, 0.25, 0.15],
+            scale: [1, 1.1, 1],
+          }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-0 left-[10%] w-[40%] h-[50%] bg-gradient-to-br from-[#38BDF8]/20 via-[#0EA5E9]/10 to-transparent rounded-full blur-[120px]"
+        />
+        <motion.div
+          animate={{
+            opacity: [0.1, 0.2, 0.1],
+            scale: [1.1, 1, 1.1],
+          }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+          className="absolute top-[10%] right-[5%] w-[35%] h-[40%] bg-gradient-to-bl from-[#06B6D4]/15 via-[#0891B2]/8 to-transparent rounded-full blur-[100px]"
+        />
+        <motion.div
+          animate={{
+            opacity: [0.08, 0.15, 0.08],
+          }}
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 6 }}
+          className="absolute top-[5%] left-[40%] w-[30%] h-[35%] bg-gradient-to-b from-[#FBBF24]/8 via-[#F59E0B]/5 to-transparent rounded-full blur-[80px]"
+        />
+      </div>
+
+      {/* Floating Particles */}
+      <div className="absolute inset-0">
+        {[
+          { left: 5, top: 15, delay: 0, duration: 20 },
+          { left: 15, top: 25, delay: 4, duration: 25 },
+          { left: 25, top: 10, delay: 2, duration: 22 },
+          { left: 40, top: 30, delay: 6, duration: 18 },
+          { left: 55, top: 20, delay: 3, duration: 24 },
+          { left: 70, top: 35, delay: 8, duration: 20 },
+          { left: 80, top: 15, delay: 1, duration: 26 },
+          { left: 90, top: 25, delay: 5, duration: 22 },
+        ].map((particle, i) => (
+          <motion.div
+            key={i}
+            animate={{
+              y: [0, -60, 0],
+              opacity: [0.2, 0.6, 0.2],
+              scale: [1, 1.3, 1],
+            }}
+            transition={{
+              duration: particle.duration,
+              repeat: Infinity,
+              delay: particle.delay,
+              ease: "easeInOut",
+            }}
+            className="absolute w-1 h-1 bg-[#38BDF8] rounded-full"
+            style={{ left: `${particle.left}%`, top: `${particle.top}%` }}
+          />
+        ))}
+      </div>
+
+      {/* Subtle Grid Pattern */}
+      <div 
+        className="absolute inset-0 opacity-[0.02]"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(56, 189, 248, 0.3) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(56, 189, 248, 0.3) 1px, transparent 1px)
+          `,
+          backgroundSize: '60px 60px',
+        }}
+      />
+
+      {/* Bottom Bow River Glow */}
+      <motion.div
+        animate={{
+          opacity: [0.1, 0.18, 0.1],
+          x: [-20, 20, -20],
+        }}
+        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-0 left-0 right-0 h-[30vh] bg-gradient-to-t from-[#0EA5E9]/10 via-[#38BDF8]/5 to-transparent"
+      />
+    </div>
+  );
+}
 
 export default function MainApp() {
   const { activeTab, setActiveTab, activeLanguage, showEmergency, setShowEmergency } = useAppStore();
@@ -29,47 +117,44 @@ export default function MainApp() {
   ];
 
   return (
-    <div className="min-h-screen bg-[var(--background)]">
+    <div className="min-h-screen bg-[#07111F] relative">
+      {/* Animated Calgary Background */}
+      <CalgaryAmbientBackground />
+
       {/* Desktop Sidebar - Hidden on mobile */}
-      <aside className="hidden lg:flex lg:w-72 lg:flex-col lg:fixed lg:inset-y-0 lg:z-50">
-        <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-[var(--border)] bg-[var(--background)] px-6 py-8">
-          {/* Logo */}
-          <div className="flex items-center gap-4 px-2">
-            <div className="relative">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#38BDF8] to-[#0284c7] flex items-center justify-center shadow-xl shadow-sky-500/30">
-                <svg width="32" height="32" viewBox="0 0 64 64" fill="none" className="text-white">
-                  <path d="M32 6L26 18H38L32 6Z" fill="currentColor" />
-                  <rect x="28" y="18" width="8" height="6" fill="currentColor" />
-                  <path d="M24 24H40V28L38 32H26L24 28V24Z" fill="currentColor" />
-                  <rect x="27" y="32" width="10" height="6" rx="1" fill="currentColor" />
-                  <rect x="29" y="38" width="6" height="18" fill="currentColor" />
-                  <ellipse cx="32" cy="58" rx="8" ry="2" fill="currentColor" opacity="0.4" />
-                  <rect x="26" y="25" width="2" height="2" rx="0.5" fill="#07111F" opacity="0.5" />
-                  <rect x="30" y="25" width="2" height="2" rx="0.5" fill="#07111F" opacity="0.5" />
-                  <rect x="34" y="25" width="2" height="2" rx="0.5" fill="#07111F" opacity="0.5" />
-                </svg>
-              </div>
-              <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[#FBBF24] border-2 border-[#07111F]" />
+      <aside className="hidden lg:flex lg:w-80 lg:flex-col lg:fixed lg:inset-y-0 lg:z-50">
+        <div className="flex grow flex-col gap-y-6 overflow-y-auto border-r border-white/[0.06] bg-[#07111F]/80 backdrop-blur-2xl px-8 py-10">
+          {/* Official Logo */}
+          <div className="flex items-center gap-5 px-2">
+            <div className="relative w-16 h-16 flex-shrink-0">
+              <Image
+                src="/calgary-connect-logo.png"
+                alt="Calgary Connect"
+                fill
+                className="object-contain"
+                priority
+              />
             </div>
             <div>
-              <h1 className="text-xl font-bold tracking-tight">Calgary Connect</h1>
-              <p className="text-sm text-[var(--foreground-muted)]">Your civic navigator</p>
+              <h1 className="text-xl font-bold tracking-tight text-white">Calgary</h1>
+              <h1 className="text-xl font-bold tracking-tight text-[#38BDF8]">Connect</h1>
+              <p className="text-xs text-white/50 mt-0.5">Your civic navigator</p>
             </div>
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="flex flex-1 flex-col mt-8">
-            <ul role="list" className="flex flex-1 flex-col gap-y-2">
+          <nav className="flex flex-1 flex-col mt-10">
+            <ul role="list" className="flex flex-1 flex-col gap-y-3">
               {navItems.map((item) => (
                 <li key={item.id}>
                   <button
                     onClick={() => setActiveTab(item.id)}
-                    className={`group flex w-full items-center gap-x-4 rounded-xl px-4 py-3.5 text-base font-medium transition-all ${
+                    className={`group flex w-full items-center gap-x-4 rounded-2xl px-5 py-4 text-base font-medium transition-all duration-300 ${
                       activeTab === item.id
                         ? item.highlight
-                          ? "bg-gradient-to-r from-[#38BDF8] to-[#0284c7] text-white shadow-lg shadow-sky-500/25"
-                          : "bg-[#38BDF8]/15 text-[#38BDF8]"
-                        : "text-[var(--foreground-muted)] hover:bg-[var(--surface)] hover:text-[var(--foreground)]"
+                          ? "bg-gradient-to-r from-[#38BDF8] to-[#0284c7] text-white shadow-xl shadow-sky-500/30"
+                          : "bg-white/10 text-white border border-white/10"
+                        : "text-white/60 hover:bg-white/[0.06] hover:text-white"
                     }`}
                   >
                     <item.icon className="h-5 w-5 shrink-0" />
@@ -80,17 +165,17 @@ export default function MainApp() {
             </ul>
 
             {/* Sidebar Action Buttons */}
-            <div className="mt-auto space-y-3 pt-8 border-t border-[var(--border)]">
+            <div className="mt-auto space-y-4 pt-10 border-t border-white/[0.06]">
               <button
                 onClick={() => setShowRentShield(true)}
-                className="flex w-full items-center gap-3 rounded-xl bg-[var(--surface)] border border-[var(--border)] px-4 py-3.5 text-sm font-medium transition-all hover:bg-[var(--surface-hover)] hover:border-[var(--border-hover)]"
+                className="flex w-full items-center gap-4 rounded-2xl bg-white/[0.04] border border-white/[0.08] px-5 py-4 text-sm font-medium text-white/80 transition-all duration-300 hover:bg-white/[0.08] hover:text-white hover:border-white/15"
               >
                 <Shield className="h-5 w-5 text-[#38BDF8]" />
                 RentShield
               </button>
               <button
                 onClick={() => setShowEmergency(true)}
-                className="flex w-full items-center gap-3 rounded-xl bg-[#E1251B] px-4 py-3.5 text-sm font-medium text-white transition-all hover:bg-[#c01f17] shadow-lg shadow-red-500/25"
+                className="flex w-full items-center gap-4 rounded-2xl bg-gradient-to-r from-[#E1251B] to-[#c01f17] px-5 py-4 text-sm font-semibold text-white transition-all duration-300 hover:shadow-xl hover:shadow-red-500/30 hover:scale-[1.02]"
               >
                 <AlertTriangle className="h-5 w-5" />
                 Emergency Hub
@@ -101,34 +186,34 @@ export default function MainApp() {
       </aside>
 
       {/* Mobile Header - Hidden on desktop */}
-      <header className="lg:hidden glass sticky top-0 z-40 px-6 py-4">
+      <header className="lg:hidden sticky top-0 z-40 bg-[#07111F]/90 backdrop-blur-2xl border-b border-white/[0.06] px-6 py-5">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="relative">
-              <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#38BDF8] to-[#0284c7] flex items-center justify-center shadow-lg shadow-sky-500/25">
-                <svg width="24" height="24" viewBox="0 0 64 64" fill="none" className="text-white">
-                  <path d="M32 6L26 18H38L32 6Z" fill="currentColor" />
-                  <rect x="28" y="18" width="8" height="6" fill="currentColor" />
-                  <path d="M24 24H40V28L38 32H26L24 28V24Z" fill="currentColor" />
-                  <rect x="27" y="32" width="10" height="6" rx="1" fill="currentColor" />
-                  <rect x="29" y="38" width="6" height="18" fill="currentColor" />
-                </svg>
-              </div>
-              <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-[#FBBF24] border-2 border-[#07111F]" />
+          <div className="flex items-center gap-4">
+            <div className="relative w-12 h-12">
+              <Image
+                src="/calgary-connect-logo.png"
+                alt="Calgary Connect"
+                fill
+                className="object-contain"
+                priority
+              />
             </div>
-            <span className="text-lg font-bold">Calgary Connect</span>
+            <div>
+              <span className="text-lg font-bold text-white">Calgary </span>
+              <span className="text-lg font-bold text-[#38BDF8]">Connect</span>
+            </div>
           </div>
           
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <button
               onClick={() => setShowEmergency(true)}
-              className="flex items-center justify-center w-10 h-10 rounded-xl bg-[#E1251B] text-white"
+              className="flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-[#E1251B] to-[#c01f17] text-white shadow-lg shadow-red-500/25"
             >
               <AlertTriangle className="h-5 w-5" />
             </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="flex items-center justify-center w-10 h-10 rounded-xl bg-[var(--surface)] border border-[var(--border)]"
+              className="flex items-center justify-center w-11 h-11 rounded-xl bg-white/[0.06] border border-white/[0.08] text-white"
             >
               {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
@@ -143,7 +228,7 @@ export default function MainApp() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="lg:hidden fixed inset-0 z-30 bg-black/50 backdrop-blur-sm"
+            className="lg:hidden fixed inset-0 z-30 bg-black/60 backdrop-blur-sm"
             onClick={() => setMobileMenuOpen(false)}
           >
             <motion.div
@@ -151,10 +236,10 @@ export default function MainApp() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25 }}
-              className="absolute right-0 top-0 bottom-0 w-72 bg-[var(--background)] border-l border-[var(--border)] p-6"
+              className="absolute right-0 top-0 bottom-0 w-80 bg-[#07111F]/95 backdrop-blur-2xl border-l border-white/[0.06] p-8"
               onClick={(e) => e.stopPropagation()}
             >
-              <nav className="mt-8 space-y-2">
+              <nav className="mt-10 space-y-3">
                 {navItems.map((item) => (
                   <button
                     key={item.id}
@@ -162,10 +247,10 @@ export default function MainApp() {
                       setActiveTab(item.id);
                       setMobileMenuOpen(false);
                     }}
-                    className={`flex w-full items-center gap-4 rounded-xl px-4 py-3.5 text-base font-medium transition-all ${
+                    className={`flex w-full items-center gap-4 rounded-2xl px-5 py-4 text-base font-medium transition-all ${
                       activeTab === item.id
-                        ? "bg-[#38BDF8]/15 text-[#38BDF8]"
-                        : "text-[var(--foreground-muted)] hover:bg-[var(--surface)]"
+                        ? "bg-white/10 text-white border border-white/10"
+                        : "text-white/60 hover:bg-white/[0.06] hover:text-white"
                     }`}
                   >
                     <item.icon className="h-5 w-5" />
@@ -174,13 +259,13 @@ export default function MainApp() {
                 ))}
               </nav>
 
-              <div className="mt-8 space-y-3 pt-8 border-t border-[var(--border)]">
+              <div className="mt-10 space-y-4 pt-10 border-t border-white/[0.06]">
                 <button
                   onClick={() => {
                     setShowRentShield(true);
                     setMobileMenuOpen(false);
                   }}
-                  className="flex w-full items-center gap-3 rounded-xl bg-[var(--surface)] border border-[var(--border)] px-4 py-3.5 text-sm font-medium"
+                  className="flex w-full items-center gap-4 rounded-2xl bg-white/[0.04] border border-white/[0.08] px-5 py-4 text-sm font-medium text-white/80"
                 >
                   <Shield className="h-5 w-5 text-[#38BDF8]" />
                   RentShield
@@ -190,7 +275,7 @@ export default function MainApp() {
                     setShowEmergency(true);
                     setMobileMenuOpen(false);
                   }}
-                  className="flex w-full items-center gap-3 rounded-xl bg-[#E1251B] px-4 py-3.5 text-sm font-medium text-white"
+                  className="flex w-full items-center gap-4 rounded-2xl bg-gradient-to-r from-[#E1251B] to-[#c01f17] px-5 py-4 text-sm font-semibold text-white"
                 >
                   <AlertTriangle className="h-5 w-5" />
                   Emergency Hub
@@ -202,14 +287,14 @@ export default function MainApp() {
       </AnimatePresence>
 
       {/* Main Content Area - With sidebar offset on desktop */}
-      <main className="lg:pl-72">
+      <main className="lg:pl-80 relative z-10">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.25 }}
           >
             {activeTab === "home" && <HomeTab />}
             {activeTab === "explore" && <ExploreTab />}
@@ -221,18 +306,18 @@ export default function MainApp() {
       </main>
 
       {/* Mobile Bottom Navigation - Hidden on desktop */}
-      <nav className="lg:hidden glass fixed bottom-0 left-0 right-0 z-40 safe-area-pb">
-        <div className="flex items-center justify-around px-2 py-3">
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#07111F]/95 backdrop-blur-2xl border-t border-white/[0.06] safe-area-pb">
+        <div className="flex items-center justify-around px-3 py-4">
           {navItems.map((item) => (
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id)}
-              className={`flex flex-col items-center gap-1 rounded-xl px-3 py-2 transition-all ${
+              className={`flex flex-col items-center gap-1.5 rounded-xl px-4 py-2.5 transition-all ${
                 activeTab === item.id
                   ? item.highlight
                     ? "bg-gradient-to-br from-[#38BDF8] to-[#0284c7] text-white shadow-lg shadow-sky-500/30"
                     : "text-[#38BDF8]"
-                  : "text-[var(--foreground-muted)]"
+                  : "text-white/50"
               }`}
             >
               <item.icon className="h-5 w-5" />

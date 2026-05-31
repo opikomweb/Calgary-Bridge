@@ -29,11 +29,16 @@ export const metadata: Metadata = {
     "community",
     "Calgary Bridge AI",
   ],
+  icons: {
+    icon: "/calgary-connect-logo.png",
+    apple: "/calgary-connect-logo.png",
+  },
   openGraph: {
     title: "Calgary Connect - Everything Calgary. One Place.",
     description:
       "Find services, support, opportunities, programs, local businesses, community resources, and trusted guidance.",
     type: "website",
+    images: ["/calgary-connect-logo.png"],
   },
 };
 
