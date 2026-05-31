@@ -206,16 +206,6 @@ export default function AITab() {
                   animate={{ opacity: 1, y: 0 }}
                   className="text-center w-full max-w-xl"
                 >
-                  {/* AI Avatar */}
-                  <motion.div
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.1, type: "spring", stiffness: 200 }}
-                    className="mb-10 flex h-28 w-28 items-center justify-center rounded-3xl bg-gradient-to-br from-[#3B82F6] to-[#1d4ed8] shadow-2xl shadow-[#3B82F6]/30 mx-auto"
-                  >
-                    <Sparkles className="h-14 w-14 text-white" />
-                  </motion.div>
-
                   {/* Headline */}
                   <motion.h1
                     initial={{ opacity: 0, y: 10 }}
