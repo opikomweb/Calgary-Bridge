@@ -522,56 +522,24 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
           </div>
 
           {/* Main Footer Content */}
-          <div className="relative py-20 px-8 lg:px-16">
+          <div className="relative py-16 px-8 lg:px-16">
             <div className="max-w-[1400px] mx-auto">
-              <div className="grid lg:grid-cols-12 gap-16 lg:gap-8">
-                {/* Brand Column - Larger */}
-                <div className="lg:col-span-5">
-                  {/* Large Logo */}
-                  <div className="flex items-start gap-6 mb-10">
-                    <div className="relative w-28 h-28 rounded-3xl overflow-hidden bg-gradient-to-br from-[#0c1829] to-[#050B14] p-2 border border-white/[0.08] shadow-xl shadow-sky-500/5 flex-shrink-0">
-                      <Image
-                        src="/calgary-connect-logo.png"
-                        alt="Calgary Connect"
-                        fill
-                        className="object-contain p-2"
-                      />
-                    </div>
-                    <div className="pt-2">
-                      <h3 className="text-3xl font-bold mb-2">
-                        <span className="text-white">Calgary </span>
-                        <span className="text-[#38BDF8]">Connect</span>
-                      </h3>
-                      <p className="text-base text-white/40">Everything Calgary. One Place.</p>
-                    </div>
+              <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-start">
+                {/* Brand Column - Logo Only */}
+                <div className="lg:col-span-3 flex flex-col items-center lg:items-start">
+                  <div className="relative w-32 h-32 rounded-3xl overflow-hidden bg-gradient-to-br from-[#0c1829] to-[#050B14] p-2 border border-white/[0.08] shadow-xl shadow-sky-500/5">
+                    <Image
+                      src="/calgary-connect-logo.png"
+                      alt="Calgary Connect"
+                      fill
+                      className="object-contain p-2"
+                    />
                   </div>
-
-                  {/* WilGlobo Info - More Prominent */}
-                  <div className="p-6 rounded-2xl bg-gradient-to-br from-sky-500/[0.08] via-sky-500/[0.03] to-transparent border border-sky-500/15 mb-10">
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-8 h-8 rounded-lg bg-sky-500/20 flex items-center justify-center">
-                        <Sparkles className="w-4 h-4 text-sky-400" />
-                      </div>
-                      <span className="text-base font-bold text-white">A WilGlobo Inc Initiative</span>
-                    </div>
-                    <p className="text-base text-white/50 leading-relaxed mb-6">
-                      Born out of the real experience and challenge of finding all the information you need at your fingertips.
-                    </p>
-                    <div className="flex flex-col gap-4">
-                      <a href="mailto:tech@wilglobo.com" className="flex items-center gap-3 text-sky-400 hover:text-sky-300 transition-colors font-semibold">
-                        <Mail className="w-5 h-5" />
-                        tech@wilglobo.com
-                      </a>
-                      <div className="flex items-center gap-3 text-white/50">
-                        <MapPin className="w-5 h-5" />
-                        Calgary, Alberta, Canada
-                      </div>
-                    </div>
-                  </div>
+                  <p className="text-sm text-white/30 mt-4 text-center lg:text-left">Everything Calgary. One Place.</p>
                 </div>
 
               {/* Link Columns Container */}
-              <div className="lg:col-span-7 grid sm:grid-cols-3 gap-12 lg:gap-8">
+              <div className="lg:col-span-9 grid sm:grid-cols-3 gap-12 lg:gap-8">
                 {/* Resources Column */}
                 <div>
                   <h4 className="text-lg font-bold text-white mb-6 pb-4 border-b border-white/[0.06]">Resources</h4>
