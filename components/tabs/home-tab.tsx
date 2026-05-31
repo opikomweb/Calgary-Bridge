@@ -384,14 +384,14 @@ export default function HomeTab() {
           </section>
 
           {/* ========== SPECIALIZED PATHWAYS ========== */}
-          <section className="px-8 lg:px-12 pb-32 max-w-[1400px] mx-auto relative z-10">
+          <section className="px-8 lg:px-12 pt-16 pb-32 max-w-[1400px] mx-auto relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="mb-14"
+              className="mb-16"
             >
-              <p className="text-sm font-semibold text-[var(--foreground-muted)] uppercase tracking-[0.2em] mb-4">Specialized Support</p>
+              <p className="text-sm font-semibold text-[var(--foreground-muted)] uppercase tracking-[0.2em] mb-5">Specialized Support</p>
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight">For specific situations.</h2>
             </motion.div>
 
@@ -418,10 +418,10 @@ export default function HomeTab() {
           </section>
 
           {/* ========== FEATURED RESOURCES ========== */}
-          <section className="px-8 lg:px-12 pb-32 max-w-[1400px] mx-auto relative z-10">
-            <div className="flex items-center justify-between mb-14">
+          <section className="px-8 lg:px-12 pt-16 pb-32 max-w-[1400px] mx-auto relative z-10">
+            <div className="flex items-center justify-between mb-16">
               <div>
-                <p className="text-sm font-bold text-[#FBBF24] uppercase tracking-[0.2em] mb-4">Recommended</p>
+                <p className="text-sm font-bold text-[#FBBF24] uppercase tracking-[0.2em] mb-5">Recommended</p>
                 <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Top resources this month.</h2>
               </div>
               <button
@@ -448,10 +448,10 @@ export default function HomeTab() {
 
           {/* ========== HIDDEN GEMS ========== */}
           {hiddenGems.length > 0 && (
-            <section className="px-8 lg:px-12 pb-32 max-w-[1400px] mx-auto relative z-10">
-              <div className="flex items-center justify-between mb-14">
+            <section className="px-8 lg:px-12 pt-16 pb-32 max-w-[1400px] mx-auto relative z-10">
+              <div className="flex items-center justify-between mb-16">
                 <div>
-                  <p className="text-sm font-bold text-[#a855f7] uppercase tracking-[0.2em] mb-4">Hidden Gems</p>
+                  <p className="text-sm font-bold text-[#a855f7] uppercase tracking-[0.2em] mb-5">Hidden Gems</p>
                   <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Programs most people miss.</h2>
                 </div>
                 <button
