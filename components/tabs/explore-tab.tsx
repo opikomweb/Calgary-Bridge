@@ -208,7 +208,7 @@ export default function ExploreTab() {
                 whileHover={{ scale: 1.02, y: -6 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setActiveCategory(category.id)}
-                className={`relative overflow-hidden rounded-[32px] bg-gradient-to-br ${category.bgGradient} backdrop-blur-xl border border-white/[0.06] p-10 md:p-12 text-left transition-all group ${
+                className={`relative overflow-hidden rounded-[32px] bg-gradient-to-br ${category.bgGradient} backdrop-blur-xl border border-white/[0.06] p-10 md:p-12 transition-all group ${
                   activeCategory === category.id 
                     ? "ring-2 ring-white/20 shadow-2xl border-white/[0.12]" 
                     : "hover:border-white/[0.1] hover:shadow-xl"
@@ -225,30 +225,33 @@ export default function ExploreTab() {
                   style={{ background: category.accentColor }}
                 />
                 
-                {/* Icon */}
-                <div 
-                  className="mb-8 flex h-[72px] w-[72px] items-center justify-center rounded-[20px] backdrop-blur-sm border border-white/[0.08]"
-                  style={{ background: `${category.accentColor}15` }}
-                >
-                  <category.icon className="h-8 w-8" style={{ color: category.accentColor }} />
+                {/* Centered Content */}
+                <div className="relative z-10 flex flex-col items-center text-center">
+                  {/* Icon */}
+                  <div 
+                    className="mb-6 flex h-[64px] w-[64px] items-center justify-center rounded-[18px] backdrop-blur-sm border border-white/[0.08]"
+                    style={{ background: `${category.accentColor}15` }}
+                  >
+                    <category.icon className="h-7 w-7" style={{ color: category.accentColor }} />
+                  </div>
+                  
+                  {/* Title */}
+                  <h3 className="font-bold text-white text-[22px] md:text-[26px] mb-4 leading-[1.2] tracking-[-0.01em]">
+                    {category.label}
+                  </h3>
+                  
+                  {/* Stat Badge */}
+                  <span 
+                    className="inline-block px-4 py-2 rounded-full text-sm font-medium border"
+                    style={{ 
+                      background: `${category.accentColor}12`,
+                      borderColor: `${category.accentColor}25`,
+                      color: category.accentColor
+                    }}
+                  >
+                    {category.stat}
+                  </span>
                 </div>
-                
-                {/* Title - More Line Height */}
-                <h3 className="font-bold text-white text-[26px] md:text-[30px] mb-5 leading-[1.25] tracking-[-0.01em]">
-                  {category.label}
-                </h3>
-                
-                {/* Stat Badge */}
-                <span 
-                  className="inline-block px-5 py-2.5 rounded-full text-sm font-medium border"
-                  style={{ 
-                    background: `${category.accentColor}12`,
-                    borderColor: `${category.accentColor}25`,
-                    color: category.accentColor
-                  }}
-                >
-                  {category.stat}
-                </span>
               </motion.button>
             ))}
           </motion.div>
