@@ -154,7 +154,7 @@ export default function HomeTab() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="text-[clamp(44px,9vw,72px)] font-bold tracking-[-0.02em] leading-[1.1]"
+            className="text-[clamp(40px,8vw,64px)] font-bold tracking-[-0.02em] leading-[1.1]"
           >
             What do you need?
           </motion.h1>
@@ -163,7 +163,7 @@ export default function HomeTab() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15, duration: 0.6 }}
-            className="text-base md:text-lg text-white/40 mt-6 mb-12 max-w-md mx-auto"
+            className="text-base text-white/35 mt-10 mb-14 max-w-sm mx-auto leading-relaxed"
           >
             Search for housing, jobs, healthcare, or ask the AI anything about Calgary.
           </motion.p>
