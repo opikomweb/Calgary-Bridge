@@ -17,12 +17,83 @@ export default function HomeTab() {
   const featuredResources = resources.filter((r) => r.featured).slice(0, 4);
   const hiddenGems = resources.filter((r) => r.hiddenGem).slice(0, 3);
 
+  // Comprehensive search across all resource fields
   const filteredResources = searchQuery
-    ? resources.filter(
-        (r) =>
-          r.title[activeLanguage]?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          r.description[activeLanguage]?.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+    ? resources.filter((r) => {
+        const query = searchQuery.toLowerCase().trim();
+        
+        // Search in title
+        const titleMatch = r.title[activeLanguage]?.toLowerCase().includes(query) ||
+                          r.title.en?.toLowerCase().includes(query);
+        
+        // Search in description
+        const descMatch = r.description[activeLanguage]?.toLowerCase().includes(query) ||
+                         r.description.en?.toLowerCase().includes(query);
+        
+        // Search in summary if exists
+        const summaryMatch = r.summary?.[activeLanguage]?.toLowerCase().includes(query) ||
+                            r.summary?.en?.toLowerCase().includes(query);
+        
+        // Search in category names (e.g., "housing", "jobs", "healthcare")
+        const categoryMatch = r.category.some(cat => 
+          cat.toLowerCase().includes(query) ||
+          query.includes(cat.toLowerCase())
+        );
+        
+        // Search in services offered
+        const servicesMatch = r.servicesOffered?.some(service => 
+          service.toLowerCase().includes(query)
+        );
+        
+        // Search in eligibility
+        const eligibilityMatch = r.eligibility?.[activeLanguage]?.toLowerCase().includes(query) ||
+                                r.eligibility?.en?.toLowerCase().includes(query);
+        
+        // Search in user types (e.g., "newcomer", "family", "senior")
+        const userTypeMatch = r.userTypes?.some(type => 
+          type.toLowerCase().includes(query) ||
+          query.includes(type.toLowerCase())
+        );
+        
+        // Search by keywords/synonyms for common queries
+        const keywordMappings: Record<string, string[]> = {
+          "childcare": ["family", "children", "daycare", "child care"],
+          "child care": ["family", "children", "daycare", "childcare"],
+          "daycare": ["childcare", "family", "children"],
+          "rent": ["housing", "rental", "tenant", "landlord"],
+          "apartment": ["housing", "rental"],
+          "doctor": ["healthcare", "medical", "clinic", "health"],
+          "hospital": ["healthcare", "medical", "emergency"],
+          "work": ["jobs", "employment", "career"],
+          "job": ["jobs", "employment", "career", "work"],
+          "immigrant": ["newcomer", "settlement", "immigration"],
+          "refugee": ["newcomer", "settlement", "immigration"],
+          "senior": ["elderly", "aging", "retirement"],
+          "mental health": ["counseling", "therapy", "crisis", "mental-health"],
+          "food": ["food bank", "meals", "grocery", "nutrition"],
+          "legal": ["lawyer", "law", "court", "rights"],
+          "bus": ["transit", "transportation", "ctrain"],
+          "train": ["transit", "transportation", "ctrain"],
+        };
+        
+        // Check keyword synonyms
+        let keywordMatch = false;
+        for (const [keyword, synonyms] of Object.entries(keywordMappings)) {
+          if (query.includes(keyword)) {
+            keywordMatch = r.category.some(cat => 
+              synonyms.some(syn => cat.toLowerCase().includes(syn) || syn.includes(cat.toLowerCase()))
+            ) || r.servicesOffered?.some(service =>
+              synonyms.some(syn => service.toLowerCase().includes(syn))
+            ) || synonyms.some(syn => 
+              r.title.en?.toLowerCase().includes(syn) || 
+              r.description.en?.toLowerCase().includes(syn)
+            );
+          }
+        }
+        
+        return titleMatch || descMatch || summaryMatch || categoryMatch || 
+               servicesMatch || eligibilityMatch || userTypeMatch || keywordMatch;
+      })
     : [];
 
   // Solution-first pathways with icons - GLASSY PREMIUM
