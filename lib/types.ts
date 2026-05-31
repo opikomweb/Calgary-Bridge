@@ -18,7 +18,11 @@ export type ResourceCategory =
   | "business"
   | "volunteering"
   | "emergency"
-  | "community";
+  | "community"
+  | "lgbtq"
+  | "indigenous"
+  | "youth"
+  | "arts";
 
 export type Priority = ResourceCategory;
 
@@ -30,11 +34,21 @@ export interface Resource {
   description: Record<Language, string>;
   summary?: Record<Language, string>;
   eligibility?: Record<Language, string>;
+  servicesOffered?: string[];
   phone?: string;
   address?: string;
   website?: string;
   hours?: string;
   featured?: boolean;
+  hiddenGem?: boolean;
+  cost?: "free" | "low-cost" | "paid" | "sliding-scale";
+  languages?: string[];
+  lastUpdated?: string;
+  source?: string;
+  coordinates?: {
+    lat: number;
+    lng: number;
+  };
 }
 
 export interface ResourceNote {
@@ -83,4 +97,13 @@ export interface Business {
   website?: string;
   offers?: string[];
   verified: boolean;
+}
+
+export interface CategoryGuide {
+  id: ResourceCategory;
+  overview: Record<Language, string>;
+  firstSteps: Record<Language, string[]>;
+  eligibilityHints: Record<Language, string[]>;
+  aiPrompts: string[];
+  hiddenGems: string[];
 }
