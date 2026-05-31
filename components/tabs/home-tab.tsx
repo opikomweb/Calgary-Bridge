@@ -273,7 +273,7 @@ export default function HomeTab() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="mb-12 md:mb-16 lg:mb-20 text-center"
+              className="mb-16 md:mb-20 lg:mb-24 text-center"
             >
               <p className="text-xs font-semibold text-[#38BDF8] uppercase tracking-[0.15em] mb-3">Start Here</p>
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight">What most Calgarians need.</h2>
