@@ -388,13 +388,13 @@ export default function HomeTab() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="mb-10 md:mb-14 lg:mb-16 text-center"
+              className="mb-16 md:mb-20 lg:mb-24 text-center"
             >
               <p className="text-xs font-semibold text-[var(--foreground-muted)] uppercase tracking-[0.15em] mb-3">Specialized Support</p>
               <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">For specific situations.</h2>
             </motion.div>
 
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mt-8 md:mt-12">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
               {specialized.map((item, index) => (
                 <motion.button
                   key={item.id}
@@ -418,7 +418,7 @@ export default function HomeTab() {
 
           {/* ========== FEATURED RESOURCES ========== */}
           <section className="px-6 md:px-8 lg:px-12 pt-8 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
-            <div className="mb-10 md:mb-14 text-center">
+            <div className="mb-16 md:mb-20 lg:mb-24 text-center">
               <p className="text-xs font-bold text-[#FBBF24] uppercase tracking-[0.15em] mb-3">Recommended</p>
               <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">Top resources this month.</h2>
               <button
@@ -429,7 +429,7 @@ export default function HomeTab() {
               </button>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-4 md:gap-6 mt-8 md:mt-12">
+            <div className="grid md:grid-cols-2 gap-4 md:gap-6">
               {featuredResources.map((resource, index) => (
                 <motion.div
                   key={resource.id}
@@ -446,7 +446,7 @@ export default function HomeTab() {
           {/* ========== HIDDEN GEMS ========== */}
           {hiddenGems.length > 0 && (
             <section className="px-6 md:px-8 lg:px-12 pt-8 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
-              <div className="mb-10 md:mb-14 text-center">
+              <div className="mb-16 md:mb-20 lg:mb-24 text-center">
                 <p className="text-xs font-bold text-[#a855f7] uppercase tracking-[0.15em] mb-3">Hidden Gems</p>
                 <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">Programs most people miss.</h2>
                 <button
@@ -457,7 +457,7 @@ export default function HomeTab() {
                 </button>
               </div>
 
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mt-8 md:mt-12">
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                 {hiddenGems.map((resource, index) => (
                   <motion.div
                     key={resource.id}
@@ -474,7 +474,7 @@ export default function HomeTab() {
 
           {/* ========== NEAR YOU ========== */}
           <section className="px-6 md:px-8 lg:px-12 pb-24 md:pb-32 max-w-[1200px] mx-auto relative z-10">
-            <div className="mb-10 md:mb-14">
+            <div className="mb-16 md:mb-20 lg:mb-24">
               <div className="flex items-center gap-2 mb-3">
                 <MapPin className="w-4 h-4 text-emerald-400" />
                 <p className="text-xs font-bold text-emerald-400 uppercase tracking-[0.15em]">Near You</p>
@@ -482,7 +482,7 @@ export default function HomeTab() {
               <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">Services in your area.</h2>
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 mt-8 md:mt-12">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
               {[
                 { name: "Calgary Food Bank", distance: "0.8 km", tag: "Free", hours: "Mon-Fri 9-5" },
                 { name: "Centre for Newcomers", distance: "1.2 km", tag: "Free", hours: "Mon-Sat 9-6" },
