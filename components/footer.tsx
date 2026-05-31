@@ -471,149 +471,185 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
 
   return (
     <>
-      <footer className="relative border-t border-white/[0.06] bg-[#030810]">
-        {/* Trust Banner */}
-        <div className="border-b border-white/[0.06] py-10 px-8 lg:px-16">
-          <div className="max-w-[1400px] mx-auto">
-            <div className="flex flex-wrap items-center justify-center gap-8 lg:gap-16">
-              <div className="flex items-center gap-3 text-white/50">
-                <Shield className="w-5 h-5 text-emerald-400" />
-                <span className="text-sm font-medium">All resources manually verified</span>
-              </div>
-              <div className="flex items-center gap-3 text-white/50">
-                <FileText className="w-5 h-5 text-sky-400" />
-                <span className="text-sm font-medium">Updated monthly</span>
-              </div>
-              <div className="flex items-center gap-3 text-white/50">
-                <Users className="w-5 h-5 text-amber-400" />
-                <span className="text-sm font-medium">Community-driven</span>
-              </div>
-              <div className="flex items-center gap-3 text-white/50">
-                <Heart className="w-5 h-5 text-pink-400" />
-                <span className="text-sm font-medium">Free to use</span>
+      <footer className="relative mt-20">
+        {/* Footer Separator - Visual Break from Main Content */}
+        <div className="relative">
+          {/* Gradient Divider Line */}
+          <div className="h-px bg-gradient-to-r from-transparent via-sky-500/50 to-transparent" />
+          
+          {/* Decorative Top Pattern */}
+          <div className="absolute inset-x-0 -top-20 h-40 bg-gradient-to-b from-transparent via-[#020508]/50 to-[#020508] pointer-events-none" />
+        </div>
+
+        {/* Footer Background - Distinctly Different */}
+        <div className="bg-[#020508] relative overflow-hidden">
+          {/* Subtle Grid Pattern */}
+          <div className="absolute inset-0 opacity-[0.02]" style={{
+            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+            backgroundSize: '40px 40px'
+          }} />
+
+          {/* Trust Banner */}
+          <div className="relative border-b border-white/[0.04] py-8 px-8 lg:px-16 bg-gradient-to-r from-sky-500/[0.03] via-transparent to-cyan-500/[0.03]">
+            <div className="max-w-[1400px] mx-auto">
+              <div className="flex flex-wrap items-center justify-center gap-6 lg:gap-12">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center">
+                    <Shield className="w-5 h-5 text-emerald-400" />
+                  </div>
+                  <span className="text-sm font-medium text-white/60">Manually verified</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-sky-500/10 flex items-center justify-center">
+                    <FileText className="w-5 h-5 text-sky-400" />
+                  </div>
+                  <span className="text-sm font-medium text-white/60">Updated monthly</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
+                    <Users className="w-5 h-5 text-amber-400" />
+                  </div>
+                  <span className="text-sm font-medium text-white/60">Community-driven</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-pink-500/10 flex items-center justify-center">
+                    <Heart className="w-5 h-5 text-pink-400" />
+                  </div>
+                  <span className="text-sm font-medium text-white/60">Free to use</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Main Footer Content */}
-        <div className="py-20 px-8 lg:px-16">
-          <div className="max-w-[1400px] mx-auto">
-            <div className="grid lg:grid-cols-5 gap-16 lg:gap-12">
-              {/* Brand Column */}
-              <div className="lg:col-span-2">
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="relative w-16 h-16 rounded-2xl overflow-hidden bg-gradient-to-br from-[#0c1829] to-[#071119] p-1 border border-white/10">
-                    <Image
-                      src="/calgary-connect-logo.png"
-                      alt="Calgary Connect"
-                      fill
-                      className="object-contain p-1"
-                    />
+          {/* Main Footer Content */}
+          <div className="relative py-20 px-8 lg:px-16">
+            <div className="max-w-[1400px] mx-auto">
+              <div className="grid lg:grid-cols-12 gap-16 lg:gap-8">
+                {/* Brand Column - Larger */}
+                <div className="lg:col-span-5">
+                  {/* Large Logo */}
+                  <div className="flex items-start gap-6 mb-10">
+                    <div className="relative w-28 h-28 rounded-3xl overflow-hidden bg-gradient-to-br from-[#0c1829] to-[#050B14] p-2 border border-white/[0.08] shadow-xl shadow-sky-500/5 flex-shrink-0">
+                      <Image
+                        src="/calgary-connect-logo.png"
+                        alt="Calgary Connect"
+                        fill
+                        className="object-contain p-2"
+                      />
+                    </div>
+                    <div className="pt-2">
+                      <h3 className="text-3xl font-bold mb-2">
+                        <span className="text-white">Calgary </span>
+                        <span className="text-[#38BDF8]">Connect</span>
+                      </h3>
+                      <p className="text-base text-white/40">Everything Calgary. One Place.</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-2xl font-bold">
-                      <span className="text-white">Calgary </span>
-                      <span className="text-[#38BDF8]">Connect</span>
-                    </h3>
-                    <p className="text-sm text-white/40">Everything Calgary. One Place.</p>
+
+                  {/* WilGlobo Info - More Prominent */}
+                  <div className="p-6 rounded-2xl bg-gradient-to-br from-sky-500/[0.08] via-sky-500/[0.03] to-transparent border border-sky-500/15 mb-10">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-8 h-8 rounded-lg bg-sky-500/20 flex items-center justify-center">
+                        <Sparkles className="w-4 h-4 text-sky-400" />
+                      </div>
+                      <span className="text-base font-bold text-white">A WilGlobo Inc Initiative</span>
+                    </div>
+                    <p className="text-base text-white/50 leading-relaxed mb-6">
+                      Born out of the real experience and challenge of finding all the information you need at your fingertips.
+                    </p>
+                    <div className="flex flex-col gap-4">
+                      <a href="mailto:tech@wilglobo.com" className="flex items-center gap-3 text-sky-400 hover:text-sky-300 transition-colors font-semibold">
+                        <Mail className="w-5 h-5" />
+                        tech@wilglobo.com
+                      </a>
+                      <div className="flex items-center gap-3 text-white/50">
+                        <MapPin className="w-5 h-5" />
+                        Calgary, Alberta, Canada
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                {/* WilGlobo Info */}
-                <div className="p-5 rounded-2xl bg-gradient-to-br from-sky-500/5 to-transparent border border-sky-500/10 mb-8">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Sparkles className="w-4 h-4 text-sky-400" />
-                    <span className="text-sm font-semibold text-white">A WilGlobo Inc Initiative</span>
-                  </div>
-                  <p className="text-sm text-white/50 leading-relaxed">
-                    Born out of the real experience and challenge of finding all the information you need at your fingertips.
-                  </p>
-                </div>
-
-                <div className="space-y-4 text-sm text-white/50">
-                  <a href="mailto:tech@wilglobo.com" className="flex items-center gap-3 hover:text-sky-400 transition-colors font-medium">
-                    <Mail className="w-4 h-4" />
-                    tech@wilglobo.com
-                  </a>
-                  <div className="flex items-center gap-3">
-                    <MapPin className="w-4 h-4" />
-                    Calgary, Alberta, Canada
-                  </div>
-                </div>
-              </div>
-
-              {/* Resources Column */}
-              <div>
-                <h4 className="text-base font-bold text-white mb-6">Resources</h4>
-                <ul className="space-y-4">
-                  {resourceLinks.map((link) => (
-                    <li key={link.label}>
-                      <button
-                        onClick={() => openModal(link.key)}
-                        className="text-sm text-white/50 hover:text-white transition-colors text-left"
-                      >
-                        {link.label}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* For Businesses Column */}
-              <div>
-                <h4 className="text-base font-bold text-white mb-6">For Businesses</h4>
-                <ul className="space-y-4">
-                  {businessLinks.map((link) => (
-                    <li key={link.label}>
-                      {link.onClick ? (
+              {/* Link Columns Container */}
+              <div className="lg:col-span-7 grid sm:grid-cols-3 gap-12 lg:gap-8">
+                {/* Resources Column */}
+                <div>
+                  <h4 className="text-lg font-bold text-white mb-6 pb-4 border-b border-white/[0.06]">Resources</h4>
+                  <ul className="space-y-4">
+                    {resourceLinks.map((link) => (
+                      <li key={link.label}>
                         <button
-                          onClick={link.onClick}
-                          className="text-sm text-white/50 hover:text-white transition-colors text-left"
+                          onClick={() => openModal(link.key)}
+                          className="text-base text-white/50 hover:text-sky-400 transition-colors text-left flex items-center gap-2 group"
                         >
+                          <ChevronRight className="w-4 h-4 opacity-0 -ml-6 group-hover:opacity-100 group-hover:ml-0 transition-all text-sky-400" />
                           {link.label}
                         </button>
-                      ) : (
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* For Businesses Column */}
+                <div>
+                  <h4 className="text-lg font-bold text-white mb-6 pb-4 border-b border-white/[0.06]">For Businesses</h4>
+                  <ul className="space-y-4">
+                    {businessLinks.map((link) => (
+                      <li key={link.label}>
+                        {link.onClick ? (
+                          <button
+                            onClick={link.onClick}
+                            className="text-base text-white/50 hover:text-sky-400 transition-colors text-left flex items-center gap-2 group"
+                          >
+                            <ChevronRight className="w-4 h-4 opacity-0 -ml-6 group-hover:opacity-100 group-hover:ml-0 transition-all text-sky-400" />
+                            {link.label}
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => openModal(link.key!)}
+                            className="text-base text-white/50 hover:text-sky-400 transition-colors text-left flex items-center gap-2 group"
+                          >
+                            <ChevronRight className="w-4 h-4 opacity-0 -ml-6 group-hover:opacity-100 group-hover:ml-0 transition-all text-sky-400" />
+                            {link.label}
+                          </button>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Community Column */}
+                <div>
+                  <h4 className="text-lg font-bold text-white mb-6 pb-4 border-b border-white/[0.06]">Community</h4>
+                  <ul className="space-y-4">
+                    {communityLinks.map((link) => (
+                      <li key={link.label}>
                         <button
-                          onClick={() => openModal(link.key!)}
-                          className="text-sm text-white/50 hover:text-white transition-colors text-left"
+                          onClick={() => openModal(link.key)}
+                          className="text-base text-white/50 hover:text-sky-400 transition-colors text-left flex items-center gap-2 group"
                         >
+                          <ChevronRight className="w-4 h-4 opacity-0 -ml-6 group-hover:opacity-100 group-hover:ml-0 transition-all text-sky-400" />
                           {link.label}
                         </button>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Community Column */}
-              <div>
-                <h4 className="text-base font-bold text-white mb-6">Community</h4>
-                <ul className="space-y-4">
-                  {communityLinks.map((link) => (
-                    <li key={link.label}>
-                      <button
-                        onClick={() => openModal(link.key)}
-                        className="text-sm text-white/50 hover:text-white transition-colors text-left"
-                      >
-                        {link.label}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         {/* Disclaimer Section */}
-        <div className="border-t border-white/[0.06] py-10 px-8 lg:px-16 bg-white/[0.01]">
+        <div className="relative border-t border-white/[0.04] py-12 px-8 lg:px-16">
           <div className="max-w-[1400px] mx-auto">
-            <div className="flex items-start gap-4 p-6 rounded-2xl bg-amber-500/5 border border-amber-500/10">
-              <AlertCircle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
-              <div className="text-sm text-white/60 leading-relaxed">
-                <strong className="text-amber-400">Important Disclaimer:</strong> Calgary Connect is an independent 
-                platform developed by WilGlobo Inc and is not affiliated with, endorsed by, or connected to the City of Calgary, 
+            <div className="flex items-start gap-5 p-8 rounded-2xl bg-gradient-to-r from-amber-500/[0.08] via-amber-500/[0.04] to-transparent border border-amber-500/15">
+              <div className="w-12 h-12 rounded-xl bg-amber-500/15 flex items-center justify-center flex-shrink-0">
+                <AlertCircle className="w-6 h-6 text-amber-400" />
+              </div>
+              <div className="text-base text-white/60 leading-relaxed">
+                <strong className="text-amber-400 text-lg block mb-2">Important Disclaimer</strong>
+                Calgary Connect is an independent platform developed by WilGlobo Inc and is not affiliated with, endorsed by, or connected to the City of Calgary, 
                 the Government of Alberta, or any official government body. Information provided is for general reference only. 
                 Always verify details directly with service providers. For emergencies, call 911.
               </div>
@@ -622,11 +658,11 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-white/[0.06] py-8 px-8 lg:px-16">
+        <div className="relative border-t border-white/[0.04] py-8 px-8 lg:px-16 bg-black/30">
           <div className="max-w-[1400px] mx-auto flex flex-col lg:flex-row items-center justify-between gap-6">
-            <div className="flex flex-wrap items-center justify-center gap-4 lg:gap-8">
+            <div className="flex flex-wrap items-center justify-center gap-6">
               {legalLinks.map((link, index) => (
-                <span key={link.label} className="flex items-center gap-4 lg:gap-8">
+                <span key={link.label} className="flex items-center gap-6">
                   <button
                     onClick={() => openModal(link.key)}
                     className="text-sm text-white/40 hover:text-white transition-colors"
@@ -634,25 +670,17 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
                     {link.label}
                   </button>
                   {index < legalLinks.length - 1 && (
-                    <span className="text-white/20 hidden lg:inline">|</span>
+                    <span className="text-white/10 hidden lg:inline">|</span>
                   )}
                 </span>
               ))}
             </div>
 
-            <p className="text-sm text-white/40">
-              &copy; {currentYear} WilGlobo Inc. All rights reserved.
+            <p className="text-sm text-white/40 font-medium">
+              &copy; {currentYear} <span className="text-white/60">WilGlobo Inc.</span> All rights reserved.
             </p>
           </div>
         </div>
-
-        {/* Small Calgary Tower Decoration */}
-        <div className="absolute bottom-4 right-8 opacity-20 pointer-events-none">
-          <svg className="w-12 h-24" viewBox="0 0 40 80">
-            <path d="M17 80 L17 32 L14 32 L20 0 L26 32 L23 32 L23 80 Z" fill="none" stroke="#38BDF8" strokeWidth="1" />
-            <ellipse cx="20" cy="26" rx="6" ry="3" fill="none" stroke="#38BDF8" strokeWidth="1" />
-            <circle cx="20" cy="3" r="2" fill="#FBBF24" className="animate-pulse" />
-          </svg>
         </div>
       </footer>
 
