@@ -269,18 +269,20 @@ export default function HomeTab() {
         <>
           {/* ========== SOLUTION PATHWAYS ========== */}
           <section className="px-6 md:px-8 lg:px-12 pb-16 md:pb-24 max-w-[1200px] mx-auto relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="mb-20 md:mb-24 lg:mb-28 text-center"
-            >
-              <p className="text-xs font-semibold text-[#38BDF8] uppercase tracking-[0.15em] mb-3">Start Here</p>
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight">What most Calgarians need.</h2>
-            </motion.div>
+            <div className="pb-16 md:pb-20 lg:pb-24">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="text-center"
+              >
+                <p className="text-xs font-semibold text-[#38BDF8] uppercase tracking-[0.15em] mb-3">Start Here</p>
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight">What most Calgarians need.</h2>
+              </motion.div>
+            </div>
 
             {/* 2x2 grid of large pathway cards - GLASSY PREMIUM */}
-            <div className="grid grid-cols-2 gap-4 md:gap-6 pt-4">
+            <div className="grid grid-cols-2 gap-4 md:gap-6">
               {pathways.map((pathway, index) => {
                 const Icon = pathway.icon;
                 return (
@@ -384,15 +386,17 @@ export default function HomeTab() {
 
           {/* ========== SPECIALIZED PATHWAYS ========== */}
           <section className="px-6 md:px-8 lg:px-12 pt-8 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-              className="mb-10 md:mb-14 lg:mb-16 text-center"
-            >
-              <p className="text-xs font-semibold text-[var(--foreground-muted)] uppercase tracking-[0.15em] mb-3">Specialized Support</p>
-              <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">For specific situations.</h2>
-            </motion.div>
+            <div className="pb-16 md:pb-20 lg:pb-24">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+                className="text-center"
+              >
+                <p className="text-xs font-semibold text-[var(--foreground-muted)] uppercase tracking-[0.15em] mb-3">Specialized Support</p>
+                <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">For specific situations.</h2>
+              </motion.div>
+            </div>
 
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
               {specialized.map((item, index) => (
@@ -418,15 +422,17 @@ export default function HomeTab() {
 
           {/* ========== FEATURED RESOURCES ========== */}
           <section className="px-6 md:px-8 lg:px-12 pt-8 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
-            <div className="mb-10 md:mb-14 text-center">
-              <p className="text-xs font-bold text-[#FBBF24] uppercase tracking-[0.15em] mb-3">Recommended</p>
-              <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">Top resources this month.</h2>
-              <button
-                onClick={() => setActiveTab("explore")}
-                className="text-[#38BDF8] text-sm font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all mt-3"
-              >
-                View all <ArrowRight className="w-4 h-4" />
-              </button>
+            <div className="pb-16 md:pb-20 lg:pb-24">
+              <div className="text-center">
+                <p className="text-xs font-bold text-[#FBBF24] uppercase tracking-[0.15em] mb-3">Recommended</p>
+                <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">Top resources this month.</h2>
+                <button
+                  onClick={() => setActiveTab("explore")}
+                  className="text-[#38BDF8] text-sm font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all mt-3"
+                >
+                  View all <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
             </div>
 
             <div className="grid md:grid-cols-2 gap-4 md:gap-6">
@@ -446,15 +452,17 @@ export default function HomeTab() {
           {/* ========== HIDDEN GEMS ========== */}
           {hiddenGems.length > 0 && (
             <section className="px-6 md:px-8 lg:px-12 pt-8 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
-              <div className="mb-10 md:mb-14 text-center">
-                <p className="text-xs font-bold text-[#a855f7] uppercase tracking-[0.15em] mb-3">Hidden Gems</p>
-                <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">Programs most people miss.</h2>
-                <button
-                  onClick={() => setActiveTab("explore")}
-                  className="text-[#38BDF8] text-sm font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all mt-3"
-                >
-                  View all <ArrowRight className="w-4 h-4" />
-                </button>
+              <div className="pb-16 md:pb-20 lg:pb-24">
+                <div className="text-center">
+                  <p className="text-xs font-bold text-[#a855f7] uppercase tracking-[0.15em] mb-3">Hidden Gems</p>
+                  <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">Programs most people miss.</h2>
+                  <button
+                    onClick={() => setActiveTab("explore")}
+                    className="text-[#38BDF8] text-sm font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all mt-3"
+                  >
+                    View all <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
 
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
@@ -474,7 +482,7 @@ export default function HomeTab() {
 
           {/* ========== NEAR YOU ========== */}
           <section className="px-6 md:px-8 lg:px-12 pb-24 md:pb-32 max-w-[1200px] mx-auto relative z-10">
-            <div className="mb-10 md:mb-14">
+            <div className="pb-16 md:pb-20 lg:pb-24">
               <div className="flex items-center gap-2 mb-3">
                 <MapPin className="w-4 h-4 text-emerald-400" />
                 <p className="text-xs font-bold text-emerald-400 uppercase tracking-[0.15em]">Near You</p>
