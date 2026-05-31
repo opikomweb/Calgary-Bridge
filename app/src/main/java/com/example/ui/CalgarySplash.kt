@@ -43,24 +43,31 @@ fun CalgarySplash(onSplashComplete: () -> Unit) {
         contentAlignment = Alignment.Center
     ) {
         androidx.compose.foundation.Canvas(modifier = Modifier.fillMaxSize()) {
-            drawCircle(
-                brush = Brush.radialGradient(
-                    colors = listOf(Color(0xFFE11D48).copy(alpha = 0.15f), Color.Transparent),
-                    center = androidx.compose.ui.geometry.Offset(0f, 0f),
-                    radius = size.width * 0.8f
-                ),
-                radius = size.width * 0.8f,
-                center = androidx.compose.ui.geometry.Offset(0f, 0f)
-            )
-            drawCircle(
-                brush = Brush.radialGradient(
-                    colors = listOf(Color(0xFF0284C7).copy(alpha = 0.2f), Color.Transparent),
-                    center = androidx.compose.ui.geometry.Offset(size.width, size.height),
-                    radius = size.width * 0.9f
-                ),
-                radius = size.width * 0.9f,
-                center = androidx.compose.ui.geometry.Offset(size.width, size.height)
-            )
+            if (size.width > 0f && size.height > 0f) {
+                val radius1 = if (size.width.isFinite()) (size.width * 0.8f).coerceAtLeast(1f) else 300f
+                val radius2 = if (size.width.isFinite()) (size.width * 0.9f).coerceAtLeast(1f) else 300f
+                val validWidth = if (size.width.isFinite()) size.width else 0f
+                val validHeight = if (size.height.isFinite()) size.height else 0f
+                
+                drawCircle(
+                    brush = Brush.radialGradient(
+                        colors = listOf(Color(0xFFE11D48).copy(alpha = 0.15f), Color.Transparent),
+                        center = androidx.compose.ui.geometry.Offset(0f, 0f),
+                        radius = radius1
+                    ),
+                    radius = radius1,
+                    center = androidx.compose.ui.geometry.Offset(0f, 0f)
+                )
+                drawCircle(
+                    brush = Brush.radialGradient(
+                        colors = listOf(Color(0xFF0284C7).copy(alpha = 0.2f), Color.Transparent),
+                        center = androidx.compose.ui.geometry.Offset(validWidth, validHeight),
+                        radius = radius2
+                    ),
+                    radius = radius2,
+                    center = androidx.compose.ui.geometry.Offset(validWidth, validHeight)
+                )
+            }
         }
 
         // Center logo & Text content

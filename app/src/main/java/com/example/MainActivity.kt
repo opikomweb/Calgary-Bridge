@@ -50,6 +50,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.PlayArrow
@@ -259,15 +260,18 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
         ) {
             // Elegant background shapes
             androidx.compose.foundation.Canvas(modifier = Modifier.fillMaxSize()) {
-                drawCircle(
-                    brush = Brush.radialGradient(
-                        colors = listOf(Color(0xFFE11D48).copy(alpha = 0.08f), Color.Transparent),
-                        center = androidx.compose.ui.geometry.Offset(size.width, 0f),
-                        radius = size.width * 0.7f
-                    ),
-                    radius = size.width * 0.7f,
-                    center = androidx.compose.ui.geometry.Offset(size.width, 0f)
-                )
+                if (size.width > 0f && size.height > 0f) {
+                    val radius1 = if (size.width.isFinite()) (size.width * 0.7f).coerceAtLeast(1f) else 300f
+                    drawCircle(
+                        brush = Brush.radialGradient(
+                            colors = listOf(Color(0xFFE11D48).copy(alpha = 0.08f), Color.Transparent),
+                            center = androidx.compose.ui.geometry.Offset(if (size.width.isFinite()) size.width else 0f, 0f),
+                            radius = radius1
+                        ),
+                        radius = radius1,
+                        center = androidx.compose.ui.geometry.Offset(if (size.width.isFinite()) size.width else 0f, 0f)
+                    )
+                }
             }
             
             Column(
@@ -503,7 +507,8 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                                 // Empty state
                                 Column(
                                     modifier = Modifier
-                                        .fillMaxSize()
+                                        .fillMaxWidth()
+                                        .weight(1f)
                                         .padding(32.dp),
                                     verticalArrangement = Arrangement.Center,
                                     horizontalAlignment = Alignment.CenterHorizontally
@@ -525,7 +530,7 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                             } else {
                                 LazyColumn(
                                     verticalArrangement = Arrangement.spacedBy(12.dp),
-                                    modifier = Modifier.fillMaxSize()
+                                    modifier = Modifier.fillMaxWidth().weight(1f)
                                 ) {
                                     items(filteredList) { res ->
                                         val titleText = res.titles[activeLang] ?: res.titles["en"] ?: ""
@@ -639,6 +644,47 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                                                         }
                                                         Spacer(modifier = Modifier.width(8.dp))
                                                     }
+
+                                                    OutlinedButton(
+                                                        onClick = {
+                                                            try {
+                                                                val query = android.net.Uri.encode(titleText + " Calgary")
+                                                                val mapIntent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=$query"))
+                                                                mapIntent.setPackage("com.google.android.apps.maps")
+                                                                if (mapIntent.resolveActivity(context.packageManager) != null) {
+                                                                    context.startActivity(mapIntent)
+                                                                } else {
+                                                                    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/maps/search/?api=1&query=$query"))
+                                                                    context.startActivity(browserIntent)
+                                                                }
+                                                            } catch (e: Exception) {
+                                                                Toast.makeText(context, "Cannot open map", Toast.LENGTH_SHORT).show()
+                                                            }
+                                                        },
+                                                        modifier = Modifier.height(36.dp),
+                                                        colors = ButtonDefaults.outlinedButtonColors(
+                                                            contentColor = Color(0xFF10B981) // A green accent
+                                                        ),
+                                                        border = androidx.compose.foundation.BorderStroke(
+                                                            1.dp,
+                                                            Color(0xFF10B981).copy(alpha = 0.5f)
+                                                        ),
+                                                        contentPadding = PaddingValues(horizontal = 12.dp),
+                                                        shape = RoundedCornerShape(12.dp)
+                                                    ) {
+                                                        Icon(
+                                                            Icons.Default.LocationOn,
+                                                            contentDescription = "Map",
+                                                            modifier = Modifier.size(14.dp)
+                                                        )
+                                                        Spacer(modifier = Modifier.width(4.dp))
+                                                        Text(
+                                                            text = "Directions",
+                                                            fontSize = 12.sp,
+                                                            fontWeight = FontWeight.Bold
+                                                        )
+                                                    }
+                                                    Spacer(modifier = Modifier.width(8.dp))
 
                                                     Button(
                                                         onClick = {
@@ -843,11 +889,21 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                                                         }
                                                     }
                                                     Spacer(modifier = Modifier.height(8.dp))
-                                                    Text(
-                                                        text = aiResponseOutput!!,
-                                                        fontSize = 14.sp,
-                                                        lineHeight = 20.sp,
-                                                        color = Color(0xFFF8FAFC)
+                                                    androidx.compose.ui.viewinterop.AndroidView(
+                                                        factory = { ctx ->
+                                                            android.widget.TextView(ctx).apply {
+                                                                text = aiResponseOutput!!
+                                                                setTextColor(android.graphics.Color.parseColor("#F8FAFC"))
+                                                                textSize = 14f
+                                                                setLineSpacing(0f, 1.4f)
+                                                                autoLinkMask = android.text.util.Linkify.ALL
+                                                                linksClickable = true
+                                                                setLinkTextColor(android.graphics.Color.parseColor("#38BDF8"))
+                                                            }
+                                                        },
+                                                        update = { view ->
+                                                            view.text = aiResponseOutput!!
+                                                        }
                                                     )
                                                     Spacer(modifier = Modifier.height(16.dp))
                                                     Text(
@@ -897,7 +953,8 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                             if (userSavedShortlist.isEmpty()) {
                                 Column(
                                     modifier = Modifier
-                                        .fillMaxSize()
+                                        .fillMaxWidth()
+                                        .weight(1f)
                                         .padding(32.dp),
                                     verticalArrangement = Arrangement.Center,
                                     horizontalAlignment = Alignment.CenterHorizontally
@@ -920,7 +977,7 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                             } else {
                                 LazyColumn(
                                     verticalArrangement = Arrangement.spacedBy(12.dp),
-                                    modifier = Modifier.fillMaxSize()
+                                    modifier = Modifier.fillMaxWidth().weight(1f)
                                 ) {
                                     items(userSavedShortlist) { bookmark ->
                                         Card(
@@ -1021,6 +1078,64 @@ fun CalgaryAppContent(viewModel: CalgaryViewModel) {
                                                         fontSize = 10.sp,
                                                         color = Color(0xFF94A3B8)
                                                     )
+                                                }
+
+                                                Spacer(modifier = Modifier.height(10.dp))
+                                                val mRes = Localization.ResourcesList.find { it.id == bookmark.id }
+                                                Row(
+                                                    modifier = Modifier.fillMaxWidth(),
+                                                    horizontalArrangement = Arrangement.End,
+                                                    verticalAlignment = Alignment.CenterVertically
+                                                ) {
+                                                    OutlinedButton(
+                                                        onClick = {
+                                                            try {
+                                                                val query = android.net.Uri.encode(bookmark.title + " Calgary")
+                                                                val mapIntent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=$query"))
+                                                                mapIntent.setPackage("com.google.android.apps.maps")
+                                                                if (mapIntent.resolveActivity(context.packageManager) != null) {
+                                                                    context.startActivity(mapIntent)
+                                                                } else {
+                                                                    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/maps/search/?api=1&query=$query"))
+                                                                    context.startActivity(browserIntent)
+                                                                }
+                                                            } catch (e: Exception) {
+                                                                Toast.makeText(context, "Cannot open map", Toast.LENGTH_SHORT).show()
+                                                            }
+                                                        },
+                                                        modifier = Modifier.height(32.dp),
+                                                        colors = ButtonDefaults.outlinedButtonColors(
+                                                            contentColor = Color(0xFF10B981)
+                                                        ),
+                                                        border = androidx.compose.foundation.BorderStroke(
+                                                            1.dp,
+                                                            Color(0xFF10B981).copy(alpha = 0.5f)
+                                                        ),
+                                                        contentPadding = PaddingValues(horizontal = 12.dp)
+                                                    ) {
+                                                        Icon(Icons.Default.LocationOn, contentDescription = "Map", modifier = Modifier.size(12.dp))
+                                                        Spacer(modifier = Modifier.width(4.dp))
+                                                        Text("Search Map", fontSize = 11.sp, fontWeight = FontWeight.SemiBold)
+                                                    }
+                                                    
+                                                    if (mRes != null && mRes.webUrl.isNotEmpty()) {
+                                                        Spacer(modifier = Modifier.width(8.dp))
+                                                        Button(
+                                                            onClick = {
+                                                                try {
+                                                                    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(mRes.webUrl))
+                                                                    context.startActivity(browserIntent)
+                                                                } catch (e: Exception) {
+                                                                    Toast.makeText(context, "No browser found", Toast.LENGTH_SHORT).show()
+                                                                }
+                                                            },
+                                                            modifier = Modifier.height(32.dp),
+                                                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF38BDF8), contentColor = Color(0xFF0B1021)),
+                                                            contentPadding = PaddingValues(horizontal = 12.dp)
+                                                        ) {
+                                                            Text("Visit Site", fontSize = 11.sp, fontWeight = FontWeight.SemiBold)
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
