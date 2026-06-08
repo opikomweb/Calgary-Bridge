@@ -226,7 +226,7 @@ export default function LandingPage() {
                 className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/[0.06] transition-all"
               >
                 <Sparkles className="w-3.5 h-3.5 text-[#FBBF24]" />
-                AI Guide
+                White Hat Guide
               </button>
             </nav>
 
@@ -307,7 +307,7 @@ export default function LandingPage() {
                   className="w-full flex items-center gap-2 px-4 py-3 mt-1 rounded-xl text-base font-medium text-white/75 hover:bg-white/[0.05] transition-all"
                 >
                   <Sparkles className="w-4 h-4 text-[#FBBF24]" />
-                  AI Guide
+                  White Hat Guide
                 </button>
 
                 <button
@@ -468,7 +468,7 @@ export default function LandingPage() {
               className="btn-secondary w-full sm:w-auto px-8 md:px-10 py-4 md:py-5 rounded-2xl flex items-center justify-center gap-3 text-base md:text-lg font-semibold"
             >
               <Sparkles className="w-5 h-5 text-[#FBBF24]" />
-              Ask the AI Guide
+                Ask the White Hat Guide
             </motion.button>
           </motion.div>
         </motion.div>
@@ -590,7 +590,7 @@ export default function LandingPage() {
                 className="btn-primary px-7 md:px-8 py-4 rounded-2xl flex items-center gap-3 text-base md:text-lg font-semibold"
               >
                 <Sparkles className="w-5 h-5" />
-                Try the AI Guide
+                Try the White Hat Guide
               </motion.button>
             </motion.div>
 

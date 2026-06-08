@@ -33,11 +33,11 @@ export default function MainApp() {
   const t = (key: string) => translations[key]?.[activeLanguage] || translations[key]?.en || key;
 
   const navItems = [
-    { id: "home" as const, icon: Home, label: "Home", highlight: false },
-    { id: "explore" as const, icon: Compass, label: "Explore", highlight: false },
-    { id: "ai" as const, icon: MessageCircle, label: "AI Guide", highlight: true },
-    { id: "shortlist" as const, icon: Heart, label: "Saved", highlight: false },
-    { id: "profile" as const, icon: User, label: "Profile", highlight: false },
+    { id: "home" as const, icon: Home, label: "Home", shortLabel: "Home", highlight: false },
+    { id: "explore" as const, icon: Compass, label: "Explore", shortLabel: "Explore", highlight: false },
+    { id: "ai" as const, icon: MessageCircle, label: "White Hat Guide", shortLabel: "Guide", highlight: true },
+    { id: "shortlist" as const, icon: Heart, label: "Saved", shortLabel: "Saved", highlight: false },
+    { id: "profile" as const, icon: User, label: "Profile", shortLabel: "Profile", highlight: false },
   ];
 
   return (
@@ -263,7 +263,7 @@ export default function MainApp() {
               }`}
             >
               <item.icon className="h-5 w-5" />
-              <span className="text-[10px] font-medium">{item.label}</span>
+              <span className="text-[10px] font-medium">{item.shortLabel}</span>
             </button>
           ))}
         </div>
