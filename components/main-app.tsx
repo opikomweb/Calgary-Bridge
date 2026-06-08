@@ -18,11 +18,17 @@ import BusinessSubmission from "./business-submission";
 import { CalgaryAnimatedBackground } from "./calgary-background";
 
 export default function MainApp() {
-  const { activeTab, setActiveTab, activeLanguage, showEmergency, setShowEmergency } = useAppStore();
+  const { activeTab, setActiveTab, activeLanguage, showEmergency, setShowEmergency, setCurrentPage, setHasOnboarded } = useAppStore();
   const [showRentShield, setShowRentShield] = React.useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [showBusinessModal, setShowBusinessModal] = React.useState(false);
   const [businessModalMode, setBusinessModalMode] = React.useState<"submit" | "featured">("submit");
+
+  const goToLanding = () => {
+    setMobileMenuOpen(false);
+    setHasOnboarded(false);
+    setCurrentPage("landing");
+  };
 
   const t = (key: string) => translations[key]?.[activeLanguage] || translations[key]?.en || key;
 
@@ -44,7 +50,11 @@ export default function MainApp() {
         <div className="flex grow flex-col overflow-y-auto border-r border-white/[0.06] bg-[#050B14]/70 backdrop-blur-3xl">
           {/* Logo Section - Large Professional Logo */}
           <div className="px-6 pt-8 pb-6 flex justify-center">
-            <div className="relative w-[200px] h-[200px] flex-shrink-0 rounded-3xl overflow-hidden bg-gradient-to-br from-[#0c1829]/80 to-[#050B14]/90 p-3 border border-white/[0.08] shadow-2xl shadow-sky-500/10 backdrop-blur-xl">
+            <button
+              onClick={goToLanding}
+              aria-label="Go to Calgary Konnect home page"
+              className="relative w-[200px] h-[200px] flex-shrink-0 rounded-3xl overflow-hidden bg-gradient-to-br from-[#0c1829]/80 to-[#050B14]/90 p-3 border border-white/[0.08] shadow-2xl shadow-sky-500/10 backdrop-blur-xl transition-all duration-300 hover:border-sky-400/30 hover:shadow-sky-500/20 hover:scale-[1.02] cursor-pointer"
+            >
               <Image
                 src="/calgary-connect-logo.png"
                 alt="Calgary Konnect"
@@ -52,7 +62,7 @@ export default function MainApp() {
                 className="object-contain p-3"
                 priority
               />
-            </div>
+            </button>
           </div>
 
           {/* Desktop Navigation - Generous Spacing */}
@@ -101,7 +111,11 @@ export default function MainApp() {
       {/* Mobile Header */}
       <header className="lg:hidden sticky top-0 z-40 bg-[#050B14]/90 backdrop-blur-2xl border-b border-white/[0.06] px-4 py-3">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
+          <button
+            onClick={goToLanding}
+            aria-label="Go to Calgary Konnect home page"
+            className="flex items-center gap-3"
+          >
             <div className="relative w-10 h-10 rounded-lg overflow-hidden bg-gradient-to-br from-[#0c1829] to-[#071119] p-0.5 border border-white/10">
               <Image
                 src="/calgary-connect-logo.png"
@@ -115,7 +129,7 @@ export default function MainApp() {
               <span className="text-base font-bold text-white">Calgary </span>
               <span className="text-base font-bold text-[#38BDF8]">Konnect</span>
             </div>
-          </div>
+          </button>
           
           <div className="flex items-center gap-2">
             <button

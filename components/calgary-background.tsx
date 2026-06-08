@@ -50,11 +50,11 @@ export function CalgaryAnimatedBackground() {
           key={i}
           initial={{
             x: `${(i * 4) % 100}%`,
-            y: "110%",
+            y: "105%",
             opacity: 0,
           }}
           animate={{
-            y: "-10%",
+            y: "15%",
             opacity: [0, 0.5, 0.3, 0],
           }}
           transition={{
@@ -62,6 +62,7 @@ export function CalgaryAnimatedBackground() {
             repeat: Infinity,
             delay: i * 0.6,
             ease: "linear",
+            times: [0, 0.25, 0.7, 1],
           }}
           className="absolute w-1 h-1 rounded-full"
           style={{
