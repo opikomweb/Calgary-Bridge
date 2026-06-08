@@ -521,7 +521,7 @@ export default function LandingPage() {
                 whileTap={{ scale: 0.99 }}
                 onClick={handleExplore}
                 className="group w-full relative overflow-hidden rounded-2xl md:rounded-3xl text-left"
-                style={{ minHeight: "180px" }}
+                style={{ minHeight: "150px" }}
               >
                 <div
                   className="absolute inset-0 transition-all duration-500 group-hover:scale-105"
@@ -529,16 +529,16 @@ export default function LandingPage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
 
-                <div className="relative z-10 p-6 md:p-14 flex flex-col md:flex-row md:items-center justify-between h-full gap-5">
-                  <div>
-                    <h3 className="text-2xl md:text-4xl font-bold mb-3 md:mb-4 text-white text-balance">
+                <div className="relative z-10 p-7 md:p-10 flex flex-col md:flex-row md:items-center justify-between h-full gap-6">
+                  <div className="space-y-4 md:space-y-5">
+                    <h3 className="text-2xl md:text-4xl font-bold text-white leading-[1.15] text-balance">
                       {pathway.solution}
                     </h3>
-                    <div className="flex flex-wrap gap-2 md:gap-3">
+                    <div className="flex flex-wrap gap-2 md:gap-2.5">
                       {pathway.preview.map((item) => (
                         <span
                           key={item}
-                          className="px-3 md:px-4 py-1.5 md:py-2 rounded-full text-xs md:text-sm font-medium"
+                          className="px-3 md:px-4 py-1.5 md:py-2 rounded-full text-xs md:text-sm font-medium leading-none"
                           style={{ backgroundColor: `${pathway.accent}20`, color: pathway.accent }}
                         >
                           {item}
@@ -547,7 +547,7 @@ export default function LandingPage() {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-3 text-white/80 group-hover:text-white transition-colors flex-shrink-0">
+                  <div className="flex items-center gap-2 text-white/80 group-hover:text-white transition-colors flex-shrink-0">
                     <span className="text-base md:text-lg font-medium">Explore</span>
                     <ArrowRight className="w-5 h-5 md:w-6 md:h-6 group-hover:translate-x-2 transition-transform" />
                   </div>
