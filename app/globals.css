@@ -6,7 +6,7 @@
 }
 
 :root {
-  /* Calgary Connect Premium Color System */
+  /* Calgary Konnect Premium Color System */
   --background: #07111F;
   --background-secondary: #0F172A;
   --foreground: #f8fafc;
@@ -61,11 +61,6 @@
 
 * {
   box-sizing: border-box;
-  margin: 0;
-}
-
-*:where(:not(html, head, script, style, [hidden])) {
-  /* Allow Tailwind padding utilities to work */
 }
 
 html {
@@ -87,7 +82,17 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   font-weight: 700;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+h4, h5, h6 {
+  line-height: 1.3;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 /* Hero headline: 56-72px desktop, 40-48px tablet, 32-40px mobile */

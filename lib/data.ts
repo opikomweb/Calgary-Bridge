@@ -70,12 +70,12 @@ export const translations: Record<string, Record<Language, string>> = {
     zh: "探索",
   },
   aiGuide: {
-    en: "AI Guide",
-    fr: "Guide IA",
-    tl: "AI Guide",
-    es: "Guía IA",
-    ar: "دليل AI",
-    zh: "AI 指南",
+    en: "iKonnect Guide",
+    fr: "iKonnect Guide",
+    tl: "iKonnect Guide",
+    es: "iKonnect Guide",
+    ar: "iKonnect Guide",
+    zh: "iKonnect Guide",
   },
   shortlist: {
     en: "Shortlist",
@@ -570,12 +570,12 @@ export const uiText: Record<string, Record<Language, string>> = {
     zh: "您已准备就绪！",
   },
   personalizedExperience: {
-    en: "We've personalized Calgary Connect just for you.",
-    fr: "Nous avons personnalisé Calgary Connect pour vous.",
-    tl: "Na-personalize namin ang Calgary Connect para sa iyo.",
-    es: "Hemos personalizado Calgary Connect solo para ti.",
-    ar: "لقد خصصنا Calgary Connect من أجلك.",
-    zh: "我们已为您个性化定制了 Calgary Connect。",
+    en: "We've personalized Calgary Konnect just for you.",
+    fr: "Nous avons personnalisé Calgary Konnect pour vous.",
+    tl: "Na-personalize namin ang Calgary Konnect para sa iyo.",
+    es: "Hemos personalizado Calgary Konnect solo para ti.",
+    ar: "لقد خصصنا Calgary Konnect من أجلك.",
+    zh: "我们已为您个性化定制了 Calgary Konnect。",
   },
 };
 

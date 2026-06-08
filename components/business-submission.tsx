@@ -156,7 +156,7 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
               </div>
               <div>
                 <h2 className="text-3xl font-bold text-white">
-                  {mode === "featured" ? "Get Featured on Calgary Connect" : "List Your Business"}
+                  {mode === "featured" ? "Get Featured on Calgary Konnect" : "List Your Business"}
                 </h2>
                 <p className="text-white/50 mt-1">
                   {mode === "featured" 

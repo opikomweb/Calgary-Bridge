@@ -15,7 +15,7 @@ const plusJakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Calgary Connect - Everything Calgary. One Place.",
+  title: "Calgary Konnect - Everything Calgary. One Place.",
   description:
     "Find services, support, opportunities, programs, local businesses, community resources, and trusted guidance—without searching dozens of websites.",
   keywords: [
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     apple: "/calgary-connect-logo.png",
   },
   openGraph: {
-    title: "Calgary Connect - Everything Calgary. One Place.",
+    title: "Calgary Konnect - Everything Calgary. One Place.",
     description:
       "Find services, support, opportunities, programs, local businesses, community resources, and trusted guidance.",
     type: "website",

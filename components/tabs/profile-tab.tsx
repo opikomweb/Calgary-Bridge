@@ -168,7 +168,7 @@ export default function ProfileTab() {
                 <MenuItem icon={<Bell className="h-4 w-4 md:h-5 md:w-5" />} label="Notifications" />
                 <MenuItem icon={<Shield className="h-4 w-4 md:h-5 md:w-5" />} label="Privacy" />
                 <MenuItem icon={<HelpCircle className="h-4 w-4 md:h-5 md:w-5" />} label="Help & Support" />
-                <MenuItem icon={<Star className="h-4 w-4 md:h-5 md:w-5" />} label="Rate Calgary Connect" isLast />
+                <MenuItem icon={<Star className="h-4 w-4 md:h-5 md:w-5" />} label="Rate Calgary Konnect" isLast />
               </div>
             </motion.section>
 
@@ -194,7 +194,7 @@ export default function ProfileTab() {
             {/* App Info */}
             <div className="text-center lg:text-left">
               <p className="text-xs text-[var(--foreground-muted)]">
-                Calgary Connect v1.0.0
+                Calgary Konnect v1.0.0
               </p>
               <p className="text-xs text-[var(--foreground-muted)] mt-0.5">
                 Made with care for Calgary residents

@@ -27,24 +27,46 @@ interface FooterProps {
 // Modal content for each page
 const pageContent: Record<string, { title: string; content: React.ReactNode }> = {
   about: {
-    title: "About Calgary Connect",
+    title: "About Calgary Konnect",
     content: (
       <div className="space-y-6">
         <p className="text-lg text-white/70 leading-relaxed">
-          Calgary Connect is a comprehensive civic resource platform designed to help Calgarians navigate the complex landscape of services, support programs, and opportunities available in our city.
+          Calgary Konnect exists for one reason: nobody should have to suffer simply because they couldn&apos;t find the right door to knock on.
         </p>
+
         <div className="p-6 rounded-2xl bg-gradient-to-br from-sky-500/10 to-cyan-500/5 border border-sky-500/20">
           <div className="flex items-center gap-3 mb-4">
             <Globe className="w-6 h-6 text-sky-400" />
-            <h3 className="text-xl font-bold text-white">A WilGlobo Inc Initiative</h3>
+            <h3 className="text-xl font-bold text-white">Why Calgary Needs Calgary Konnect</h3>
           </div>
           <p className="text-white/60 leading-relaxed">
-            Calgary Connect was born out of the real experience and challenge of finding all the information you need at your fingertips. As newcomers and long-time residents alike struggle to navigate the maze of government services, community programs, and support resources, we recognized the need for a single, unified platform.
+            Calgary is one of the most generous cities in Canada. There are food banks, rent-relief funds, free legal clinics, language classes, mental-health lines, and settlement programs for almost every situation. The tragedy isn&apos;t that help doesn&apos;t exist &mdash; it&apos;s that the people who need it most can&apos;t find it in time.
           </p>
         </div>
+
+        <h3 className="text-xl font-bold text-white mt-8">The Problem We Saw</h3>
+        <p className="text-white/60 leading-relaxed">
+          Picture a single mother who just landed in Calgary with two kids and three suitcases. Her English is shaky, her savings are nearly gone, and she has two weeks to find housing before a hotel voucher runs out. The help she needs is out there &mdash; but it&apos;s scattered across dozens of websites, buried in PDFs, hidden behind phone trees, and written in language she can barely read. By the time she finds the right program, the intake window has closed.
+        </p>
+        <p className="text-white/60 leading-relaxed">
+          Picture a senior on a fixed income who eats less so he can afford his medication, never knowing a subsidy program could have covered both. Picture a young worker one missed paycheque away from eviction, unaware that emergency rent support was approved for people exactly like him. These aren&apos;t rare stories in Calgary. They happen every single day &mdash; not because the city failed them, but because the information never reached them.
+        </p>
+
+        <h3 className="text-xl font-bold text-white mt-8">Our Solution</h3>
+        <p className="text-white/60 leading-relaxed">
+          Calgary Konnect brings every essential service into one place, in plain language, in the languages our communities actually speak. Instead of searching ten websites, you ask one question and get a clear answer: where to go, who to call, what you qualify for, and what to bring. We turn hours of confusion into a few calm minutes &mdash; so help arrives while it still matters.
+        </p>
+
+        <div className="p-6 rounded-2xl bg-gradient-to-br from-amber-500/10 to-amber-500/5 border border-amber-500/20">
+          <p className="text-white/70 leading-relaxed italic">
+            &ldquo;I spent three weeks calling numbers that led nowhere. With Calgary Konnect I found a settlement worker, a food bank near my building, and free English classes &mdash; all in one afternoon. For the first time since arriving, I could breathe.&rdquo;
+          </p>
+          <p className="text-white/50 text-sm mt-3">&mdash; A Calgary newcomer, in her own words</p>
+        </div>
+
         <h3 className="text-xl font-bold text-white mt-8">Our Mission</h3>
         <p className="text-white/60 leading-relaxed">
-          To democratize access to information and services for all Calgarians, regardless of background, language, or circumstance. We believe everyone deserves easy access to housing support, employment resources, healthcare information, and community services.
+          To democratize access to information and services for all Calgarians, regardless of background, language, or circumstance. We believe everyone deserves easy access to housing support, employment resources, healthcare information, and community services &mdash; before a hard week becomes a crisis.
         </p>
         <h3 className="text-xl font-bold text-white mt-8">What We Offer</h3>
         <ul className="space-y-3 text-white/60">
@@ -73,7 +95,7 @@ const pageContent: Record<string, { title: string; content: React.ReactNode }> =
     content: (
       <div className="space-y-6">
         <p className="text-lg text-white/70 leading-relaxed">
-          Every resource on Calgary Connect undergoes a rigorous verification process to ensure accuracy and reliability.
+          Every resource on Calgary Konnect undergoes a rigorous verification process to ensure accuracy and reliability.
         </p>
         <h3 className="text-xl font-bold text-white">Our Verification Process</h3>
         <div className="space-y-4">
@@ -108,7 +130,7 @@ const pageContent: Record<string, { title: string; content: React.ReactNode }> =
       <div className="space-y-6">
         <p className="text-sm text-white/50">Last updated: January 2026</p>
         <p className="text-white/70 leading-relaxed">
-          By accessing and using Calgary Connect, you agree to be bound by these Terms of Service.
+          By accessing and using Calgary Konnect, you agree to be bound by these Terms of Service.
         </p>
         <h3 className="text-xl font-bold text-white">1. Acceptance of Terms</h3>
         <p className="text-white/60 leading-relaxed">
@@ -116,7 +138,7 @@ const pageContent: Record<string, { title: string; content: React.ReactNode }> =
         </p>
         <h3 className="text-xl font-bold text-white">2. Use of Service</h3>
         <p className="text-white/60 leading-relaxed">
-          Calgary Connect provides information about local services and resources. This information is provided for general reference purposes only and should not be considered professional advice.
+          Calgary Konnect provides information about local services and resources. This information is provided for general reference purposes only and should not be considered professional advice.
         </p>
         <h3 className="text-xl font-bold text-white">3. Disclaimer</h3>
         <p className="text-white/60 leading-relaxed">
@@ -139,7 +161,7 @@ const pageContent: Record<string, { title: string; content: React.ReactNode }> =
       <div className="space-y-6">
         <p className="text-sm text-white/50">Last updated: January 2026</p>
         <p className="text-white/70 leading-relaxed">
-          Your privacy is important to us. This policy explains how Calgary Connect collects, uses, and protects your information.
+          Your privacy is important to us. This policy explains how Calgary Konnect collects, uses, and protects your information.
         </p>
         <h3 className="text-xl font-bold text-white">Information We Collect</h3>
         <ul className="space-y-2 text-white/60">
@@ -167,7 +189,7 @@ const pageContent: Record<string, { title: string; content: React.ReactNode }> =
     content: (
       <div className="space-y-6">
         <p className="text-white/70 leading-relaxed">
-          Calgary Connect uses cookies and similar technologies to enhance your browsing experience.
+          Calgary Konnect uses cookies and similar technologies to enhance your browsing experience.
         </p>
         <h3 className="text-xl font-bold text-white">What Are Cookies?</h3>
         <p className="text-white/60 leading-relaxed">
@@ -200,7 +222,7 @@ const pageContent: Record<string, { title: string; content: React.ReactNode }> =
     content: (
       <div className="space-y-6">
         <p className="text-white/70 leading-relaxed">
-          Calgary Connect is committed to ensuring digital accessibility for people with disabilities. We continually improve the user experience for everyone.
+          Calgary Konnect is committed to ensuring digital accessibility for people with disabilities. We continually improve the user experience for everyone.
         </p>
         <h3 className="text-xl font-bold text-white">Our Commitment</h3>
         <p className="text-white/60 leading-relaxed">
@@ -227,7 +249,7 @@ const pageContent: Record<string, { title: string; content: React.ReactNode }> =
       <div className="space-y-6">
         <div className="p-5 rounded-xl bg-amber-500/10 border border-amber-500/20">
           <p className="text-white/70 leading-relaxed">
-            <strong className="text-amber-400">Important:</strong> Calgary Connect is an independent platform and is NOT affiliated with, endorsed by, or connected to the City of Calgary, the Government of Alberta, or any official government body.
+            <strong className="text-amber-400">Important:</strong> Calgary Konnect is an independent platform and is NOT affiliated with, endorsed by, or connected to the City of Calgary, the Government of Alberta, or any official government body.
           </p>
         </div>
         <h3 className="text-xl font-bold text-white">Information Accuracy</h3>
@@ -244,7 +266,7 @@ const pageContent: Record<string, { title: string; content: React.ReactNode }> =
         </p>
         <h3 className="text-xl font-bold text-white">Limitation of Liability</h3>
         <p className="text-white/60 leading-relaxed">
-          Calgary Connect and WilGlobo Inc shall not be held liable for any damages arising from the use of information on this platform.
+          Calgary Konnect shall not be held liable for any damages arising from the use of information on this platform.
         </p>
       </div>
     ),
@@ -254,7 +276,7 @@ const pageContent: Record<string, { title: string; content: React.ReactNode }> =
     content: (
       <div className="space-y-6">
         <p className="text-white/70 leading-relaxed">
-          Calgary Connect is built on community trust. Please follow these guidelines to maintain a helpful, respectful platform.
+          Calgary Konnect is built on community trust. Please follow these guidelines to maintain a helpful, respectful platform.
         </p>
         <h3 className="text-xl font-bold text-white">Be Respectful</h3>
         <p className="text-white/60 leading-relaxed">
@@ -280,7 +302,7 @@ const pageContent: Record<string, { title: string; content: React.ReactNode }> =
     content: (
       <div className="space-y-6">
         <p className="text-white/70 leading-relaxed">
-          Help us make Calgary Connect even better! We are always looking for passionate volunteers.
+          Help us make Calgary Konnect even better! We are always looking for passionate volunteers.
         </p>
         <h3 className="text-xl font-bold text-white">Volunteer Opportunities</h3>
         <div className="space-y-4">
@@ -294,7 +316,7 @@ const pageContent: Record<string, { title: string; content: React.ReactNode }> =
           </div>
           <div className="p-5 rounded-xl bg-white/[0.03] border border-white/[0.08]">
             <h4 className="font-bold text-white mb-2">Community Outreach</h4>
-            <p className="text-white/60">Spread the word about Calgary Connect in your network.</p>
+            <p className="text-white/60">Spread the word about Calgary Konnect in your network.</p>
           </div>
         </div>
         <h3 className="text-xl font-bold text-white">Get Involved</h3>
@@ -309,7 +331,7 @@ const pageContent: Record<string, { title: string; content: React.ReactNode }> =
     content: (
       <div className="space-y-6">
         <p className="text-white/70 leading-relaxed">
-          Calgary Connect welcomes partnerships with organizations that share our mission of helping Calgarians access vital services and resources.
+          Calgary Konnect welcomes partnerships with organizations that share our mission of helping Calgarians access vital services and resources.
         </p>
         <h3 className="text-xl font-bold text-white">Partnership Opportunities</h3>
         <ul className="space-y-3 text-white/60">
@@ -331,7 +353,7 @@ const pageContent: Record<string, { title: string; content: React.ReactNode }> =
           </li>
         </ul>
         <div className="p-6 rounded-2xl bg-gradient-to-br from-sky-500/10 to-cyan-500/5 border border-sky-500/20 mt-6">
-          <h3 className="text-xl font-bold text-white mb-3">Contact WilGlobo Inc</h3>
+          <h3 className="text-xl font-bold text-white mb-3">Partner With Calgary Konnect</h3>
           <p className="text-white/60 mb-4">
             For partnership inquiries and business opportunities, reach out to our team.
           </p>
@@ -356,10 +378,10 @@ const pageContent: Record<string, { title: string; content: React.ReactNode }> =
         <div className="p-6 rounded-2xl bg-gradient-to-br from-sky-500/10 to-cyan-500/5 border border-sky-500/20">
           <div className="flex items-center gap-3 mb-4">
             <Building2 className="w-6 h-6 text-sky-400" />
-            <h3 className="text-xl font-bold text-white">WilGlobo Inc</h3>
+            <h3 className="text-xl font-bold text-white">Calgary Konnect</h3>
           </div>
           <p className="text-white/60 mb-6">
-            Calgary Connect is proudly developed and maintained by WilGlobo Inc, a technology company focused on civic innovation and community empowerment.
+            Calgary Konnect is built and maintained right here in Calgary, with a focus on civic innovation and helping every resident find the support they need.
           </p>
           <div className="space-y-4">
             <a 
@@ -453,7 +475,7 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
   ];
 
   const resourceLinks = [
-    { label: "About Calgary Connect", key: "about" },
+    { label: "About Calgary Konnect", key: "about" },
     { label: "How We Verify Resources", key: "verification" },
     { label: "Community Guidelines", key: "guidelines" },
   ];
@@ -530,7 +552,7 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
                   <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden bg-gradient-to-br from-[#0c1829] to-[#050B14] p-1.5 border border-white/[0.08] shadow-lg shadow-sky-500/5">
                     <Image
                       src="/calgary-connect-logo.png"
-                      alt="Calgary Connect"
+                      alt="Calgary Konnect"
                       fill
                       className="object-contain p-1.5"
                     />
@@ -617,7 +639,7 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
               </div>
               <div className="text-sm text-white/60 leading-relaxed min-w-0">
                 <strong className="text-amber-400 block mb-1">Important Disclaimer</strong>
-                Calgary Connect is an independent platform developed by WilGlobo Inc and is not affiliated with, endorsed by, or connected to the City of Calgary, 
+                Calgary Konnect is an independent platform and is not affiliated with, endorsed by, or connected to the City of Calgary, 
                 the Government of Alberta, or any official government body. Information provided is for general reference only. 
                 Always verify details directly with service providers. For emergencies, call 911.
               </div>
@@ -645,7 +667,7 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
             </div>
 
             <p className="text-xs text-white/40 font-medium">
-              &copy; {currentYear} <span className="text-white/60">WilGlobo Inc.</span> All rights reserved.
+              &copy; {currentYear} <span className="text-white/60">Calgary Konnect.</span> All rights reserved.
             </p>
           </div>
         </div>
