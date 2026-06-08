@@ -35,7 +35,7 @@ export default function MainApp() {
   const navItems = [
     { id: "home" as const, icon: Home, label: "Home", shortLabel: "Home", highlight: false },
     { id: "explore" as const, icon: Compass, label: "Explore", shortLabel: "Explore", highlight: false },
-    { id: "ai" as const, icon: MessageCircle, label: "White Hat Guide", shortLabel: "Guide", highlight: true },
+    { id: "ai" as const, icon: MessageCircle, label: "iKonnect Guide", shortLabel: "Guide", highlight: true },
     { id: "shortlist" as const, icon: Heart, label: "Saved", shortLabel: "Saved", highlight: false },
     { id: "profile" as const, icon: User, label: "Profile", shortLabel: "Profile", highlight: false },
   ];
