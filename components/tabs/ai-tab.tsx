@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useAppStore } from "@/lib/store";
 import { resources, categoryLabels } from "@/lib/data";
 import { 
-  Send, Sparkles, User, ArrowRight, Phone, ExternalLink, 
+  Send, User, ArrowRight, Phone, ExternalLink, 
   Home, Briefcase, Heart, Users, Scale, Bus, 
   CloudSnow, Calendar, TrendingUp
 } from "lucide-react";
@@ -269,7 +269,7 @@ export default function AITab() {
                         }`}
                       >
                         <div
-                          className={`flex h-10 w-10 md:h-11 md:w-11 flex-shrink-0 items-center justify-center rounded-xl md:rounded-2xl ${
+                          className={`flex h-10 w-10 md:h-11 md:w-11 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl md:rounded-2xl ${
                             message.role === "user"
                               ? "bg-[#3B82F6]"
                               : "bg-gradient-to-br from-[#3B82F6] to-[#1d4ed8]"
@@ -278,7 +278,13 @@ export default function AITab() {
                           {message.role === "user" ? (
                             <User className="h-5 w-5 text-white" />
                           ) : (
-                            <Sparkles className="h-5 w-5 text-white" />
+                            <Image
+                              src="/ikonnect-guide-avatar.png"
+                              alt="iKonnect Guide"
+                              width={44}
+                              height={44}
+                              className="h-full w-full object-cover"
+                            />
                           )}
                         </div>
                         <div className={`flex-1 min-w-0 ${message.role === "user" ? "flex justify-end" : ""}`}>
@@ -322,8 +328,14 @@ export default function AITab() {
                       animate={{ opacity: 1, y: 0 }}
                       className="flex gap-3 md:gap-4"
                     >
-                      <div className="flex h-10 w-10 md:h-11 md:w-11 flex-shrink-0 items-center justify-center rounded-xl md:rounded-2xl bg-gradient-to-br from-[#3B82F6] to-[#1d4ed8]">
-                        <Sparkles className="h-5 w-5 text-white" />
+                      <div className="flex h-10 w-10 md:h-11 md:w-11 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl md:rounded-2xl bg-gradient-to-br from-[#3B82F6] to-[#1d4ed8]">
+                        <Image
+                          src="/ikonnect-guide-avatar.png"
+                          alt="iKonnect Guide"
+                          width={44}
+                          height={44}
+                          className="h-full w-full object-cover"
+                        />
                       </div>
                       <div className="glass-card rounded-xl md:rounded-2xl px-4 md:px-5 py-3 md:py-4">
                         <div className="flex gap-1.5">
