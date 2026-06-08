@@ -1,17 +1,24 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, Sparkles, Search, Menu, X } from "lucide-react";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import {
+  ArrowRight, Sparkles, Search, Menu, X, ChevronDown,
+  Home, Briefcase, Heart, Users, AlertTriangle, Building2, Baby,
+  GraduationCap, Bus, Scale, HandHeart, Accessibility, Utensils, Brain,
+} from "lucide-react";
 import Image from "next/image";
 import { useAppStore } from "@/lib/store";
 import { useRef, useState, useEffect } from "react";
 import Footer from "@/components/footer";
+import type { ResourceCategory } from "@/lib/types";
 
 export default function LandingPage() {
-  const { setCurrentPage, setActiveTab, setHasOnboarded, setSearchQuery } = useAppStore();
+  const { setCurrentPage, setActiveTab, setHasOnboarded, setSearchQuery, setActiveCategory } = useAppStore();
   const heroRef = useRef<HTMLDivElement>(null);
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const [mobileGroup, setMobileGroup] = useState<string | null>(null);
   const [query, setQuery] = useState("");
 
   const { scrollYProgress } = useScroll({
@@ -36,6 +43,18 @@ export default function LandingPage() {
     setActiveTab(tab);
   };
 
+  // Open Explore pre-filtered to a specific category
+  const openCategory = (category: ResourceCategory) => {
+    setHasOnboarded(true);
+    setCurrentPage("main");
+    setActiveCategory(category);
+    setSearchQuery("");
+    setActiveTab("explore");
+    setOpenMenu(null);
+    setMobileMenuOpen(false);
+    setMobileGroup(null);
+  };
+
   const handleExplore = () => enterApp("explore");
   const handleAskAI = () => enterApp("ai");
 
@@ -50,11 +69,41 @@ export default function LandingPage() {
     }
   };
 
-  const navLinks = [
-    { label: "Housing", tab: "explore" as const },
-    { label: "Jobs", tab: "explore" as const },
-    { label: "Healthcare", tab: "explore" as const },
-    { label: "AI Guide", tab: "ai" as const },
+  // Professional grouped mega-menu — surfaces all searchable categories
+  const menuGroups: {
+    label: string;
+    items: { label: string; category: ResourceCategory; icon: React.ElementType; desc: string }[];
+  }[] = [
+    {
+      label: "Essentials",
+      items: [
+        { label: "Housing & Rent", category: "housing", icon: Home, desc: "Rentals, subsidies & tenant help" },
+        { label: "Jobs & Career", category: "jobs", icon: Briefcase, desc: "Hiring, resumes & training" },
+        { label: "Healthcare", category: "healthcare", icon: Heart, desc: "Clinics, doctors & coverage" },
+        { label: "Food Support", category: "food", icon: Utensils, desc: "Food banks & free meals" },
+        { label: "Emergency Help", category: "emergency", icon: AlertTriangle, desc: "Urgent crisis support" },
+      ],
+    },
+    {
+      label: "People & Support",
+      items: [
+        { label: "Newcomer Services", category: "newcomer", icon: Users, desc: "Settlement & language help" },
+        { label: "Family & Childcare", category: "family", icon: Baby, desc: "Childcare & parenting" },
+        { label: "Senior Services", category: "senior", icon: Users, desc: "Programs for older adults" },
+        { label: "Mental Health", category: "mental-health", icon: Brain, desc: "Counselling & crisis lines" },
+        { label: "Disability Support", category: "disability", icon: Accessibility, desc: "Accessible services" },
+      ],
+    },
+    {
+      label: "Community & Life",
+      items: [
+        { label: "Education", category: "education", icon: GraduationCap, desc: "Schools, classes & upgrading" },
+        { label: "Legal Help", category: "legal", icon: Scale, desc: "Free legal clinics & rights" },
+        { label: "Transit", category: "transit", icon: Bus, desc: "Getting around Calgary" },
+        { label: "Small Business", category: "business", icon: Building2, desc: "Start & grow a business" },
+        { label: "Volunteering", category: "volunteering", icon: HandHeart, desc: "Give back locally" },
+      ],
+    },
   ];
 
   // Immersive pathways — solutions first, not organizations
@@ -118,17 +167,67 @@ export default function LandingPage() {
               </span>
             </button>
 
-            {/* Desktop nav */}
-            <nav className="hidden md:flex items-center gap-1">
-              {navLinks.map((link) => (
-                <button
-                  key={link.label}
-                  onClick={() => enterApp(link.tab)}
-                  className="px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/[0.06] transition-all"
+            {/* Desktop nav — professional grouped dropdowns */}
+            <nav className="hidden md:flex items-center gap-1" onMouseLeave={() => setOpenMenu(null)}>
+              {menuGroups.map((group) => (
+                <div
+                  key={group.label}
+                  className="relative"
+                  onMouseEnter={() => setOpenMenu(group.label)}
                 >
-                  {link.label}
-                </button>
+                  <button
+                    onClick={() => setOpenMenu((v) => (v === group.label ? null : group.label))}
+                    className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                      openMenu === group.label
+                        ? "text-white bg-white/[0.08]"
+                        : "text-white/60 hover:text-white hover:bg-white/[0.06]"
+                    }`}
+                  >
+                    {group.label}
+                    <ChevronDown
+                      className={`w-3.5 h-3.5 transition-transform ${openMenu === group.label ? "rotate-180" : ""}`}
+                    />
+                  </button>
+
+                  <AnimatePresence>
+                    {openMenu === group.label && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 8, scale: 0.97 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 8, scale: 0.97 }}
+                        transition={{ duration: 0.15 }}
+                        className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-[340px]"
+                      >
+                        <div className="bg-[#0a1628]/95 backdrop-blur-2xl border border-white/[0.08] rounded-2xl shadow-2xl shadow-black/40 p-2 overflow-hidden">
+                          {group.items.map((item) => (
+                            <button
+                              key={item.category}
+                              onClick={() => openCategory(item.category)}
+                              className="w-full flex items-start gap-3 p-3 rounded-xl text-left hover:bg-white/[0.05] transition-colors group/item"
+                            >
+                              <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-[#38BDF8]/10 border border-[#38BDF8]/15 flex items-center justify-center group-hover/item:bg-[#38BDF8]/20 transition-colors">
+                                <item.icon className="w-4 h-4 text-[#38BDF8]" />
+                              </div>
+                              <div className="min-w-0">
+                                <p className="text-sm font-semibold text-white leading-tight">{item.label}</p>
+                                <p className="text-xs text-white/45 mt-0.5 leading-snug">{item.desc}</p>
+                              </div>
+                            </button>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               ))}
+
+              <button
+                onClick={handleAskAI}
+                className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/[0.06] transition-all"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-[#FBBF24]" />
+                AI Guide
+              </button>
             </nav>
 
             {/* CTA + mobile toggle */}
@@ -151,39 +250,80 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* Mobile dropdown */}
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="md:hidden bg-[#07111F]/95 backdrop-blur-2xl border-t border-white/[0.06] px-5 py-4"
-          >
-            <nav className="flex flex-col gap-1">
-              {navLinks.map((link) => (
+        {/* Mobile dropdown — grouped accordions */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden bg-[#07111F]/97 backdrop-blur-2xl border-t border-white/[0.06] overflow-hidden"
+            >
+              <nav className="flex flex-col gap-1 px-4 py-4 max-h-[70vh] overflow-y-auto">
+                {menuGroups.map((group) => (
+                  <div key={group.label} className="border-b border-white/[0.05] last:border-0 pb-1">
+                    <button
+                      onClick={() => setMobileGroup((v) => (v === group.label ? null : group.label))}
+                      className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-base font-semibold text-white/85 hover:bg-white/[0.05] transition-all"
+                    >
+                      {group.label}
+                      <ChevronDown
+                        className={`w-4 h-4 transition-transform ${mobileGroup === group.label ? "rotate-180" : ""}`}
+                      />
+                    </button>
+                    <AnimatePresence>
+                      {mobileGroup === group.label && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          className="overflow-hidden"
+                        >
+                          <div className="flex flex-col gap-0.5 pb-2">
+                            {group.items.map((item) => (
+                              <button
+                                key={item.category}
+                                onClick={() => openCategory(item.category)}
+                                className="w-full flex items-center gap-3 pl-4 pr-4 py-2.5 rounded-xl text-left hover:bg-white/[0.05] transition-colors"
+                              >
+                                <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-[#38BDF8]/10 border border-[#38BDF8]/15 flex items-center justify-center">
+                                  <item.icon className="w-4 h-4 text-[#38BDF8]" />
+                                </div>
+                                <span className="text-sm font-medium text-white/75">{item.label}</span>
+                              </button>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ))}
+
                 <button
-                  key={link.label}
                   onClick={() => {
                     setMobileMenuOpen(false);
-                    enterApp(link.tab);
+                    handleAskAI();
                   }}
-                  className="w-full text-left px-4 py-3 rounded-xl text-base font-medium text-white/70 hover:text-white hover:bg-white/[0.06] transition-all"
+                  className="w-full flex items-center gap-2 px-4 py-3 mt-1 rounded-xl text-base font-medium text-white/75 hover:bg-white/[0.05] transition-all"
                 >
-                  {link.label}
+                  <Sparkles className="w-4 h-4 text-[#FBBF24]" />
+                  AI Guide
                 </button>
-              ))}
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  enterApp("home");
-                }}
-                className="mt-2 btn-primary px-5 py-3 rounded-xl text-base font-semibold flex items-center justify-center gap-2"
-              >
-                Open App
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </nav>
-          </motion.div>
-        )}
+
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    enterApp("home");
+                  }}
+                  className="mt-2 btn-primary px-5 py-3 rounded-xl text-base font-semibold flex items-center justify-center gap-2"
+                >
+                  Open App
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </nav>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </header>
 
       {/* ========== HERO — IMMERSIVE CALGARY ========== */}

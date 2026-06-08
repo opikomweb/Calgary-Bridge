@@ -61,11 +61,6 @@
 
 * {
   box-sizing: border-box;
-  margin: 0;
-}
-
-*:where(:not(html, head, script, style, [hidden])) {
-  /* Allow Tailwind padding utilities to work */
 }
 
 html {
