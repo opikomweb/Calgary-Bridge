@@ -106,7 +106,7 @@ export default function LandingPage() {
               <div className="relative w-10 h-10 md:w-11 md:h-11 rounded-xl overflow-hidden bg-gradient-to-br from-[#0c1829] to-[#071119] p-0.5 border border-white/10">
                 <Image
                   src="/calgary-connect-logo.png"
-                  alt="Calgary Connect logo"
+                  alt="Calgary Konnect logo"
                   fill
                   className="object-contain p-0.5"
                   priority
@@ -114,7 +114,7 @@ export default function LandingPage() {
               </div>
               <span className="text-base md:text-lg font-bold tracking-tight">
                 <span className="text-white">Calgary </span>
-                <span className="text-[#38BDF8]">Connect</span>
+                <span className="text-[#38BDF8]">Konnect</span>
               </span>
             </button>
 

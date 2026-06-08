@@ -47,7 +47,7 @@ export default function MainApp() {
             <div className="relative w-[200px] h-[200px] flex-shrink-0 rounded-3xl overflow-hidden bg-gradient-to-br from-[#0c1829]/80 to-[#050B14]/90 p-3 border border-white/[0.08] shadow-2xl shadow-sky-500/10 backdrop-blur-xl">
               <Image
                 src="/calgary-connect-logo.png"
-                alt="Calgary Connect"
+                alt="Calgary Konnect"
                 fill
                 className="object-contain p-3"
                 priority
@@ -105,7 +105,7 @@ export default function MainApp() {
             <div className="relative w-10 h-10 rounded-lg overflow-hidden bg-gradient-to-br from-[#0c1829] to-[#071119] p-0.5 border border-white/10">
               <Image
                 src="/calgary-connect-logo.png"
-                alt="Calgary Connect"
+                alt="Calgary Konnect"
                 fill
                 className="object-contain p-0.5"
                 priority
@@ -113,7 +113,7 @@ export default function MainApp() {
             </div>
             <div>
               <span className="text-base font-bold text-white">Calgary </span>
-              <span className="text-base font-bold text-[#38BDF8]">Connect</span>
+              <span className="text-base font-bold text-[#38BDF8]">Konnect</span>
             </div>
           </div>
           
