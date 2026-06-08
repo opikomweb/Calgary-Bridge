@@ -191,46 +191,25 @@ export default function LandingPage() {
         ref={heroRef}
         className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-16 md:pt-20"
       >
-        {/* Authentic Calgary skyline background */}
+        {/* Authentic Calgary daytime skyline background */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {/* Base sky gradient */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0a1628] via-[#07111F] to-[#0d1a2d]" />
+          {/* Base sky gradient (matches the photo's blue sky) */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#1b3a5c] via-[#0f2742] to-[#07111F]" />
 
-          {/* Real Calgary Tower / skyline photo */}
+          {/* Real bright daytime Calgary skyline photo */}
           <Image
-            src="/calgary-skyline-bg.png"
-            alt="Calgary skyline at night featuring the Calgary Tower"
+            src="/calgary-skyline-day.png"
+            alt="Aerial view of downtown Calgary skyline over the Bow River on a clear day"
             fill
             priority
-            className="object-cover object-bottom opacity-60"
+            className="object-cover object-center"
           />
 
-          {/* Readability overlays */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#07111F] via-[#07111F]/55 to-[#07111F]/30" />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#07111F]/60 via-transparent to-[#07111F]" />
-
-          {/* Aurora / northern lights glow */}
-          <motion.div
-            animate={{ opacity: [0.15, 0.28, 0.15], scale: [1, 1.1, 1] }}
-            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-[8%] left-1/4 w-[70%] h-[40%] bg-gradient-to-r from-[#38BDF8]/20 via-[#06b6d4]/15 to-transparent rounded-full blur-[120px] -rotate-12"
-          />
-
-          {/* Warm Calgary Tower beacon glow */}
-          <motion.div
-            animate={{ opacity: [0.2, 0.4, 0.2] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-[28%] left-1/2 -translate-x-1/2 w-40 h-40 bg-[#FBBF24]/25 rounded-full blur-[80px]"
-          />
-
-          {/* River shimmer at bottom */}
-          <div className="absolute bottom-0 left-0 right-0 h-10 overflow-hidden">
-            <motion.div
-              animate={{ x: ["-100%", "100%"] }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-[#38BDF8]/30 to-transparent"
-            />
-          </div>
+          {/* Readability scrims — keep the photo bright while text stays legible */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#07111F]/35 via-[#07111F]/30 to-[#07111F]/75" />
+          <div className="absolute inset-0 bg-[#07111F]/25" />
+          {/* Fade base into the dark page below */}
+          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-[#07111F]" />
         </div>
 
         {/* Hero content */}
