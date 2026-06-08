@@ -10,6 +10,7 @@ import {
   Scale, HandHeart, Accessibility, Utensils, Brain, Check
 } from "lucide-react";
 import ResourceCard from "../resource-card";
+import LiveResults from "../live-results";
 import { filterResources } from "@/lib/search";
 import type { ResourceCategory } from "@/lib/types";
 
@@ -302,6 +303,15 @@ export default function ExploreTab() {
               <p className="text-xl md:text-2xl font-semibold text-white/50 mb-3">No resources found</p>
               <p className="text-base text-white/35 leading-relaxed">Try adjusting your search or filters</p>
             </motion.div>
+          )}
+
+          {/* ===== LIVE GOOGLE MAPS RESULTS (curated first, live below) ===== */}
+          {(activeCategory !== "all" || searchQuery.trim().length >= 2) && (
+            <LiveResults
+              category={activeCategory}
+              query={searchQuery}
+              categoryLabel={currentCategoryInfo.label}
+            />
           )}
         </div>
       </section>
