@@ -92,96 +92,103 @@ export function CalgaryTowerSmall({ className = "" }: { className?: string }) {
   );
 }
 
-// Cartoon Calgary CTrain that runs back and forth along the bottom track
+// Long Calgary CTrain that glides along a gently curved rail line.
+// Uses native SVG <animateMotion> (SMIL) so it stays lightweight — no JS
+// animation loop. The path enters from slightly up on the left, dips down
+// through the footer, then exits at an upward angle on the right, with
+// rotate="auto" tilting the train naturally into the curve.
 function CalgaryCTrain() {
-  return (
-    <div className="absolute bottom-6 left-0 right-0 h-20 pointer-events-none overflow-hidden">
-      {/* Subtle rail line */}
-      <div className="absolute bottom-2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
-      <div className="absolute bottom-[3px] left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#38BDF8]/20 to-transparent" />
+  // Smooth rail path across the bottom: up-left → down (footer) → up-right.
+  const RAIL = "M -260 60 C 170 28 440 150 760 138 S 1330 46 1720 8";
 
-      {/* The train travels left <-> right forever, flipping direction at each end */}
-      <motion.div
-        className="absolute bottom-[6px]"
-        initial={{ left: "-18%" }}
-        animate={{ left: ["-18%", "108%", "-18%"] }}
-        transition={{
-          duration: 26,
-          times: [0, 0.5, 1],
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
+  return (
+    <div className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none overflow-hidden">
+      <svg
+        className="absolute inset-0 w-full h-full"
+        viewBox="0 0 1440 180"
+        preserveAspectRatio="xMidYMax slice"
+        fill="none"
+        aria-hidden="true"
       >
-        {/* Flip the sprite for each travel direction */}
-        <motion.div
-          animate={{ scaleX: [1, 1, -1, -1, 1] }}
-          transition={{
-            duration: 26,
-            times: [0, 0.49, 0.51, 0.99, 1],
-            repeat: Infinity,
-            ease: "linear",
-          }}
-        >
-          <CTrainSprite />
-        </motion.div>
-      </motion.div>
+        <defs>
+          <linearGradient id="railGrad" x1="0" y1="0" x2="1440" y2="0" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stopColor="#38BDF8" stopOpacity="0" />
+            <stop offset="0.5" stopColor="#38BDF8" stopOpacity="0.35" />
+            <stop offset="1" stopColor="#38BDF8" stopOpacity="0" />
+          </linearGradient>
+          <path id="ctrain-rail" d={RAIL} />
+        </defs>
+
+        {/* Visible rail line (soft glow + crisp line) */}
+        <use href="#ctrain-rail" stroke="url(#railGrad)" strokeWidth="6" strokeLinecap="round" opacity="0.4" />
+        <use href="#ctrain-rail" stroke="url(#railGrad)" strokeWidth="1.5" strokeLinecap="round" />
+
+        {/* The long train, gliding along the rail */}
+        <g opacity="0.55" className="drop-shadow-[0_0_10px_rgba(56,189,248,0.25)]">
+          <CTrainCars />
+          <animateMotion dur="24s" repeatCount="indefinite" rotate="auto" calcMode="linear">
+            <mpath href="#ctrain-rail" />
+          </animateMotion>
+        </g>
+      </svg>
     </div>
   );
 }
 
-// The Calgary CTrain sprite — red/silver Siemens light-rail car
-function CTrainSprite() {
+// A single CTrain car drawn around a center x; lead=true adds the cab nose.
+function CTrainCar({ cx, lead = false }: { cx: number; lead?: boolean }) {
+  const w = 104;
+  const x = cx - w / 2;
   return (
-    <svg
-      width="150"
-      height="46"
-      viewBox="0 0 150 46"
-      fill="none"
-      className="opacity-50 drop-shadow-[0_0_12px_rgba(56,189,248,0.25)]"
-      aria-hidden="true"
-    >
-      {/* Shadow under the train */}
-      <ellipse cx="75" cy="44" rx="62" ry="2.5" fill="#000000" opacity="0.35" />
-
-      {/* Main body */}
-      <rect x="6" y="8" width="138" height="28" rx="9" fill="#C8CDD4" />
-      {/* Red CTrain livery stripe */}
-      <rect x="6" y="8" width="138" height="9" rx="9" fill="#D52B1E" />
-      <rect x="6" y="30" width="138" height="6" rx="6" fill="#A2161C" opacity="0.55" />
-
-      {/* Front cab nose accent */}
-      <path d="M138 8 q6 0 6 9 v10 q0 9 -6 9 z" fill="#E63427" />
-
+    <g>
+      {/* Body */}
+      <rect x={x} y={-15} width={w} height={30} rx={9} fill="#C8CDD4" />
+      {/* Red CTrain livery */}
+      <rect x={x} y={-15} width={w} height={9} rx={6} fill="#D52B1E" />
+      <rect x={x} y={9} width={w} height={6} rx={5} fill="#A2161C" opacity="0.55" />
       {/* Windows */}
       <g fill="#0B1E2D">
-        <rect x="14" y="19" width="18" height="11" rx="2.5" />
-        <rect x="37" y="19" width="18" height="11" rx="2.5" />
-        <rect x="60" y="19" width="18" height="11" rx="2.5" />
-        <rect x="83" y="19" width="18" height="11" rx="2.5" />
-        <rect x="106" y="19" width="18" height="11" rx="2.5" />
-        {/* Windshield */}
-        <path d="M129 19 h7 q4 0 4 5 v1 q0 5 -4 5 h-7 z" />
+        <rect x={x + 9} y={-4} width={18} height={11} rx={2.5} />
+        <rect x={x + 32} y={-4} width={18} height={11} rx={2.5} />
+        <rect x={x + 55} y={-4} width={18} height={11} rx={2.5} />
+        <rect x={x + 78} y={-4} width={16} height={11} rx={2.5} />
       </g>
       {/* Window glow */}
       <g fill="#7FD8FF" opacity="0.5">
-        <rect x="14" y="19" width="18" height="3.5" rx="1.5" />
-        <rect x="37" y="19" width="18" height="3.5" rx="1.5" />
-        <rect x="60" y="19" width="18" height="3.5" rx="1.5" />
-        <rect x="83" y="19" width="18" height="3.5" rx="1.5" />
-        <rect x="106" y="19" width="18" height="3.5" rx="1.5" />
+        <rect x={x + 9} y={-4} width={18} height={3.5} rx={1.5} />
+        <rect x={x + 32} y={-4} width={18} height={3.5} rx={1.5} />
+        <rect x={x + 55} y={-4} width={18} height={3.5} rx={1.5} />
+        <rect x={x + 78} y={-4} width={16} height={3.5} rx={1.5} />
       </g>
-
-      {/* Headlight */}
-      <circle cx="140" cy="31" r="2.2" fill="#FFE9A8" />
-
+      {/* Cab nose + headlight on the lead car (front faces right) */}
+      {lead && (
+        <>
+          <path d={`M${x + w} -15 q7 0 7 9 v12 q0 9 -7 9 z`} fill="#E63427" />
+          <circle cx={x + w + 2} cy={8} r={2.2} fill="#FFE9A8" />
+        </>
+      )}
       {/* Wheels */}
-      <circle cx="34" cy="38" r="5" fill="#1A2530" />
-      <circle cx="34" cy="38" r="2" fill="#4A5563" />
-      <circle cx="116" cy="38" r="5" fill="#1A2530" />
-      <circle cx="116" cy="38" r="2" fill="#4A5563" />
+      <circle cx={cx - 28} cy={17} r={4.5} fill="#1A2530" />
+      <circle cx={cx - 28} cy={17} r={1.8} fill="#4A5563" />
+      <circle cx={cx + 28} cy={17} r={4.5} fill="#1A2530" />
+      <circle cx={cx + 28} cy={17} r={1.8} fill="#4A5563" />
+    </g>
+  );
+}
 
-      {/* Pantograph on roof */}
-      <path d="M70 8 l8 -6 M78 2 l8 6" stroke="#6B7280" strokeWidth="1.5" />
-    </svg>
+// Three coupled cars centered at origin (so animateMotion glides it cleanly).
+function CTrainCars() {
+  return (
+    <g>
+      {/* Soft shadow under the whole train */}
+      <ellipse cx={0} cy={21} rx={185} ry={3} fill="#000000" opacity="0.3" />
+      {/* Pantograph */}
+      <path d="M-60 -15 l8 -6 M-52 -21 l8 6" stroke="#6B7280" strokeWidth="1.5" />
+      <path d="M60 -15 l8 -6 M68 -21 l8 6" stroke="#6B7280" strokeWidth="1.5" />
+      {/* Cars: rear, middle, lead(front) */}
+      <CTrainCar cx={-118} />
+      <CTrainCar cx={0} />
+      <CTrainCar cx={118} lead />
+    </g>
   );
 }
