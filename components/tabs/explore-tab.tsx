@@ -10,6 +10,7 @@ import {
   Scale, HandHeart, Accessibility, Utensils, Brain, Check
 } from "lucide-react";
 import ResourceCard from "../resource-card";
+import { filterResources } from "@/lib/search";
 import type { ResourceCategory } from "@/lib/types";
 
 const allCategories: { id: ResourceCategory | "all"; label: string; icon: React.ElementType }[] = [
@@ -83,14 +84,7 @@ export default function ExploreTab() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const filteredResources = resources.filter((resource) => {
-    const matchesCategory = activeCategory === "all" || resource.category.includes(activeCategory as ResourceCategory);
-    const matchesSearch =
-      searchQuery === "" ||
-      resource.title[activeLanguage]?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      resource.description[activeLanguage]?.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
+  const filteredResources = filterResources(resources, activeCategory, searchQuery, activeLanguage);
 
   const currentCategoryInfo = allCategories.find(c => c.id === activeCategory) || allCategories[0];
 

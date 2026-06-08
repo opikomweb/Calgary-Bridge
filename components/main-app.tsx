@@ -13,12 +13,16 @@ import ShortlistTab from "./tabs/shortlist-tab";
 import ProfileTab from "./tabs/profile-tab";
 import EmergencyHub from "./emergency-hub";
 import RentShield from "./rentshield";
+import Footer from "./footer";
+import BusinessSubmission from "./business-submission";
 import { CalgaryAnimatedBackground } from "./calgary-background";
 
 export default function MainApp() {
   const { activeTab, setActiveTab, activeLanguage, showEmergency, setShowEmergency } = useAppStore();
   const [showRentShield, setShowRentShield] = React.useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  const [showBusinessModal, setShowBusinessModal] = React.useState(false);
+  const [businessModalMode, setBusinessModalMode] = React.useState<"submit" | "featured">("submit");
 
   const t = (key: string) => translations[key]?.[activeLanguage] || translations[key]?.en || key;
 
@@ -212,6 +216,21 @@ export default function MainApp() {
             {activeTab === "profile" && <ProfileTab />}
           </motion.div>
         </AnimatePresence>
+
+        {/* Global Footer — About, Privacy, Legal (on every tab) */}
+        <Footer
+          onOpenSubmitBusiness={() => {
+            setBusinessModalMode("submit");
+            setShowBusinessModal(true);
+          }}
+          onOpenGetFeatured={() => {
+            setBusinessModalMode("featured");
+            setShowBusinessModal(true);
+          }}
+        />
+
+        {/* Spacer so mobile bottom nav never overlaps the footer */}
+        <div className="h-20 lg:hidden" />
       </main>
 
       {/* Mobile Bottom Navigation */}
@@ -245,6 +264,13 @@ export default function MainApp() {
       <AnimatePresence>
         {showRentShield && <RentShield onClose={() => setShowRentShield(false)} />}
       </AnimatePresence>
+
+      {/* Business Submission Modal */}
+      <BusinessSubmission
+        isOpen={showBusinessModal}
+        onClose={() => setShowBusinessModal(false)}
+        mode={businessModalMode}
+      />
     </div>
   );
 }
