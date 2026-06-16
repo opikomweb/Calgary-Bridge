@@ -3,9 +3,11 @@
 import React from "react";
 import { useAppStore } from "@/lib/store";
 import { translations } from "@/lib/data";
-import { Home, Compass, Smile, Heart, User, AlertTriangle, Shield, Menu, X, HandHeart } from "lucide-react";
+import Image from "next/image";
+import { AlertTriangle, Shield, Menu, X } from "lucide-react";
 import { ThemeToggle } from "./theme-toggle";
-import { RotatingLogo } from "./rotating-logo";
+import { CalgaryConnectLogo } from "./calgary-connect-logo";
+import { NAV_ITEMS } from "./nav-items";
 import { motion, AnimatePresence } from "framer-motion";
 import HomeTab from "./tabs/home-tab";
 import ExploreTab from "./tabs/explore-tab";
@@ -42,14 +44,7 @@ export default function MainApp() {
 
   const t = (key: string) => translations[key]?.[activeLanguage] || translations[key]?.en || key;
 
-  const navItems = [
-    { id: "home" as const, icon: Home, label: "Home", shortLabel: "Home", highlight: false },
-    { id: "explore" as const, icon: Compass, label: "Explore", shortLabel: "Explore", highlight: false },
-    { id: "ai" as const, icon: Smile, label: "iKonnect Guide", shortLabel: "Guide", highlight: true },
-    { id: "do-good" as const, icon: HandHeart, label: "Do Good", shortLabel: "Do Good", highlight: false },
-    { id: "shortlist" as const, icon: Heart, label: "Saved", shortLabel: "Saved", highlight: false },
-    { id: "profile" as const, icon: User, label: "Profile", shortLabel: "Profile", highlight: false },
-  ];
+  const navItems = NAV_ITEMS;
 
   return (
     <div className="min-h-screen bg-background relative">
@@ -58,58 +53,68 @@ export default function MainApp() {
 
       {/* Desktop Sidebar */}
       <aside className="hidden lg:flex lg:w-[340px] lg:flex-col lg:fixed lg:inset-y-0 lg:z-50">
-        <div className="flex grow flex-col overflow-y-auto border-r border-foreground/[0.06] bg-background/70 backdrop-blur-3xl">
-          {/* Logo Section - Compact transparent brand lockup (no badge, no extra text) */}
-          <div className="px-6 pt-6 pb-4 flex justify-center">
+        <div className="flex grow flex-col overflow-y-auto border-r border-foreground/[0.08] bg-background shadow-sm">
+          {/* Logo Section */}
+          <div className="px-5 pt-5 pb-4 border-b border-foreground/[0.06]">
             <button
               onClick={goToLanding}
               aria-label="Go to Calgary Connect home page"
-              className="group relative w-full max-w-[150px] aspect-square flex-shrink-0 transition-transform duration-300 ease-out hover:scale-[1.03] active:scale-95 cursor-pointer"
+              className="group w-full transition-opacity hover:opacity-80 active:opacity-60 cursor-pointer"
             >
-              <RotatingLogo imgPadding="p-0" priority />
+              <CalgaryConnectLogo size="md" />
             </button>
           </div>
 
-          {/* Desktop Navigation - Generous Spacing */}
-          <nav className="flex flex-1 flex-col px-8">
-            <ul role="list" className="flex flex-1 flex-col gap-y-3">
+          {/* Desktop Navigation */}
+          <nav className="flex flex-1 flex-col px-4 pt-3">
+            <ul role="list" className="flex flex-1 flex-col gap-y-1">
               {navItems.map((item) => (
                 <li key={item.id}>
                   <button
                     onClick={() => setActiveTab(item.id)}
-                    className={`group flex w-full items-center gap-x-5 rounded-2xl px-6 py-4 text-lg font-bold tracking-tight transition-all duration-300 ${
+                    className={`group flex w-full items-center gap-x-3 rounded-xl px-4 py-3 text-base font-semibold tracking-tight transition-all duration-200 ${
                       activeTab === item.id
                         ? item.highlight
-                          ? "bg-gradient-to-r from-[#1D4ED8] to-[#0A2540] text-white shadow-2xl shadow-blue-900/40"
-                          : "bg-[#1D4ED8]/[0.12] text-foreground border border-[#1D4ED8]/40 shadow-lg shadow-blue-900/10"
-                        : "text-foreground/75 hover:bg-foreground/[0.06] hover:text-foreground"
+                          ? "bg-[#E1251B] text-white shadow-lg shadow-red-700/25"
+                          : "bg-[#0b2239] dark:bg-[#1D4ED8] text-white shadow-md shadow-blue-900/20"
+                        : "text-foreground/70 hover:bg-foreground/[0.06] hover:text-foreground"
                     }`}
                   >
-                    <item.icon className={`h-6 w-6 shrink-0 ${activeTab === item.id ? (item.highlight ? "" : "text-[#1D4ED8]") : "opacity-70"}`} />
-                    {item.label}
+                    {item.icon ? (
+                      <item.icon className="h-5 w-5 shrink-0" strokeWidth={activeTab === item.id ? 2.3 : 2} />
+                    ) : (
+                      <Image
+                        src="/ikonnect-guide-avatar.png"
+                        alt=""
+                        width={20}
+                        height={20}
+                        className="h-5 w-5 shrink-0 object-contain"
+                      />
+                    )}
+                    <span className="truncate">{item.label}</span>
                   </button>
                 </li>
               ))}
             </ul>
 
             {/* Sidebar Action Buttons */}
-            <div className="mt-auto space-y-4 py-10 border-t border-foreground/[0.06]">
-              <div className="flex items-center justify-between rounded-2xl bg-foreground/[0.03] border border-foreground/[0.06] px-6 py-4">
-                <span className="text-base font-medium text-foreground/70">Appearance</span>
+            <div className="mt-auto space-y-2 py-5 border-t border-foreground/[0.06]">
+              <div className="flex items-center justify-between rounded-xl bg-foreground/[0.03] border border-foreground/[0.06] px-4 py-3">
+                <span className="text-sm font-medium text-foreground/70">Appearance</span>
                 <ThemeToggle />
               </div>
               <button
                 onClick={() => setShowRentShield(true)}
-                className="flex w-full items-center gap-5 rounded-2xl bg-foreground/[0.03] border border-foreground/[0.06] px-6 py-5 text-base font-medium text-foreground/70 transition-all duration-300 hover:bg-foreground/[0.06] hover:text-foreground hover:border-foreground/[0.12]"
+                className="flex w-full items-center gap-3 rounded-xl bg-foreground/[0.03] border border-foreground/[0.06] px-4 py-3 text-sm font-semibold text-foreground/70 transition-all duration-200 hover:bg-foreground/[0.07] hover:text-foreground"
               >
-                <Shield className="h-6 w-6 text-[#1D4ED8]" />
+                <Shield className="h-5 w-5 text-[#1D4ED8] dark:text-[#38BDF8] shrink-0" />
                 RentShield
               </button>
               <button
                 onClick={() => setShowEmergency(true)}
-                className="flex w-full items-center gap-5 rounded-2xl bg-gradient-to-r from-[#E1251B] to-[#b91c1c] px-6 py-5 text-base font-semibold text-white transition-all duration-300 hover:shadow-2xl hover:shadow-red-500/40 hover:scale-[1.02]"
+                className="flex w-full items-center gap-3 rounded-xl bg-[#E1251B] px-4 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-[#B91C1C] hover:shadow-lg hover:shadow-red-700/30"
               >
-                <AlertTriangle className="h-6 w-6" />
+                <AlertTriangle className="h-5 w-5 shrink-0" />
                 Emergency Hub
               </button>
             </div>
@@ -118,31 +123,28 @@ export default function MainApp() {
       </aside>
 
       {/* Mobile / Tablet Header */}
-      <header className="lg:hidden sticky top-0 z-40 bg-background/90 backdrop-blur-2xl border-b border-foreground/[0.06] px-4 sm:px-6 py-2.5">
-        {/* Calgary brand accent strip (blue → red) under the header */}
-        <div className="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-[#1D4ED8] via-[#3B82F6] to-[#E1251B]" />
+      <header className="lg:hidden sticky top-0 z-40 bg-background border-b border-foreground/[0.08] px-4 sm:px-5 py-2">
+        {/* Calgary brand accent strip — red+blue in day, lighter blue+red in dark */}
+        <div className="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-[#1D4ED8] dark:from-[#38BDF8] via-[#1D4ED8]/60 dark:via-[#38BDF8]/40 to-[#E1251B]" />
         <div className="flex items-center justify-between gap-3">
           <button
             onClick={goToLanding}
             aria-label="Go to Calgary Connect home page"
-            className="flex items-center"
+            className="flex items-center transition-opacity hover:opacity-80 active:opacity-60"
           >
-            {/* Square brand lockup (Calgary Tower + bridge + wordmark) */}
-            <div className="relative h-[78px] w-[78px] sm:h-[92px] sm:w-[92px] flex-shrink-0 transition-transform duration-300 active:scale-95">
-              <RotatingLogo imgPadding="p-0" priority />
-            </div>
+            <CalgaryConnectLogo size="sm" />
           </button>
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileMenuOpen}
-            className="group flex items-center justify-center w-[52px] h-[52px] sm:w-14 sm:h-14 rounded-2xl border-t border-white/40 bg-gradient-to-b from-[#F4493C] via-[#E1251B] to-[#B91C1C] text-white ring-1 ring-inset ring-white/15 shadow-[0_6px_0_-1px_#8f1410,0_12px_22px_-6px_rgba(225,37,27,0.55)] transition-all duration-150 hover:shadow-[0_6px_0_-1px_#8f1410,0_16px_28px_-6px_rgba(225,37,27,0.7)] active:translate-y-[3px] active:shadow-[0_3px_0_-1px_#8f1410,0_8px_16px_-6px_rgba(225,37,27,0.5)]"
+            className="flex items-center justify-center w-10 h-10 rounded-xl bg-[#E1251B] text-white shadow-md shadow-red-700/30 transition-all duration-150 hover:bg-[#B91C1C] active:scale-95"
           >
             {mobileMenuOpen ? (
-              <X className="h-7 w-7 drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]" strokeWidth={2.75} />
+              <X className="h-5 w-5" strokeWidth={2.5} />
             ) : (
-              <Menu className="h-7 w-7 drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]" strokeWidth={2.75} />
+              <Menu className="h-5 w-5" strokeWidth={2.5} />
             )}
           </button>
         </div>
@@ -163,10 +165,10 @@ export default function MainApp() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25 }}
-              className="absolute right-0 top-0 bottom-0 w-[85%] max-w-[360px] bg-background/70 backdrop-blur-2xl backdrop-saturate-150 border-l border-white/15 shadow-2xl shadow-black/30 ring-1 ring-inset ring-white/10 p-8"
+              className="absolute right-0 top-0 bottom-0 w-[85%] max-w-[360px] bg-background border-l border-foreground/[0.1] shadow-2xl shadow-black/30 ring-1 ring-inset ring-foreground/[0.06] p-8"
               onClick={(e) => e.stopPropagation()}
             >
-              <nav className="mt-12 space-y-3">
+              <nav className="mt-8 space-y-1">
                 {navItems.map((item) => (
                   <button
                     key={item.id}
@@ -174,23 +176,33 @@ export default function MainApp() {
                       setActiveTab(item.id);
                       setMobileMenuOpen(false);
                     }}
-                    className={`flex w-full items-center gap-5 rounded-2xl px-6 py-4 text-lg font-bold tracking-tight transition-all ${
+                    className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 text-base font-semibold tracking-tight transition-all ${
                       activeTab === item.id
                         ? item.highlight
-                          ? "bg-gradient-to-r from-[#1D4ED8] to-[#0A2540] text-white shadow-lg shadow-blue-900/30"
-                          : "bg-[#1D4ED8]/[0.12] text-foreground border border-[#1D4ED8]/40"
-                        : "text-foreground/75 hover:bg-foreground/[0.06] hover:text-foreground"
+                          ? "bg-[#E1251B] text-white shadow-md shadow-red-700/20"
+                          : "bg-[#0b2239] dark:bg-[#1D4ED8] text-white shadow-sm"
+                        : "text-foreground/70 hover:bg-foreground/[0.06] hover:text-foreground"
                     }`}
                   >
-                    <item.icon className={`h-6 w-6 ${activeTab === item.id && !item.highlight ? "text-[#1D4ED8]" : ""}`} />
-                    {item.label}
+                    {item.icon ? (
+                      <item.icon className="h-5 w-5 shrink-0" strokeWidth={activeTab === item.id ? 2.3 : 2} />
+                    ) : (
+                      <Image
+                        src="/ikonnect-guide-avatar.png"
+                        alt=""
+                        width={20}
+                        height={20}
+                        className="h-5 w-5 shrink-0 object-contain"
+                      />
+                    )}
+                    <span className="truncate">{item.label}</span>
                   </button>
                 ))}
               </nav>
 
-              <div className="mt-12 space-y-4 pt-10 border-t border-foreground/[0.06]">
-                <div className="flex items-center justify-between rounded-2xl bg-foreground/[0.03] border border-foreground/[0.06] px-6 py-4">
-                  <span className="text-base font-medium text-foreground/70">Appearance</span>
+              <div className="mt-6 space-y-2 pt-6 border-t border-foreground/[0.06]">
+                <div className="flex items-center justify-between rounded-xl bg-foreground/[0.03] border border-foreground/[0.06] px-4 py-3">
+                  <span className="text-sm font-medium text-foreground/70">Appearance</span>
                   <ThemeToggle />
                 </div>
                 <button
@@ -198,9 +210,9 @@ export default function MainApp() {
                     setShowRentShield(true);
                     setMobileMenuOpen(false);
                   }}
-                  className="flex w-full items-center gap-5 rounded-2xl bg-foreground/[0.03] border border-foreground/[0.06] px-6 py-5 text-base font-medium text-foreground/70"
+                  className="flex w-full items-center gap-3 rounded-xl bg-foreground/[0.03] border border-foreground/[0.06] px-4 py-3 text-sm font-semibold text-foreground/70 hover:bg-foreground/[0.07] hover:text-foreground transition-colors"
                 >
-                  <Shield className="h-6 w-6 text-[#1D4ED8]" />
+                <Shield className="h-5 w-5 text-[#1D4ED8] dark:text-[#38BDF8] shrink-0" />
                   RentShield
                 </button>
                 <button
@@ -208,9 +220,9 @@ export default function MainApp() {
                     setShowEmergency(true);
                     setMobileMenuOpen(false);
                   }}
-                  className="flex w-full items-center gap-5 rounded-2xl bg-gradient-to-r from-[#E1251B] to-[#b91c1c] px-6 py-5 text-base font-semibold text-white"
+                  className="flex w-full items-center gap-3 rounded-xl bg-[#E1251B] px-4 py-3 text-sm font-bold text-white hover:bg-[#B91C1C] transition-colors"
                 >
-                  <AlertTriangle className="h-6 w-6" />
+                  <AlertTriangle className="h-5 w-5 shrink-0" />
                   Emergency Hub
                 </button>
               </div>
@@ -254,9 +266,9 @@ export default function MainApp() {
         <div className="h-20 lg:hidden" />
       </main>
 
-      {/* Mobile Bottom Navigation */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-background/95 backdrop-blur-2xl border-t border-foreground/[0.06] safe-area-pb">
-        <div className="flex items-center justify-between gap-1 px-2 py-2.5">
+      {/* Mobile Bottom Navigation — solid bg, no backdrop-blur so no white haze */}
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-background border-t border-foreground/[0.10] safe-area-pb">
+        <div className="flex items-center justify-between px-1 py-2">
           {navItems.map((item) => {
             const active = activeTab === item.id;
             return (
@@ -265,17 +277,50 @@ export default function MainApp() {
                 onClick={() => setActiveTab(item.id)}
                 aria-label={item.label}
                 aria-current={active ? "page" : undefined}
-                className={`flex items-center justify-center gap-2 rounded-full transition-all duration-200 ${
+                className={`flex flex-col items-center justify-center gap-0.5 flex-1 rounded-xl py-2 transition-all duration-200 ${
                   active
                     ? item.highlight
-                      ? "border-t border-white/40 bg-gradient-to-b from-[#F4493C] via-[#E1251B] to-[#B91C1C] text-white ring-1 ring-inset ring-white/15 shadow-[0_4px_0_-1px_#8f1410,0_8px_16px_-5px_rgba(225,37,27,0.55)] px-4 py-2.5"
-                      : "border-t border-white/30 bg-gradient-to-b from-[#F4493C] via-[#E1251B] to-[#B91C1C] text-white ring-1 ring-inset ring-white/15 shadow-[0_4px_0_-1px_#8f1410,0_8px_16px_-5px_rgba(225,37,27,0.5)] px-4 py-2.5"
-                    : "text-foreground/55 px-3 py-2.5 active:scale-90"
+                      ? "text-[#E1251B]"
+                      : "text-[#1D4ED8] dark:text-[#38BDF8]"
+                    : "text-foreground/55 hover:text-foreground/80 active:scale-90"
                 }`}
               >
-                <item.icon className={`h-6 w-6 shrink-0 ${active && item.highlight ? "drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]" : ""}`} strokeWidth={active ? 2.4 : 2} />
-                {active && (
-                  <span className="text-[13px] font-bold tracking-tight whitespace-nowrap">{item.shortLabel}</span>
+                {active && item.highlight ? (
+                  <div className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-[#E1251B] text-white shadow-md shadow-red-700/30">
+                    <Image
+                      src="/ikonnect-guide-avatar.png"
+                      alt=""
+                      width={20}
+                      height={20}
+                      className="h-5 w-5 object-contain shrink-0"
+                    />
+                    <span className="text-[12px] font-bold tracking-tight">{item.shortLabel}</span>
+                  </div>
+                ) : active ? (
+                  <>
+                    {item.icon ? (
+                      <item.icon className="h-5 w-5 shrink-0" strokeWidth={2.3} />
+                    ) : (
+                      <Image
+                        src="/ikonnect-guide-avatar.png"
+                        alt=""
+                        width={20}
+                        height={20}
+                        className="h-5 w-5 object-contain shrink-0"
+                      />
+                    )}
+                    <span className="text-[10px] font-bold tracking-tight">{item.shortLabel}</span>
+                  </>
+                ) : item.icon ? (
+                  <item.icon className="h-5 w-5 shrink-0" strokeWidth={1.8} />
+                ) : (
+                  <Image
+                    src="/ikonnect-guide-avatar.png"
+                    alt=""
+                    width={20}
+                    height={20}
+                    className="h-5 w-5 object-contain shrink-0 opacity-55"
+                  />
                 )}
               </button>
             );

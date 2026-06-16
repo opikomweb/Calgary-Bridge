@@ -27,10 +27,10 @@ const popularQuestions = [
   "How do I find ESL classes near me?",
 ];
 
-const calgaryInsights = [
+  const calgaryInsights = [
   { icon: TrendingUp, label: "340+ jobs posted this week", chip: "bg-[#1D4ED8]/15 text-[#1D4ED8] dark:text-[#60A5FA] ring-1 ring-[#1D4ED8]/30" },
   { icon: Home, label: "12 housing programs available", chip: "bg-[#1D4ED8]/15 text-[#1D4ED8] dark:text-[#60A5FA] ring-1 ring-[#1D4ED8]/30" },
-  { icon: Calendar, label: "Free tax clinics open now", chip: "bg-[#E12521]/12 text-[#E12521] ring-1 ring-[#E12521]/30" },
+  { icon: Calendar, label: "Free tax clinics open now", chip: "bg-[#E12521]/12 text-[#E1251B] ring-1 ring-[#E12521]/30" },
 ];
 
 export default function AITab() {
@@ -161,10 +161,9 @@ export default function AITab() {
       </div>
 
       {/* Split Layout - Chat Left, Intelligence Right.
-          Mobile reserves space for the sticky header (~88px) AND the fixed
-          bottom nav (~72px) so the docked input + last message never hide
-          behind the nav bar. */}
-      <div className="flex h-[calc(100dvh-192px)] sm:h-[calc(100dvh-204px)] lg:h-[calc(100vh-100px)]">
+          Mobile: use dvh minus the sticky header (~56px) and fixed bottom nav (~64px).
+          The extra subtraction removes the blank dead-zone that appeared on mobile. */}
+      <div className="flex h-[calc(100dvh-120px)] sm:h-[calc(100dvh-130px)] lg:h-[calc(100vh-80px)]">
         {/* Left Side - AI Conversation. Expands to full width when the
             Calgary Pulse panel is collapsed. */}
         <div className={`relative flex-1 flex flex-col min-w-0 ${pulseOpen ? "lg:max-w-[65%]" : "lg:max-w-full"}`}>
@@ -322,7 +321,7 @@ export default function AITab() {
                                       href={link.url}
                                       target="_blank"
                                       rel="noopener noreferrer"
-                                      className="inline-flex items-center gap-1.5 rounded-full border border-[#1D4ED8]/30 bg-[#1D4ED8]/10 px-3.5 py-2 text-xs md:text-sm font-medium text-[#1D4ED8] transition-colors hover:bg-[#1D4ED8]/15"
+                                      className="inline-flex items-center gap-1.5 rounded-full border-2 border-[#1D4ED8] bg-[#1D4ED8] px-3.5 py-2 text-xs md:text-sm font-medium text-white transition-colors hover:bg-[#1e40af] hover:border-[#1e40af]"
                                     >
                                       {isMap ? <MapPin className="h-3.5 w-3.5" /> : <Search className="h-3.5 w-3.5" />}
                                       {link.label}
@@ -368,9 +367,9 @@ export default function AITab() {
           </div>
 
           {/* Input - Docked at Bottom */}
-          <div className="border-t border-[var(--border)] bg-[var(--background)]/80 backdrop-blur-xl">
+          <div className="border-t-2 border-foreground/[0.08] bg-background">
             <div className="px-5 md:px-8 py-4 md:py-5">
-              <div className="glass-card flex items-center gap-2 md:gap-3 rounded-xl md:rounded-2xl p-2 md:p-2.5">
+              <div className="flex items-center gap-2 md:gap-3 rounded-xl md:rounded-2xl bg-white dark:bg-[rgba(15,23,42,0.9)] border-2 border-foreground/[0.15] focus-within:border-[#E1251B] transition-colors p-2 md:p-2.5 shadow-sm">
                 <input
                   ref={inputRef}
                   type="text"
@@ -378,7 +377,7 @@ export default function AITab() {
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSend(input)}
                   placeholder="Ask iKonnect anything..."
-                  className="flex-1 bg-transparent px-3 md:px-4 py-2.5 md:py-3 text-foreground placeholder:text-[var(--foreground-muted)] focus:outline-none text-sm md:text-base min-w-0"
+                  className="flex-1 bg-transparent px-3 md:px-4 py-2.5 md:py-3 text-foreground placeholder:text-foreground/50 focus:outline-none text-sm md:text-base min-w-0"
                 />
                 <motion.button
                   whileHover={{ scale: 1.05 }}
@@ -509,7 +508,7 @@ function AIResourceCard({ resource }: { resource: Resource }) {
           {resource.category.slice(0, 2).map((cat) => (
             <span
               key={cat}
-              className="px-3 py-1 rounded-full text-xs sm:text-sm font-medium bg-[#3B82F6]/15 text-[#3B82F6]"
+              className="px-3 py-1 rounded-full text-xs sm:text-sm font-medium bg-[#1D4ED8]/15 text-[#1D4ED8] dark:bg-[#3B82F6]/15 dark:text-[#3B82F6]"
             >
               {categoryLabels[cat]?.[activeLanguage] || cat}
             </span>
@@ -518,7 +517,7 @@ function AIResourceCard({ resource }: { resource: Resource }) {
         <button
           onClick={() => toggleBookmark(resource.id)}
           aria-label={isBookmarked ? "Saved" : "Save resource"}
-          className="flex-shrink-0 text-sm text-[#3B82F6] font-semibold flex items-center gap-1.5 whitespace-nowrap hover:text-[#60A5FA] transition-colors"
+          className="flex-shrink-0 text-sm text-[#1D4ED8] dark:text-[#3B82F6] font-semibold flex items-center gap-1.5 whitespace-nowrap hover:text-[#1e40af] dark:hover:text-[#60A5FA] transition-colors"
         >
           {isBookmarked ? "Saved" : "Save"}
           <ArrowRight className="w-4 h-4" />
@@ -536,7 +535,7 @@ function AIResourceCard({ resource }: { resource: Resource }) {
         {resource.phone && (
           <a
             href={`tel:${resource.phone}`}
-            className="flex items-center gap-2 text-sm md:text-base font-semibold text-[#3B82F6] hover:text-[#60A5FA] transition-colors"
+            className="flex items-center gap-2 text-sm md:text-base font-semibold text-[#1D4ED8] dark:text-[#3B82F6] hover:text-[#1e40af] dark:hover:text-[#60A5FA] transition-colors"
           >
             <Phone className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
             {resource.phone}
@@ -547,7 +546,7 @@ function AIResourceCard({ resource }: { resource: Resource }) {
             href={resource.website}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-sm md:text-base font-bold text-[#3B82F6] hover:text-[#60A5FA] transition-colors underline underline-offset-4"
+            className="flex items-center gap-2 text-sm md:text-base font-bold text-[#1D4ED8] dark:text-[#3B82F6] hover:text-[#1e40af] dark:hover:text-[#60A5FA] transition-colors underline underline-offset-4"
           >
             <ExternalLink className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
             Visit Website

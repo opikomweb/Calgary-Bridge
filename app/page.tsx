@@ -4,8 +4,6 @@ import { useAppStore } from "@/lib/store";
 import LandingPage from "@/components/landing-page";
 import Onboarding from "@/components/onboarding";
 import MainApp from "@/components/main-app";
-import { AuthProvider } from "@/components/auth-provider";
-import { AuthDialog } from "@/components/auth-dialog";
 
 export default function Home() {
   const currentPage = useAppStore((state) => state.currentPage);
@@ -23,11 +21,8 @@ export default function Home() {
   };
 
   return (
-    <AuthProvider>
-      <main className="min-h-screen bg-gradient-hero">
-        {getView()}
-      </main>
-      <AuthDialog />
-    </AuthProvider>
+    <main className="min-h-screen bg-gradient-hero">
+      {getView()}
+    </main>
   );
 }

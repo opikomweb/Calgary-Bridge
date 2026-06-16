@@ -1,4 +1,10 @@
-import { auth } from '@/lib/auth'
-import { toNextJsHandler } from 'better-auth/next-js'
+// This route is no longer used — auth is handled by Supabase.
+// Kept as a placeholder so any legacy bookmarks return 404 gracefully.
+import { NextResponse } from "next/server";
 
-export const { GET, POST } = toNextJsHandler(auth.handler)
+export async function GET() {
+  return NextResponse.json({ error: "Not found" }, { status: 404 });
+}
+export async function POST() {
+  return NextResponse.json({ error: "Not found" }, { status: 404 });
+}

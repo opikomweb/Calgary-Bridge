@@ -17,17 +17,19 @@ export function CalgaryAnimatedBackground() {
       {/* Base: light, friendly Calgary-blue wash (matches the chat surface). */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#e6edfb] via-[#eef3fd] to-[#f4f8ff] dark:from-[#070d18] dark:via-[#0a1322] dark:to-[#0c1a2e]" />
 
-      {/* Very soft top glow for a touch of depth — kept faint so it never
-          tints the area where text and cards sit. */}
+      {/* Very soft top glow — only visible in day mode to avoid blue haze
+          leaking onto dark surfaces. */}
       <div
-        className="absolute -top-32 left-1/2 -translate-x-1/2 w-[900px] h-[420px] rounded-full blur-[120px] opacity-50 dark:opacity-30"
-        style={{ background: "radial-gradient(ellipse, rgba(59,130,246,0.10) 0%, transparent 70%)" }}
+        className="absolute -top-32 left-1/2 -translate-x-1/2 w-[900px] h-[420px] rounded-full blur-[120px] opacity-40 dark:opacity-0"
+        style={{ background: "radial-gradient(ellipse, rgba(59,130,246,0.08) 0%, transparent 70%)" }}
       />
 
       {/* Premium Calgary skyline silhouette, anchored to the bottom edge.
-          `mix-blend-mode: multiply` lets the white backdrop of the art fall
-          away so only the soft-blue silhouette tints the gradient. Low opacity
-          keeps it a tasteful watermark rather than a busy backdrop. */}
+          Day mode: `mix-blend-multiply` drops the white backdrop so only the
+          blue silhouette tints the gradient.
+          Dark mode: no blend mode — use a very low opacity tinted silhouette
+          so the image darkens naturally against the navy background without
+          creating the bright-white "screen" bleed. */}
       <div className="absolute inset-x-0 bottom-0 h-[42vh] min-h-[260px] max-h-[460px]">
         <Image
           src="/calgary-skyline-silhouette.png"
@@ -35,7 +37,7 @@ export function CalgaryAnimatedBackground() {
           fill
           priority
           sizes="100vw"
-          className="object-cover object-bottom opacity-95 mix-blend-multiply dark:opacity-30 dark:mix-blend-screen"
+          className="object-cover object-bottom opacity-90 mix-blend-multiply dark:opacity-15 dark:mix-blend-normal"
         />
       </div>
     </div>

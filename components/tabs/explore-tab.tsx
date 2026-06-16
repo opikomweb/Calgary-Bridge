@@ -134,13 +134,13 @@ export default function ExploreTab() {
           >
             {/* Search Input */}
             <div className="relative flex-1">
-              <Search className="absolute left-4 md:left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-foreground/55" />
+              <Search className="absolute left-4 md:left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-[#1D4ED8] dark:text-[#38BDF8]" />
               <input
                 type="text"
                 placeholder="Search resources..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full h-14 md:h-16 bg-foreground/[0.04] hover:bg-foreground/[0.06] border border-foreground/[0.1] hover:border-foreground/[0.15] focus:border-[#1D4ED8]/40 focus:bg-foreground/[0.06] rounded-xl md:rounded-2xl text-base text-foreground placeholder:text-foreground/45 pl-12 md:pl-14 pr-4 outline-none transition-all duration-300 focus:shadow-[0_0_0_4px_rgba(29,78,216,0.08)]"
+                className="w-full h-14 md:h-16 bg-white dark:bg-[rgba(15,23,42,0.9)] hover:bg-white border-2 border-foreground/[0.15] hover:border-foreground/[0.25] focus:border-[#1D4ED8] dark:focus:border-[#38BDF8] rounded-xl md:rounded-2xl text-base text-foreground placeholder:text-foreground/45 pl-12 md:pl-14 pr-4 outline-none transition-all duration-300 focus:shadow-[0_0_0_4px_rgba(29,78,216,0.08)] dark:focus:shadow-[0_0_0_4px_rgba(56,189,248,0.08)] shadow-sm"
               />
             </div>
 
@@ -148,10 +148,10 @@ export default function ExploreTab() {
             <div ref={dropdownRef} className="relative">
               <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
-                className={`h-14 md:h-16 px-5 md:px-6 rounded-xl md:rounded-2xl flex items-center gap-3 font-medium text-sm md:text-base transition-all w-full md:min-w-[240px] justify-between ${
+                className={`h-14 md:h-16 px-5 md:px-6 rounded-xl md:rounded-2xl flex items-center gap-3 font-medium text-sm md:text-base transition-all w-full md:min-w-[240px] justify-between shadow-sm border-2 ${
                   activeCategory !== "all"
-                    ? "bg-[#1D4ED8]/12 border border-[#1D4ED8]/35 text-foreground"
-                    : "bg-foreground/[0.04] border border-foreground/[0.1] hover:border-foreground/[0.18] text-foreground"
+                    ? "bg-[#1D4ED8] border-[#1D4ED8] text-white"
+                    : "bg-white dark:bg-[rgba(15,23,42,0.9)] border-foreground/[0.15] hover:border-[#1D4ED8] text-foreground"
                 }`}
               >
                 <div className="flex items-center gap-2.5 min-w-0">
@@ -221,7 +221,7 @@ export default function ExploreTab() {
                 whileHover={{ scale: 1.02, y: -4 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setActiveCategory(category.id)}
-                className={`relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-br ${category.bgGradient} backdrop-blur-xl border border-foreground/[0.06] p-4 md:p-6 lg:p-8 transition-all group hover:border-foreground/[0.1] hover:shadow-lg`}
+                className={`relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-br ${category.bgGradient} border border-white/10 p-4 md:p-6 lg:p-8 transition-all group hover:shadow-lg`}
               >
                 {/* Accent Glow */}
                 <div 
@@ -233,8 +233,8 @@ export default function ExploreTab() {
                 <div className="relative z-10 flex flex-col items-center text-center">
                   {/* Icon */}
                   <div 
-                    className="mb-3 md:mb-4 flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-xl md:rounded-2xl backdrop-blur-sm border border-foreground/[0.08]"
-                    style={{ background: `${category.accentColor}15` }}
+                    className="mb-3 md:mb-4 flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-xl md:rounded-2xl border border-white/15"
+                    style={{ background: `${category.accentColor}22` }}
                   >
                     <category.icon className="h-5 w-5 md:h-6 md:w-6" style={{ color: category.accentColor }} />
                   </div>
@@ -275,7 +275,7 @@ export default function ExploreTab() {
             {activeCategory !== "all" && (
               <button
                 onClick={() => setActiveCategory("all")}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#1D4ED8]/10 text-[#1D4ED8] hover:bg-[#1D4ED8]/15 transition-colors text-xs font-medium border border-[#1D4ED8]/25"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#1D4ED8] text-white hover:bg-[#1e40af] transition-colors text-xs font-medium border border-[#1D4ED8]"
               >
                 <span className="truncate max-w-[120px]">{currentCategoryInfo.label}</span>
                 <X className="w-3.5 h-3.5 flex-shrink-0" />

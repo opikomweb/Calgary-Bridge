@@ -278,11 +278,25 @@ p {
   border: 1px solid var(--border);
 }
 
+/* In dark mode, lock the glass bg to a solid dark value so no
+   light bleeds through the blur and creates the white/blurry haze. */
+.dark .glass {
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
 .glass-subtle {
   background: var(--surface);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border);
+}
+
+.dark .glass-subtle {
+  background: rgba(15, 23, 42, 0.80);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .glass-card {
@@ -292,25 +306,46 @@ p {
   border: 1px solid var(--border);
 }
 
+.dark .glass-card {
+  background: var(--card-solid);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
 /* Hero background with radial gradients */
 .bg-hero {
   background: 
-    radial-gradient(ellipse 120% 80% at 50% 0%, rgba(56, 189, 248, 0.12) 0%, transparent 50%),
-    radial-gradient(ellipse 80% 60% at 100% 100%, rgba(251, 191, 36, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse 60% 50% at 0% 80%, rgba(56, 189, 248, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse 120% 80% at 50% 0%, rgba(56, 189, 248, 0.10) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 60% at 100% 100%, rgba(251, 191, 36, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 50% at 0% 80%, rgba(56, 189, 248, 0.04) 0%, transparent 50%),
+    var(--background);
+}
+
+/* Dark mode: much more subtle so there's no white/blue haze */
+.dark .bg-hero {
+  background:
+    radial-gradient(ellipse 120% 80% at 50% 0%, rgba(56, 189, 248, 0.04) 0%, transparent 50%),
     var(--background);
 }
 
 .bg-gradient-hero {
   background: 
-    radial-gradient(ellipse 100% 100% at 50% 0%, rgba(56, 189, 248, 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse 100% 100% at 50% 0%, rgba(56, 189, 248, 0.12) 0%, transparent 60%),
     var(--background);
+}
+
+.dark .bg-gradient-hero {
+  background: var(--background);
 }
 
 .bg-section {
   background: 
-    radial-gradient(ellipse 80% 60% at 50% -20%, rgba(56, 189, 248, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 60% at 50% -20%, rgba(56, 189, 248, 0.05) 0%, transparent 50%),
     var(--background);
+}
+
+.dark .bg-section {
+  background: var(--background);
 }
 
 /* Emergency gradient */
@@ -380,18 +415,31 @@ p {
 }
 
 .btn-secondary {
-  background: var(--surface);
-  border: 1px solid var(--border-hover);
-  color: var(--foreground);
+  background: #ffffff;
+  border: 2px solid rgba(11, 34, 57, 0.20);
+  color: #0b2239;
   font-weight: 600;
   font-size: 17px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.dark .btn-secondary {
+  background: rgba(15, 23, 42, 0.85);
+  border-color: rgba(255, 255, 255, 0.20);
+  color: #f8fafc;
+}
+
 .btn-secondary:hover {
-  background: var(--surface-hover);
-  border-color: var(--border-hover);
+  background: #f4f9ff;
+  border-color: #1D4ED8;
+  color: #1D4ED8;
   transform: translateY(-1px);
+}
+
+.dark .btn-secondary:hover {
+  background: rgba(29, 78, 216, 0.15);
+  border-color: #38BDF8;
+  color: #38BDF8;
 }
 
 .btn-secondary:active {
@@ -537,8 +585,8 @@ p {
 
 /* Premium input styles */
 .input-premium {
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: #ffffff;
+  border: 2px solid rgba(11, 34, 57, 0.18);
   border-radius: 20px;
   padding: 20px 28px;
   font-size: 18px;
@@ -547,11 +595,20 @@ p {
   width: 100%;
 }
 
+.dark .input-premium {
+  background: rgba(15, 23, 42, 0.9);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
 .input-premium:focus {
   outline: none;
   border-color: var(--primary);
-  background: var(--surface-hover);
-  box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.15);
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(29, 78, 216, 0.12);
+}
+
+.dark .input-premium:focus {
+  background: rgba(15, 23, 42, 0.95);
 }
 
 .input-premium::placeholder {
@@ -560,8 +617,8 @@ p {
 
 /* Large conversational search box */
 .search-hero {
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: #ffffff;
+  border: 2px solid rgba(11, 34, 57, 0.18);
   border-radius: 24px;
   padding: 24px 32px;
   font-size: 20px;
@@ -570,13 +627,23 @@ p {
   width: 100%;
 }
 
+.dark .search-hero {
+  background: rgba(15, 23, 42, 0.9);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
 .search-hero:focus {
   outline: none;
-  border-color: rgba(56, 189, 248, 0.5);
-  background: var(--surface-hover);
+  border-color: #1D4ED8;
+  background: #ffffff;
   box-shadow: 
-    0 0 0 4px rgba(56, 189, 248, 0.12),
+    0 0 0 4px rgba(29, 78, 216, 0.12),
     0 25px 50px -12px rgba(2, 32, 71, 0.25);
+}
+
+.dark .search-hero:focus {
+  background: rgba(15, 23, 42, 0.95);
+  border-color: #38BDF8;
 }
 
 /* Calgary skyline animation */
@@ -639,10 +706,14 @@ p {
   position: absolute;
   inset: 0;
   background: 
-    radial-gradient(ellipse 80% 60% at 80% 20%, rgba(56, 189, 248, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse 60% 50% at 20% 80%, rgba(251, 191, 36, 0.05) 0%, transparent 50%);
+    radial-gradient(ellipse 80% 60% at 80% 20%, rgba(56, 189, 248, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 50% at 20% 80%, rgba(251, 191, 36, 0.04) 0%, transparent 50%);
   pointer-events: none;
   z-index: 0;
+}
+
+.dark .calgary-ambient::before {
+  background: none;
 }
 
 /* Smooth page transitions */
