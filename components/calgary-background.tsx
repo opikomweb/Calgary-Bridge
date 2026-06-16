@@ -25,19 +25,20 @@ export function CalgaryAnimatedBackground() {
       />
 
       {/* Premium Calgary skyline silhouette, anchored to the bottom edge.
-          Day mode: `mix-blend-multiply` drops the white backdrop so only the
-          blue silhouette tints the gradient.
-          Dark mode: no blend mode — use a very low opacity tinted silhouette
-          so the image darkens naturally against the navy background without
-          creating the bright-white "screen" bleed. */}
-      <div className="absolute inset-x-0 bottom-0 h-[42vh] min-h-[260px] max-h-[460px]">
+          Using object-contain + bottom anchor so the full skyline — including
+          the Calgary Tower's observation deck and antenna — is always fully
+          visible and never clipped. The container is taller to give the tower
+          room, and max-h is removed so it can breathe on large screens.
+          Day mode: mix-blend-multiply drops the white backdrop.
+          Dark mode: low opacity tint, normal blend. */}
+      <div className="absolute inset-x-0 bottom-0 h-[52vh] min-h-[320px]">
         <Image
           src="/calgary-skyline-silhouette.png"
           alt=""
           fill
           priority
           sizes="100vw"
-          className="object-cover object-bottom opacity-90 mix-blend-multiply dark:opacity-15 dark:mix-blend-normal"
+          className="object-contain object-bottom opacity-85 mix-blend-multiply dark:opacity-12 dark:mix-blend-normal"
         />
       </div>
     </div>
