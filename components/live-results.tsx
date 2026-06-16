@@ -48,7 +48,7 @@ export default function LiveResults({ category, query, categoryLabel }: LiveResu
   return (
     <div className="mt-10 md:mt-14">
       {/* Trigger / header */}
-      <div className="rounded-2xl md:rounded-3xl border border-[#38BDF8]/20 bg-sky-500/[0.06] backdrop-blur-xl p-5 md:p-7">
+      <div className="rounded-2xl md:rounded-3xl border border-[#38BDF8]/20 bg-card p-5 md:p-7">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-start gap-3.5">
             <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-[#38BDF8]/15 border border-[#38BDF8]/25">

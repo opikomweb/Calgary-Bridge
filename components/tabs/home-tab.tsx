@@ -247,7 +247,7 @@ export default function HomeTab() {
                     whileHover={{ scale: 1.02, y: -4 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => setActiveTab("explore")}
-                    className={`group relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-br ${pathway.bgGradient} backdrop-blur-xl border border-foreground/[0.06] hover:border-foreground/[0.12] transition-all duration-500`}
+                    className={`group relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-br ${pathway.bgGradient} border border-white/10 hover:border-white/20 transition-all duration-500`}
                     style={{ 
                       boxShadow: `0 0 60px -20px ${pathway.accent}15`
                     }}
@@ -261,7 +261,7 @@ export default function HomeTab() {
                     <div className="relative z-10 p-5 md:p-8 lg:p-10 flex flex-col items-center text-center">
                       {/* Icon */}
                       <div 
-                        className="w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-xl md:rounded-2xl flex items-center justify-center mb-4 md:mb-6 border border-foreground/[0.08] backdrop-blur-sm transition-transform group-hover:scale-110"
+                        className="w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-xl md:rounded-2xl flex items-center justify-center mb-4 md:mb-6 border border-white/15 transition-transform group-hover:scale-110"
                         style={{ backgroundColor: `${pathway.accent}15` }}
                       >
                         <Icon className="w-6 h-6 md:w-7 md:h-7" style={{ color: pathway.accent }} />

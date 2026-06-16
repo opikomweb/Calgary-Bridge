@@ -32,7 +32,7 @@ export default function SearchExtras({ query, similar }: SearchExtrasProps) {
     <div className="mt-8 md:mt-10 space-y-5">
       {/* ===== Similar categories accordion ===== */}
       {similar.length > 0 && (
-        <div className="rounded-2xl border border-white/60 bg-[var(--card)]/85 backdrop-blur-xl shadow-lg shadow-[#0A2540]/10 overflow-hidden">
+        <div className="rounded-2xl border border-border bg-card shadow-lg overflow-hidden">
           <button
             onClick={() => setOpen((o) => !o)}
             aria-expanded={open}
@@ -86,7 +86,7 @@ export default function SearchExtras({ query, similar }: SearchExtrasProps) {
       )}
 
       {/* ===== Can't find it? Search live on Google / Google Maps ===== */}
-      <div className="rounded-2xl border border-white/60 bg-[var(--card)]/85 backdrop-blur-xl shadow-lg shadow-[#0A2540]/10 p-5 md:p-6">
+      <div className="rounded-2xl border border-border bg-card shadow-lg p-5 md:p-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="min-w-0">
             <p className="font-semibold text-foreground leading-snug">

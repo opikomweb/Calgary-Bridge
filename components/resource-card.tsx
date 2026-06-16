@@ -34,10 +34,10 @@ interface ResourceCardProps {
 }
 
 const costLabels: Record<string, { label: string; color: string }> = {
-  "free": { label: "Free", color: "text-[#1D4ED8] dark:text-sky-400 bg-[#1D4ED8]/12 dark:bg-sky-500/15" },
-  "low-cost": { label: "Low Cost", color: "text-[#1D4ED8] dark:text-sky-400 bg-[#1D4ED8]/12 dark:bg-sky-500/15" },
-  "sliding-scale": { label: "Sliding Scale", color: "text-foreground/70 bg-foreground/[0.08]" },
-  "paid": { label: "Paid", color: "text-foreground/70 bg-foreground/[0.08]" },
+  "free":          { label: "Free",          color: "text-white bg-emerald-600 dark:bg-emerald-500" },
+  "low-cost":      { label: "Low Cost",      color: "text-white bg-emerald-600 dark:bg-emerald-500" },
+  "sliding-scale": { label: "Sliding Scale", color: "text-white bg-amber-500" },
+  "paid":          { label: "Paid",          color: "text-white bg-[#E1251B]" },
 };
 
 export default function ResourceCard({ resource, showNotes = false, variant = "default", onReport, onClaimBusiness }: ResourceCardProps) {
@@ -181,10 +181,10 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
                 href={googleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 rounded-xl bg-foreground/[0.06] border border-foreground/[0.08] px-3 py-2 text-xs md:text-sm font-semibold text-foreground transition-all hover:bg-foreground/[0.1] active:scale-95"
+                aria-label="Open in Maps"
+                className="flex items-center justify-center rounded-xl bg-foreground/[0.06] border border-foreground/[0.08] p-2 md:p-2.5 text-foreground transition-all hover:bg-foreground/[0.1] active:scale-95"
               >
                 <MapPin className="h-3.5 w-3.5 flex-shrink-0" />
-                Directions
               </a>
             )}
             {resource.mapUrl && (
@@ -192,10 +192,10 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
                 href={resource.mapUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 rounded-xl bg-[#1D4ED8] dark:bg-sky-500/15 px-3 py-2 text-xs md:text-sm font-semibold text-white dark:text-sky-400 transition-all hover:bg-[#1e40af] active:scale-95"
+                aria-label="Search on Maps"
+                className="flex items-center justify-center rounded-xl bg-foreground/[0.06] border border-foreground/[0.08] p-2 md:p-2.5 text-foreground transition-all hover:bg-foreground/[0.1] active:scale-95"
               >
                 <MapPin className="h-3.5 w-3.5 flex-shrink-0" />
-                Maps
               </a>
             )}
             {resource.website && (
@@ -296,15 +296,18 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
         )}
 
           {(resource.phone || resource.address) && (
-            <div className="mt-3 md:mt-4 flex flex-col gap-1.5 md:gap-2 text-xs md:text-sm text-[var(--foreground-muted)]">
+            <div className="mt-3 md:mt-4 flex flex-col gap-1.5 md:gap-2">
               {resource.phone && (
-                <span className="flex items-center gap-2">
+                <a
+                  href={`tel:${resource.phone}`}
+                  className="flex items-center gap-2 text-xs md:text-sm font-semibold text-[#E1251B] hover:underline"
+                >
                   <Phone className="w-3.5 h-3.5 md:w-4 md:h-4 flex-shrink-0" />
                   <span>{resource.phone}</span>
-                </span>
+                </a>
               )}
               {resource.address && (
-                <span className="flex items-start gap-2 min-w-0">
+                <span className="flex items-start gap-2 min-w-0 text-xs md:text-sm text-foreground/70">
                   <MapPin className="w-3.5 h-3.5 md:w-4 md:h-4 flex-shrink-0 mt-0.5" />
                   <span className="break-words">{resource.address}</span>
                 </span>
@@ -422,10 +425,10 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
               href={googleMapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 md:gap-2 rounded-xl bg-foreground/[0.06] border border-foreground/[0.08] px-3 md:px-5 py-2 md:py-3 text-xs md:text-sm font-bold text-foreground transition-all hover:bg-foreground/[0.1] active:scale-95"
+              aria-label="Open in Maps"
+              className="flex items-center justify-center rounded-xl bg-foreground/[0.06] border border-foreground/[0.08] p-2.5 md:p-3 text-foreground transition-all hover:bg-foreground/[0.1] active:scale-95"
             >
-              <MapPin className="h-3.5 w-3.5 md:h-4 md:w-4 flex-shrink-0" />
-              Directions
+              <MapPin className="h-4 w-4 flex-shrink-0" />
             </a>
           )}
           {resource.mapUrl && (
@@ -433,10 +436,10 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
               href={resource.mapUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 md:gap-2 rounded-xl bg-[#1D4ED8] dark:bg-sky-500/15 px-3 md:px-5 py-2 md:py-3 text-xs md:text-sm font-bold text-white dark:text-sky-400 transition-all hover:bg-[#1e40af] active:scale-95"
+              aria-label="Search on Maps"
+              className="flex items-center justify-center rounded-xl bg-foreground/[0.06] border border-foreground/[0.08] p-2.5 md:p-3 text-foreground transition-all hover:bg-foreground/[0.1] active:scale-95"
             >
-              <MapPin className="h-3.5 w-3.5 md:h-4 md:w-4 flex-shrink-0" />
-              Maps
+              <MapPin className="h-4 w-4 flex-shrink-0" />
             </a>
           )}
           {resource.website && (

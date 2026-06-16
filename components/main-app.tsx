@@ -272,8 +272,8 @@ export default function MainApp() {
         <div className="h-20 lg:hidden" />
       </main>
 
-      {/* Mobile Bottom Navigation */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-background/97 backdrop-blur-2xl border-t border-foreground/[0.08] safe-area-pb">
+      {/* Mobile Bottom Navigation — solid bg, no backdrop-blur so no white haze */}
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-background border-t border-foreground/[0.10] safe-area-pb">
         <div className="flex items-center justify-between px-1 py-2">
           {navItems.map((item) => {
             const active = activeTab === item.id;
@@ -287,8 +287,8 @@ export default function MainApp() {
                   active
                     ? item.highlight
                       ? "text-[#E1251B]"
-                      : "text-[#0b2239] dark:text-[#1D4ED8]"
-                    : "text-foreground/45 active:scale-90"
+                      : "text-[#1D4ED8] dark:text-[#38BDF8]"
+                    : "text-foreground/55 hover:text-foreground/80 active:scale-90"
                 }`}
               >
                 {active && item.highlight ? (
@@ -318,14 +318,14 @@ export default function MainApp() {
                     <span className="text-[10px] font-bold tracking-tight">{item.shortLabel}</span>
                   </>
                 ) : item.icon ? (
-                  <item.icon className="h-5 w-5 shrink-0" strokeWidth={2} />
+                  <item.icon className="h-5 w-5 shrink-0" strokeWidth={1.8} />
                 ) : (
                   <Image
                     src="/ikonnect-guide-avatar.png"
                     alt=""
                     width={20}
                     height={20}
-                    className="h-5 w-5 object-contain shrink-0 opacity-45"
+                    className="h-5 w-5 object-contain shrink-0 opacity-55"
                   />
                 )}
               </button>

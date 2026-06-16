@@ -221,7 +221,7 @@ export default function ExploreTab() {
                 whileHover={{ scale: 1.02, y: -4 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setActiveCategory(category.id)}
-                className={`relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-br ${category.bgGradient} backdrop-blur-xl border border-foreground/[0.06] p-4 md:p-6 lg:p-8 transition-all group hover:border-foreground/[0.1] hover:shadow-lg`}
+                className={`relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-br ${category.bgGradient} border border-white/10 p-4 md:p-6 lg:p-8 transition-all group hover:shadow-lg`}
               >
                 {/* Accent Glow */}
                 <div 
@@ -233,8 +233,8 @@ export default function ExploreTab() {
                 <div className="relative z-10 flex flex-col items-center text-center">
                   {/* Icon */}
                   <div 
-                    className="mb-3 md:mb-4 flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-xl md:rounded-2xl backdrop-blur-sm border border-foreground/[0.08]"
-                    style={{ background: `${category.accentColor}15` }}
+                    className="mb-3 md:mb-4 flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-xl md:rounded-2xl border border-white/15"
+                    style={{ background: `${category.accentColor}22` }}
                   >
                     <category.icon className="h-5 w-5 md:h-6 md:w-6" style={{ color: category.accentColor }} />
                   </div>

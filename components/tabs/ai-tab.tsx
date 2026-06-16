@@ -367,7 +367,7 @@ export default function AITab() {
           </div>
 
           {/* Input - Docked at Bottom */}
-          <div className="border-t-2 border-foreground/[0.08] bg-background/95 backdrop-blur-xl">
+          <div className="border-t-2 border-foreground/[0.08] bg-background">
             <div className="px-5 md:px-8 py-4 md:py-5">
               <div className="flex items-center gap-2 md:gap-3 rounded-xl md:rounded-2xl bg-white dark:bg-[rgba(15,23,42,0.9)] border-2 border-foreground/[0.15] focus-within:border-[#E1251B] transition-colors p-2 md:p-2.5 shadow-sm">
                 <input
