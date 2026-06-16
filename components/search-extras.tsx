@@ -32,11 +32,11 @@ export default function SearchExtras({ query, similar }: SearchExtrasProps) {
     <div className="mt-8 md:mt-10 space-y-5">
       {/* ===== Similar categories accordion ===== */}
       {similar.length > 0 && (
-        <div className="rounded-2xl border border-foreground/[0.08] bg-foreground/[0.025] overflow-hidden">
+        <div className="rounded-2xl border border-white/60 bg-[var(--card)]/85 backdrop-blur-xl shadow-lg shadow-[#0A2540]/10 overflow-hidden">
           <button
             onClick={() => setOpen((o) => !o)}
             aria-expanded={open}
-            className="w-full flex items-center justify-between gap-4 px-5 md:px-6 py-4 md:py-5 text-left hover:bg-foreground/[0.03] transition-colors"
+            className="w-full flex items-center justify-between gap-4 px-5 md:px-6 py-4 md:py-5 text-left hover:bg-foreground/[0.04] transition-colors"
           >
             <div className="flex items-center gap-3.5 min-w-0">
               <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-[#1D4ED8]/[0.12] border border-[#1D4ED8]/25">
@@ -46,7 +46,7 @@ export default function SearchExtras({ query, similar }: SearchExtrasProps) {
                 <p className="font-semibold text-foreground leading-snug">
                   Want to see similar categories?
                 </p>
-                <p className="text-sm text-foreground/50 leading-relaxed">
+                <p className="text-sm text-foreground/65 leading-relaxed">
                   {totalSimilar} related result{totalSimilar !== 1 ? "s" : ""} that may also help with &quot;{q}&quot;
                 </p>
               </div>
@@ -86,13 +86,13 @@ export default function SearchExtras({ query, similar }: SearchExtrasProps) {
       )}
 
       {/* ===== Can't find it? Search live on Google / Google Maps ===== */}
-      <div className="rounded-2xl border border-[#1D4ED8]/20 bg-[#1D4ED8]/[0.05] p-5 md:p-6">
+      <div className="rounded-2xl border border-white/60 bg-[var(--card)]/85 backdrop-blur-xl shadow-lg shadow-[#0A2540]/10 p-5 md:p-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="min-w-0">
             <p className="font-semibold text-foreground leading-snug">
               Can&apos;t find what you&apos;re looking for?
             </p>
-            <p className="text-sm text-foreground/50 leading-relaxed">
+            <p className="text-sm text-foreground/65 leading-relaxed">
               Search live on Google or Google Maps for &quot;{q}&quot; in Calgary.
             </p>
           </div>
