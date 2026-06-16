@@ -102,7 +102,9 @@ export default function ExploreTab() {
             transition={{ duration: 0.6 }}
           >
             <h1 className="heading-accent text-[clamp(32px,6vw,56px)] font-bold tracking-[-0.02em] leading-[1.1] mb-4">
-              Explore <span className="text-calgary-red">Resources</span>
+              <span>
+                Explore <span className="text-calgary-red">Resources</span>
+              </span>
             </h1>
             <p className="text-base md:text-lg text-foreground/45 max-w-xl leading-relaxed">
               Every verified Calgary service and program, searchable and filterable.
