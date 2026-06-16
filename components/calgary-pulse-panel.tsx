@@ -228,128 +228,143 @@ function StarField() {
 }
 
 /**
- * Panoramic mountain + Calgary skyline silhouette.
- * viewBox: 0 0 300 100 — wide 3:1 panorama.
- * Five mountain layers for depth (far→near), then city buildings, Calgary Tower.
+ * Panoramic landscape — Calgary Foothills rolling ridgelines + downtown skyline.
+ * Uses SVG cubic-bezier paths so ridgelines are gently curved (not triangular).
+ * viewBox: 0 0 300 100
+ *
+ * Layer order (back to front):
+ *   1. Far ridge   — palest, highest horizon
+ *   2. Mid ridge   — medium, wide rolls
+ *   3. Near ridge  — darkest, fills bottom
+ *   4. City blocks + Calgary Tower
+ *   5. Ground vignette
  */
 function PanoramicLandscape({ scene }: { scene: WeatherScene }) {
-  // Mountain tint adapts to weather mood
   const isLight = scene === "sunny" || scene === "partly_cloudy";
-  const snow = scene === "snowy";
+  const snow    = scene === "snowy";
 
-  const mtn = (alpha: number) =>
-    snow ? `rgba(210,220,235,${alpha})` : isLight ? `rgba(15,30,60,${alpha})` : `rgba(10,20,40,${alpha})`;
-  const mtnSnow = (alpha: number) => `rgba(235,242,252,${alpha})`;
-  const bld = (alpha: number) =>
-    isLight ? `rgba(10,20,50,${alpha})` : `rgba(5,12,30,${alpha})`;
+  // Colour helpers
+  const mF = (a: number) =>  // far ridge — slate-blue tint
+    snow ? `rgba(190,210,232,${a})` : isLight ? `rgba(80,110,160,${a})` : `rgba(50,70,110,${a})`;
+  const mM = (a: number) =>  // mid ridge
+    snow ? `rgba(160,185,215,${a})` : isLight ? `rgba(40,65,110,${a})` : `rgba(25,45,80,${a})`;
+  const mN = (a: number) =>  // near ridge — darkest
+    snow ? `rgba(130,155,192,${a})` : isLight ? `rgba(18,35,70,${a})` : `rgba(10,22,50,${a})`;
+  const bld = (a: number) =>
+    isLight ? `rgba(10,18,45,${a})` : `rgba(5,10,28,${a})`;
+  const snowFill = `rgba(238,245,255,0.88)`;
 
   return (
     <g>
-      {/* Layer 1 — farthest mountains, lightest */}
-      <polygon points="0,78 22,52 44,78"   fill={mtn(0.28)} />
-      <polygon points="16,78 44,38 72,78"  fill={mtn(0.30)} />
-      <polygon points="55,78 78,44 101,78" fill={mtn(0.28)} />
-      <polygon points="88,78 108,50 128,78" fill={mtn(0.26)} />
-      <polygon points="115,78 134,55 153,78" fill={mtn(0.24)} />
-      <polygon points="140,78 160,48 180,78" fill={mtn(0.22)} />
-      <polygon points="170,78 192,54 214,78" fill={mtn(0.20)} />
-      <polygon points="200,78 220,50 240,78" fill={mtn(0.22)} />
-      <polygon points="230,78 256,42 282,78" fill={mtn(0.24)} />
-      <polygon points="262,78 285,52 300,78" fill={mtn(0.22)} />
+      {/* ── Far ridge: smooth rolling Foothills silhouette ── */}
+      {/* Gently curved path — no pyramids, natural undulation */}
+      <path
+        d="M0,76 C15,72 25,62 40,60 C55,58 65,66 80,64
+           C95,62 108,54 125,52 C142,50 155,58 170,56
+           C185,54 198,62 215,60 C232,58 248,50 265,52
+           C280,54 292,62 300,60 L300,100 L0,100 Z"
+        fill={mF(0.38)}
+      />
+      {/* Snow caps on far ridge peaks */}
+      {snow && (
+        <path
+          d="M38,60 C40,56 42,54 44,52 C46,54 48,58 50,60 Z
+             M123,52 C125,48 127,46 129,44 C131,46 133,50 135,52 Z
+             M263,52 C265,48 267,46 269,44 C271,46 273,50 275,52 Z"
+          fill={snowFill}
+        />
+      )}
 
-      {/* Snow caps on far mountains (snowy scene) */}
-      {snow && <>
-        <polygon points="44,38 38,48 50,48"  fill={mtnSnow(0.7)} />
-        <polygon points="108,50 103,58 113,58" fill={mtnSnow(0.65)} />
-        <polygon points="256,42 251,52 261,52" fill={mtnSnow(0.68)} />
-      </>}
+      {/* ── Mid ridge ── */}
+      <path
+        d="M0,82 C12,76 22,68 38,65 C54,62 68,70 85,67
+           C102,64 115,55 135,53 C155,51 168,62 188,60
+           C208,58 222,66 242,64 C262,62 278,70 300,68
+           L300,100 L0,100 Z"
+        fill={mM(0.52)}
+      />
+      {snow && (
+        <path
+          d="M133,53 C135,49 137,47 139,45 C141,47 143,51 145,53 Z"
+          fill={snowFill}
+        />
+      )}
 
-      {/* Layer 2 — mid mountains, medium */}
-      <polygon points="0,82 30,48 60,82"    fill={mtn(0.45)} />
-      <polygon points="40,82 74,30 108,82"  fill={mtn(0.50)} />
-      <polygon points="90,82 120,36 150,82" fill={mtn(0.48)} />
-      <polygon points="138,82 165,44 192,82" fill={mtn(0.46)} />
-      <polygon points="180,82 210,32 240,82" fill={mtn(0.52)} />
-      <polygon points="225,82 255,40 285,82" fill={mtn(0.48)} />
-      <polygon points="265,82 290,50 300,82" fill={mtn(0.44)} />
+      {/* ── Near ridge — foreground hills ── */}
+      <path
+        d="M0,88 C20,82 38,74 60,72 C80,70 98,78 120,76
+           C140,74 158,66 180,68 C202,70 220,78 245,76
+           C268,74 284,80 300,78 L300,100 L0,100 Z"
+        fill={mN(0.70)}
+      />
 
-      {/* Snow caps on mid mountains */}
-      {snow && <>
-        <polygon points="74,30 67,44 81,44"   fill={mtnSnow(0.80)} />
-        <polygon points="120,36 114,48 126,48" fill={mtnSnow(0.75)} />
-        <polygon points="210,32 203,46 217,46" fill={mtnSnow(0.80)} />
-      </>}
-
-      {/* Layer 3 — near mountains, darkest */}
-      <polygon points="0,88 40,56 80,88"     fill={mtn(0.68)} />
-      <polygon points="60,88 100,42 140,88"  fill={mtn(0.72)} />
-      <polygon points="120,88 158,52 196,88" fill={mtn(0.70)} />
-      <polygon points="178,88 220,44 262,88" fill={mtn(0.72)} />
-      <polygon points="248,88 278,58 300,88" fill={mtn(0.66)} />
-
-      {/* City buildings — sits in front of mountains */}
+      {/* ── City skyline — flat-roofed Calgary blocks ── */}
       {/* Far-right cluster */}
-      <rect x="240" y="76" width="10" height="14" rx="1" fill={bld(0.70)} />
-      <rect x="253" y="71" width="8"  height="19" rx="1" fill={bld(0.75)} />
-      <rect x="264" y="74" width="11" height="16" rx="1" fill={bld(0.70)} />
-      <rect x="278" y="68" width="9"  height="22" rx="1" fill={bld(0.78)} />
-      <rect x="290" y="72" width="10" height="18" rx="1" fill={bld(0.72)} />
+      <rect x="252" y="74" width="9"  height="16" rx="0.5" fill={bld(0.68)} />
+      <rect x="264" y="70" width="7"  height="20" rx="0.5" fill={bld(0.74)} />
+      <rect x="274" y="72" width="10" height="18" rx="0.5" fill={bld(0.70)} />
+      <rect x="287" y="67" width="8"  height="23" rx="0.5" fill={bld(0.76)} />
 
       {/* Right cluster */}
-      <rect x="196" y="74" width="9"  height="16" rx="1" fill={bld(0.74)} />
-      <rect x="207" y="68" width="11" height="22" rx="1" fill={bld(0.78)} />
-      <rect x="221" y="71" width="8"  height="19" rx="1" fill={bld(0.72)} />
-      <rect x="232" y="75" width="6"  height="15" rx="1" fill={bld(0.68)} />
+      <rect x="204" y="73" width="8"  height="17" rx="0.5" fill={bld(0.72)} />
+      <rect x="215" y="67" width="10" height="23" rx="0.5" fill={bld(0.78)} />
+      <rect x="228" y="70" width="7"  height="20" rx="0.5" fill={bld(0.74)} />
+      <rect x="238" y="74" width="11" height="16" rx="0.5" fill={bld(0.68)} />
 
-      {/* Centre-right cluster */}
-      <rect x="148" y="72" width="10" height="18" rx="1" fill={bld(0.76)} />
-      <rect x="161" y="65" width="12" height="25" rx="1" fill={bld(0.80)} />
-      <rect x="176" y="68" width="8"  height="22" rx="1" fill={bld(0.78)} />
+      {/* Centre-right */}
+      <rect x="155" y="71" width="9"  height="19" rx="0.5" fill={bld(0.74)} />
+      <rect x="167" y="64" width="11" height="26" rx="0.5" fill={bld(0.80)} />
+      <rect x="181" y="68" width="8"  height="22" rx="0.5" fill={bld(0.76)} />
+      <rect x="192" y="72" width="9"  height="18" rx="0.5" fill={bld(0.70)} />
 
-      {/* Calgary Tower — centrepiece around x=128 */}
-      {/* Tower shaft */}
-      <rect x="124" y="68" width="7" height="22" rx="0.5" fill={bld(0.92)} />
-      {/* Elevator shaft (thinner top) */}
-      <rect x="126" y="55" width="3" height="16" fill={bld(0.92)} />
-      {/* Observation deck — the distinctive round collar */}
-      <ellipse cx="127.5" cy="54" rx="8" ry="4" fill={bld(0.94)} />
-      <rect x="119.5" y="52" width="16" height="4" rx="2" fill={bld(0.94)} />
-      {/* Glass ring on deck */}
-      <ellipse cx="127.5" cy="52" rx="7" ry="2.5"
-        fill="none" stroke={isLight ? "rgba(150,210,255,0.5)" : "rgba(100,160,220,0.35)"} strokeWidth="0.8" />
+      {/* ── Calgary Tower — centrepiece, x≈130 ── */}
+      {/* Base shaft */}
+      <rect x="127" y="70" width="6" height="20" rx="0.5" fill={bld(0.92)} />
+      {/* Tapering elevator shaft up */}
+      <rect x="129" y="56" width="2.5" height="16" fill={bld(0.92)} />
+      {/* Observation deck — distinctive horizontal slab */}
+      <rect x="122" y="54" width="16" height="3.5" rx="1.5" fill={bld(0.95)} />
+      <ellipse cx="130" cy="54" rx="8" ry="2.2" fill={bld(0.94)} />
+      {/* Deck glass highlight */}
+      <ellipse cx="130" cy="53.2" rx="6.5" ry="1.2"
+        fill="none"
+        stroke={isLight ? "rgba(160,220,255,0.55)" : "rgba(100,160,220,0.30)"}
+        strokeWidth="0.7"
+      />
       {/* Antenna */}
-      <rect x="127" y="42" width="1.2" height="12" fill={bld(0.96)} />
-      {/* Antenna tip glow (night or stormy) */}
+      <rect x="129.6" y="42" width="1" height="13" fill={bld(0.96)} />
       {(scene === "night" || scene === "stormy") && (
-        <motion.circle cx="127.6" cy="42" r="1.5"
-          fill="#ff4444"
-          animate={{ opacity: [1, 0.2, 1] }}
+        <motion.circle cx="130.1" cy="42" r="1.3"
+          fill="#ff3333"
+          animate={{ opacity: [1, 0.15, 1] }}
           transition={{ repeat: Infinity, duration: 1.4, ease: "easeInOut" }}
         />
       )}
 
+      {/* Centre-left */}
+      <rect x="100" y="69" width="8"  height="21" rx="0.5" fill={bld(0.80)} />
+      <rect x="111" y="65" width="10" height="25" rx="0.5" fill={bld(0.84)} />
+      <rect x="144" y="70" width="8"  height="20" rx="0.5" fill={bld(0.76)} />
+
       {/* Left cluster */}
-      <rect x="62"  y="74" width="9"  height="16" rx="1" fill={bld(0.76)} />
-      <rect x="73"  y="68" width="11" height="22" rx="1" fill={bld(0.80)} />
-      <rect x="87"  y="71" width="8"  height="19" rx="1" fill={bld(0.75)} />
-      <rect x="98"  y="66" width="12" height="24" rx="1" fill={bld(0.82)} />
-      <rect x="113" y="70" width="8"  height="20" rx="1" fill={bld(0.78)} />
+      <rect x="65"  y="73" width="9"  height="17" rx="0.5" fill={bld(0.74)} />
+      <rect x="76"  y="67" width="10" height="23" rx="0.5" fill={bld(0.80)} />
+      <rect x="89"  y="70" width="8"  height="20" rx="0.5" fill={bld(0.76)} />
 
       {/* Far-left cluster */}
-      <rect x="0"   y="76" width="10" height="14" rx="1" fill={bld(0.70)} />
-      <rect x="12"  y="70" width="9"  height="20" rx="1" fill={bld(0.75)} />
-      <rect x="24"  y="73" width="11" height="17" rx="1" fill={bld(0.72)} />
-      <rect x="38"  y="67" width="8"  height="23" rx="1" fill={bld(0.78)} />
-      <rect x="49"  y="71" width="10" height="19" rx="1" fill={bld(0.74)} />
+      <rect x="14"  y="74" width="9"  height="16" rx="0.5" fill={bld(0.70)} />
+      <rect x="26"  y="68" width="10" height="22" rx="0.5" fill={bld(0.76)} />
+      <rect x="39"  y="71" width="8"  height="19" rx="0.5" fill={bld(0.72)} />
+      <rect x="51"  y="66" width="11" height="24" rx="0.5" fill={bld(0.78)} />
 
-      {/* Foreground ground strip — gradient from dark to transparent top */}
+      {/* ── Ground vignette — fades bottom to dark ── */}
       <defs>
-        <linearGradient id="groundGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="rgba(8,15,30,0)" />
-          <stop offset="100%" stopColor="rgba(8,15,30,0.92)" />
+        <linearGradient id="gVig" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"   stopColor="rgba(5,12,28,0)" />
+          <stop offset="100%" stopColor="rgba(5,12,28,0.88)" />
         </linearGradient>
       </defs>
-      <rect x="0" y="82" width="300" height="18" fill="url(#groundGrad)" />
+      <rect x="0" y="80" width="300" height="20" fill="url(#gVig)" />
     </g>
   );
 }
@@ -549,73 +564,104 @@ function PulseSkeleton() {
 function NewsAccordionItem({ item, index }: { item: NewsItem; index: number }) {
   const [open, setOpen] = useState(false);
   const style = sourceBadgeStyle(item.source);
-  // Truncate title to ~55 chars for the collapsed hook
-  const hook = item.title.length > 58 ? item.title.slice(0, 55).trimEnd() + "…" : item.title;
-  const hasMore = item.title.length > 58;
+
+  // Hook: first 110 chars of title, ends at a word boundary — gives a proper teaser
+  const HOOK_LEN = 110;
+  const hook =
+    item.title.length > HOOK_LEN
+      ? item.title.slice(0, item.title.lastIndexOf(" ", HOOK_LEN)).trimEnd() + "…"
+      : item.title;
+  const hasMore = item.title.length > HOOK_LEN;
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 6 }}
+      initial={{ opacity: 0, y: 5 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.28 + index * 0.04 }}
-      className="rounded-xl border border-foreground/[0.08] bg-foreground/[0.02] hover:border-foreground/[0.14] transition-colors duration-200 overflow-hidden"
+      transition={{ delay: 0.22 + index * 0.035 }}
     >
-      {/* Collapsed row — always visible */}
       <button
         onClick={() => setOpen((o) => !o)}
-        className="w-full flex items-center gap-2.5 px-3 py-2.5 text-left group"
+        className="w-full flex items-start gap-3 py-3 text-left group border-b border-foreground/[0.07] last:border-0"
         aria-expanded={open}
       >
-        {/* Source tag */}
-        <span className={`text-[9px] font-black px-1.5 py-0.5 rounded flex-shrink-0 leading-none uppercase tracking-wide ${style.tag}`}>
-          {shortSourceName(item.source)}
-        </span>
+        {/* Bullet / source colour accent */}
+        <span className={`mt-1.5 w-2 h-2 rounded-full flex-shrink-0 ${
+          item.source.includes("660") || item.source.includes("CityNews") ? "bg-[#1D4ED8]" :
+          item.source.includes("CBC") ? "bg-[#CB2B2B]" :
+          item.source.includes("Global") ? "bg-emerald-600" :
+          "bg-amber-500"
+        }`} />
 
-        {/* Hook text */}
-        <span className="flex-1 min-w-0 text-xs font-semibold text-foreground/85 leading-snug line-clamp-1">
-          {hook}
-        </span>
+        <div className="flex-1 min-w-0">
+          {/* Source + timestamp inline */}
+          <div className="flex items-center gap-2 mb-0.5">
+            <span className={`text-[9px] font-black uppercase tracking-wide px-1.5 py-0.5 rounded ${style.tag}`}>
+              {shortSourceName(item.source)}
+            </span>
+            {item.pubDate && (
+              <span className="text-[9px] text-foreground/35">{formatPubDate(item.pubDate)}</span>
+            )}
+          </div>
+          {/* Hook sentence — substantive 1–2 sentence teaser */}
+          <p className="text-[11px] font-semibold text-foreground/85 leading-snug">
+            {hook}
+          </p>
+        </div>
 
-        {/* Timestamp */}
-        {item.pubDate && (
-          <span className="text-[9px] text-foreground/35 flex-shrink-0 pr-1">
-            {formatPubDate(item.pubDate)}
-          </span>
-        )}
-
-        {/* Expand chevron */}
+        {/* Arrow — rotates on open */}
         <ChevronRight
-          className={`w-3.5 h-3.5 flex-shrink-0 text-foreground/30 transition-transform duration-200 ${open ? "rotate-90" : ""}`}
+          className={`w-3.5 h-3.5 flex-shrink-0 mt-1.5 transition-transform duration-200 ${
+            open ? "rotate-90 text-[#E1251B]" : "text-foreground/30 group-hover:text-foreground/55"
+          }`}
         />
       </button>
 
-      {/* Expanded panel */}
+      {/* Expanded: full title + red CTA */}
       <AnimatePresence initial={false}>
-        {open && (
+        {open && hasMore && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.2, ease: "easeInOut" }}
+            transition={{ duration: 0.22, ease: [0.4, 0, 0.2, 1] }}
             className="overflow-hidden"
           >
-            <div className="px-3 pb-3 pt-0 border-t border-foreground/[0.06]">
-              {/* Full title */}
-              <p className="text-xs text-foreground/80 leading-relaxed mt-2.5">
+            <div className="pl-5 pb-3 pt-1">
+              <p className="text-[11px] text-foreground/70 leading-relaxed mb-2">
                 {item.title}
               </p>
-              {/* Red CTA link */}
               <a
                 href={item.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 mt-2.5 text-xs font-bold text-[#E1251B] hover:text-[#b91c1c] transition-colors group"
+                className="inline-flex items-center gap-1 text-[11px] font-bold text-[#E1251B] hover:underline"
+                onClick={(e) => e.stopPropagation()}
               >
                 Read full story
-                <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                <ArrowUpRight className="w-3 h-3" />
               </a>
-              {/* Source attribution */}
-              <p className="text-[9px] text-foreground/35 mt-1">via {item.source}</p>
+            </div>
+          </motion.div>
+        )}
+        {open && !hasMore && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.22, ease: [0.4, 0, 0.2, 1] }}
+            className="overflow-hidden"
+          >
+            <div className="pl-5 pb-3 pt-0">
+              <a
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-[11px] font-bold text-[#E1251B] hover:underline"
+                onClick={(e) => e.stopPropagation()}
+              >
+                Read full story
+                <ArrowUpRight className="w-3 h-3" />
+              </a>
             </div>
           </motion.div>
         )}
@@ -696,15 +742,15 @@ export function CalgaryPulsePanel() {
             <WeatherScene scene={scene} />
           </div>
 
-          {/* Top-left: frosted glass info strip */}
-          <div className="absolute top-3 left-3 right-3 z-10">
-            <div className="inline-flex flex-col gap-0.5 backdrop-blur-md bg-black/28 rounded-xl px-3 py-2 border border-white/10">
-              <p className="text-[9px] font-black uppercase tracking-[0.18em] text-white/55">Calgary, AB</p>
+          {/* Top-left: very light frosted info strip — nearly transparent */}
+          <div className="absolute top-3 left-3 z-10">
+            <div className="inline-flex flex-col gap-0.5 backdrop-blur-sm bg-black/[0.12] rounded-xl px-3 py-2 border border-white/[0.12]">
+              <p className="text-[9px] font-black uppercase tracking-[0.18em] text-white/70">Calgary, AB</p>
               <div className="flex items-baseline gap-2">
-                <span className="text-2xl font-black text-white leading-none drop-shadow">{weather.temp}°C</span>
-                <span className="text-xs font-semibold text-white/80">{getSeasonLabel(weather.temp, weather.wmoCode)}</span>
+                <span className="text-2xl font-black text-white leading-none" style={{ textShadow: "0 1px 6px rgba(0,0,0,0.45)" }}>{weather.temp}°C</span>
+                <span className="text-xs font-semibold text-white/90" style={{ textShadow: "0 1px 4px rgba(0,0,0,0.40)" }}>{getSeasonLabel(weather.temp, weather.wmoCode)}</span>
               </div>
-              <p className="text-[10px] text-white/60">
+              <p className="text-[10px] text-white/75" style={{ textShadow: "0 1px 3px rgba(0,0,0,0.35)" }}>
                 Feels {weather.feelsLike}°C &middot; {wmoToDesc(weather.wmoCode)}
               </p>
             </div>
@@ -817,44 +863,46 @@ export function CalgaryPulsePanel() {
         </AnimatePresence>
       </motion.div>
 
-      {/* ---- Calgary Headlines -------------------------------------------- */}
+      {/* ---- What's Happening in Calgary ---------------------------------- */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
       >
-        {/* Section header */}
-        <div className="flex items-center gap-2 mb-3 pb-2 border-b border-foreground/[0.06]">
-          <div className="w-6 h-6 flex-shrink-0 rounded-md bg-[#E1251B]/10 flex items-center justify-center">
-            <Radio className="w-3 h-3 text-[#E1251B]" />
+        {/* Coloured section header band */}
+        <div className="flex items-center justify-between px-3 py-2.5 rounded-xl bg-[#1D4ED8] dark:bg-[#1a3fa8] mb-3">
+          <div className="flex items-center gap-2">
+            <Radio className="w-3.5 h-3.5 text-white/80 flex-shrink-0" />
+            <p className="text-[11px] font-black text-white uppercase tracking-[0.14em]">
+              What&apos;s Happening in Calgary
+            </p>
           </div>
-          <p className="text-[10px] font-black text-foreground/70 uppercase tracking-widest flex-1">
-            Calgary Headlines
-          </p>
-          <span className="flex items-center gap-1 text-[9px] text-foreground/40">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse inline-block" />
+          <span className="flex items-center gap-1.5 text-[9px] text-white/65 font-semibold">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse inline-block" />
             Live
           </span>
         </div>
 
-        {/* Source pills */}
-        <div className="flex flex-wrap gap-1 mb-3">
+        {/* Source legend — compact inline row, no background pills */}
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 mb-3 px-1">
           {(["660 CityNews", "CBC Calgary", "Global News", "Calgary Herald"] as const).map((src) => {
-            const s = sourceBadgeStyle(src);
+            const dotColor =
+              src.includes("660") ? "bg-[#1D4ED8]" :
+              src.includes("CBC") ? "bg-[#CB2B2B]" :
+              src.includes("Global") ? "bg-emerald-600" : "bg-amber-500";
             return (
-              <span key={src} className={`text-[9px] font-bold px-2 py-0.5 rounded-full ${s.pill}`}>
+              <span key={src} className="flex items-center gap-1 text-[9px] text-foreground/45 font-medium">
+                <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${dotColor}`} />
                 {src}
               </span>
             );
           })}
         </div>
 
-        {/* Accordion headline list */}
-        <div className="space-y-1.5">
+        {/* Headline list — no card backgrounds, just divider lines */}
+        <div>
           {news.length === 0 ? (
-            <div className="flex items-center gap-2.5 p-3 rounded-xl border border-foreground/[0.08] bg-foreground/[0.03]">
-              <p className="text-xs text-foreground/45">Headlines unavailable — check back shortly.</p>
-            </div>
+            <p className="text-xs text-foreground/45 py-3 pl-5">Headlines unavailable — check back shortly.</p>
           ) : (
             news.map((item, i) => (
               <NewsAccordionItem key={item.link + i} item={item} index={i} />
