@@ -69,12 +69,19 @@ export interface ResourceNote {
   completed: boolean;
 }
 
+export interface WebLink {
+  label: string;
+  url: string;
+}
+
 export interface ChatMessage {
   id: string;
   role: "user" | "assistant";
   content: string;
   timestamp: Date;
   resources?: string[];
+  /** Live web / Google Maps / government search links the guide suggests. */
+  webLinks?: WebLink[];
 }
 
 export type TabType = "home" | "explore" | "ai" | "do-good" | "shortlist" | "profile";

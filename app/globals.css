@@ -214,23 +214,51 @@ p {
   letter-spacing: -0.01em;
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar — kept clearly visible so users can tell when a region
+   is scrollable. A tinted track + a solid branded-blue thumb give an obvious
+   affordance on every scrollable edge. */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 12px;
+  height: 12px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: color-mix(in srgb, var(--primary-dark) 8%, transparent);
+  border-radius: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--border-hover);
-  border-radius: 4px;
+  background: color-mix(in srgb, var(--primary-dark) 55%, transparent);
+  border-radius: 8px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--muted-foreground);
+  background: var(--primary-dark);
+  background-clip: padding-box;
+}
+
+/* Firefox: always show a visible thin scrollbar with a branded thumb. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--primary-dark) 55%, transparent) color-mix(in srgb, var(--primary-dark) 8%, transparent);
+}
+
+/* Opt-in helper: a slim always-visible scrollbar for inner panels. */
+.scrollbar-visible::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.scrollbar-visible::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--primary-dark) 60%, transparent);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+.scrollbar-visible::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-dark);
+  background-clip: padding-box;
 }
 
 .hide-scrollbar::-webkit-scrollbar {

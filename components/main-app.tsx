@@ -59,12 +59,12 @@ export default function MainApp() {
       {/* Desktop Sidebar */}
       <aside className="hidden lg:flex lg:w-[340px] lg:flex-col lg:fixed lg:inset-y-0 lg:z-50">
         <div className="flex grow flex-col overflow-y-auto border-r border-foreground/[0.06] bg-background/70 backdrop-blur-3xl">
-          {/* Logo Section - Large transparent brand lockup (no badge, no extra text) */}
-          <div className="px-6 pt-8 pb-6 flex justify-center">
+          {/* Logo Section - Compact transparent brand lockup (no badge, no extra text) */}
+          <div className="px-6 pt-6 pb-4 flex justify-center">
             <button
               onClick={goToLanding}
               aria-label="Go to Calgary Connect home page"
-              className="group relative w-full max-w-[220px] aspect-square flex-shrink-0 transition-transform duration-300 ease-out hover:scale-[1.03] active:scale-95 cursor-pointer"
+              className="group relative w-full max-w-[150px] aspect-square flex-shrink-0 transition-transform duration-300 ease-out hover:scale-[1.03] active:scale-95 cursor-pointer"
             >
               <RotatingLogo imgPadding="p-0" priority />
             </button>
@@ -268,8 +268,8 @@ export default function MainApp() {
                 className={`flex items-center justify-center gap-2 rounded-full transition-all duration-200 ${
                   active
                     ? item.highlight
-                      ? "border-t border-white/40 bg-gradient-to-b from-[#3B82F6] via-[#1D4ED8] to-[#0A2540] text-white ring-1 ring-inset ring-white/15 shadow-[0_4px_0_-1px_#071a33,0_8px_16px_-5px_rgba(29,78,216,0.5)] px-4 py-2.5"
-                      : "bg-[#1D4ED8]/[0.16] text-[#1D4ED8] px-4 py-2.5"
+                      ? "border-t border-white/40 bg-gradient-to-b from-[#F4493C] via-[#E1251B] to-[#B91C1C] text-white ring-1 ring-inset ring-white/15 shadow-[0_4px_0_-1px_#8f1410,0_8px_16px_-5px_rgba(225,37,27,0.55)] px-4 py-2.5"
+                      : "border-t border-white/30 bg-gradient-to-b from-[#F4493C] via-[#E1251B] to-[#B91C1C] text-white ring-1 ring-inset ring-white/15 shadow-[0_4px_0_-1px_#8f1410,0_8px_16px_-5px_rgba(225,37,27,0.5)] px-4 py-2.5"
                     : "text-foreground/55 px-3 py-2.5 active:scale-90"
                 }`}
               >

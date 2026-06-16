@@ -37,7 +37,7 @@ export default function DoGoodTab() {
               Give back to Calgary
             </span>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-[-0.02em] text-foreground text-balance leading-[1.05]">
-              Do good for <span className="text-[#0284c7]">your city</span>.
+              Do good for <span className="text-[#1D4ED8]">your city</span>.
             </h1>
             <p className="text-base md:text-lg text-foreground/70 leading-relaxed max-w-2xl text-pretty">
               Real, researched ways to help your neighbours — volunteer, donate, sponsor a family,
@@ -90,7 +90,7 @@ export default function DoGoodTab() {
       <section className="relative pb-28 md:pb-20 pt-4">
         <div className="max-w-[1100px] mx-auto px-6 md:px-8 lg:px-12">
           <div className="rounded-3xl bg-gradient-to-br from-[#0c2d4d] to-[#071a2e] p-8 md:p-12 text-center">
-            <HandHeart className="w-10 h-10 text-[#38BDF8] mx-auto mb-4" />
+            <HandHeart className="w-10 h-10 text-[#E1251B] mx-auto mb-4" />
             <h2 className="text-2xl md:text-3xl font-bold text-white text-balance mb-3">
               Calgary is built by neighbours helping neighbours.
             </h2>
