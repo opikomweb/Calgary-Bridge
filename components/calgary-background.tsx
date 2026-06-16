@@ -102,7 +102,7 @@ function CalgaryCTrain() {
   const RAIL = "M -260 60 C 170 28 440 150 760 138 S 1330 46 1720 8";
 
   return (
-    <div className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none overflow-hidden">
+    <div className="absolute bottom-24 left-0 right-0 h-40 md:bottom-0 md:h-48 pointer-events-none overflow-hidden">
       <svg
         className="absolute inset-0 w-full h-full"
         viewBox="0 0 1440 180"

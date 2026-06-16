@@ -194,7 +194,7 @@ export default function AITab() {
       </div>
 
       {/* Split Layout - Chat Left, Intelligence Right */}
-      <div className="flex h-[calc(100vh-140px)] lg:h-[calc(100vh-100px)]">
+      <div className="flex h-[calc(100dvh-128px)] lg:h-[calc(100vh-100px)]">
         {/* Left Side - AI Conversation (full on mobile, 60% on desktop) */}
         <div className="flex-1 flex flex-col min-w-0 lg:max-w-[65%]">
           <div className="flex-1 overflow-y-auto">

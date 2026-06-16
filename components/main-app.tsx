@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import { useAppStore } from "@/lib/store";
 import { translations } from "@/lib/data";
 import { Home, Compass, Smile, Heart, User, AlertTriangle, Shield, Menu, X } from "lucide-react";
 import { ThemeToggle } from "./theme-toggle";
+import { RotatingLogo } from "./rotating-logo";
 import { motion, AnimatePresence } from "framer-motion";
 import HomeTab from "./tabs/home-tab";
 import ExploreTab from "./tabs/explore-tab";
@@ -54,15 +54,9 @@ export default function MainApp() {
             <button
               onClick={goToLanding}
               aria-label="Go to Calgary Konnect home page"
-              className="relative w-[200px] h-[200px] flex-shrink-0 rounded-3xl overflow-hidden bg-card p-3 border border-border shadow-2xl shadow-sky-500/10 backdrop-blur-xl transition-all duration-300 hover:border-sky-400/30 hover:shadow-sky-500/20 hover:scale-[1.02] cursor-pointer"
+              className="relative w-[200px] h-[200px] flex-shrink-0 rounded-3xl overflow-hidden bg-white p-3 border border-border shadow-2xl shadow-sky-500/10 transition-all duration-300 hover:border-sky-400/40 hover:shadow-sky-500/20 hover:scale-[1.02] cursor-pointer"
             >
-              <Image
-                src="/calgary-connect-logo.png"
-                alt="Calgary Konnect"
-                fill
-                className="object-contain p-3"
-                priority
-              />
+              <RotatingLogo imgPadding="p-3" priority />
             </button>
           </div>
 
@@ -73,15 +67,15 @@ export default function MainApp() {
                 <li key={item.id}>
                   <button
                     onClick={() => setActiveTab(item.id)}
-                    className={`group flex w-full items-center gap-x-5 rounded-2xl px-6 py-5 text-lg font-medium transition-all duration-300 ${
+                    className={`group flex w-full items-center gap-x-5 rounded-2xl px-6 py-4 text-lg font-bold tracking-tight transition-all duration-300 ${
                       activeTab === item.id
                         ? item.highlight
                           ? "bg-gradient-to-r from-[#38BDF8] to-[#0284c7] text-white shadow-2xl shadow-sky-500/40"
-                          : "bg-foreground/[0.08] text-foreground border border-foreground/[0.12] shadow-xl shadow-black/20"
-                        : "text-foreground/50 hover:bg-foreground/[0.04] hover:text-foreground/80"
+                          : "bg-[#38BDF8]/[0.12] text-foreground border border-[#38BDF8]/40 shadow-lg shadow-sky-500/10"
+                        : "text-foreground/75 hover:bg-foreground/[0.06] hover:text-foreground"
                     }`}
                   >
-                    <item.icon className={`h-6 w-6 shrink-0 ${activeTab === item.id ? "" : "opacity-60"}`} />
+                    <item.icon className={`h-6 w-6 shrink-0 ${activeTab === item.id ? (item.highlight ? "" : "text-[#38BDF8]") : "opacity-70"}`} />
                     {item.label}
                   </button>
                 </li>
@@ -121,14 +115,8 @@ export default function MainApp() {
             aria-label="Go to Calgary Konnect home page"
             className="flex items-center gap-3"
           >
-            <div className="relative w-10 h-10 rounded-lg overflow-hidden bg-card p-0.5 border border-border">
-              <Image
-                src="/calgary-connect-logo.png"
-                alt="Calgary Konnect"
-                fill
-                className="object-contain p-0.5"
-                priority
-              />
+            <div className="relative w-10 h-10 rounded-lg overflow-hidden bg-white p-0.5 border border-border">
+              <RotatingLogo imgPadding="p-0.5" priority />
             </div>
             <div>
               <span className="text-base font-bold text-foreground">Calgary </span>
@@ -179,13 +167,15 @@ export default function MainApp() {
                       setActiveTab(item.id);
                       setMobileMenuOpen(false);
                     }}
-                    className={`flex w-full items-center gap-5 rounded-2xl px-6 py-5 text-lg font-medium transition-all ${
+                    className={`flex w-full items-center gap-5 rounded-2xl px-6 py-4 text-lg font-bold tracking-tight transition-all ${
                       activeTab === item.id
-                        ? "bg-foreground/[0.08] text-foreground border border-foreground/[0.12]"
-                        : "text-foreground/50 hover:bg-foreground/[0.04] hover:text-foreground/80"
+                        ? item.highlight
+                          ? "bg-gradient-to-r from-[#38BDF8] to-[#0284c7] text-white shadow-lg shadow-sky-500/30"
+                          : "bg-[#38BDF8]/[0.12] text-foreground border border-[#38BDF8]/40"
+                        : "text-foreground/75 hover:bg-foreground/[0.06] hover:text-foreground"
                     }`}
                   >
-                    <item.icon className="h-6 w-6" />
+                    <item.icon className={`h-6 w-6 ${activeTab === item.id && !item.highlight ? "text-[#38BDF8]" : ""}`} />
                     {item.label}
                   </button>
                 ))}
@@ -272,7 +262,7 @@ export default function MainApp() {
               }`}
             >
               <item.icon className="h-5 w-5" />
-              <span className="text-[10px] font-medium">{item.shortLabel}</span>
+              <span className="text-[10px] font-bold tracking-tight">{item.shortLabel}</span>
             </button>
           ))}
         </div>
