@@ -152,17 +152,15 @@ export default function LandingPage() {
       >
         <div className="max-w-[1400px] mx-auto px-5 md:px-8">
           <div className="flex items-center justify-between h-16 md:h-20">
-            {/* Logo — full brand lockup, large & clearly visible.
-                The artwork already contains the "Calgary Connect" wordmark, so
-                no separate text label is shown. A subtle glassy badge keeps the
-                dark logo crisp against the hero. */}
+            {/* Logo — full transparent brand lockup (white wordmark for the dark hero).
+                The artwork already contains the "Calgary Connect" wordmark. */}
             <button
               onClick={() => enterApp("home")}
               aria-label="Calgary Connect — go to home"
               className="flex items-center transition-transform duration-300 hover:scale-105 active:scale-95"
             >
-              <div className="relative h-14 md:h-[72px] aspect-[1.62] flex-shrink-0 rounded-2xl bg-[#0a1424]/55 ring-1 ring-white/15 backdrop-blur-md shadow-lg shadow-black/30 overflow-hidden">
-                <RotatingLogo imgPadding="p-1.5" priority />
+              <div className="relative h-16 w-20 md:h-[88px] md:w-28 flex-shrink-0 drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)]">
+                <RotatingLogo imgPadding="p-0" variant="dark" priority />
               </div>
             </button>
 
