@@ -15,8 +15,7 @@ import {
   Users,
   X,
   Building2,
-  Globe,
-  Sparkles
+  Globe
 } from "lucide-react";
 
 interface FooterProps {

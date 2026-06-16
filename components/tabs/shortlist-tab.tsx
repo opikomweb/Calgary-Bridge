@@ -17,11 +17,11 @@ export default function ShortlistTab() {
       {/* Page Header */}
       <div className="px-5 md:px-8 pt-6 pb-4 md:pt-10 md:pb-6">
         <div className="flex items-center gap-3">
-          <Heart className="h-5 w-5 md:h-6 md:w-6 text-pink-500" />
+          <Heart className="h-5 w-5 md:h-6 md:w-6 text-[#E1251B]" />
           <h2 className="text-xl md:text-2xl font-bold">
             {translations.shortlist?.[activeLanguage] || "Shortlist"}
           </h2>
-          <span className="rounded-full bg-pink-500/20 px-2.5 py-1 text-sm font-semibold text-pink-500">
+          <span className="rounded-full bg-[#E1251B]/15 px-2.5 py-1 text-sm font-semibold text-[#E1251B]">
             {bookmarkedItems.length}
           </span>
         </div>

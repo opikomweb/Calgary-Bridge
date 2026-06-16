@@ -98,7 +98,7 @@
   --secondary: #E1251B;
   --secondary-foreground: #ffffff;
 
-  --accent: #FBBF24;
+  --accent: #38BDF8;
   --accent-foreground: #07111F;
 
   --surface: rgba(255, 255, 255, 0.06);
@@ -316,7 +316,7 @@ p {
 }
 
 .text-gradient-gold {
-  background: linear-gradient(135deg, #FBBF24 0%, #fcd34d 100%);
+  background: linear-gradient(135deg, #38BDF8 0%, #0284c7 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -419,11 +419,11 @@ p {
 
 /* Card glow colors */
 .glow-blue { --card-glow: rgba(56, 189, 248, 0.3); }
-.glow-gold { --card-glow: rgba(251, 191, 36, 0.3); }
+.glow-gold { --card-glow: rgba(2, 132, 199, 0.3); }
 .glow-red { --card-glow: rgba(225, 37, 27, 0.3); }
-.glow-green { --card-glow: rgba(34, 197, 94, 0.3); }
-.glow-purple { --card-glow: rgba(168, 85, 247, 0.3); }
-.glow-cyan { --card-glow: rgba(6, 182, 212, 0.3); }
+.glow-green { --card-glow: rgba(56, 189, 248, 0.3); }
+.glow-purple { --card-glow: rgba(2, 132, 199, 0.3); }
+.glow-cyan { --card-glow: rgba(56, 189, 248, 0.3); }
 
 /* Focus states */
 .focus-ring:focus-visible {

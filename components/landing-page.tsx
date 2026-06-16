@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import {
-  ArrowRight, Sparkles, Search, Menu, X, ChevronDown,
+  ArrowRight, Compass, Search, Menu, X, ChevronDown,
   Home, Briefcase, Heart, Users, AlertTriangle, Building2, Baby,
   GraduationCap, Bus, Scale, HandHeart, Accessibility, Utensils, Brain, MapPin,
 } from "lucide-react";
@@ -121,22 +121,22 @@ export default function LandingPage() {
       id: "jobs",
       solution: "Looking for Work?",
       preview: ["Resume help", "Hiring companies", "Job fairs"],
-      image: "linear-gradient(135deg, #78350f 0%, #b45309 50%, #92400e 100%)",
-      accent: "#FBBF24",
+      image: "linear-gradient(135deg, #0a2540 0%, #0e3a63 50%, #0a2540 100%)",
+      accent: "#38BDF8",
     },
     {
       id: "health",
       solution: "Get Healthcare Access",
       preview: ["Walk-in clinics", "Family doctors", "Mental health"],
-      image: "linear-gradient(135deg, #064e3b 0%, #047857 50%, #065f46 100%)",
-      accent: "#34D399",
+      image: "linear-gradient(135deg, #3a0a0a 0%, #6b1410 50%, #3a0a0a 100%)",
+      accent: "#E1251B",
     },
     {
       id: "newcomer",
       solution: "New to Calgary?",
       preview: ["Settlement services", "Language classes", "Community connections"],
-      image: "linear-gradient(135deg, #164e63 0%, #0891b2 50%, #155e75 100%)",
-      accent: "#22D3EE",
+      image: "linear-gradient(135deg, #071a2e 0%, #0c2d4d 50%, #071a2e 100%)",
+      accent: "#38BDF8",
     },
   ];
 
@@ -577,9 +577,9 @@ export default function LandingPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FBBF24]/10 border border-[#FBBF24]/20 mb-6 md:mb-8">
-                <Sparkles className="w-4 h-4 text-[#FBBF24]" />
-                <span className="text-sm font-medium text-[#FBBF24]">AI-Powered Guidance</span>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#38BDF8]/10 border border-[#38BDF8]/20 mb-6 md:mb-8">
+                <Compass className="w-4 h-4 text-[#38BDF8]" />
+                <span className="text-sm font-medium text-[#38BDF8]">AI-Powered Guidance</span>
               </div>
 
               <h2 className="text-[clamp(28px,5vw,48px)] font-bold tracking-tight mb-4 md:mb-6 text-balance">
@@ -661,7 +661,7 @@ export default function LandingPage() {
                 </div>
               </div>
 
-              <div className="absolute -inset-4 bg-gradient-to-r from-[#38BDF8]/20 via-transparent to-[#FBBF24]/10 rounded-3xl blur-2xl -z-10" />
+              <div className="absolute -inset-4 bg-gradient-to-r from-[#38BDF8]/20 via-transparent to-[#0284c7]/10 rounded-3xl blur-2xl -z-10" />
             </motion.div>
           </div>
         </div>

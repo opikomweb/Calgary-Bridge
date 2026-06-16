@@ -425,7 +425,7 @@ export const calgaryResources: Resource[] = [
   // Layer 2: Specialized Employment Supports (Newcomer-focused)
   {
     id: "centre-for-newcomers-employment",
-    category: ["jobs", "newcomer"],
+    category: ["newcomer", "jobs"],
     userTypes: ["newcomer"],
     title: {
       en: "Centre for Newcomers - Employment Services",
@@ -462,7 +462,7 @@ export const calgaryResources: Resource[] = [
   },
   {
     id: "ccis-employment",
-    category: ["jobs", "newcomer"],
+    category: ["newcomer", "jobs"],
     userTypes: ["newcomer"],
     title: {
       en: "CCIS Employment Services",
@@ -497,7 +497,7 @@ export const calgaryResources: Resource[] = [
   },
   {
     id: "criec",
-    category: ["jobs", "newcomer"],
+    category: ["newcomer", "jobs"],
     userTypes: ["newcomer"],
     title: {
       en: "Calgary Region Immigrant Employment Council (CRIEC)",
@@ -531,7 +531,7 @@ export const calgaryResources: Resource[] = [
   },
   {
     id: "ciwa-employment",
-    category: ["jobs", "newcomer", "family"],
+    category: ["newcomer", "family", "jobs"],
     userTypes: ["newcomer", "family"],
     title: {
       en: "CIWA - Employment Programs for Women",
@@ -669,7 +669,7 @@ export const calgaryResources: Resource[] = [
   },
   {
     id: "ties-employment",
-    category: ["jobs", "newcomer"],
+    category: ["newcomer", "jobs"],
     userTypes: ["newcomer"],
     title: {
       en: "TIES - Employment Programs",
@@ -2089,7 +2089,7 @@ export const calgaryResources: Resource[] = [
       fr: "Aide gratuite pour connecter les familles à des services de garde de qualité.",
       tl: "Libreng tulong para makahanap ng quality, licensed child care.",
       es: "Ayuda gratuita para conectar a las familias con cuidado infantil de calidad.",
-      ar: "مساعدة مجانية لربط العائلات برعاية أطفا�� مرخصة وجيدة.",
+      ar: "مساعدة مجانية لربط العائلات برعاية أطفا���� مرخصة وجيدة.",
       zh: "免费帮助家庭联系优质持牌托儿服务。",
     },
     summary: {
@@ -2457,7 +2457,7 @@ export const calgaryResources: Resource[] = [
       fr: "Locations Kijiji Calgary",
       tl: "Kijiji Calgary Rentals",
       es: "Alquileres Kijiji Calgary",
-      ar: "إيجار��ت Kijiji كالجاري",
+      ar: "إيج��ر��ت Kijiji كالجاري",
       zh: "Kijiji 卡尔加里租房",
     },
     description: {
@@ -3200,7 +3200,7 @@ export const calgaryResources: Resource[] = [
       tl: "Ang energy at construction sectors ng Alberta ay nangangailangan ng welder buong taon.",
       es: "Los sectores de energía y construcción de Alberta necesitan soldadores todo el año.",
       ar: "تحتاج قطاعات الطاقة والبناء في ألبرتا إلى لحّامين على مدار العام.",
-      zh: "艾伯塔的能源、管道和建筑行业全年需要焊工，尤其是即将开展的管道项目���",
+      zh: "艾伯塔的能源、管道和建筑行业全年需要焊工，尤其是即将开展的管��项目���",
     },
     servicesOffered: [
       "Welding & pipefitting careers",

@@ -28,7 +28,7 @@ const popularQuestions = [
 ];
 
 const calgaryInsights = [
-  { icon: TrendingUp, label: "340+ jobs posted this week", chip: "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 ring-1 ring-emerald-500/30" },
+  { icon: TrendingUp, label: "340+ jobs posted this week", chip: "bg-sky-500/15 text-sky-600 dark:text-sky-400 ring-1 ring-sky-500/30" },
   { icon: Home, label: "12 housing programs available", chip: "bg-sky-500/15 text-sky-600 dark:text-sky-400 ring-1 ring-sky-500/30" },
   { icon: Calendar, label: "Free tax clinics open now", chip: "bg-[#E12521]/12 text-[#E12521] ring-1 ring-[#E12521]/30" },
 ];
@@ -144,7 +144,7 @@ export default function AITab() {
       <div className="absolute inset-0 pointer-events-none">
         {/* Radial gradients */}
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-radial from-[#38BDF8]/8 via-transparent to-transparent" />
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-radial from-[#FBBF24]/5 via-transparent to-transparent" />
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-radial from-[#0284c7]/6 via-transparent to-transparent" />
         
         {/* Calgary Tower silhouette - right side */}
         <svg className="absolute right-16 top-1/4 w-24 h-64 opacity-[0.04]" viewBox="0 0 60 200">
@@ -427,7 +427,7 @@ export default function AITab() {
               className="mb-14"
             >
               <h3 className="text-xl font-bold mb-8 flex items-center gap-4">
-                <TrendingUp className="w-6 h-6 text-[#FBBF24]" />
+                <TrendingUp className="w-6 h-6 text-[#0284c7]" />
                 Popular This Week
               </h3>
               <div className="space-y-5">

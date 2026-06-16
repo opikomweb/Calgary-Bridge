@@ -453,7 +453,7 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
                 <div
                   className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${
                     isCompleted
-                      ? "border-emerald-400 bg-emerald-400"
+                      ? "border-sky-400 bg-sky-400"
                       : "border-[var(--foreground-muted)]"
                   }`}
                 >

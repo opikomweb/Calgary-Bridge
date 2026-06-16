@@ -76,11 +76,11 @@ export default function ProfileTab() {
                   <p className="text-xs text-[var(--foreground-muted)] mt-0.5">Saved</p>
                 </div>
                 <div className="text-center px-4 py-3 md:px-5 md:py-4 rounded-xl md:rounded-2xl bg-[var(--card)] backdrop-blur-md border border-[var(--border)] flex-1 md:flex-initial">
-                  <p className="text-xl md:text-2xl font-bold text-[#22c55e]">{priorities.length}</p>
+                  <p className="text-xl md:text-2xl font-bold text-[#E1251B]">{priorities.length}</p>
                   <p className="text-xs text-[var(--foreground-muted)] mt-0.5">Priorities</p>
                 </div>
                 <div className="text-center px-4 py-3 md:px-5 md:py-4 rounded-xl md:rounded-2xl bg-[var(--card)] backdrop-blur-md border border-[var(--border)] flex-1 md:flex-initial">
-                  <p className="text-xl md:text-2xl font-bold text-[#f59e0b]">
+                  <p className="text-xl md:text-2xl font-bold text-[#0284c7]">
                     {languageNames[activeLanguage]?.slice(0, 2).toUpperCase() || "EN"}
                   </p>
                   <p className="text-xs text-[var(--foreground-muted)] mt-0.5">Language</p>

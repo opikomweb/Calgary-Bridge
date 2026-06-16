@@ -194,7 +194,7 @@ function TenantRights({ onBack }: { onBack: () => void }) {
         {rights.map((right, index) => (
           <div key={index} className="glass-card rounded-xl p-4">
             <h4 className="font-semibold mb-2 flex items-center gap-2">
-              <CheckCircle className="w-4 h-4 text-green-500" />
+              <CheckCircle className="w-4 h-4 text-sky-500" />
               {right.title}
             </h4>
             <p className="text-sm text-[var(--foreground-muted)]">{right.content}</p>
@@ -285,7 +285,7 @@ function RentChecker({ onBack, onResult }: { onBack: () => void; onResult: (type
                 onClick={() => setNoticeGiven("yes")}
                 className={`flex-1 py-3 rounded-xl font-medium transition-all ${
                   noticeGiven === "yes"
-                    ? "bg-green-500/20 text-green-500 border border-green-500/30"
+                    ? "bg-sky-500/20 text-sky-500 border border-sky-500/30"
                     : "bg-[var(--surface)] border border-[var(--border)]"
                 }`}
               >
@@ -316,13 +316,13 @@ function RentChecker({ onBack, onResult }: { onBack: () => void; onResult: (type
         <div className="space-y-4">
           <div className={`p-6 rounded-xl text-center ${
             result === "valid" 
-              ? "bg-green-500/15 border border-green-500/30" 
+              ? "bg-sky-500/15 border border-sky-500/30" 
               : "bg-red-500/15 border border-red-500/30"
           }`}>
             {result === "valid" ? (
               <>
-                <CheckCircle className="w-12 h-12 mx-auto mb-3 text-green-500" />
-                <h4 className="text-lg font-semibold text-green-500 mb-2">Appears Valid</h4>
+                <CheckCircle className="w-12 h-12 mx-auto mb-3 text-sky-500" />
+                <h4 className="text-lg font-semibold text-sky-500 mb-2">Appears Valid</h4>
                 <p className="text-sm text-[var(--foreground-muted)]">
                   Based on your answers, this rent increase appears to follow Alberta rules.
                   The increase is {(((Number(newRent) - Number(currentRent)) / Number(currentRent)) * 100).toFixed(1)}%.
@@ -425,8 +425,8 @@ function LeaseHelp({ onBack }: { onBack: () => void }) {
         ))}
       </div>
 
-      <div className="mt-6 p-4 rounded-xl bg-[#f59e0b]/10 border border-[#f59e0b]/30">
-        <p className="text-sm text-[#f59e0b] font-medium mb-1">Tip</p>
+      <div className="mt-6 p-4 rounded-xl bg-[#E1251B]/10 border border-[#E1251B]/30">
+        <p className="text-sm text-[#E1251B] font-medium mb-1">Tip</p>
         <p className="text-sm text-[var(--foreground-muted)]">
           Always read your entire lease before signing. If something is unclear, ask for clarification in writing.
         </p>
