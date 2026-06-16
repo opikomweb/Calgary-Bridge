@@ -1,10 +1,11 @@
 /**
  * /api/calgary-pulse
  *
- * Aggregates live data from three public, no-key Canadian data sources:
+ * Aggregates live data from five public, no-key Canadian data sources:
  *   1. Open-Meteo         — weather (temp, humidity, wind, UV, weather code)
  *   2. Environment Canada — weather alerts/watches (Calgary ATOM feed ab12)
  *   3. MSC GeoMet-OGC     — Air Quality Health Index (AQHI) for Calgary
+ *   4. Multiple Calgary news RSS feeds — top headlines from trusted local media
  *
  * Cache: 10 minutes (Next.js revalidation). The client also refreshes
  * sequentially every 10 minutes via polling.
@@ -92,13 +93,111 @@ async function fetchAQHI(): Promise<{ value: number; risk: string; label: string
   return { value: Math.round(value * 10) / 10, risk, label };
 }
 
-// ---- Handler -----------------------------------------------------------------
+// ---- 4. Calgary news RSS feeds ---------------------------------------------
+
+type NewsItem = {
+  title: string;
+  link: string;
+  pubDate: string;
+  source: string;
+  sourceUrl: string;
+};
+
+const NEWS_FEEDS: { name: string; url: string; siteUrl: string }[] = [
+  {
+    name: "660 CityNews",
+    url: "https://www.660citynews.com/feed/",
+    siteUrl: "https://calgary.citynews.ca",
+  },
+  {
+    name: "CBC Calgary",
+    url: "https://www.cbc.ca/cmlink/rss-canada-calgary",
+    siteUrl: "https://www.cbc.ca/news/canada/calgary",
+  },
+  {
+    name: "Global News",
+    url: "https://globalnews.ca/calgary/feed/",
+    siteUrl: "https://globalnews.ca/calgary/",
+  },
+  {
+    name: "Calgary Herald",
+    url: "https://calgaryherald.com/feed/",
+    siteUrl: "https://calgaryherald.com",
+  },
+];
+
+/** Parse a single RSS 2.0 feed and return up to `limit` items. */
+function parseRSS(xml: string, sourceName: string, siteUrl: string, limit = 3): NewsItem[] {
+  const items: NewsItem[] = [];
+  // Match <item> blocks
+  const itemRx = /<item[^>]*>([\s\S]*?)<\/item>/g;
+  // Strip CDATA wrappers and HTML tags
+  const clean = (s: string) =>
+    s.replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1").replace(/<[^>]+>/g, "").trim();
+
+  let m: RegExpExecArray | null;
+  while ((m = itemRx.exec(xml)) !== null && items.length < limit) {
+    const block = m[1];
+    const titleM = /<title[^>]*>([\s\S]*?)<\/title>/.exec(block);
+    const linkM = /<link>([\s\S]*?)<\/link>/.exec(block) ??
+      /<link[^/].*?href="([^"]+)"/.exec(block);
+    const dateM = /<pubDate>([\s\S]*?)<\/pubDate>/.exec(block) ??
+      /<dc:date>([\s\S]*?)<\/dc:date>/.exec(block);
+
+    const title = clean(titleM?.[1] ?? "").replace(/&amp;/g, "&").replace(/&#039;/g, "'").replace(/&quot;/g, '"').replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+    const link  = clean(linkM?.[1] ?? "");
+    const pubDate = clean(dateM?.[1] ?? "");
+
+    if (!title || !link) continue;
+    // Skip obvious feed-level title duplicates
+    if (title === sourceName || title === "CBC | Calgary News") continue;
+
+    items.push({ title, link, pubDate, source: sourceName, sourceUrl: siteUrl });
+  }
+  return items;
+}
+
+async function fetchOneFeed(feed: (typeof NEWS_FEEDS)[0]): Promise<NewsItem[]> {
+  try {
+    const res = await fetch(feed.url, {
+      next: { revalidate: 600 },
+      headers: {
+        "User-Agent": "Mozilla/5.0 (compatible; CalgaryKonnect/1.0)",
+        Accept: "application/rss+xml, application/xml, text/xml, */*",
+      },
+      redirect: "follow",
+    });
+    if (!res.ok) return [];
+    const xml = await res.text();
+    return parseRSS(xml, feed.name, feed.siteUrl, 2);
+  } catch {
+    return [];
+  }
+}
+
+async function fetchNews(): Promise<NewsItem[]> {
+  const results = await Promise.allSettled(NEWS_FEEDS.map(fetchOneFeed));
+  const all: NewsItem[] = [];
+  for (const r of results) {
+    if (r.status === "fulfilled") all.push(...r.value);
+  }
+  // Sort by pubDate descending, most-recent first
+  all.sort((a, b) => {
+    const da = a.pubDate ? new Date(a.pubDate).getTime() : 0;
+    const db = b.pubDate ? new Date(b.pubDate).getTime() : 0;
+    return db - da;
+  });
+  return all.slice(0, 8); // top 8 across all sources
+}
+
+// ---- Handler ----------------------------------------------------------------
 export async function GET() {
   try {
-    const [weather, alerts, aqhi] = await Promise.allSettled([
+    const [weather, alerts, aqhi, news] = await Promise.allSettled([
       fetchWeather(),
       fetchAlerts(),
       fetchAQHI(),
+      fetchNews(),
     ]);
 
     return NextResponse.json(
@@ -106,6 +205,7 @@ export async function GET() {
         weather:  weather.status  === "fulfilled" ? weather.value  : null,
         alerts:   alerts.status   === "fulfilled" ? alerts.value   : [],
         aqhi:     aqhi.status     === "fulfilled" ? aqhi.value     : null,
+        news:     news.status     === "fulfilled" ? news.value     : [],
         fetchedAt: new Date().toISOString(),
       },
       {

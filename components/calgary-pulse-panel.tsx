@@ -19,6 +19,7 @@ import {
   Wind, Droplets, Sun, AlertTriangle, Activity,
   ExternalLink, RefreshCw, Thermometer, Eye,
   Cloud, CloudRain, CloudSnow, CloudSun, Loader2,
+  Newspaper, Radio,
 } from "lucide-react";
 
 // ---- Types ------------------------------------------------------------------
@@ -39,6 +40,14 @@ type AlertItem = {
   link: string;
 };
 
+type NewsItem = {
+  title: string;
+  link: string;
+  pubDate: string;
+  source: string;
+  sourceUrl: string;
+};
+
 type AQHIData = {
   value: number;
   risk: string;
@@ -49,6 +58,7 @@ type PulseData = {
   weather: WeatherData | null;
   alerts: AlertItem[];
   aqhi: AQHIData | null;
+  news: NewsItem[];
   fetchedAt: string;
 };
 
@@ -129,6 +139,32 @@ function alertIconColour(title: string): string {
   return "text-foreground/50";
 }
 
+function sourceBadgeStyle(source: string): string {
+  if (source.includes("660") || source.includes("CityNews")) return "bg-[#1D4ED8]/15 text-[#1D4ED8] dark:text-[#60A5FA]";
+  if (source.includes("CBC")) return "bg-red-600/12 text-red-700 dark:text-red-400";
+  if (source.includes("Global")) return "bg-emerald-600/12 text-emerald-700 dark:text-emerald-400";
+  if (source.includes("Herald")) return "bg-amber-500/12 text-amber-700 dark:text-amber-400";
+  return "bg-foreground/[0.08] text-foreground/60";
+}
+
+function formatPubDate(raw: string): string {
+  if (!raw) return "";
+  try {
+    const d = new Date(raw);
+    if (isNaN(d.getTime())) return "";
+    const now = Date.now();
+    const diff = now - d.getTime();
+    const m = Math.floor(diff / 60000);
+    if (m < 2) return "Just now";
+    if (m < 60) return `${m}m ago`;
+    const h = Math.floor(m / 60);
+    if (h < 24) return `${h}h ago`;
+    return d.toLocaleDateString("en-CA", { month: "short", day: "numeric" });
+  } catch {
+    return "";
+  }
+}
+
 function timeAgo(iso: string): string {
   const diff = Date.now() - new Date(iso).getTime();
   const m = Math.floor(diff / 60000);
@@ -149,6 +185,12 @@ function PulseSkeleton() {
       <div className="space-y-3">
         {[1, 2].map((i) => (
           <div key={i} className="h-20 rounded-2xl bg-foreground/[0.05]" />
+        ))}
+      </div>
+      <div className="h-6 rounded-lg bg-foreground/[0.06] w-32" />
+      <div className="space-y-2.5">
+        {[1, 2, 3, 4].map((i) => (
+          <div key={i} className="h-16 rounded-xl bg-foreground/[0.04]" />
         ))}
       </div>
     </div>
@@ -196,7 +238,7 @@ export function CalgaryPulsePanel() {
 
   if (loading) return <PulseSkeleton />;
 
-  const { weather, alerts, aqhi } = data ?? { weather: null, alerts: [], aqhi: null };
+  const { weather, alerts, aqhi, news } = data ?? { weather: null, alerts: [], aqhi: null, news: [] };
 
   return (
     <div className="space-y-5">
@@ -353,9 +395,80 @@ export function CalgaryPulsePanel() {
         </AnimatePresence>
       </motion.div>
 
+      {/* ---- Calgary News Headlines --------------------------------------- */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+      >
+        {/* Section header */}
+        <div className="flex items-center gap-2 mb-3">
+          <div className="w-7 h-7 flex-shrink-0 rounded-lg bg-[#E1251B]/10 flex items-center justify-center">
+            <Radio className="w-3.5 h-3.5 text-[#E1251B]" />
+          </div>
+          <h3 className="text-sm font-bold text-foreground/80 uppercase tracking-wider flex-1">
+            Calgary Headlines
+          </h3>
+          <span className="text-[10px] text-foreground/40 flex items-center gap-1">
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            Live
+          </span>
+        </div>
+
+        {/* Source legend pills */}
+        <div className="flex flex-wrap gap-1.5 mb-3">
+          {["660 CityNews", "CBC Calgary", "Global News", "Calgary Herald"].map((src) => (
+            <span key={src} className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${sourceBadgeStyle(src)}`}>
+              {src}
+            </span>
+          ))}
+        </div>
+
+        {/* Headlines list */}
+        <div className="space-y-2">
+          {news.length === 0 ? (
+            <div className="flex items-center gap-3 p-4 rounded-xl border border-foreground/[0.08] bg-foreground/[0.03]">
+              <Newspaper className="w-4 h-4 text-foreground/30 flex-shrink-0" />
+              <p className="text-sm text-foreground/50">Headlines unavailable — check back shortly.</p>
+            </div>
+          ) : (
+            news.map((item, i) => (
+              <motion.a
+                key={item.link + i}
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, x: -6 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.32 + i * 0.04 }}
+                className="group flex items-start gap-3 p-3 xl:p-3.5 rounded-xl border border-foreground/[0.07] bg-foreground/[0.02] hover:bg-foreground/[0.06] hover:border-foreground/[0.15] transition-all duration-200"
+              >
+                {/* Source badge */}
+                <span className={`mt-0.5 text-[9px] font-bold px-1.5 py-0.5 rounded flex-shrink-0 leading-none ${sourceBadgeStyle(item.source)}`}>
+                  {item.source.replace("Calgary", "").replace("CityNews", "City").trim()}
+                </span>
+
+                {/* Title + meta */}
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-semibold text-foreground leading-snug line-clamp-2 group-hover:text-[#1D4ED8] dark:group-hover:text-[#60A5FA] transition-colors">
+                    {item.title}
+                  </p>
+                  {item.pubDate && (
+                    <p className="text-[10px] text-foreground/45 mt-1">
+                      {formatPubDate(item.pubDate)}
+                    </p>
+                  )}
+                </div>
+                <ExternalLink className="w-3 h-3 text-foreground/25 group-hover:text-foreground/60 flex-shrink-0 mt-1 transition-colors" />
+              </motion.a>
+            ))
+          )}
+        </div>
+      </motion.div>
+
       {/* ---- Source attribution ------------------------------------------- */}
       <p className="text-[10px] text-foreground/30 text-center leading-relaxed pt-1">
-        Data: Open-Meteo · Environment Canada · MSC GeoMet-OGC · Auto-refreshes every 10 min
+        Data: Open-Meteo · Environment Canada · MSC GeoMet-OGC · 660 CityNews · CBC · Global News · Calgary Herald · Auto-refreshes every 10 min
       </p>
 
     </div>
