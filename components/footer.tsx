@@ -1,4 +1,5 @@
 "use client";
+// Footer v2 — uses CalgaryConnectLogo (Supabase auth branch)
 
 import React, { useState } from "react";
 import Image from "next/image";

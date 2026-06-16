@@ -59,7 +59,7 @@ export default function MainApp() {
 
       {/* Desktop Sidebar */}
       <aside className="hidden lg:flex lg:w-[340px] lg:flex-col lg:fixed lg:inset-y-0 lg:z-50">
-        <div className="flex grow flex-col overflow-y-auto border-r border-foreground/[0.08] bg-background/95 backdrop-blur-3xl shadow-sm">
+        <div className="flex grow flex-col overflow-y-auto border-r border-foreground/[0.08] bg-background shadow-sm">
           {/* Logo Section */}
           <div className="px-5 pt-5 pb-4 border-b border-foreground/[0.06]">
             <button

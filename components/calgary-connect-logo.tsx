@@ -1,13 +1,13 @@
 "use client";
 
 /**
- * CalgaryConnectLogo
+ * CalgaryConnectLogo — v2
  *
  * Inline SVG brand mark matching the reference design:
- *   – Calgary Tower (deep red / crimson) in foreground
- *   – Arch bridge (deep blue) behind the tower
- *   – Subtle wave swoosh (blue) at the base
- *   – Wordmark: "Calgary" (deep navy) + "Connect" (Calgary red), same size, one line
+ *   - Calgary Tower (deep red / crimson) in foreground
+ *   - Arch bridge (deep blue) behind the tower
+ *   - Subtle wave swoosh (blue) at the base
+ *   - Wordmark: "Calgary" (deep navy / white in dark mode) + "Connect" (Calgary red)
  *
  * Usage:
  *   <CalgaryConnectLogo size="sm" />   // icon-only for very small slots
