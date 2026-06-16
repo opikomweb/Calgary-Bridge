@@ -183,7 +183,7 @@ export default function AITab() {
                     className="mx-auto mb-6 flex h-20 w-20 md:h-24 md:w-24 items-center justify-center"
                   >
                     <Image
-                      src="/ikonnect-guide-avatar.png"
+                      src="/askonnect-avatar.png"
                       alt="Askonnect"
                       width={96}
                       height={96}
@@ -252,7 +252,7 @@ export default function AITab() {
                             <User className="h-5 w-5 text-white" />
                           ) : (
                             <Image
-                              src="/ikonnect-guide-avatar.png"
+                              src="/askonnect-avatar.png"
                               alt="Askonnect"
                               width={44}
                               height={44}
@@ -329,7 +329,7 @@ export default function AITab() {
                     >
                       <div className="flex h-10 w-10 md:h-11 md:w-11 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl md:rounded-2xl">
                         <Image
-                          src="/ikonnect-guide-avatar.png"
+                          src="/askonnect-avatar.png"
                           alt="Askonnect"
                           width={44}
                           height={44}

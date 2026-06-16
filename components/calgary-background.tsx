@@ -5,7 +5,7 @@ import Image from "next/image";
 // Clean, calm Calgary background with a premium skyline accent.
 //
 // Base is a soft, light "Calgary blue" gradient — the same calm surface the
-// iKonnect Guide chat sits on — so dark and deep-blue text stays sharp and
+// Askonnect chat sits on — so dark and deep-blue text stays sharp and
 // readable on every tab. A single, refined Calgary skyline silhouette is
 // anchored along the very bottom edge as a subtle brand watermark. It is kept
 // faint (and uses multiply blending to drop its white backdrop) so it adds a

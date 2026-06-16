@@ -84,7 +84,7 @@ export default function MainApp() {
                       <item.icon className="h-5 w-5 shrink-0" strokeWidth={activeTab === item.id ? 2.3 : 2} />
                     ) : (
                       <Image
-                        src="/ikonnect-guide-avatar.png"
+                        src="/askonnect-avatar.png"
                         alt=""
                         width={20}
                         height={20}
@@ -188,7 +188,7 @@ export default function MainApp() {
                       <item.icon className="h-5 w-5 shrink-0" strokeWidth={activeTab === item.id ? 2.3 : 2} />
                     ) : (
                       <Image
-                        src="/ikonnect-guide-avatar.png"
+                        src="/askonnect-avatar.png"
                         alt=""
                         width={20}
                         height={20}
@@ -288,7 +288,7 @@ export default function MainApp() {
                 {active && item.highlight ? (
                   <div className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-[#E1251B] text-white shadow-md shadow-red-700/30">
                     <Image
-                      src="/ikonnect-guide-avatar.png"
+                      src="/askonnect-avatar.png"
                       alt=""
                       width={22}
                       height={22}
@@ -302,7 +302,7 @@ export default function MainApp() {
                       <item.icon className="h-6 w-6 shrink-0" strokeWidth={2.3} />
                     ) : (
                       <Image
-                        src="/ikonnect-guide-avatar.png"
+                        src="/askonnect-avatar.png"
                         alt=""
                         width={22}
                         height={22}
@@ -315,7 +315,7 @@ export default function MainApp() {
                   <item.icon className="h-6 w-6 shrink-0" strokeWidth={1.8} />
                 ) : (
                   <Image
-                    src="/ikonnect-guide-avatar.png"
+                    src="/askonnect-avatar.png"
                     alt=""
                     width={22}
                     height={22}

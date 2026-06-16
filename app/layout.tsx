@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     "housing",
     "jobs",
     "community",
-    "iKonnect Guide",
+    "Askonnect",
     "tourism",
     "things to do in Calgary",
   ],

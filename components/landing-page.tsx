@@ -252,7 +252,7 @@ export default function LandingPage() {
                 className="flex items-center gap-2 pl-1.5 pr-4 py-1.5 rounded-full text-sm font-bold uppercase tracking-wide text-white/90 hover:text-white hover:bg-white/[0.1] drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)] transition-all"
               >
                 <Image
-                  src="/ikonnect-guide-avatar.png"
+                  src="/askonnect-avatar.png"
                   alt=""
                   width={28}
                   height={28}
@@ -347,7 +347,7 @@ export default function LandingPage() {
                   className="w-full flex items-center gap-2.5 px-3 py-3 mt-1 rounded-xl text-base font-bold uppercase tracking-wide text-white/90 hover:bg-white/[0.05] transition-all"
                 >
                   <Image
-                    src="/ikonnect-guide-avatar.png"
+                    src="/askonnect-avatar.png"
                     alt=""
                     width={28}
                     height={28}
@@ -514,7 +514,7 @@ export default function LandingPage() {
               className="btn-secondary w-full sm:w-auto px-8 md:px-10 py-4 md:py-5 rounded-2xl flex items-center justify-center gap-3 text-base md:text-lg font-semibold"
             >
                 <Image
-                  src="/ikonnect-guide-avatar.png"
+                  src="/askonnect-avatar.png"
                   alt=""
                   width={28}
                   height={28}
@@ -658,7 +658,7 @@ export default function LandingPage() {
                 className="btn-primary px-7 md:px-8 py-4 rounded-2xl flex items-center gap-3 text-base md:text-lg font-semibold"
               >
                 <Image
-                  src="/ikonnect-guide-avatar.png"
+                  src="/askonnect-avatar.png"
                   alt=""
                   width={28}
                   height={28}
@@ -686,7 +686,7 @@ export default function LandingPage() {
                   <div className="flex gap-3">
               <div className="relative w-8 h-8 rounded-full overflow-hidden ring-1 ring-white/20 flex-shrink-0">
                 <Image
-                  src="/ikonnect-guide-avatar.png"
+                  src="/askonnect-avatar.png"
                   alt="Askonnect"
                   fill
                   className="object-cover"
