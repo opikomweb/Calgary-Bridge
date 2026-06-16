@@ -139,7 +139,7 @@ export default function LandingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#07111F] overflow-x-hidden">
+    <div className="dark min-h-screen bg-[#07111F] text-white overflow-x-hidden">
       {/* ========== GLASSY STICKY HEADER ========== */}
       <header
         className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
