@@ -16,7 +16,7 @@ import {
   DollarSign, 
   ChevronDown, 
   ChevronUp,
-  Sparkles,
+  Gem,
   CheckCircle,
   Calendar,
   Users,
@@ -34,10 +34,10 @@ interface ResourceCardProps {
 }
 
 const costLabels: Record<string, { label: string; color: string }> = {
-  "free": { label: "Free", color: "text-emerald-400 bg-emerald-500/15" },
+  "free": { label: "Free", color: "text-sky-400 bg-sky-500/15" },
   "low-cost": { label: "Low Cost", color: "text-sky-400 bg-sky-500/15" },
-  "sliding-scale": { label: "Sliding Scale", color: "text-amber-400 bg-amber-500/15" },
-  "paid": { label: "Paid", color: "text-slate-400 bg-slate-500/15" },
+  "sliding-scale": { label: "Sliding Scale", color: "text-foreground/70 bg-foreground/[0.08]" },
+  "paid": { label: "Paid", color: "text-foreground/70 bg-foreground/[0.08]" },
 };
 
 export default function ResourceCard({ resource, showNotes = false, variant = "default", onReport, onClaimBusiness }: ResourceCardProps) {
@@ -86,8 +86,8 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
                 </span>
               ))}
               {resource.hiddenGem && (
-                <span className="px-2.5 py-1 md:px-3 md:py-1.5 rounded-full text-xs font-semibold bg-purple-500/15 text-purple-400 flex items-center gap-1">
-                  <Sparkles className="w-3 h-3" />
+                <span className="px-2.5 py-1 md:px-3 md:py-1.5 rounded-full text-xs font-semibold bg-[#E1251B]/12 text-[#E1251B] flex items-center gap-1">
+                  <Gem className="w-3 h-3" />
                   <span className="hidden sm:inline">Hidden Gem</span>
                 </span>
               )}
@@ -101,7 +101,7 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
                 onClick={() => toggleBookmark(resource.id)}
                 className={`rounded-lg md:rounded-xl p-2 md:p-2.5 transition-all ${
                   isBookmarked
-                    ? "bg-pink-500/20 text-pink-400"
+                    ? "bg-[#E1251B]/15 text-[#E1251B]"
                     : "bg-foreground/[0.06] text-[var(--foreground-muted)] hover:text-foreground hover:bg-foreground/[0.1]"
                 }`}
               >
@@ -187,11 +187,23 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
                 href={googleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 md:gap-2 rounded-xl md:rounded-2xl bg-amber-500/15 px-3 md:px-4 py-2 md:py-2.5 text-sm font-semibold text-amber-400 transition-all hover:bg-amber-500/25 active:scale-95"
+                className="flex items-center gap-1.5 md:gap-2 rounded-xl md:rounded-2xl bg-foreground/[0.06] border border-foreground/[0.08] px-3 md:px-4 py-2 md:py-2.5 text-sm font-semibold text-foreground transition-all hover:bg-foreground/[0.1] active:scale-95"
               >
                 <MapPin className="h-4 w-4" />
                 <span className="hidden sm:inline">Directions</span>
                 <span className="sm:hidden">Map</span>
+              </a>
+            )}
+            {resource.mapUrl && (
+              <a
+                href={resource.mapUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 md:gap-2 rounded-xl md:rounded-2xl bg-sky-500/15 px-3 md:px-4 py-2 md:py-2.5 text-sm font-semibold text-sky-400 transition-all hover:bg-sky-500/25 active:scale-95"
+              >
+                <MapPin className="h-4 w-4" />
+                <span className="hidden sm:inline">Search on Maps</span>
+                <span className="sm:hidden">Maps</span>
               </a>
             )}
             {resource.website && (
@@ -235,14 +247,14 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
               </span>
             ))}
             {resource.featured && (
-              <span className="px-2.5 py-1 md:px-3 md:py-1.5 rounded-full text-xs font-semibold bg-amber-500/15 text-amber-400 flex items-center gap-1">
+              <span className="px-2.5 py-1 md:px-3 md:py-1.5 rounded-full text-xs font-semibold bg-[#E1251B]/12 text-[#E1251B] flex items-center gap-1">
                 <Star className="w-3 h-3 fill-current" />
                 <span className="hidden sm:inline">Featured</span>
               </span>
             )}
             {resource.hiddenGem && (
-              <span className="px-2.5 py-1 md:px-3 md:py-1.5 rounded-full text-xs font-semibold bg-purple-500/15 text-purple-400 flex items-center gap-1">
-                <Sparkles className="w-3 h-3" />
+              <span className="px-2.5 py-1 md:px-3 md:py-1.5 rounded-full text-xs font-semibold bg-[#E1251B]/12 text-[#E1251B] flex items-center gap-1">
+                <Gem className="w-3 h-3" />
                 <span className="hidden sm:inline">Hidden Gem</span>
               </span>
             )}
@@ -255,7 +267,7 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
             onClick={() => toggleBookmark(resource.id)}
             className={`flex-shrink-0 rounded-lg md:rounded-xl p-2 md:p-2.5 transition-all ${
               isBookmarked
-                ? "bg-pink-500/20 text-pink-400"
+                ? "bg-[#E1251B]/15 text-[#E1251B]"
                 : "bg-foreground/[0.06] text-[var(--foreground-muted)] hover:text-foreground hover:bg-foreground/[0.1]"
             }`}
           >
@@ -343,7 +355,7 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
                     {resource.servicesOffered && resource.servicesOffered.length > 0 && (
                       <div>
                         <h4 className="text-base font-bold mb-4 flex items-center gap-2">
-                          <CheckCircle className="w-5 h-5 text-emerald-400" />
+                          <CheckCircle className="w-5 h-5 text-sky-400" />
                           Services Offered
                         </h4>
                         <div className="flex flex-wrap gap-3">
@@ -419,10 +431,21 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
               href={googleMapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 rounded-2xl bg-amber-500/15 px-7 py-4 text-base font-bold text-amber-400 transition-all hover:bg-amber-500/25 active:scale-95"
+              className="flex items-center gap-3 rounded-2xl bg-foreground/[0.06] border border-foreground/[0.08] px-7 py-4 text-base font-bold text-foreground transition-all hover:bg-foreground/[0.1] active:scale-95"
             >
               <MapPin className="h-5 w-5" />
               Directions
+            </a>
+          )}
+          {resource.mapUrl && (
+            <a
+              href={resource.mapUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 rounded-2xl bg-sky-500/15 px-7 py-4 text-base font-bold text-sky-400 transition-all hover:bg-sky-500/25 active:scale-95"
+            >
+              <MapPin className="h-5 w-5" />
+              Search on Google Maps
             </a>
           )}
           {resource.website && (
@@ -446,14 +469,14 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
                 onClick={() => toggleResourceComplete(resource.id)}
                 className={`flex items-center gap-3 rounded-2xl px-6 py-4 text-base font-bold transition-all active:scale-95 ${
                   isCompleted
-                    ? "bg-emerald-500/20 text-emerald-400"
+                    ? "bg-sky-500/20 text-sky-400"
                     : "bg-foreground/[0.06] border border-foreground/[0.08] text-[var(--foreground-muted)] hover:text-foreground"
                 }`}
               >
                 <div
                   className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${
                     isCompleted
-                      ? "border-emerald-400 bg-emerald-400"
+                      ? "border-sky-400 bg-sky-400"
                       : "border-[var(--foreground-muted)]"
                   }`}
                 >

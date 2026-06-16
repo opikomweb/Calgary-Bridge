@@ -1,17 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 
-const inter = Inter({
+// Poppins — clean, geometric sans-serif used across the whole product
+// for maximum legibility and a consistent, professional look.
+const poppins = Poppins({
   subsets: ["latin"],
-  variable: "--font-sans",
-  display: "swap",
-});
-
-const plusJakarta = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  variable: "--font-heading",
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-poppins",
   display: "swap",
 });
 
@@ -28,7 +25,9 @@ export const metadata: Metadata = {
     "housing",
     "jobs",
     "community",
-    "Calgary Bridge AI",
+    "iKonnect Guide",
+    "tourism",
+    "things to do in Calgary",
   ],
   icons: {
     icon: "/calgary-connect-logo.png",
@@ -59,7 +58,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="bg-background" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${plusJakarta.variable} font-sans antialiased bg-background text-foreground`}
+        className={`${poppins.variable} font-sans antialiased bg-background text-foreground`}
       >
         <ThemeProvider
           attribute="class"

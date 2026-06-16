@@ -7,7 +7,8 @@ import { resources } from "@/lib/data";
 import { 
   Search, ChevronDown, X, Home, Briefcase, Heart, Users, 
   AlertTriangle, Building2, Baby, GraduationCap, Bus,
-  Scale, HandHeart, Accessibility, Utensils, Brain, Check
+  Scale, HandHeart, Accessibility, Utensils, Brain, Check, Truck, MapPin,
+  Laptop, Package, Store, Sprout, Wrench
 } from "lucide-react";
 import ResourceCard from "../resource-card";
 import LiveResults from "../live-results";
@@ -29,7 +30,14 @@ const allCategories: { id: ResourceCategory | "all"; label: string; icon: React.
   { id: "transit", label: "Transit", icon: Bus },
   { id: "education", label: "Education", icon: GraduationCap },
   { id: "legal", label: "Legal Help", icon: Scale },
-  { id: "business", label: "Small Business", icon: Building2 },
+  { id: "business", label: "Business & Licensing", icon: Building2 },
+  { id: "workspace", label: "Workspaces", icon: Laptop },
+  { id: "storage", label: "Storage Facilities", icon: Package },
+  { id: "ethnic-market", label: "Cultural & Ethnic Stores", icon: Store },
+  { id: "farmers-market", label: "Farmers Markets", icon: Sprout },
+  { id: "essentials", label: "Local Essentials", icon: Wrench },
+  { id: "tourism", label: "Tourists & Visitors", icon: MapPin },
+  { id: "logistics", label: "Shipping & Logistics", icon: Truck },
   { id: "volunteering", label: "Volunteering", icon: HandHeart },
   { id: "community", label: "Community", icon: Users },
 ];
@@ -49,24 +57,24 @@ const heroCategories = [
     icon: Briefcase, 
     label: "Jobs & Career",
     stat: "340+ openings",
-    accentColor: "#FBBF24",
-    bgGradient: "from-[#2d2408] to-[#1a1505]",
+    accentColor: "#38BDF8",
+    bgGradient: "from-[#0c2d4d] to-[#071a2e]",
   },
   { 
     id: "healthcare" as ResourceCategory, 
     icon: Heart, 
     label: "Healthcare",
     stat: "24/7 available",
-    accentColor: "#34D399",
-    bgGradient: "from-[#0d2d24] to-[#071a16]",
+    accentColor: "#38BDF8",
+    bgGradient: "from-[#0c2d4d] to-[#071a2e]",
   },
   { 
     id: "newcomer" as ResourceCategory, 
     icon: Users, 
     label: "Newcomer Services",
     stat: "10 organizations",
-    accentColor: "#22D3EE",
-    bgGradient: "from-[#082d36] to-[#051a20]",
+    accentColor: "#38BDF8",
+    bgGradient: "from-[#0c2d4d] to-[#071a2e]",
   },
 ];
 
@@ -89,19 +97,25 @@ export default function ExploreTab() {
 
   const currentCategoryInfo = allCategories.find(c => c.id === activeCategory) || allCategories[0];
 
+  // Quick-launch hero cards only on the default view (no category, no search).
+  // Extracted to a boolean so it doesn't narrow `activeCategory` to "all".
+  const showHeroCards = activeCategory === "all" && !searchQuery.trim();
+
   return (
     <div className="min-h-screen relative">
 
       {/* ========== PAGE HEADER ========== */}
-      <section className="relative pt-12 pb-8 md:pt-20 md:pb-12 lg:pt-24 lg:pb-16">
+      <section className="relative pt-6 pb-6 md:pt-20 md:pb-12 lg:pt-24 lg:pb-16">
         <div className="max-w-[1200px] mx-auto px-5 md:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-[clamp(32px,6vw,56px)] font-bold tracking-[-0.02em] leading-[1.1] mb-4">
-              Explore Resources
+            <h1 className="heading-accent text-[clamp(32px,6vw,56px)] font-bold tracking-[-0.02em] leading-[1.1] mb-4">
+              <span>
+                Explore <span className="text-calgary-red">Resources</span>
+              </span>
             </h1>
             <p className="text-base md:text-lg text-foreground/45 max-w-xl leading-relaxed">
               Every verified Calgary service and program, searchable and filterable.
@@ -185,7 +199,12 @@ export default function ExploreTab() {
         </div>
       </section>
 
-      {/* ========== HERO CATEGORY CARDS - GLASSY PREMIUM ========== */}
+      {/* ========== HERO CATEGORY CARDS - GLASSY PREMIUM ==========
+          Quick-launch shortcuts only on the default Explore view. Once a
+          category is selected (e.g. via the dropdown / side menu) or a search
+          is active, these are hidden so results show immediately — the same
+          categories already live in the dropdown above. */}
+      {showHeroCards && (
       <section className="relative pb-8 md:pb-12">
         <div className="max-w-[1200px] mx-auto px-5 md:px-8">
           <motion.div
@@ -203,16 +222,7 @@ export default function ExploreTab() {
                 whileHover={{ scale: 1.02, y: -4 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setActiveCategory(category.id)}
-                className={`relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-br ${category.bgGradient} backdrop-blur-xl border border-foreground/[0.06] p-4 md:p-6 lg:p-8 transition-all group ${
-                  activeCategory === category.id 
-                    ? "ring-2 ring-white/20 shadow-xl border-foreground/[0.12]" 
-                    : "hover:border-foreground/[0.1] hover:shadow-lg"
-                }`}
-                style={{
-                  boxShadow: activeCategory === category.id 
-                    ? `0 0 40px -10px ${category.accentColor}30`
-                    : undefined
-                }}
+                className={`relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-br ${category.bgGradient} backdrop-blur-xl border border-foreground/[0.06] p-4 md:p-6 lg:p-8 transition-all group hover:border-foreground/[0.1] hover:shadow-lg`}
               >
                 {/* Accent Glow */}
                 <div 
@@ -252,6 +262,7 @@ export default function ExploreTab() {
           </motion.div>
         </div>
       </section>
+      )}
 
       {/* ========== ACTIVE FILTER & RESULTS COUNT ========== */}
       <section className="relative pb-4 md:pb-6">

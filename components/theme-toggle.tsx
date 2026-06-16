@@ -29,7 +29,7 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
         {mounted && isDark ? (
           <Moon className="h-4 w-4 text-[#7dd3fc]" />
         ) : (
-          <Sun className="h-4 w-4 text-[#0284c7] dark:text-[#FBBF24]" />
+          <Sun className="h-4 w-4 text-[#0284c7] dark:text-[#7dd3fc]" />
         )}
       </span>
       <span className="hidden sm:inline">{mounted && isDark ? "Night" : "Day"}</span>

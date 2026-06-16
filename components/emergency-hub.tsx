@@ -62,26 +62,26 @@ export default function EmergencyHub({ onClose }: EmergencyHubProps) {
         {/* Winter Safety Tips */}
         <div className="mt-6 rounded-xl bg-white/10 p-4">
           <div className="mb-3 flex items-center gap-2">
-            <Snowflake className="h-5 w-5 text-cyan-300" />
+            <Snowflake className="h-5 w-5 text-sky-300" />
             <h3 className="font-semibold text-white">
               {uiText.winterSafety?.[activeLanguage] || "Winter Safety Tips"}
             </h3>
           </div>
           <ul className="space-y-2 text-sm text-white/80">
             <li key="tip-1" className="flex items-start gap-2">
-              <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-cyan-300" />
+              <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-sky-300" />
               Layer clothing and cover extremities in cold weather
             </li>
             <li key="tip-2" className="flex items-start gap-2">
-              <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-cyan-300" />
+              <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-sky-300" />
               Check weather forecasts before traveling
             </li>
             <li key="tip-3" className="flex items-start gap-2">
-              <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-cyan-300" />
+              <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-sky-300" />
               Keep emergency supplies in your vehicle
             </li>
             <li key="tip-4" className="flex items-start gap-2">
-              <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-cyan-300" />
+              <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-sky-300" />
               Know the signs of frostbite and hypothermia
             </li>
           </ul>

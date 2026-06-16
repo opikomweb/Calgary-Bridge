@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { useAppStore } from "@/lib/store";
 import { resources } from "@/lib/data";
-import { Search, ArrowRight, Sparkles, MapPin, ChevronRight, Home, Briefcase, Heart, Users } from "lucide-react";
+import { Search, ArrowRight, MessagesSquare, MapPin, ChevronRight, Home, Briefcase, Heart, Users } from "lucide-react";
 import ResourceCard from "../resource-card";
 import { searchResources } from "@/lib/search";
 
@@ -32,8 +32,8 @@ export default function HomeTab() {
       icon: Briefcase,
       solution: "Looking for Work?",
       description: "Resume building, job fairs, skills training, career counseling, and hiring companies",
-      bgGradient: "from-[#2d2408] to-[#1a1505]",
-      accent: "#FBBF24",
+      bgGradient: "from-[#0c2d4d] to-[#071a2e]",
+      accent: "#38BDF8",
       stats: "340+ openings",
     },
     {
@@ -41,8 +41,8 @@ export default function HomeTab() {
       icon: Heart,
       solution: "Get Healthcare Access",
       description: "Walk-in clinics, family doctors, mental health support, and Alberta Health registration",
-      bgGradient: "from-[#0d2d24] to-[#071a16]",
-      accent: "#34D399",
+      bgGradient: "from-[#0c2d4d] to-[#071a2e]",
+      accent: "#38BDF8",
       stats: "24/7 available",
     },
     {
@@ -50,8 +50,8 @@ export default function HomeTab() {
       icon: Users,
       solution: "New to Calgary?",
       description: "Settlement services, language classes, community connections, and integration support",
-      bgGradient: "from-[#082d36] to-[#051a20]",
-      accent: "#22D3EE",
+      bgGradient: "from-[#0c2d4d] to-[#071a2e]",
+      accent: "#38BDF8",
       stats: "10 orgs",
     },
   ];
@@ -68,7 +68,7 @@ export default function HomeTab() {
     <div className="min-h-screen relative">
 
       {/* ========== HERO SEARCH ========== */}
-      <section className="relative pt-16 pb-16 md:pt-24 md:pb-20 lg:pt-32 lg:pb-28">
+      <section className="relative pt-8 pb-10 md:pt-24 md:pb-20 lg:pt-32 lg:pb-28">
         <div className="max-w-[720px] mx-auto px-6 md:px-8 lg:px-12 relative z-10">
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
@@ -76,16 +76,16 @@ export default function HomeTab() {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="text-[clamp(32px,7vw,56px)] font-bold tracking-[-0.02em] leading-[1.1]"
           >
-            What do you need?
+            What do you <span className="text-calgary-red">need?</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15, duration: 0.6 }}
-            className="text-sm md:text-base text-foreground/40 mt-4 md:mt-6 mb-8 md:mb-10 leading-relaxed"
+            className="text-base md:text-lg text-foreground/70 mt-4 md:mt-6 mb-8 md:mb-10 leading-relaxed"
           >
-            Search for housing, jobs, healthcare, or ask the AI anything about Calgary.
+            Search for housing, jobs, healthcare, or ask iKonnect anything about Calgary.
           </motion.p>
 
           {/* Search bar */}
@@ -117,7 +117,7 @@ export default function HomeTab() {
                 <button
                   key={q}
                   onClick={() => setSearchQuery(q)}
-                  className="px-3 md:px-4 py-2 md:py-2.5 rounded-lg md:rounded-xl bg-foreground/[0.04] border border-foreground/[0.08] text-xs md:text-sm text-foreground/50 hover:bg-foreground/[0.08] hover:border-foreground/[0.15] hover:text-foreground/80 transition-all duration-300"
+                  className="px-3.5 md:px-4 py-2 md:py-2.5 rounded-lg md:rounded-xl bg-foreground/[0.06] border border-foreground/[0.12] text-sm font-medium text-foreground/75 hover:bg-[#38BDF8]/10 hover:border-[#38BDF8]/40 hover:text-foreground transition-all duration-300"
                 >
                   {q}
                 </button>
@@ -188,8 +188,8 @@ export default function HomeTab() {
       {!searchQuery && (
         <>
           {/* ========== SOLUTION PATHWAYS ========== */}
-          <section className="px-6 md:px-8 lg:px-12 pb-16 md:pb-24 max-w-[1200px] mx-auto relative z-10">
-            <div className="pb-16 md:pb-20 lg:pb-24">
+          <section className="px-6 md:px-8 lg:px-12 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
+            <div className="pb-8 md:pb-10">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -197,7 +197,7 @@ export default function HomeTab() {
                 className="text-center"
               >
                 <p className="text-xs font-semibold text-[#38BDF8] uppercase tracking-[0.15em] mb-3">Start Here</p>
-                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight">What most Calgarians need.</h2>
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight">What most <span className="text-calgary-red">Calgarians</span> need.</h2>
               </motion.div>
             </div>
 
@@ -286,11 +286,11 @@ export default function HomeTab() {
                   whileHover={{ rotate: 5 }}
                   className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br from-[#38BDF8] to-[#0284c7] flex items-center justify-center flex-shrink-0 shadow-xl shadow-sky-500/30"
                 >
-                  <Sparkles className="w-8 h-8 md:w-10 md:h-10 text-white" />
+                  <MessagesSquare className="w-8 h-8 md:w-10 md:h-10 text-white" />
                 </motion.div>
                 
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs font-bold text-sky-200 uppercase tracking-[0.15em] mb-2">Calgary Bridge AI</p>
+                  <p className="text-xs font-bold text-sky-200 uppercase tracking-[0.15em] mb-2">iKonnect Guide</p>
                   <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2 leading-tight">
                     Get personalized guidance
                   </h3>
@@ -305,8 +305,8 @@ export default function HomeTab() {
           </section>
 
           {/* ========== SPECIALIZED PATHWAYS ========== */}
-          <section className="px-6 md:px-8 lg:px-12 pt-8 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
-            <div className="pb-16 md:pb-20 lg:pb-24">
+          <section className="px-6 md:px-8 lg:px-12 pt-4 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
+            <div className="pb-8 md:pb-10">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -341,10 +341,10 @@ export default function HomeTab() {
           </section>
 
           {/* ========== FEATURED RESOURCES ========== */}
-          <section className="px-6 md:px-8 lg:px-12 pt-8 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
-            <div className="pb-16 md:pb-20 lg:pb-24">
+          <section className="px-6 md:px-8 lg:px-12 pt-4 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
+            <div className="pb-8 md:pb-10">
               <div className="text-center">
-                <p className="text-xs font-bold text-[#FBBF24] uppercase tracking-[0.15em] mb-3">Recommended</p>
+                <p className="text-xs font-bold text-[#0284c7] uppercase tracking-[0.15em] mb-3">Recommended</p>
                 <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">Top resources this month.</h2>
                 <button
                   onClick={() => setActiveTab("explore")}
@@ -371,10 +371,10 @@ export default function HomeTab() {
 
           {/* ========== HIDDEN GEMS ========== */}
           {hiddenGems.length > 0 && (
-            <section className="px-6 md:px-8 lg:px-12 pt-8 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
-              <div className="pb-16 md:pb-20 lg:pb-24">
+            <section className="px-6 md:px-8 lg:px-12 pt-4 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
+              <div className="pb-8 md:pb-10">
                 <div className="text-center">
-                  <p className="text-xs font-bold text-[#a855f7] uppercase tracking-[0.15em] mb-3">Hidden Gems</p>
+                  <p className="text-xs font-bold text-[#0284c7] uppercase tracking-[0.15em] mb-3">Hidden Gems</p>
                   <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">Programs most people miss.</h2>
                   <button
                     onClick={() => setActiveTab("explore")}
@@ -404,8 +404,8 @@ export default function HomeTab() {
           <section className="px-6 md:px-8 lg:px-12 pb-24 md:pb-32 max-w-[1200px] mx-auto relative z-10">
             <div className="pb-16 md:pb-20 lg:pb-24">
               <div className="flex items-center gap-2 mb-3">
-                <MapPin className="w-4 h-4 text-emerald-400" />
-                <p className="text-xs font-bold text-emerald-400 uppercase tracking-[0.15em]">Near You</p>
+                <MapPin className="w-4 h-4 text-[#0284c7]" />
+                <p className="text-xs font-bold text-[#0284c7] uppercase tracking-[0.15em]">Near You</p>
               </div>
               <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">Services in your area.</h2>
             </div>
@@ -426,7 +426,7 @@ export default function HomeTab() {
                 >
                   <div className="flex items-start justify-between gap-3 mb-3">
                     <h3 className="text-base md:text-lg font-bold text-foreground leading-tight">{place.name}</h3>
-                    <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-400/15 text-emerald-400 flex-shrink-0">
+                    <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-[#0284c7]/15 text-[#0284c7] flex-shrink-0">
                       {place.tag}
                     </span>
                   </div>

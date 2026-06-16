@@ -2,11 +2,12 @@
 
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import {
-  ArrowRight, Sparkles, Smile, Search, Menu, X, ChevronDown,
+  ArrowRight, Compass, Search, Menu, X, ChevronDown,
   Home, Briefcase, Heart, Users, AlertTriangle, Building2, Baby,
-  GraduationCap, Bus, Scale, HandHeart, Accessibility, Utensils, Brain,
+  GraduationCap, Bus, Scale, HandHeart, Accessibility, Utensils, Brain, MapPin,
 } from "lucide-react";
 import Image from "next/image";
+import { RotatingLogo } from "@/components/rotating-logo";
 import { useAppStore } from "@/lib/store";
 import { useRef, useState, useEffect } from "react";
 import Footer from "@/components/footer";
@@ -37,7 +38,7 @@ export default function LandingPage() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const enterApp = (tab: "home" | "ai" | "explore") => {
+  const enterApp = (tab: "home" | "ai" | "explore" | "do-good") => {
     setHasOnboarded(true);
     setCurrentPage("main");
     setActiveTab(tab);
@@ -100,6 +101,7 @@ export default function LandingPage() {
         { label: "Education", category: "education", icon: GraduationCap, desc: "Schools, classes & upgrading" },
         { label: "Legal Help", category: "legal", icon: Scale, desc: "Free legal clinics & rights" },
         { label: "Transit", category: "transit", icon: Bus, desc: "Getting around Calgary" },
+        { label: "Tourists & Visitors", category: "tourism", icon: MapPin, desc: "Sights, hotels, dining & tours" },
         { label: "Small Business", category: "business", icon: Building2, desc: "Start & grow a business" },
         { label: "Volunteering", category: "volunteering", icon: HandHeart, desc: "Give back locally" },
       ],
@@ -119,22 +121,22 @@ export default function LandingPage() {
       id: "jobs",
       solution: "Looking for Work?",
       preview: ["Resume help", "Hiring companies", "Job fairs"],
-      image: "linear-gradient(135deg, #78350f 0%, #b45309 50%, #92400e 100%)",
-      accent: "#FBBF24",
+      image: "linear-gradient(135deg, #0a2540 0%, #0e3a63 50%, #0a2540 100%)",
+      accent: "#38BDF8",
     },
     {
       id: "health",
       solution: "Get Healthcare Access",
       preview: ["Walk-in clinics", "Family doctors", "Mental health"],
-      image: "linear-gradient(135deg, #064e3b 0%, #047857 50%, #065f46 100%)",
-      accent: "#34D399",
+      image: "linear-gradient(135deg, #3a0a0a 0%, #6b1410 50%, #3a0a0a 100%)",
+      accent: "#E1251B",
     },
     {
       id: "newcomer",
       solution: "New to Calgary?",
       preview: ["Settlement services", "Language classes", "Community connections"],
-      image: "linear-gradient(135deg, #164e63 0%, #0891b2 50%, #155e75 100%)",
-      accent: "#22D3EE",
+      image: "linear-gradient(135deg, #071a2e 0%, #0c2d4d 50%, #071a2e 100%)",
+      accent: "#38BDF8",
     },
   ];
 
@@ -150,21 +152,16 @@ export default function LandingPage() {
       >
         <div className="max-w-[1400px] mx-auto px-5 md:px-8">
           <div className="flex items-center justify-between h-16 md:h-20">
-            {/* Logo */}
-            <button onClick={() => enterApp("home")} className="flex items-center gap-3">
-              <div className="relative w-10 h-10 md:w-11 md:h-11 rounded-xl overflow-hidden bg-gradient-to-br from-[#0c1829] to-[#071119] p-0.5 border border-white/10">
-                <Image
-                  src="/calgary-connect-logo.png"
-                  alt="Calgary Konnect logo"
-                  fill
-                  className="object-contain p-0.5"
-                  priority
-                />
+            {/* Logo — full transparent brand lockup (white wordmark for the dark hero).
+                The artwork already contains the "Calgary Connect" wordmark. */}
+            <button
+              onClick={() => enterApp("home")}
+              aria-label="Calgary Connect — go to home"
+              className="flex items-center transition-transform duration-300 hover:scale-105 active:scale-95"
+            >
+              <div className="relative h-16 w-20 md:h-[88px] md:w-28 flex-shrink-0 drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)]">
+                <RotatingLogo imgPadding="p-0" variant="dark" priority />
               </div>
-              <span className="text-base md:text-lg font-bold tracking-tight">
-                <span className="text-white">Calgary </span>
-                <span className="text-[#38BDF8]">Konnect</span>
-              </span>
             </button>
 
             {/* Desktop nav — professional grouped dropdowns */}
@@ -177,15 +174,15 @@ export default function LandingPage() {
                 >
                   <button
                     onClick={() => setOpenMenu((v) => (v === group.label ? null : group.label))}
-                    className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                    className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wide drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)] transition-all ${
                       openMenu === group.label
-                        ? "text-white bg-white/[0.08]"
-                        : "text-white/60 hover:text-white hover:bg-white/[0.06]"
+                        ? "text-white bg-white/[0.12]"
+                        : "text-white/90 hover:text-white hover:bg-white/[0.1]"
                     }`}
                   >
                     {group.label}
                     <ChevronDown
-                      className={`w-3.5 h-3.5 transition-transform ${openMenu === group.label ? "rotate-180" : ""}`}
+                      className={`w-4 h-4 transition-transform ${openMenu === group.label ? "rotate-180" : ""}`}
                     />
                   </button>
 
@@ -223,10 +220,24 @@ export default function LandingPage() {
 
               <button
                 onClick={handleAskAI}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/[0.06] transition-all"
+                className="flex items-center gap-2 pl-1.5 pr-4 py-1.5 rounded-full text-sm font-bold uppercase tracking-wide text-white/90 hover:text-white hover:bg-white/[0.1] drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)] transition-all"
               >
-                <Smile className="w-3.5 h-3.5 text-[#FBBF24]" />
+                <Image
+                  src="/ikonnect-guide-avatar.png"
+                  alt=""
+                  width={28}
+                  height={28}
+                  className="w-7 h-7 rounded-full ring-1 ring-white/25 flex-shrink-0"
+                />
                 iKonnect Guide
+              </button>
+
+              <button
+                onClick={() => enterApp("do-good")}
+                className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wide text-white/90 hover:text-white hover:bg-white/[0.1] drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)] transition-all"
+              >
+                <HandHeart className="w-4 h-4 text-[#EF4444]" />
+                Do Good
               </button>
             </nav>
 
@@ -264,7 +275,7 @@ export default function LandingPage() {
                   <div key={group.label} className="border-b border-white/[0.05] last:border-0 pb-1">
                     <button
                       onClick={() => setMobileGroup((v) => (v === group.label ? null : group.label))}
-                      className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-base font-semibold text-white/85 hover:bg-white/[0.05] transition-all"
+                      className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-base font-bold uppercase tracking-wide text-white/90 hover:bg-white/[0.05] transition-all"
                     >
                       {group.label}
                       <ChevronDown
@@ -304,9 +315,15 @@ export default function LandingPage() {
                     setMobileMenuOpen(false);
                     handleAskAI();
                   }}
-                  className="w-full flex items-center gap-2 px-4 py-3 mt-1 rounded-xl text-base font-medium text-white/75 hover:bg-white/[0.05] transition-all"
+                  className="w-full flex items-center gap-2.5 px-3 py-3 mt-1 rounded-xl text-base font-bold uppercase tracking-wide text-white/90 hover:bg-white/[0.05] transition-all"
                 >
-                  <Smile className="w-4 h-4 text-[#FBBF24]" />
+                  <Image
+                    src="/ikonnect-guide-avatar.png"
+                    alt=""
+                    width={28}
+                    height={28}
+                    className="w-7 h-7 rounded-full ring-1 ring-white/25 flex-shrink-0"
+                  />
                   iKonnect Guide
                 </button>
 
@@ -387,7 +404,7 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.45, duration: 0.7 }}
-            className="text-base md:text-xl lg:text-2xl text-white/70 leading-relaxed max-w-3xl mx-auto mb-10 md:mb-14 text-pretty"
+            className="text-base md:text-xl lg:text-2xl font-medium text-white/90 leading-relaxed max-w-3xl mx-auto mb-10 md:mb-14 text-pretty drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]"
           >
             Housing, jobs, tenant support, local life, businesses, events, trusted services, and AI guidance—all intelligently connected.
           </motion.p>
@@ -400,7 +417,7 @@ export default function LandingPage() {
             className="max-w-3xl mx-auto mb-6 md:mb-8"
           >
             <div className="relative group">
-              <Search className="absolute left-5 md:left-8 top-1/2 -translate-y-1/2 w-5 h-5 md:w-7 md:h-7 text-white/50 group-focus-within:text-[#38BDF8] transition-colors pointer-events-none" />
+              <Search className="absolute left-5 md:left-8 top-1/2 -translate-y-1/2 w-5 h-5 md:w-7 md:h-7 text-[#38BDF8] transition-colors pointer-events-none z-10" />
               <input
                 type="text"
                 value={query}
@@ -410,7 +427,7 @@ export default function LandingPage() {
                 }}
                 placeholder="My landlord won't fix the heat..."
                 aria-label="Search Calgary resources"
-                className="w-full h-16 md:h-20 bg-white/[0.06] hover:bg-white/[0.08] border border-white/10 hover:border-white/15 focus:border-[#38BDF8]/50 focus:bg-white/[0.08] rounded-2xl md:rounded-3xl text-base md:text-xl text-white placeholder:text-white/40 pl-14 md:pl-20 pr-28 md:pr-32 outline-none transition-all duration-300 focus:shadow-[0_0_0_4px_rgba(56,189,248,0.12),0_25px_50px_-12px_rgba(0,0,0,0.5)]"
+                className="w-full h-16 md:h-20 bg-white/[0.16] hover:bg-white/[0.2] focus:bg-white/[0.22] backdrop-blur-xl border border-white/30 hover:border-white/40 focus:border-[#38BDF8]/70 rounded-2xl md:rounded-3xl text-base md:text-xl font-medium text-white placeholder:text-white/70 pl-14 md:pl-20 pr-28 md:pr-32 outline-none transition-all duration-300 shadow-[0_8px_30px_-6px_rgba(0,0,0,0.45)] focus:shadow-[0_0_0_4px_rgba(56,189,248,0.2),0_25px_50px_-12px_rgba(0,0,0,0.6)]"
               />
               <button
                 onClick={handleSearchSubmit}
@@ -437,7 +454,7 @@ export default function LandingPage() {
                     setSearchQuery(q);
                     enterApp("home");
                   }}
-                  className="px-4 md:px-5 py-2 md:py-3 rounded-full bg-white/[0.04] border border-white/[0.08] text-xs md:text-sm text-white/60 hover:bg-white/[0.08] hover:border-white/[0.15] hover:text-white transition-all duration-300"
+                  className="px-4 md:px-5 py-2.5 md:py-3 rounded-full bg-white/[0.1] border border-white/20 text-sm md:text-base font-medium text-white/90 hover:bg-white/[0.18] hover:border-white/30 hover:text-white transition-all duration-300 backdrop-blur-md shadow-sm shadow-black/20"
                 >
                   {q}
                 </button>
@@ -467,31 +484,21 @@ export default function LandingPage() {
               onClick={handleAskAI}
               className="btn-secondary w-full sm:w-auto px-8 md:px-10 py-4 md:py-5 rounded-2xl flex items-center justify-center gap-3 text-base md:text-lg font-semibold"
             >
-                <Smile className="w-5 h-5 text-[#FBBF24]" />
-                Ask the iKonnect Guide
+                <Image
+                  src="/ikonnect-guide-avatar.png"
+                  alt=""
+                  width={28}
+                  height={28}
+                  className="w-7 h-7 rounded-full ring-1 ring-white/30 flex-shrink-0"
+                />
+                iKonnect, Ask me.
             </motion.button>
-          </motion.div>
-        </motion.div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 hidden md:block"
-        >
-          <motion.div
-            animate={{ y: [0, 12, 0] }}
-            transition={{ duration: 2.5, repeat: Infinity }}
-            className="w-6 h-12 rounded-full border-2 border-white/20 flex items-start justify-center p-2"
-          >
-            <div className="w-1.5 h-3 bg-white/40 rounded-full" />
           </motion.div>
         </motion.div>
       </section>
 
       {/* ========== IMMERSIVE PATHWAYS — Solutions First ========== */}
-      <section className="relative py-20 md:py-32 lg:py-40">
+      <section className="relative py-14 md:py-20 lg:py-24">
         <div className="max-w-[1400px] mx-auto px-5 md:px-8">
           {/* Section header */}
           <motion.div
@@ -559,7 +566,7 @@ export default function LandingPage() {
       </section>
 
       {/* ========== AI SECTION — Conversational Preview ========== */}
-      <section className="relative py-20 md:py-32 lg:py-40 overflow-hidden">
+      <section className="relative py-14 md:py-20 lg:py-24 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#38BDF8]/5 to-transparent" />
 
         <div className="max-w-[1200px] mx-auto px-5 md:px-8 relative z-10">
@@ -570,9 +577,9 @@ export default function LandingPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FBBF24]/10 border border-[#FBBF24]/20 mb-6 md:mb-8">
-                <Sparkles className="w-4 h-4 text-[#FBBF24]" />
-                <span className="text-sm font-medium text-[#FBBF24]">AI-Powered Guidance</span>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#38BDF8]/10 border border-[#38BDF8]/20 mb-6 md:mb-8">
+                <Compass className="w-4 h-4 text-[#38BDF8]" />
+                <span className="text-sm font-medium text-[#38BDF8]">AI-Powered Guidance</span>
               </div>
 
               <h2 className="text-[clamp(28px,5vw,48px)] font-bold tracking-tight mb-4 md:mb-6 text-balance">
@@ -589,7 +596,13 @@ export default function LandingPage() {
                 onClick={handleAskAI}
                 className="btn-primary px-7 md:px-8 py-4 rounded-2xl flex items-center gap-3 text-base md:text-lg font-semibold"
               >
-                <Smile className="w-5 h-5" />
+                <Image
+                  src="/ikonnect-guide-avatar.png"
+                  alt=""
+                  width={28}
+                  height={28}
+                  className="w-7 h-7 rounded-full ring-1 ring-white/30 flex-shrink-0"
+                />
                 Try the iKonnect Guide
               </motion.button>
             </motion.div>
@@ -610,8 +623,13 @@ export default function LandingPage() {
                   </div>
 
                   <div className="flex gap-3">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#38BDF8] to-[#0284c7] flex-shrink-0 flex items-center justify-center">
-                <Smile className="w-4 h-4 text-white" />
+              <div className="relative w-8 h-8 rounded-full overflow-hidden ring-1 ring-white/20 flex-shrink-0">
+                <Image
+                  src="/ikonnect-guide-avatar.png"
+                  alt="iKonnect Guide"
+                  fill
+                  className="object-cover"
+                />
                     </div>
                     <div className="bg-white/[0.06] px-5 py-4 rounded-2xl rounded-bl-md max-w-[320px]">
                       <p className="text-sm md:text-[15px] text-white/90 leading-relaxed mb-3">
@@ -643,14 +661,14 @@ export default function LandingPage() {
                 </div>
               </div>
 
-              <div className="absolute -inset-4 bg-gradient-to-r from-[#38BDF8]/20 via-transparent to-[#FBBF24]/10 rounded-3xl blur-2xl -z-10" />
+              <div className="absolute -inset-4 bg-gradient-to-r from-[#38BDF8]/20 via-transparent to-[#0284c7]/10 rounded-3xl blur-2xl -z-10" />
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* ========== FOOTER CTA ========== */}
-      <section className="relative py-20 md:py-32">
+      <section className="relative py-14 md:py-20">
         <div className="max-w-[900px] mx-auto px-5 md:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

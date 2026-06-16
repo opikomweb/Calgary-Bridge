@@ -1,15 +1,16 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import { useAppStore } from "@/lib/store";
 import { translations } from "@/lib/data";
-import { Home, Compass, Smile, Heart, User, AlertTriangle, Shield, Menu, X } from "lucide-react";
+import { Home, Compass, Smile, Heart, User, AlertTriangle, Shield, Menu, X, HandHeart } from "lucide-react";
 import { ThemeToggle } from "./theme-toggle";
+import { RotatingLogo } from "./rotating-logo";
 import { motion, AnimatePresence } from "framer-motion";
 import HomeTab from "./tabs/home-tab";
 import ExploreTab from "./tabs/explore-tab";
 import AITab from "./tabs/ai-tab";
+import DoGoodTab from "./tabs/do-good-tab";
 import ShortlistTab from "./tabs/shortlist-tab";
 import ProfileTab from "./tabs/profile-tab";
 import EmergencyHub from "./emergency-hub";
@@ -31,12 +32,21 @@ export default function MainApp() {
     setCurrentPage("landing");
   };
 
+  // Always scroll to the top when switching tabs so the user lands on the
+  // heading of the section they tapped, even if they were scrolled to the bottom.
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [activeTab]);
+
   const t = (key: string) => translations[key]?.[activeLanguage] || translations[key]?.en || key;
 
   const navItems = [
     { id: "home" as const, icon: Home, label: "Home", shortLabel: "Home", highlight: false },
     { id: "explore" as const, icon: Compass, label: "Explore", shortLabel: "Explore", highlight: false },
     { id: "ai" as const, icon: Smile, label: "iKonnect Guide", shortLabel: "Guide", highlight: true },
+    { id: "do-good" as const, icon: HandHeart, label: "Do Good", shortLabel: "Do Good", highlight: false },
     { id: "shortlist" as const, icon: Heart, label: "Saved", shortLabel: "Saved", highlight: false },
     { id: "profile" as const, icon: User, label: "Profile", shortLabel: "Profile", highlight: false },
   ];
@@ -49,20 +59,14 @@ export default function MainApp() {
       {/* Desktop Sidebar */}
       <aside className="hidden lg:flex lg:w-[340px] lg:flex-col lg:fixed lg:inset-y-0 lg:z-50">
         <div className="flex grow flex-col overflow-y-auto border-r border-foreground/[0.06] bg-background/70 backdrop-blur-3xl">
-          {/* Logo Section - Large Professional Logo */}
+          {/* Logo Section - Large transparent brand lockup (no badge, no extra text) */}
           <div className="px-6 pt-8 pb-6 flex justify-center">
             <button
               onClick={goToLanding}
-              aria-label="Go to Calgary Konnect home page"
-              className="relative w-[200px] h-[200px] flex-shrink-0 rounded-3xl overflow-hidden bg-card p-3 border border-border shadow-2xl shadow-sky-500/10 backdrop-blur-xl transition-all duration-300 hover:border-sky-400/30 hover:shadow-sky-500/20 hover:scale-[1.02] cursor-pointer"
+              aria-label="Go to Calgary Connect home page"
+              className="group relative w-full max-w-[220px] aspect-square flex-shrink-0 transition-transform duration-300 ease-out hover:scale-[1.03] active:scale-95 cursor-pointer"
             >
-              <Image
-                src="/calgary-connect-logo.png"
-                alt="Calgary Konnect"
-                fill
-                className="object-contain p-3"
-                priority
-              />
+              <RotatingLogo imgPadding="p-0" priority />
             </button>
           </div>
 
@@ -73,15 +77,15 @@ export default function MainApp() {
                 <li key={item.id}>
                   <button
                     onClick={() => setActiveTab(item.id)}
-                    className={`group flex w-full items-center gap-x-5 rounded-2xl px-6 py-5 text-lg font-medium transition-all duration-300 ${
+                    className={`group flex w-full items-center gap-x-5 rounded-2xl px-6 py-4 text-lg font-bold tracking-tight transition-all duration-300 ${
                       activeTab === item.id
                         ? item.highlight
                           ? "bg-gradient-to-r from-[#38BDF8] to-[#0284c7] text-white shadow-2xl shadow-sky-500/40"
-                          : "bg-foreground/[0.08] text-foreground border border-foreground/[0.12] shadow-xl shadow-black/20"
-                        : "text-foreground/50 hover:bg-foreground/[0.04] hover:text-foreground/80"
+                          : "bg-[#38BDF8]/[0.12] text-foreground border border-[#38BDF8]/40 shadow-lg shadow-sky-500/10"
+                        : "text-foreground/75 hover:bg-foreground/[0.06] hover:text-foreground"
                     }`}
                   >
-                    <item.icon className={`h-6 w-6 shrink-0 ${activeTab === item.id ? "" : "opacity-60"}`} />
+                    <item.icon className={`h-6 w-6 shrink-0 ${activeTab === item.id ? (item.highlight ? "" : "text-[#38BDF8]") : "opacity-70"}`} />
                     {item.label}
                   </button>
                 </li>
@@ -113,43 +117,34 @@ export default function MainApp() {
         </div>
       </aside>
 
-      {/* Mobile Header */}
-      <header className="lg:hidden sticky top-0 z-40 bg-background/90 backdrop-blur-2xl border-b border-foreground/[0.06] px-4 py-3">
-        <div className="flex items-center justify-between">
+      {/* Mobile / Tablet Header */}
+      <header className="lg:hidden sticky top-0 z-40 bg-background/90 backdrop-blur-2xl border-b border-foreground/[0.06] px-4 sm:px-6 py-2.5">
+        {/* Calgary brand accent strip (blue → red) under the header */}
+        <div className="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-[#38BDF8] via-[#0284c7] to-[#E1251B]" />
+        <div className="flex items-center justify-between gap-3">
           <button
             onClick={goToLanding}
-            aria-label="Go to Calgary Konnect home page"
-            className="flex items-center gap-3"
+            aria-label="Go to Calgary Connect home page"
+            className="flex items-center"
           >
-            <div className="relative w-10 h-10 rounded-lg overflow-hidden bg-card p-0.5 border border-border">
-              <Image
-                src="/calgary-connect-logo.png"
-                alt="Calgary Konnect"
-                fill
-                className="object-contain p-0.5"
-                priority
-              />
-            </div>
-            <div>
-              <span className="text-base font-bold text-foreground">Calgary </span>
-              <span className="text-base font-bold text-[#38BDF8]">Konnect</span>
+            {/* Square brand lockup (Calgary Tower + bridge + wordmark) */}
+            <div className="relative h-[64px] w-[64px] sm:h-[72px] sm:w-[72px] flex-shrink-0 transition-transform duration-300 active:scale-95">
+              <RotatingLogo imgPadding="p-0" priority />
             </div>
           </button>
-          
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => setShowEmergency(true)}
-              className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-[#E1251B] to-[#b91c1c] text-white shadow-lg shadow-red-500/30"
-            >
-              <AlertTriangle className="h-4 w-4" />
-            </button>
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="flex items-center justify-center w-10 h-10 rounded-lg bg-foreground/[0.06] border border-foreground/[0.08] text-foreground"
-            >
-              {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-            </button>
-          </div>
+
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileMenuOpen}
+            className="group flex items-center justify-center w-[52px] h-[52px] sm:w-14 sm:h-14 rounded-2xl border-t border-white/40 bg-gradient-to-b from-[#F4493C] via-[#E1251B] to-[#B91C1C] text-white ring-1 ring-inset ring-white/15 shadow-[0_6px_0_-1px_#8f1410,0_12px_22px_-6px_rgba(225,37,27,0.55)] transition-all duration-150 hover:shadow-[0_6px_0_-1px_#8f1410,0_16px_28px_-6px_rgba(225,37,27,0.7)] active:translate-y-[3px] active:shadow-[0_3px_0_-1px_#8f1410,0_8px_16px_-6px_rgba(225,37,27,0.5)]"
+          >
+            {mobileMenuOpen ? (
+              <X className="h-7 w-7 drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]" strokeWidth={2.75} />
+            ) : (
+              <Menu className="h-7 w-7 drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]" strokeWidth={2.75} />
+            )}
+          </button>
         </div>
       </header>
 
@@ -179,13 +174,15 @@ export default function MainApp() {
                       setActiveTab(item.id);
                       setMobileMenuOpen(false);
                     }}
-                    className={`flex w-full items-center gap-5 rounded-2xl px-6 py-5 text-lg font-medium transition-all ${
+                    className={`flex w-full items-center gap-5 rounded-2xl px-6 py-4 text-lg font-bold tracking-tight transition-all ${
                       activeTab === item.id
-                        ? "bg-foreground/[0.08] text-foreground border border-foreground/[0.12]"
-                        : "text-foreground/50 hover:bg-foreground/[0.04] hover:text-foreground/80"
+                        ? item.highlight
+                          ? "bg-gradient-to-r from-[#38BDF8] to-[#0284c7] text-white shadow-lg shadow-sky-500/30"
+                          : "bg-[#38BDF8]/[0.12] text-foreground border border-[#38BDF8]/40"
+                        : "text-foreground/75 hover:bg-foreground/[0.06] hover:text-foreground"
                     }`}
                   >
-                    <item.icon className="h-6 w-6" />
+                    <item.icon className={`h-6 w-6 ${activeTab === item.id && !item.highlight ? "text-[#38BDF8]" : ""}`} />
                     {item.label}
                   </button>
                 ))}
@@ -223,7 +220,7 @@ export default function MainApp() {
       </AnimatePresence>
 
       {/* Main Content Area */}
-      <main className="lg:pl-[360px] lg:pr-8 relative z-10">
+      <main className="lg:pl-[360px] lg:pr-8 relative z-10 min-w-0 overflow-x-clip">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
@@ -234,8 +231,9 @@ export default function MainApp() {
           >
             {activeTab === "home" && <HomeTab />}
             {activeTab === "explore" && <ExploreTab />}
-            {activeTab === "ai" && <AITab />}
-            {activeTab === "shortlist" && <ShortlistTab />}
+              {activeTab === "ai" && <AITab />}
+              {activeTab === "do-good" && <DoGoodTab />}
+              {activeTab === "shortlist" && <ShortlistTab />}
             {activeTab === "profile" && <ProfileTab />}
           </motion.div>
         </AnimatePresence>
@@ -258,23 +256,30 @@ export default function MainApp() {
 
       {/* Mobile Bottom Navigation */}
       <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-background/95 backdrop-blur-2xl border-t border-foreground/[0.06] safe-area-pb">
-        <div className="flex items-center justify-around px-2 py-2">
-          {navItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => setActiveTab(item.id)}
-              className={`flex flex-col items-center gap-1 rounded-xl px-3 py-2 transition-all min-w-0 ${
-                activeTab === item.id
-                  ? item.highlight
-                    ? "bg-gradient-to-br from-[#38BDF8] to-[#0284c7] text-white shadow-lg shadow-sky-500/30"
-                    : "text-[#38BDF8]"
-                  : "text-foreground/40"
-              }`}
-            >
-              <item.icon className="h-5 w-5" />
-              <span className="text-[10px] font-medium">{item.shortLabel}</span>
-            </button>
-          ))}
+        <div className="flex items-center justify-between gap-1 px-2 py-2.5">
+          {navItems.map((item) => {
+            const active = activeTab === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => setActiveTab(item.id)}
+                aria-label={item.label}
+                aria-current={active ? "page" : undefined}
+                className={`flex items-center justify-center gap-2 rounded-full transition-all duration-200 ${
+                  active
+                    ? item.highlight
+                      ? "border-t border-white/40 bg-gradient-to-b from-[#F4493C] via-[#E1251B] to-[#B91C1C] text-white ring-1 ring-inset ring-white/15 shadow-[0_4px_0_-1px_#8f1410,0_8px_16px_-5px_rgba(225,37,27,0.55)] px-4 py-2.5"
+                      : "bg-[#38BDF8]/[0.16] text-[#0284c7] px-4 py-2.5"
+                    : "text-foreground/55 px-3 py-2.5 active:scale-90"
+                }`}
+              >
+                <item.icon className={`h-6 w-6 shrink-0 ${active && item.highlight ? "drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]" : ""}`} strokeWidth={active ? 2.4 : 2} />
+                {active && (
+                  <span className="text-[13px] font-bold tracking-tight whitespace-nowrap">{item.shortLabel}</span>
+                )}
+              </button>
+            );
+          })}
         </div>
       </nav>
 

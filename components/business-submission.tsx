@@ -16,7 +16,6 @@ import {
   DollarSign,
   Users,
   FileText,
-  Sparkles,
   Crown,
   Zap,
   Shield
@@ -93,8 +92,8 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
         "Social media promotion",
         "Press release inclusion",
       ],
-      color: "from-amber-500 to-amber-600",
-      accent: "text-amber-300",
+      color: "from-[#E1251B] to-[#b91c1c]",
+      accent: "text-[#E1251B]",
       popular: false,
     },
   ];
@@ -151,7 +150,7 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
           {/* Header */}
           <div className="p-10 pb-0">
             <div className="flex items-center gap-4 mb-4">
-              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${mode === "featured" ? "bg-gradient-to-br from-amber-500 to-amber-600" : "bg-gradient-to-br from-sky-500 to-sky-600"}`}>
+              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${mode === "featured" ? "bg-gradient-to-br from-[#E1251B] to-[#b91c1c]" : "bg-gradient-to-br from-sky-500 to-sky-600"}`}>
                 {mode === "featured" ? <Crown className="w-7 h-7 text-white" /> : <Building2 className="w-7 h-7 text-white" />}
               </div>
               <div>
@@ -399,7 +398,7 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
                       <ul className="space-y-3">
                         {pkg.features.map((feature, idx) => (
                           <li key={idx} className="flex items-start gap-2 text-sm text-white/60">
-                            <Check className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                            <Check className="w-4 h-4 text-sky-400 mt-0.5 flex-shrink-0" />
                             {feature}
                           </li>
                         ))}
@@ -417,7 +416,7 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
                   </button>
                   <button
                     onClick={handleSubmit}
-                    className="flex-1 h-14 rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-bold flex items-center justify-center gap-3 hover:shadow-lg hover:shadow-emerald-500/30 transition-all"
+                    className="flex-1 h-14 rounded-2xl bg-gradient-to-r from-sky-500 to-sky-600 text-white font-bold flex items-center justify-center gap-3 hover:shadow-lg hover:shadow-sky-500/30 transition-all"
                   >
                     Submit Listing <Check className="w-5 h-5" />
                   </button>
@@ -432,7 +431,7 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
                 animate={{ opacity: 1, scale: 1 }}
                 className="text-center py-12"
               >
-                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center mx-auto mb-8">
+                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-sky-500 to-sky-600 flex items-center justify-center mx-auto mb-8">
                   <Check className="w-12 h-12 text-white" />
                 </div>
                 <h3 className="text-3xl font-bold text-white mb-4">Submission Received!</h3>

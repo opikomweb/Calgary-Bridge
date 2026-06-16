@@ -47,8 +47,30 @@ const keywordMappings: Record<string, string[]> = {
   classes: ["education", "learning", "language"],
   language: ["education", "newcomer", "esl"],
   disability: ["disabilities", "accessibility", "support"],
-  business: ["small business", "entrepreneur", "startup"],
+  business: ["small business", "entrepreneur", "startup", "register business", "incorporation"],
+  register: ["business", "incorporation", "registry", "ownr"],
+  incorporate: ["business", "incorporation", "registry"],
+  ownr: ["business", "incorporation", "registry"],
+  nuans: ["business", "incorporation", "name search"],
+  shipping: ["logistics", "courier", "parcel", "freight", "delivery"],
+  ship: ["logistics", "courier", "parcel", "shipping"],
+  courier: ["logistics", "shipping", "parcel", "delivery"],
+  parcel: ["logistics", "shipping", "courier"],
+  freight: ["logistics", "shipping", "cargo", "import", "export"],
+  "import export": ["logistics", "customs", "freight", "shipping"],
+  import: ["logistics", "customs", "freight", "shipping"],
+  export: ["logistics", "customs", "freight", "shipping"],
+  customs: ["logistics", "import", "export"],
   volunteer: ["volunteering", "community"],
+  tourist: ["tourism", "visit", "attraction", "sightseeing"],
+  tourism: ["visit", "attraction", "sightseeing", "tour"],
+  visit: ["tourism", "attraction", "sightseeing"],
+  tour: ["tourism", "tours", "guide", "sightseeing"],
+  sightseeing: ["tourism", "attraction", "tour"],
+  attraction: ["tourism", "sightseeing"],
+  hotel: ["tourism", "hotels", "lodging", "stay"],
+  restaurant: ["tourism", "dining", "restaurants"],
+  dining: ["tourism", "restaurant", "food"],
 };
 
 // Maps everyday search terms to the resource categories they should prioritize.
@@ -115,8 +137,41 @@ const categoryIntent: Record<string, ResourceCategory[]> = {
   business: ["business"],
   entrepreneur: ["business"],
   startup: ["business"],
+  register: ["business"],
+  incorporate: ["business"],
+  incorporation: ["business"],
+  ownr: ["business"],
+  nuans: ["business"],
+  "register business": ["business"],
+  shipping: ["logistics"],
+  ship: ["logistics"],
+  courier: ["logistics"],
+  parcel: ["logistics"],
+  freight: ["logistics"],
+  cargo: ["logistics"],
+  import: ["logistics"],
+  export: ["logistics"],
+  "import export": ["logistics"],
+  customs: ["logistics"],
+  logistics: ["logistics"],
   volunteer: ["volunteering"],
   volunteering: ["volunteering"],
+  tourist: ["tourism"],
+  tourism: ["tourism"],
+  visit: ["tourism"],
+  visiting: ["tourism"],
+  tour: ["tourism"],
+  tours: ["tourism"],
+  sightseeing: ["tourism"],
+  attraction: ["tourism"],
+  attractions: ["tourism"],
+  hotel: ["tourism"],
+  hotels: ["tourism"],
+  restaurant: ["tourism"],
+  restaurants: ["tourism"],
+  dining: ["tourism"],
+  "things to do": ["tourism"],
+  sightsee: ["tourism"],
 };
 
 function lc(s?: string) {
@@ -211,9 +266,12 @@ function scoreResource(
       return titleHasQuery ? score : 0;
     }
 
-    // Primary-category providers are the most relevant; secondary far less.
-    score += matchIndex === 0 ? 90 : 28;
-    if (r.category.length === 1 && matchIndex === 0) score += 25; // single-purpose focus
+    // Primary-category providers (the MAIN services for this category) must
+    // always rank above resources that only list it as a secondary/related
+    // category. A large fixed gap guarantees this regardless of priority.
+    const isPrimary = matchIndex === 0;
+    score += isPrimary ? 500 : 60;
+    if (r.category.length === 1 && isPrimary) score += 25; // single-purpose focus
 
     // Refine ranking by how directly the resource matches the meaningful
     // query tokens (e.g. a daycare whose services list "childcare").
@@ -225,6 +283,11 @@ function scoreResource(
 
     if (r.featured) score += 5;
     if (r.cost === "free") score += 2;
+    // Trust ranking: vetted platforms (RentFaster, liv.rent, Boardwalk…) rank
+    // above social-media classifieds. Priority orders resources WITHIN a tier;
+    // it is dampened for secondary matches so a high-priority "related" org
+    // can never jump ahead of the category's main providers.
+    if (r.priority) score += isPrimary ? r.priority : r.priority * 0.2;
     return score;
   }
 
@@ -256,6 +319,7 @@ function scoreResource(
   if (score > 0) {
     if (r.featured) score += 5;
     if (r.cost === "free") score += 2;
+    if (r.priority) score += r.priority;
   }
   return score;
 }
@@ -310,10 +374,17 @@ export function filterResources(
 function categoryRank(r: Resource, category: ResourceCategory): number {
   let score = 0;
   const idx = r.category.indexOf(category);
-  if (idx === 0) score += 40; // primary focus
-  else if (idx > 0) score += 12; // secondary focus
-  if (r.category.length === 1 && idx === 0) score += 20; // single-purpose provider
+  // Main providers (this is their PRIMARY category) always come before
+  // resources that only list it as a secondary/related category. The large
+  // gap guarantees ordering regardless of an individual resource's priority.
+  const isPrimary = idx === 0;
+  if (isPrimary) score += 500; // primary focus — main key providers first
+  else if (idx > 0) score += 60; // secondary / related
+  if (r.category.length === 1 && isPrimary) score += 20; // single-purpose provider
   if (r.featured) score += 6;
   if (r.cost === "free") score += 2;
+  // Priority orders WITHIN a tier; dampened for secondary so related orgs
+  // never leapfrog the category's primary providers.
+  if (r.priority) score += isPrimary ? r.priority : r.priority * 0.2;
   return score;
 }

@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useAppStore } from "@/lib/store";
 import { languageNames, categoryLabels } from "@/lib/data";
 import type { Language, ResourceCategory } from "@/lib/types";
-import { Globe, Sparkles, ChevronRight, ChevronLeft, ArrowLeft, Home, Scale, Briefcase, GraduationCap, Heart, Brain, Users, Clock, AlertTriangle, Handshake, Store, Palette } from "lucide-react";
+import { Globe, Compass, ChevronRight, ChevronLeft, ArrowLeft, Home, Scale, Briefcase, GraduationCap, Heart, Brain, Users, Clock, AlertTriangle, Handshake, Store, Palette } from "lucide-react";
 
 const languages: Language[] = ["en", "fr", "tl", "es", "ar", "zh"];
 
@@ -214,7 +214,7 @@ export default function Onboarding() {
                 onClick={handleComplete}
                 className="btn-primary flex items-center gap-2 rounded-xl px-8 py-3.5"
               >
-                <Sparkles className="h-5 w-5" />
+                <Compass className="h-5 w-5" />
                 {t("letsGo")}
               </motion.button>
             </div>

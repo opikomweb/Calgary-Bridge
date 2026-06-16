@@ -22,7 +22,14 @@ export type ResourceCategory =
   | "lgbtq"
   | "indigenous"
   | "youth"
-  | "arts";
+  | "arts"
+  | "logistics"
+  | "tourism"
+  | "workspace"
+  | "storage"
+  | "ethnic-market"
+  | "farmers-market"
+  | "essentials";
 
 export type Priority = ResourceCategory;
 
@@ -38,9 +45,15 @@ export interface Resource {
   phone?: string;
   address?: string;
   website?: string;
+  /** Direct Google Maps search URL. Use for "search near your home" style
+   *  resources where there is no single fixed address. */
+  mapUrl?: string;
   hours?: string;
   featured?: boolean;
   hiddenGem?: boolean;
+  /** Trust ranking within a category (higher = more trusted/recommended).
+   *  Used to rank vetted platforms above social-media classifieds. */
+  priority?: number;
   cost?: "free" | "low-cost" | "paid" | "sliding-scale";
   languages?: string[];
   lastUpdated?: string;
@@ -64,7 +77,7 @@ export interface ChatMessage {
   resources?: string[];
 }
 
-export type TabType = "home" | "explore" | "ai" | "shortlist" | "profile";
+export type TabType = "home" | "explore" | "ai" | "do-good" | "shortlist" | "profile";
 
 export type PageType = 
   | "landing" 
