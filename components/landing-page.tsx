@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import {
-  ArrowRight, Sparkles, Smile, Search, Menu, X, ChevronDown,
+  ArrowRight, Sparkles, Search, Menu, X, ChevronDown,
   Home, Briefcase, Heart, Users, AlertTriangle, Building2, Baby,
   GraduationCap, Bus, Scale, HandHeart, Accessibility, Utensils, Brain,
 } from "lucide-react";
@@ -151,15 +151,15 @@ export default function LandingPage() {
       >
         <div className="max-w-[1400px] mx-auto px-5 md:px-8">
           <div className="flex items-center justify-between h-16 md:h-20">
-            {/* Logo */}
-            <button onClick={() => enterApp("home")} className="flex items-center gap-3 transition-transform duration-300 hover:scale-105 active:scale-95">
-              <div className="relative w-11 h-11 md:w-14 md:h-14 flex-shrink-0">
+            {/* Logo — full brand lockup, large & clearly visible */}
+            <button
+              onClick={() => enterApp("home")}
+              aria-label="Calgary Konnect — go to home"
+              className="flex items-center transition-transform duration-300 hover:scale-105 active:scale-95"
+            >
+              <div className="relative w-[150px] h-12 md:w-[210px] md:h-16 flex-shrink-0">
                 <RotatingLogo imgPadding="p-0" priority />
               </div>
-              <span className="text-base md:text-lg font-bold tracking-tight">
-                <span className="text-white">Calgary </span>
-                <span className="text-[#38BDF8]">Konnect</span>
-              </span>
             </button>
 
             {/* Desktop nav — professional grouped dropdowns */}
@@ -172,15 +172,15 @@ export default function LandingPage() {
                 >
                   <button
                     onClick={() => setOpenMenu((v) => (v === group.label ? null : group.label))}
-                    className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                    className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wide drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)] transition-all ${
                       openMenu === group.label
-                        ? "text-white bg-white/[0.08]"
-                        : "text-white/60 hover:text-white hover:bg-white/[0.06]"
+                        ? "text-white bg-white/[0.12]"
+                        : "text-white/90 hover:text-white hover:bg-white/[0.1]"
                     }`}
                   >
                     {group.label}
                     <ChevronDown
-                      className={`w-3.5 h-3.5 transition-transform ${openMenu === group.label ? "rotate-180" : ""}`}
+                      className={`w-4 h-4 transition-transform ${openMenu === group.label ? "rotate-180" : ""}`}
                     />
                   </button>
 
@@ -218,17 +218,23 @@ export default function LandingPage() {
 
               <button
                 onClick={handleAskAI}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/[0.06] transition-all"
+                className="flex items-center gap-2 pl-1.5 pr-4 py-1.5 rounded-full text-sm font-bold uppercase tracking-wide text-white/90 hover:text-white hover:bg-white/[0.1] drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)] transition-all"
               >
-                <Smile className="w-3.5 h-3.5 text-[#FBBF24]" />
+                <Image
+                  src="/ikonnect-guide-avatar.png"
+                  alt=""
+                  width={28}
+                  height={28}
+                  className="w-7 h-7 rounded-full ring-1 ring-white/25 flex-shrink-0"
+                />
                 iKonnect Guide
               </button>
 
               <button
                 onClick={() => enterApp("do-good")}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/[0.06] transition-all"
+                className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wide text-white/90 hover:text-white hover:bg-white/[0.1] drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)] transition-all"
               >
-                <HandHeart className="w-3.5 h-3.5 text-[#EF4444]" />
+                <HandHeart className="w-4 h-4 text-[#EF4444]" />
                 Do Good
               </button>
             </nav>
@@ -267,7 +273,7 @@ export default function LandingPage() {
                   <div key={group.label} className="border-b border-white/[0.05] last:border-0 pb-1">
                     <button
                       onClick={() => setMobileGroup((v) => (v === group.label ? null : group.label))}
-                      className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-base font-semibold text-white/85 hover:bg-white/[0.05] transition-all"
+                      className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-base font-bold uppercase tracking-wide text-white/90 hover:bg-white/[0.05] transition-all"
                     >
                       {group.label}
                       <ChevronDown
@@ -307,9 +313,15 @@ export default function LandingPage() {
                     setMobileMenuOpen(false);
                     handleAskAI();
                   }}
-                  className="w-full flex items-center gap-2 px-4 py-3 mt-1 rounded-xl text-base font-medium text-white/75 hover:bg-white/[0.05] transition-all"
+                  className="w-full flex items-center gap-2.5 px-3 py-3 mt-1 rounded-xl text-base font-bold uppercase tracking-wide text-white/90 hover:bg-white/[0.05] transition-all"
                 >
-                  <Smile className="w-4 h-4 text-[#FBBF24]" />
+                  <Image
+                    src="/ikonnect-guide-avatar.png"
+                    alt=""
+                    width={28}
+                    height={28}
+                    className="w-7 h-7 rounded-full ring-1 ring-white/25 flex-shrink-0"
+                  />
                   iKonnect Guide
                 </button>
 
@@ -403,7 +415,7 @@ export default function LandingPage() {
             className="max-w-3xl mx-auto mb-6 md:mb-8"
           >
             <div className="relative group">
-              <Search className="absolute left-5 md:left-8 top-1/2 -translate-y-1/2 w-5 h-5 md:w-7 md:h-7 text-white/50 group-focus-within:text-[#38BDF8] transition-colors pointer-events-none" />
+              <Search className="absolute left-5 md:left-8 top-1/2 -translate-y-1/2 w-5 h-5 md:w-7 md:h-7 text-[#38BDF8] transition-colors pointer-events-none z-10" />
               <input
                 type="text"
                 value={query}
@@ -413,7 +425,7 @@ export default function LandingPage() {
                 }}
                 placeholder="My landlord won't fix the heat..."
                 aria-label="Search Calgary resources"
-                className="w-full h-16 md:h-20 bg-white/[0.06] hover:bg-white/[0.08] border border-white/10 hover:border-white/15 focus:border-[#38BDF8]/50 focus:bg-white/[0.08] rounded-2xl md:rounded-3xl text-base md:text-xl text-white placeholder:text-white/40 pl-14 md:pl-20 pr-28 md:pr-32 outline-none transition-all duration-300 focus:shadow-[0_0_0_4px_rgba(56,189,248,0.12),0_25px_50px_-12px_rgba(0,0,0,0.5)]"
+                className="w-full h-16 md:h-20 bg-white/[0.16] hover:bg-white/[0.2] focus:bg-white/[0.22] backdrop-blur-xl border border-white/30 hover:border-white/40 focus:border-[#38BDF8]/70 rounded-2xl md:rounded-3xl text-base md:text-xl font-medium text-white placeholder:text-white/70 pl-14 md:pl-20 pr-28 md:pr-32 outline-none transition-all duration-300 shadow-[0_8px_30px_-6px_rgba(0,0,0,0.45)] focus:shadow-[0_0_0_4px_rgba(56,189,248,0.2),0_25px_50px_-12px_rgba(0,0,0,0.6)]"
               />
               <button
                 onClick={handleSearchSubmit}
@@ -470,7 +482,13 @@ export default function LandingPage() {
               onClick={handleAskAI}
               className="btn-secondary w-full sm:w-auto px-8 md:px-10 py-4 md:py-5 rounded-2xl flex items-center justify-center gap-3 text-base md:text-lg font-semibold"
             >
-                <Smile className="w-5 h-5 text-[#FBBF24]" />
+                <Image
+                  src="/ikonnect-guide-avatar.png"
+                  alt=""
+                  width={28}
+                  height={28}
+                  className="w-7 h-7 rounded-full ring-1 ring-white/30 flex-shrink-0"
+                />
                 Ask the iKonnect Guide
             </motion.button>
           </motion.div>
@@ -592,7 +610,13 @@ export default function LandingPage() {
                 onClick={handleAskAI}
                 className="btn-primary px-7 md:px-8 py-4 rounded-2xl flex items-center gap-3 text-base md:text-lg font-semibold"
               >
-                <Smile className="w-5 h-5" />
+                <Image
+                  src="/ikonnect-guide-avatar.png"
+                  alt=""
+                  width={28}
+                  height={28}
+                  className="w-7 h-7 rounded-full ring-1 ring-white/30 flex-shrink-0"
+                />
                 Try the iKonnect Guide
               </motion.button>
             </motion.div>
@@ -613,8 +637,13 @@ export default function LandingPage() {
                   </div>
 
                   <div className="flex gap-3">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#38BDF8] to-[#0284c7] flex-shrink-0 flex items-center justify-center">
-                <Smile className="w-4 h-4 text-white" />
+              <div className="relative w-8 h-8 rounded-full overflow-hidden ring-1 ring-white/20 flex-shrink-0">
+                <Image
+                  src="/ikonnect-guide-avatar.png"
+                  alt="iKonnect Guide"
+                  fill
+                  className="object-cover"
+                />
                     </div>
                     <div className="bg-white/[0.06] px-5 py-4 rounded-2xl rounded-bl-md max-w-[320px]">
                       <p className="text-sm md:text-[15px] text-white/90 leading-relaxed mb-3">

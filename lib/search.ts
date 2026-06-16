@@ -225,6 +225,9 @@ function scoreResource(
 
     if (r.featured) score += 5;
     if (r.cost === "free") score += 2;
+    // Trust ranking: vetted platforms (RentFaster, liv.rent, Boardwalk…) rank
+    // above social-media classifieds (Kijiji, Facebook Marketplace).
+    if (r.priority) score += r.priority;
     return score;
   }
 
@@ -256,6 +259,7 @@ function scoreResource(
   if (score > 0) {
     if (r.featured) score += 5;
     if (r.cost === "free") score += 2;
+    if (r.priority) score += r.priority;
   }
   return score;
 }
@@ -315,5 +319,6 @@ function categoryRank(r: Resource, category: ResourceCategory): number {
   if (r.category.length === 1 && idx === 0) score += 20; // single-purpose provider
   if (r.featured) score += 6;
   if (r.cost === "free") score += 2;
+  if (r.priority) score += r.priority;
   return score;
 }

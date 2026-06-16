@@ -41,6 +41,9 @@ export interface Resource {
   hours?: string;
   featured?: boolean;
   hiddenGem?: boolean;
+  /** Trust ranking within a category (higher = more trusted/recommended).
+   *  Used to rank vetted platforms above social-media classifieds. */
+  priority?: number;
   cost?: "free" | "low-cost" | "paid" | "sliding-scale";
   languages?: string[];
   lastUpdated?: string;
