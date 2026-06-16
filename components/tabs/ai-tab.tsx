@@ -7,7 +7,7 @@ import { useAppStore } from "@/lib/store";
 import { resources, categoryLabels } from "@/lib/data";
 import { 
   Send, User, ArrowRight, Phone, ExternalLink, 
-  Home, CloudSnow, Calendar, TrendingUp, PanelRightClose, PanelRightOpen
+  Home, CloudSnow, Calendar, TrendingUp, PanelRightClose, PanelRightOpen, Search, MapPin
 } from "lucide-react";
 import type { Resource } from "@/lib/types";
 
@@ -99,59 +99,47 @@ export default function AITab() {
       .slice(0, 3);
   };
 
-  const generateAIResponse = (query: string): { text: string; resources: Resource[] } => {
-    const relevantResources = findRelevantResources(query);
-    const lowerQuery = query.toLowerCase();
-
-    let responseText = "";
-
-    if (lowerQuery.includes("housing") || lowerQuery.includes("rent") || lowerQuery.includes("apartment")) {
-      responseText = "I understand you're looking for housing assistance in Calgary. Here are some key resources:\n\n**Calgary Housing Company** (403-221-6430) - Manages affordable, rent-geared-to-income programs\n\n**Homeward Trust Calgary** (403-718-8533) - Housing-first programs and emergency shelter coordination\n\n**Rental Scam Prevention Guide** - Learn how to avoid common housing frauds\n\nTo apply, contact the Calgary Housing Company directly or call 211 Alberta for guidance.";
-    } else if (lowerQuery.includes("job") || lowerQuery.includes("work") || lowerQuery.includes("employment") || lowerQuery.includes("training")) {
-      responseText = "Finding employment in Calgary is an important step! Here are the best resources:\n\n**Centre for Newcomers** (403-569-3325) - Free employment services including resume help and interview prep\n\n**CCIS Employment** (403-262-2006) - Job training and career bridging programs\n\n**CRIEC** (403-262-8700) - Mentorship for internationally trained professionals\n\nMany programs are free. Start with the Centre for Newcomers!";
-    } else if (lowerQuery.includes("health") || lowerQuery.includes("doctor") || lowerQuery.includes("medical") || lowerQuery.includes("register")) {
-      responseText = "Healthcare in Alberta is covered by Alberta Health Services. Here's how to get started:\n\n**Step 1:** Register for an Alberta Health Care Card at Service Alberta\n\n**Step 2:** Find a family doctor through albertadocs.ca or walk-in clinics\n\n**Step 3:** For health advice 24/7, call Alberta Health Link at **811**\n\nEmergency services are always available - call **911**";
-    } else if (lowerQuery.includes("mental") || lowerQuery.includes("anxiety") || lowerQuery.includes("stress") || lowerQuery.includes("depression")) {
-      responseText = "Mental health support is available 24/7 in Calgary. You're not alone:\n\n**Distress Centre** (403-266-4357) - Immediate crisis support by phone\n\n**211 Alberta** - Free referrals to counseling and mental health services\n\n**Alberta Health Services** mental health clinics - Free treatment\n\nAll services are confidential and available to everyone.";
-    } else if (lowerQuery.includes("newcomer") || lowerQuery.includes("immigrant") || lowerQuery.includes("refugee") || lowerQuery.includes("settlement")) {
-      responseText = "Welcome to Calgary! Comprehensive newcomer support is available:\n\n**Centre for Newcomers** (403-569-3325) - Free settlement services in many languages\n\n**CCIS** (403-262-2006) - Integration programs, ESL classes, and employment help\n\n**211 Alberta** - Complete resource directory in multiple languages\n\nMost services are free and available in your language.";
-    } else if (lowerQuery.includes("legal") || lowerQuery.includes("tenant") || lowerQuery.includes("rights") || lowerQuery.includes("eviction")) {
-      responseText = "Legal help is available in Calgary:\n\n**Legal Aid Alberta** (1-866-845-2222) - Free legal advice for eligible residents\n\n**Your Tenant Rights:**\n• 24-hour notice required before landlord entry\n• Rent increases limited to once per year with 3 months notice\n• Eviction requires proper legal process\n\n**Community Legal Clinics** - Free advice on specific issues";
-    } else if (lowerQuery.includes("transit") || lowerQuery.includes("bus") || lowerQuery.includes("pass")) {
-      responseText = "Getting around Calgary is easy:\n\n**Calgary Transit** - Buses and CTrain throughout the city\n\n**Low-Income Transit Pass:**\n• Available for eligible residents\n• Apply through Fair Entry program\n• Significant savings on monthly passes\n\n**Plan your trip:** calgarytransit.com";
-    } else if (
-      lowerQuery.includes("visit") || lowerQuery.includes("tourist") || lowerQuery.includes("tour") ||
-      lowerQuery.includes("sightsee") || lowerQuery.includes("hotel") || lowerQuery.includes("restaurant") ||
-      lowerQuery.includes("things to do") || lowerQuery.includes("attraction") || lowerQuery.includes("see in")
-    ) {
-      responseText = "Welcome to Calgary! Here's the best of the city for visitors:\n\n**Top sights:** Calgary Tower, Heritage Park Historical Village, Studio Bell, Prince's Island Park and the Bow River pathways\n\n**Trusted local guides:**\n• **Toonie Tours** – gratuity-based walking & bike tours\n• **The History Wrangler (Rob Lennard)** – award-winning history tours\n• **Alberta Blue Sky Tours** – day trips to Banff & the Rockies\n\n**Where to stay:** Downtown hotels near Stephen Avenue keep you walking distance to dining and the CTrain\n\n**Dining:** Explore Stephen Avenue, Inglewood and 17th Ave for top-rated restaurants\n\nTap into the Tourists & Visitors category to browse curated, highly-rated options.";
-    } else {
-      responseText = "I'm here to help you navigate Calgary's resources and services. I can provide information about:\n\n• **Housing** - Affordable rentals, shelters, subsidies\n• **Jobs** - Training programs, resume help, career services\n• **Healthcare** - Doctors, clinics, mental health support\n• **Newcomers** - Settlement, ESL, integration programs\n• **Legal** - Tenant rights, free legal advice\n• **Transit** - Low-income passes, trip planning\n\nWhat would you like help with?";
-    }
-
-    return { text: responseText, resources: relevantResources };
-  };
-
   const handleSend = async (message: string) => {
-    if (!message.trim()) return;
+    const trimmed = message.trim();
+    if (!trimmed) return;
 
-    addChatMessage({
-      role: "user",
-      content: message.trim(),
-    });
+    // Capture history BEFORE appending the new user message (state updates async).
+    const history = chatMessages.map((m) => ({ role: m.role, content: m.content }));
+
+    addChatMessage({ role: "user", content: trimmed });
     setInput("");
     setIsTyping(true);
 
-    setTimeout(() => {
-      const { text, resources: relevantResources } = generateAIResponse(message);
-      
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: trimmed, language: activeLanguage, history }),
+      });
+      if (!res.ok) throw new Error(`status ${res.status}`);
+      const data = await res.json();
+      if (!data?.reply) throw new Error("empty reply");
+
       addChatMessage({
         role: "assistant",
-        content: text,
-        resources: relevantResources.map(r => r.id),
+        content: data.reply,
+        resources: Array.isArray(data.resourceIds) ? data.resourceIds : [],
+        webLinks: Array.isArray(data.webSearches) ? data.webSearches : [],
       });
+    } catch (err) {
+      // Graceful fallback — the guide always responds with vetted local
+      // resources even if the AI service is briefly unavailable.
+      console.log("[v0] chat fallback engaged:", err instanceof Error ? err.message : err);
+      const relevant = findRelevantResources(trimmed);
+      addChatMessage({
+        role: "assistant",
+        content:
+          "I had trouble reaching live information just now, but here are some trusted Calgary resources that should help. Please try asking again in a moment for a more tailored answer.",
+        resources: relevant.map((r) => r.id),
+      });
+    } finally {
       setIsTyping(false);
-    }, 1200);
+    }
   };
 
   const handleSuggestionClick = (query: string) => {
@@ -316,6 +304,32 @@ export default function AITab() {
                                 const resource = resources.find(r => r.id === resourceId);
                                 return resource ? <AIResourceCard key={resourceId} resource={resource} /> : null;
                               })}
+                            </div>
+                          )}
+
+                          {/* Live web / Google Maps / government search links */}
+                          {message.role === "assistant" && message.webLinks && message.webLinks.length > 0 && (
+                            <div className="mt-4">
+                              <p className="text-xs font-medium text-[var(--foreground-muted)] uppercase tracking-wider mb-2">
+                                Search live
+                              </p>
+                              <div className="flex flex-wrap gap-2">
+                                {message.webLinks.map((link, i) => {
+                                  const isMap = /maps/.test(link.url);
+                                  return (
+                                    <a
+                                      key={i}
+                                      href={link.url}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="inline-flex items-center gap-1.5 rounded-full border border-[#1D4ED8]/30 bg-[#1D4ED8]/10 px-3.5 py-2 text-xs md:text-sm font-medium text-[#1D4ED8] transition-colors hover:bg-[#1D4ED8]/15"
+                                    >
+                                      {isMap ? <MapPin className="h-3.5 w-3.5" /> : <Search className="h-3.5 w-3.5" />}
+                                      {link.label}
+                                    </a>
+                                  );
+                                })}
+                              </div>
                             </div>
                           )}
                         </div>

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.3.0",
+    "ai": "^6.0.206",
     "better-auth": "^1.6.19",
     "drizzle-orm": "^0.45.2",
     "framer-motion": "^12.40.0",
@@ -19,6 +20,7 @@
     "pg": "^8.21.0",
     "react": "latest",
     "react-dom": "latest",
+    "zod": "^4.4.3",
     "zustand": "latest"
   },
   "devDependencies": {
