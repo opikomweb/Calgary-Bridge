@@ -123,68 +123,129 @@ function lc(s?: string) {
   return s?.toLowerCase() ?? "";
 }
 
+// Filler words that should never drive a match (so "I need childcare"
+// matches on "childcare", not on "i" / "need").
+const STOPWORDS = new Set([
+  "i", "a", "an", "the", "to", "of", "for", "and", "or", "in", "on", "at", "is",
+  "are", "am", "my", "me", "we", "us", "you", "need", "needs", "want", "wants",
+  "looking", "look", "find", "finding", "help", "helps", "please", "some", "any",
+  "near", "with", "how", "do", "does", "can", "get", "getting", "where", "what",
+  "there", "here", "service", "services", "resource", "resources",
+]);
+
+function tokenize(query: string): string[] {
+  return query
+    .split(/[^a-z0-9]+/)
+    .map((t) => t.trim())
+    .filter((t) => t.length > 2 && !STOPWORDS.has(t));
+}
+
+function escapeRe(s: string) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+// Whole-word index of `needle` inside `haystack`, or -1.
+function wordIndex(haystack: string, needle: string): number {
+  const m = haystack.match(new RegExp(`\\b${escapeRe(needle)}\\b`));
+  return m && m.index !== undefined ? m.index : -1;
+}
+
+/**
+ * Detects which resource categories a free-text query is really asking for.
+ * Scans for intent keywords ANYWHERE in the phrase (longest phrase first),
+ * so "I need childcare" → ["family"] and "mental health support" →
+ * ["mental-health"] without the word "health" also dragging in clinics.
+ */
+function detectIntents(query: string): ResourceCategory[] {
+  const found = new Set<ResourceCategory>();
+  const consumed: Array<[number, number]> = [];
+  const keys = Object.keys(categoryIntent).sort((a, b) => b.length - a.length);
+  for (const key of keys) {
+    const idx = wordIndex(query, key);
+    if (idx === -1) continue;
+    const end = idx + key.length;
+    // Skip a shorter keyword fully contained in an already-matched longer one
+    // (e.g. "health" inside "mental health").
+    if (consumed.some(([s, e]) => idx >= s && end <= e)) continue;
+    consumed.push([idx, end]);
+    for (const c of categoryIntent[key]) found.add(c);
+  }
+  return [...found];
+}
+
 /**
  * Scores how relevant a resource is to a query. Higher = more relevant.
- * Returns 0 when there is no match at all (the resource is excluded).
+ * Returns 0 when the resource should be EXCLUDED.
  */
-function scoreResource(r: Resource, query: string, lang: Language): number {
+function scoreResource(
+  r: Resource,
+  query: string,
+  tokens: string[],
+  intents: ResourceCategory[],
+  lang: Language
+): number {
   const titleEn = lc(r.title.en);
   const titleLocal = lc(r.title[lang]);
   const descEn = lc(r.description.en);
   const descLocal = lc(r.description[lang]);
   const summary = lc(r.summary?.en) + " " + lc(r.summary?.[lang]);
   const services = (r.servicesOffered ?? []).map(lc);
+  const haystack = `${titleEn} ${titleLocal} ${summary} ${descEn} ${descLocal} ${services.join(" ")}`;
+
+  const titleHasQuery = titleEn.includes(query) || titleLocal.includes(query);
+  const exactTitle = titleEn === query || titleLocal === query;
 
   let score = 0;
-
-  // --- Title matches (strongest signal) ---
-  if (titleEn === query || titleLocal === query) score += 120;
+  if (exactTitle) score += 120;
   else if (titleEn.startsWith(query) || titleLocal.startsWith(query)) score += 80;
-  else if (titleEn.includes(query) || titleLocal.includes(query)) score += 60;
+  else if (titleHasQuery) score += 60;
 
-  // --- Category intent: does the query point to a category this resource leads with? ---
-  const intendedCategories = categoryIntent[query] ?? [];
-  if (intendedCategories.length > 0) {
-    const matchIndex = r.category.findIndex((c) => intendedCategories.includes(c));
-    if (matchIndex === 0) {
-      // Resource's PRIMARY category matches the intent — most relevant.
-      score += 70;
-    } else if (matchIndex > 0) {
-      // Matches, but it's a secondary focus (e.g. CIWA's "family" tag) — lower.
-      score += 22;
+  // ===== Intent-gated path: the query clearly names a category =====
+  if (intents.length > 0) {
+    const matchIndex = r.category.findIndex((c) => intents.includes(c));
+
+    if (matchIndex === -1) {
+      // Resource does NOT belong to any requested category. Only keep it if the
+      // user literally searched its name; otherwise exclude it entirely so
+      // unrelated orgs (mental health, jobs, etc.) never leak into the results.
+      return titleHasQuery ? score : 0;
     }
-    // Single-purpose providers (only the intended category) get a focus bonus.
-    if (r.category.length === 1 && matchIndex === 0) score += 25;
+
+    // Primary-category providers are the most relevant; secondary far less.
+    score += matchIndex === 0 ? 90 : 28;
+    if (r.category.length === 1 && matchIndex === 0) score += 25; // single-purpose focus
+
+    // Refine ranking by how directly the resource matches the meaningful
+    // query tokens (e.g. a daycare whose services list "childcare").
+    for (const t of tokens) {
+      if (services.some((s) => s.includes(t))) score += 12;
+      else if (titleEn.includes(t) || titleLocal.includes(t)) score += 14;
+      else if (summary.includes(t) || descEn.includes(t) || descLocal.includes(t)) score += 5;
+    }
+
+    if (r.featured) score += 5;
+    if (r.cost === "free") score += 2;
+    return score;
   }
 
-  // --- Direct category name match ---
-  if (r.category.some((c) => c.toLowerCase().includes(query) || query.includes(c.toLowerCase()))) {
-    score += 18;
+  // ===== Generic text path: no category intent (e.g. searching a name) =====
+  if (r.category.some((c) => c.toLowerCase() === query)) score += 30;
+
+  for (const t of tokens) {
+    if (titleEn.includes(t) || titleLocal.includes(t)) score += 18;
+    else if (services.some((s) => s.includes(t))) score += 12;
+    else if (summary.includes(t)) score += 6;
+    else if (descEn.includes(t) || descLocal.includes(t)) score += 5;
   }
 
-  // --- Services offered ---
-  if (services.some((s) => s === query)) score += 30;
-  else if (services.some((s) => s.includes(query))) score += 16;
-
-  // --- Summary / description (weakest, often incidental mentions) ---
-  if (summary.includes(query)) score += 8;
-  if (descEn.includes(query) || descLocal.includes(query)) score += 6;
-
-  // --- Eligibility & user types ---
-  if (lc(r.eligibility?.en).includes(query) || lc(r.eligibility?.[lang]).includes(query)) score += 4;
-  if (r.userTypes?.some((t) => t.toLowerCase().includes(query) || query.includes(t.toLowerCase())))
-    score += 4;
-
-  // --- Keyword synonym fallback (only if nothing stronger matched) ---
+  // Synonym expansion fallback for everyday phrasing, only if nothing matched.
   if (score === 0) {
     for (const [keyword, synonyms] of Object.entries(keywordMappings)) {
-      if (!query.includes(keyword)) continue;
+      if (wordIndex(query, keyword) === -1) continue;
       const synHit =
         r.category.some((cat) =>
           synonyms.some((syn) => cat.toLowerCase().includes(syn) || syn.includes(cat.toLowerCase()))
-        ) ||
-        services.some((service) => synonyms.some((syn) => service.includes(syn))) ||
-        synonyms.some((syn) => titleEn.includes(syn) || descEn.includes(syn));
+        ) || synonyms.some((syn) => haystack.includes(syn));
       if (synHit) {
         score += 12;
         break;
@@ -192,19 +253,18 @@ function scoreResource(r: Resource, query: string, lang: Language): number {
     }
   }
 
-  // --- Small quality boosts so verified/featured resources lead ties ---
   if (score > 0) {
     if (r.featured) score += 5;
     if (r.cost === "free") score += 2;
   }
-
   return score;
 }
 
 /**
  * Rich, language-aware, relevance-RANKED search across all meaningful
  * resource fields. Results are sorted most-relevant first so dedicated
- * providers outrank organizations that only mention a topic in passing.
+ * providers outrank organizations that only mention a topic in passing,
+ * and off-topic resources are excluded when the query names a category.
  */
 export function searchResources(
   list: Resource[],
@@ -214,8 +274,11 @@ export function searchResources(
   const query = rawQuery.toLowerCase().trim();
   if (!query) return [];
 
+  const tokens = tokenize(query);
+  const intents = detectIntents(query);
+
   return list
-    .map((r) => ({ r, score: scoreResource(r, query, activeLanguage) }))
+    .map((r) => ({ r, score: scoreResource(r, query, tokens, intents, activeLanguage) }))
     .filter((x) => x.score > 0)
     .sort((a, b) => b.score - a.score)
     .map((x) => x.r);
