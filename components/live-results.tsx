@@ -48,17 +48,17 @@ export default function LiveResults({ category, query, categoryLabel }: LiveResu
   return (
     <div className="mt-10 md:mt-14">
       {/* Trigger / header */}
-      <div className="rounded-2xl md:rounded-3xl border border-[#38BDF8]/20 bg-gradient-to-br from-[#0c2438]/70 to-[#071726]/80 backdrop-blur-xl p-5 md:p-7">
+      <div className="rounded-2xl md:rounded-3xl border border-[#38BDF8]/20 bg-sky-500/[0.06] backdrop-blur-xl p-5 md:p-7">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-start gap-3.5">
             <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-[#38BDF8]/15 border border-[#38BDF8]/25">
               <MapPin className="h-5 w-5 text-[#38BDF8]" />
             </div>
             <div className="space-y-1">
-              <h3 className="text-lg md:text-xl font-bold text-white leading-snug">
+              <h3 className="text-lg md:text-xl font-bold text-foreground leading-snug">
                 Search live on Google Maps
               </h3>
-              <p className="text-sm text-white/50 leading-relaxed max-w-md">
+              <p className="text-sm text-foreground/50 leading-relaxed max-w-md">
                 Find verified, highly-rated providers for {subject} near you &mdash; pulled live and
                 ranked by rating and reviews.
               </p>
@@ -85,7 +85,7 @@ export default function LiveResults({ category, query, categoryLabel }: LiveResu
         </div>
 
         {!canSearch && (
-          <p className="mt-3 text-xs text-white/40">
+          <p className="mt-3 text-xs text-foreground/40">
             Pick a category or type a search term to enable live results.
           </p>
         )}
@@ -113,7 +113,7 @@ export default function LiveResults({ category, query, categoryLabel }: LiveResu
             className="mt-6"
           >
             {results.length === 0 ? (
-              <p className="text-sm text-white/45 py-6 text-center">
+              <p className="text-sm text-foreground/45 py-6 text-center">
                 No verified live matches found right now. Your curated resources above are still the
                 best place to start.
               </p>
@@ -121,9 +121,9 @@ export default function LiveResults({ category, query, categoryLabel }: LiveResu
               <>
                 <div className="flex items-center gap-2 mb-4">
                   <BadgeCheck className="h-4 w-4 text-[#34D399]" />
-                  <p className="text-sm font-medium text-white/70">
+                  <p className="text-sm font-medium text-foreground/70">
                     Live from Google Maps
-                    <span className="text-white/40"> &middot; {results.length} verified result{results.length !== 1 ? "s" : ""}</span>
+                    <span className="text-foreground/40"> &middot; {results.length} verified result{results.length !== 1 ? "s" : ""}</span>
                   </p>
                 </div>
                 <div className="grid md:grid-cols-2 gap-4 md:gap-5">
@@ -152,10 +152,10 @@ function LivePlaceCard({ place, index }: { place: LivePlace; index: number }) {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.04 }}
-      className="rounded-2xl border border-white/[0.07] bg-white/[0.025] hover:bg-white/[0.04] hover:border-white/[0.12] transition-colors p-5 flex flex-col"
+      className="rounded-2xl border border-foreground/[0.07] bg-foreground/[0.025] hover:bg-foreground/[0.04] hover:border-foreground/[0.12] transition-colors p-5 flex flex-col"
     >
       <div className="flex items-start justify-between gap-3">
-        <h4 className="font-semibold text-white leading-snug text-balance">{place.name}</h4>
+        <h4 className="font-semibold text-foreground leading-snug text-balance">{place.name}</h4>
         {typeof place.rating === "number" && (
           <span className="flex-shrink-0 inline-flex items-center gap-1 px-2 py-1 rounded-full bg-amber-400/15 text-amber-300 text-xs font-semibold">
             <Star className="h-3 w-3 fill-amber-300" />
@@ -165,12 +165,12 @@ function LivePlaceCard({ place, index }: { place: LivePlace; index: number }) {
       </div>
 
       {(place.reviews || place.openNow !== undefined) && (
-        <div className="mt-1.5 flex items-center gap-2 text-xs text-white/45">
+        <div className="mt-1.5 flex items-center gap-2 text-xs text-foreground/45">
           {place.reviews ? <span>{place.reviews} Google reviews</span> : null}
           {place.openNow !== undefined && (
             <>
-              {place.reviews ? <span className="text-white/20">&middot;</span> : null}
-              <span className={place.openNow ? "text-emerald-300" : "text-white/45"}>
+              {place.reviews ? <span className="text-foreground/20">&middot;</span> : null}
+              <span className={place.openNow ? "text-emerald-300" : "text-foreground/45"}>
                 {place.openNow ? "Open now" : "Closed now"}
               </span>
             </>
@@ -179,13 +179,13 @@ function LivePlaceCard({ place, index }: { place: LivePlace; index: number }) {
       )}
 
       {place.address && (
-        <p className="mt-3 flex items-start gap-2 text-sm text-white/55 leading-relaxed">
-          <MapPin className="h-4 w-4 flex-shrink-0 mt-0.5 text-white/35" />
+        <p className="mt-3 flex items-start gap-2 text-sm text-foreground/55 leading-relaxed">
+          <MapPin className="h-4 w-4 flex-shrink-0 mt-0.5 text-foreground/35" />
           <span>{place.address}</span>
         </p>
       )}
 
-      <div className="mt-4 pt-4 border-t border-white/[0.06] flex flex-wrap items-center gap-2">
+      <div className="mt-4 pt-4 border-t border-foreground/[0.06] flex flex-wrap items-center gap-2">
         <a
           href={mapsUrl}
           target="_blank"
@@ -198,7 +198,7 @@ function LivePlaceCard({ place, index }: { place: LivePlace; index: number }) {
         {place.phone && (
           <a
             href={`tel:${place.phone.replace(/\s/g, "")}`}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.05] text-white/70 hover:bg-white/[0.08] transition-colors text-xs font-medium"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-foreground/[0.05] text-foreground/70 hover:bg-foreground/[0.08] transition-colors text-xs font-medium"
           >
             <Phone className="h-3.5 w-3.5" />
             {place.phone}
@@ -209,7 +209,7 @@ function LivePlaceCard({ place, index }: { place: LivePlace; index: number }) {
             href={place.website}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.05] text-white/70 hover:bg-white/[0.08] transition-colors text-xs font-medium"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-foreground/[0.05] text-foreground/70 hover:bg-foreground/[0.08] transition-colors text-xs font-medium"
           >
             <Globe className="h-3.5 w-3.5" />
             Website

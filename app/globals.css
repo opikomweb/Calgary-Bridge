@@ -1,62 +1,126 @@
 @import "tailwindcss";
 
+/* Class-based dark mode: default theme is the bright "sunny Calgary" day look,
+   .dark switches to the deep navy night look. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme inline {
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
   --font-heading: "Inter", system-ui, -apple-system, sans-serif;
+
+  /* Semantic color tokens -> Tailwind utilities (bg-background, text-foreground, etc.) */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card-solid);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--card-solid);
+  --color-popover-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border-solid);
+  --color-ring: var(--ring);
+  --color-sky-brand: var(--primary);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
 }
 
+/* ============ DAY MODE (default) — bright sunny Calgary blue-sky ============ */
 :root {
-  /* Calgary Konnect Premium Color System */
-  --background: #07111F;
-  --background-secondary: #0F172A;
-  --foreground: #f8fafc;
-  --foreground-muted: #94a3b8;
-  
-  /* Primary - Accent Blue (Updated) */
-  --primary: #38BDF8;
-  --primary-hover: #7dd3fc;
-  --primary-dark: #0284c7;
-  --primary-foreground: #07111F;
-  
+  --background: #eaf3ff;
+  --background-secondary: #f4f9ff;
+  --foreground: #0b2239;
+  --foreground-muted: #45607a;
+
+  /* Primary - Calgary sky blue (slightly deepened for contrast on light) */
+  --primary: #0284c7;
+  --primary-hover: #0ea5e9;
+  --primary-dark: #0369a1;
+  --primary-foreground: #ffffff;
+
   /* Calgary Red */
   --calgary-red: #E1251B;
   --secondary: #E1251B;
   --secondary-foreground: #ffffff;
-  
+
   /* Warm Gold */
-  --accent: #FBBF24;
-  --accent-foreground: #07111F;
-  
-  /* Surface colors - glassmorphism */
-  --surface: rgba(255, 255, 255, 0.06);
-  --surface-hover: rgba(255, 255, 255, 0.10);
-  --surface-active: rgba(255, 255, 255, 0.14);
-  
+  --accent: #D97706;
+  --accent-foreground: #ffffff;
+
+  /* Surface overlays (subtle dark-on-light glass) */
+  --surface: rgba(11, 34, 57, 0.04);
+  --surface-hover: rgba(11, 34, 57, 0.07);
+  --surface-active: rgba(11, 34, 57, 0.10);
+
   /* Card */
-  --card: rgba(15, 23, 42, 0.6);
-  --card-hover: rgba(15, 23, 42, 0.8);
-  --card-foreground: #f8fafc;
-  
+  --card: rgba(255, 255, 255, 0.72);
+  --card-hover: rgba(255, 255, 255, 0.88);
+  --card-solid: #ffffff;
+  --card-foreground: #0b2239;
+
   /* Border */
-  --border: rgba(255, 255, 255, 0.08);
-  --border-hover: rgba(255, 255, 255, 0.16);
-  
-  /* Ring */
-  --ring: #38BDF8;
-  
-  /* Muted */
-  --muted: #1e293b;
-  --muted-foreground: #64748b;
-  
-  /* Emergency */
+  --border: rgba(11, 34, 57, 0.10);
+  --border-hover: rgba(11, 34, 57, 0.18);
+  --border-solid: rgba(11, 34, 57, 0.12);
+
+  --ring: #0284c7;
+
+  --muted: #e2edfa;
+  --muted-foreground: #5b7286;
+
   --emergency: #E1251B;
   --emergency-foreground: #ffffff;
-  
-  /* Radius - generous for premium feel */
+
   --radius: 1.5rem;
   --radius-sm: 0.75rem;
   --radius-lg: 2rem;
   --radius-xl: 2.5rem;
+}
+
+/* ============ NIGHT MODE — deep navy Calgary ============ */
+.dark {
+  --background: #07111F;
+  --background-secondary: #0F172A;
+  --foreground: #f8fafc;
+  --foreground-muted: #94a3b8;
+
+  --primary: #38BDF8;
+  --primary-hover: #7dd3fc;
+  --primary-dark: #0284c7;
+  --primary-foreground: #07111F;
+
+  --calgary-red: #E1251B;
+  --secondary: #E1251B;
+  --secondary-foreground: #ffffff;
+
+  --accent: #FBBF24;
+  --accent-foreground: #07111F;
+
+  --surface: rgba(255, 255, 255, 0.06);
+  --surface-hover: rgba(255, 255, 255, 0.10);
+  --surface-active: rgba(255, 255, 255, 0.14);
+
+  --card: rgba(15, 23, 42, 0.6);
+  --card-hover: rgba(15, 23, 42, 0.8);
+  --card-solid: #0f172a;
+  --card-foreground: #f8fafc;
+
+  --border: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.16);
+  --border-solid: rgba(255, 255, 255, 0.10);
+
+  --ring: #38BDF8;
+
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+
+  --emergency: #E1251B;
+  --emergency-foreground: #ffffff;
 }
 
 * {
@@ -155,12 +219,12 @@ p {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--border-hover);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.25);
+  background: var(--muted-foreground);
 }
 
 .hide-scrollbar::-webkit-scrollbar {
@@ -174,24 +238,24 @@ p {
 
 /* Premium Glassmorphism */
 .glass {
-  background: rgba(15, 23, 42, 0.8);
+  background: var(--card-hover);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border);
 }
 
 .glass-subtle {
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--surface);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
 }
 
 .glass-card {
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(15, 23, 42, 0.5) 100%);
+  background: var(--card);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border);
 }
 
 /* Hero background with radial gradients */
@@ -255,17 +319,17 @@ p {
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: white;
+  background: var(--surface);
+  border: 1px solid var(--border-hover);
+  color: var(--foreground);
   font-weight: 600;
   font-size: 17px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.24);
+  background: var(--surface-hover);
+  border-color: var(--border-hover);
   transform: translateY(-1px);
 }
 
@@ -278,10 +342,10 @@ p {
    Internal padding: 24-32px mobile, 32-40px desktop | Radius: 20-24px | Gaps: 20-32px
    ============================================= */
 .premium-card {
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.92) 0%, rgba(15, 23, 42, 0.58) 100%);
+  background: var(--card);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border);
   border-radius: 20px;
   padding: 24px;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -297,17 +361,17 @@ p {
 .premium-card:hover {
   transform: translateY(-4px);
   box-shadow: 
-    0 24px 48px -12px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.14);
+    0 24px 48px -12px rgba(2, 32, 71, 0.18),
+    0 0 0 1px var(--border-hover);
+  border-color: var(--border-hover);
 }
 
 /* Action cards — large category tiles */
 .action-card {
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.96) 0%, rgba(15, 23, 42, 0.72) 100%);
+  background: var(--card);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  border: 1px solid var(--border);
   border-radius: 24px;
   padding: 24px;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -323,10 +387,10 @@ p {
 
 .action-card:hover {
   transform: translateY(-6px);
-  background: linear-gradient(135deg, rgba(15, 23, 42, 1) 0%, rgba(15, 23, 42, 0.88) 100%);
-  border-color: rgba(255, 255, 255, 0.16);
+  background: var(--card-hover);
+  border-color: var(--border-hover);
   box-shadow: 
-    0 32px 64px -16px rgba(0, 0, 0, 0.5),
+    0 32px 64px -16px rgba(2, 32, 71, 0.22),
     0 0 50px -12px var(--card-glow, rgba(56, 189, 248, 0.2));
 }
 
@@ -412,8 +476,8 @@ p {
 
 /* Premium input styles */
 .input-premium {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 20px;
   padding: 20px 28px;
   font-size: 18px;
@@ -425,7 +489,7 @@ p {
 .input-premium:focus {
   outline: none;
   border-color: var(--primary);
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--surface-hover);
   box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.15);
 }
 
@@ -435,8 +499,8 @@ p {
 
 /* Large conversational search box */
 .search-hero {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 24px;
   padding: 24px 32px;
   font-size: 20px;
@@ -448,10 +512,10 @@ p {
 .search-hero:focus {
   outline: none;
   border-color: rgba(56, 189, 248, 0.5);
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--surface-hover);
   box-shadow: 
     0 0 0 4px rgba(56, 189, 248, 0.12),
-    0 25px 50px -12px rgba(0, 0, 0, 0.4);
+    0 25px 50px -12px rgba(2, 32, 71, 0.25);
 }
 
 /* Calgary skyline animation */

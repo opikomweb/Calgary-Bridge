@@ -42,7 +42,7 @@ const heroCategories = [
     label: "Housing & Rent",
     stat: "12 programs",
     accentColor: "#38BDF8",
-    bgGradient: "from-[#0c2d4d]/80 to-[#071a2e]/90",
+    bgGradient: "from-[#0c2d4d] to-[#071a2e]",
   },
   { 
     id: "jobs" as ResourceCategory, 
@@ -50,7 +50,7 @@ const heroCategories = [
     label: "Jobs & Career",
     stat: "340+ openings",
     accentColor: "#FBBF24",
-    bgGradient: "from-[#2d2408]/80 to-[#1a1505]/90",
+    bgGradient: "from-[#2d2408] to-[#1a1505]",
   },
   { 
     id: "healthcare" as ResourceCategory, 
@@ -58,7 +58,7 @@ const heroCategories = [
     label: "Healthcare",
     stat: "24/7 available",
     accentColor: "#34D399",
-    bgGradient: "from-[#0d2d24]/80 to-[#071a16]/90",
+    bgGradient: "from-[#0d2d24] to-[#071a16]",
   },
   { 
     id: "newcomer" as ResourceCategory, 
@@ -66,7 +66,7 @@ const heroCategories = [
     label: "Newcomer Services",
     stat: "10 organizations",
     accentColor: "#22D3EE",
-    bgGradient: "from-[#082d36]/80 to-[#051a20]/90",
+    bgGradient: "from-[#082d36] to-[#051a20]",
   },
 ];
 
@@ -103,7 +103,7 @@ export default function ExploreTab() {
             <h1 className="text-[clamp(32px,6vw,56px)] font-bold tracking-[-0.02em] leading-[1.1] mb-4">
               Explore Resources
             </h1>
-            <p className="text-base md:text-lg text-white/45 max-w-xl leading-relaxed">
+            <p className="text-base md:text-lg text-foreground/45 max-w-xl leading-relaxed">
               Every verified Calgary service and program, searchable and filterable.
             </p>
           </motion.div>
@@ -121,13 +121,13 @@ export default function ExploreTab() {
           >
             {/* Search Input */}
             <div className="relative flex-1">
-              <Search className="absolute left-4 md:left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-white/35" />
+              <Search className="absolute left-4 md:left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-foreground/35" />
               <input
                 type="text"
                 placeholder="Search resources..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full h-14 md:h-16 bg-white/[0.03] hover:bg-white/[0.05] border border-white/[0.06] hover:border-white/[0.1] focus:border-[#38BDF8]/30 focus:bg-white/[0.05] rounded-xl md:rounded-2xl text-base text-white placeholder:text-white/25 pl-12 md:pl-14 pr-4 outline-none transition-all duration-300 focus:shadow-[0_0_0_4px_rgba(56,189,248,0.06)]"
+                className="w-full h-14 md:h-16 bg-foreground/[0.03] hover:bg-foreground/[0.05] border border-foreground/[0.06] hover:border-foreground/[0.1] focus:border-[#38BDF8]/30 focus:bg-foreground/[0.05] rounded-xl md:rounded-2xl text-base text-foreground placeholder:text-foreground/25 pl-12 md:pl-14 pr-4 outline-none transition-all duration-300 focus:shadow-[0_0_0_4px_rgba(56,189,248,0.06)]"
               />
             </div>
 
@@ -137,8 +137,8 @@ export default function ExploreTab() {
                 onClick={() => setDropdownOpen(!dropdownOpen)}
                 className={`h-14 md:h-16 px-5 md:px-6 rounded-xl md:rounded-2xl flex items-center gap-3 font-medium text-sm md:text-base transition-all w-full md:min-w-[240px] justify-between ${
                   activeCategory !== "all"
-                    ? "bg-[#38BDF8]/15 border border-[#38BDF8]/30 text-white"
-                    : "bg-white/[0.03] border border-white/[0.06] hover:border-white/[0.1] text-white/80"
+                    ? "bg-[#38BDF8]/15 border border-[#38BDF8]/30 text-foreground"
+                    : "bg-foreground/[0.03] border border-foreground/[0.06] hover:border-foreground/[0.1] text-foreground/80"
                 }`}
               >
                 <div className="flex items-center gap-2.5 min-w-0">
@@ -155,7 +155,7 @@ export default function ExploreTab() {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -8, scale: 0.96 }}
                     transition={{ duration: 0.15 }}
-                    className="absolute top-full left-0 right-0 mt-2 bg-[#0a1628]/98 backdrop-blur-2xl border border-white/[0.08] rounded-xl md:rounded-2xl shadow-2xl overflow-hidden z-50 max-h-[400px] overflow-y-auto"
+                    className="absolute top-full left-0 right-0 mt-2 bg-popover backdrop-blur-2xl border border-border rounded-xl md:rounded-2xl shadow-2xl overflow-hidden z-50 max-h-[400px] overflow-y-auto"
                   >
                     {allCategories.map((category) => (
                       <button
@@ -167,7 +167,7 @@ export default function ExploreTab() {
                         className={`w-full flex items-center gap-3 px-4 md:px-5 py-3 md:py-4 text-left text-sm transition-all ${
                           activeCategory === category.id
                             ? "bg-[#38BDF8]/10 text-[#38BDF8]"
-                            : "text-white/60 hover:bg-white/[0.03] hover:text-white"
+                            : "text-foreground/60 hover:bg-foreground/[0.03] hover:text-foreground"
                         }`}
                       >
                         <category.icon className="w-4 h-4 flex-shrink-0" />
@@ -203,10 +203,10 @@ export default function ExploreTab() {
                 whileHover={{ scale: 1.02, y: -4 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setActiveCategory(category.id)}
-                className={`relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-br ${category.bgGradient} backdrop-blur-xl border border-white/[0.06] p-4 md:p-6 lg:p-8 transition-all group ${
+                className={`relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-br ${category.bgGradient} backdrop-blur-xl border border-foreground/[0.06] p-4 md:p-6 lg:p-8 transition-all group ${
                   activeCategory === category.id 
-                    ? "ring-2 ring-white/20 shadow-xl border-white/[0.12]" 
-                    : "hover:border-white/[0.1] hover:shadow-lg"
+                    ? "ring-2 ring-white/20 shadow-xl border-foreground/[0.12]" 
+                    : "hover:border-foreground/[0.1] hover:shadow-lg"
                 }`}
                 style={{
                   boxShadow: activeCategory === category.id 
@@ -224,7 +224,7 @@ export default function ExploreTab() {
                 <div className="relative z-10 flex flex-col items-center text-center">
                   {/* Icon */}
                   <div 
-                    className="mb-3 md:mb-4 flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-xl md:rounded-2xl backdrop-blur-sm border border-white/[0.08]"
+                    className="mb-3 md:mb-4 flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-xl md:rounded-2xl backdrop-blur-sm border border-foreground/[0.08]"
                     style={{ background: `${category.accentColor}15` }}
                   >
                     <category.icon className="h-5 w-5 md:h-6 md:w-6" style={{ color: category.accentColor }} />
@@ -257,8 +257,8 @@ export default function ExploreTab() {
       <section className="relative pb-4 md:pb-6">
         <div className="max-w-[1200px] mx-auto px-5 md:px-8">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <p className="text-base text-white/40">
-              <span className="font-bold text-white text-lg md:text-xl">{filteredResources.length}</span>
+            <p className="text-base text-foreground/40">
+              <span className="font-bold text-foreground text-lg md:text-xl">{filteredResources.length}</span>
               {" "}resource{filteredResources.length !== 1 ? "s" : ""} found
             </p>
             
@@ -297,11 +297,11 @@ export default function ExploreTab() {
               animate={{ opacity: 1 }}
               className="text-center py-20 md:py-32"
             >
-              <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-white/[0.03] border border-white/[0.06] flex items-center justify-center mx-auto mb-8">
-                <Search className="w-10 h-10 md:w-14 md:h-14 text-white/25" />
+              <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-foreground/[0.03] border border-foreground/[0.06] flex items-center justify-center mx-auto mb-8">
+                <Search className="w-10 h-10 md:w-14 md:h-14 text-foreground/25" />
               </div>
-              <p className="text-xl md:text-2xl font-semibold text-white/50 mb-3">No resources found</p>
-              <p className="text-base text-white/35 leading-relaxed">Try adjusting your search or filters</p>
+              <p className="text-xl md:text-2xl font-semibold text-foreground/50 mb-3">No resources found</p>
+              <p className="text-base text-foreground/35 leading-relaxed">Try adjusting your search or filters</p>
             </motion.div>
           )}
 

@@ -500,11 +500,11 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
           <div className="h-px bg-gradient-to-r from-transparent via-sky-500/50 to-transparent" />
           
           {/* Decorative Top Pattern */}
-          <div className="absolute inset-x-0 -top-16 h-32 bg-gradient-to-b from-transparent via-[#020508]/50 to-[#020508] pointer-events-none" />
+          <div className="absolute inset-x-0 -top-16 h-32 bg-gradient-to-b from-transparent via-[#0b1d33]/50 to-[#0b1d33] pointer-events-none" />
         </div>
 
-        {/* Footer Background - Distinctly Different */}
-        <div className="bg-[#020508] relative overflow-hidden">
+        {/* Footer Background - Distinctly Different (always a deep navy in both themes) */}
+        <div className="bg-[#0b1d33] relative overflow-hidden">
           {/* Subtle Grid Pattern */}
           <div className="absolute inset-0 opacity-[0.02]" style={{
             backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,

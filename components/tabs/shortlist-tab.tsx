@@ -29,10 +29,10 @@ export default function ShortlistTab() {
 
       {bookmarkedItems.length === 0 ? (
         <div className="flex-1 flex flex-col items-center justify-center text-center px-5 md:px-8 py-12 md:py-20">
-          <div className="mb-6 flex h-20 w-20 md:h-24 md:w-24 items-center justify-center rounded-full bg-white/[0.06] border border-white/[0.08]">
+          <div className="mb-6 flex h-20 w-20 md:h-24 md:w-24 items-center justify-center rounded-full bg-foreground/[0.06] border border-foreground/[0.08]">
             <Heart className="h-10 w-10 md:h-12 md:w-12 text-[var(--foreground-muted)]" />
           </div>
-          <p className="text-xl md:text-2xl font-semibold text-white/70">
+          <p className="text-xl md:text-2xl font-semibold text-foreground/70">
             {uiText.emptyShortlist?.[activeLanguage] || "Your shortlist is empty"}
           </p>
           <p className="mt-3 text-sm md:text-base text-[var(--foreground-muted)] max-w-sm leading-relaxed">

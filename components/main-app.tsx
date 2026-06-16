@@ -4,7 +4,8 @@ import React from "react";
 import Image from "next/image";
 import { useAppStore } from "@/lib/store";
 import { translations } from "@/lib/data";
-import { Home, Compass, MessageCircle, Heart, User, AlertTriangle, Shield, Menu, X } from "lucide-react";
+import { Home, Compass, Smile, Heart, User, AlertTriangle, Shield, Menu, X } from "lucide-react";
+import { ThemeToggle } from "./theme-toggle";
 import { motion, AnimatePresence } from "framer-motion";
 import HomeTab from "./tabs/home-tab";
 import ExploreTab from "./tabs/explore-tab";
@@ -35,25 +36,25 @@ export default function MainApp() {
   const navItems = [
     { id: "home" as const, icon: Home, label: "Home", shortLabel: "Home", highlight: false },
     { id: "explore" as const, icon: Compass, label: "Explore", shortLabel: "Explore", highlight: false },
-    { id: "ai" as const, icon: MessageCircle, label: "iKonnect Guide", shortLabel: "Guide", highlight: true },
+    { id: "ai" as const, icon: Smile, label: "iKonnect Guide", shortLabel: "Guide", highlight: true },
     { id: "shortlist" as const, icon: Heart, label: "Saved", shortLabel: "Saved", highlight: false },
     { id: "profile" as const, icon: User, label: "Profile", shortLabel: "Profile", highlight: false },
   ];
 
   return (
-    <div className="min-h-screen bg-[#050B14] relative">
+    <div className="min-h-screen bg-background relative">
       {/* Animated Calgary Background with Tower, River, Bridge */}
       <CalgaryAnimatedBackground />
 
       {/* Desktop Sidebar */}
       <aside className="hidden lg:flex lg:w-[340px] lg:flex-col lg:fixed lg:inset-y-0 lg:z-50">
-        <div className="flex grow flex-col overflow-y-auto border-r border-white/[0.06] bg-[#050B14]/70 backdrop-blur-3xl">
+        <div className="flex grow flex-col overflow-y-auto border-r border-foreground/[0.06] bg-background/70 backdrop-blur-3xl">
           {/* Logo Section - Large Professional Logo */}
           <div className="px-6 pt-8 pb-6 flex justify-center">
             <button
               onClick={goToLanding}
               aria-label="Go to Calgary Konnect home page"
-              className="relative w-[200px] h-[200px] flex-shrink-0 rounded-3xl overflow-hidden bg-gradient-to-br from-[#0c1829]/80 to-[#050B14]/90 p-3 border border-white/[0.08] shadow-2xl shadow-sky-500/10 backdrop-blur-xl transition-all duration-300 hover:border-sky-400/30 hover:shadow-sky-500/20 hover:scale-[1.02] cursor-pointer"
+              className="relative w-[200px] h-[200px] flex-shrink-0 rounded-3xl overflow-hidden bg-card p-3 border border-border shadow-2xl shadow-sky-500/10 backdrop-blur-xl transition-all duration-300 hover:border-sky-400/30 hover:shadow-sky-500/20 hover:scale-[1.02] cursor-pointer"
             >
               <Image
                 src="/calgary-connect-logo.png"
@@ -76,8 +77,8 @@ export default function MainApp() {
                       activeTab === item.id
                         ? item.highlight
                           ? "bg-gradient-to-r from-[#38BDF8] to-[#0284c7] text-white shadow-2xl shadow-sky-500/40"
-                          : "bg-white/[0.08] text-white border border-white/[0.12] shadow-xl shadow-black/20"
-                        : "text-white/50 hover:bg-white/[0.04] hover:text-white/80"
+                          : "bg-foreground/[0.08] text-foreground border border-foreground/[0.12] shadow-xl shadow-black/20"
+                        : "text-foreground/50 hover:bg-foreground/[0.04] hover:text-foreground/80"
                     }`}
                   >
                     <item.icon className={`h-6 w-6 shrink-0 ${activeTab === item.id ? "" : "opacity-60"}`} />
@@ -88,10 +89,14 @@ export default function MainApp() {
             </ul>
 
             {/* Sidebar Action Buttons */}
-            <div className="mt-auto space-y-4 py-10 border-t border-white/[0.06]">
+            <div className="mt-auto space-y-4 py-10 border-t border-foreground/[0.06]">
+              <div className="flex items-center justify-between rounded-2xl bg-foreground/[0.03] border border-foreground/[0.06] px-6 py-4">
+                <span className="text-base font-medium text-foreground/70">Appearance</span>
+                <ThemeToggle />
+              </div>
               <button
                 onClick={() => setShowRentShield(true)}
-                className="flex w-full items-center gap-5 rounded-2xl bg-white/[0.03] border border-white/[0.06] px-6 py-5 text-base font-medium text-white/70 transition-all duration-300 hover:bg-white/[0.06] hover:text-white hover:border-white/[0.12]"
+                className="flex w-full items-center gap-5 rounded-2xl bg-foreground/[0.03] border border-foreground/[0.06] px-6 py-5 text-base font-medium text-foreground/70 transition-all duration-300 hover:bg-foreground/[0.06] hover:text-foreground hover:border-foreground/[0.12]"
               >
                 <Shield className="h-6 w-6 text-[#38BDF8]" />
                 RentShield
@@ -109,14 +114,14 @@ export default function MainApp() {
       </aside>
 
       {/* Mobile Header */}
-      <header className="lg:hidden sticky top-0 z-40 bg-[#050B14]/90 backdrop-blur-2xl border-b border-white/[0.06] px-4 py-3">
+      <header className="lg:hidden sticky top-0 z-40 bg-background/90 backdrop-blur-2xl border-b border-foreground/[0.06] px-4 py-3">
         <div className="flex items-center justify-between">
           <button
             onClick={goToLanding}
             aria-label="Go to Calgary Konnect home page"
             className="flex items-center gap-3"
           >
-            <div className="relative w-10 h-10 rounded-lg overflow-hidden bg-gradient-to-br from-[#0c1829] to-[#071119] p-0.5 border border-white/10">
+            <div className="relative w-10 h-10 rounded-lg overflow-hidden bg-card p-0.5 border border-border">
               <Image
                 src="/calgary-connect-logo.png"
                 alt="Calgary Konnect"
@@ -126,7 +131,7 @@ export default function MainApp() {
               />
             </div>
             <div>
-              <span className="text-base font-bold text-white">Calgary </span>
+              <span className="text-base font-bold text-foreground">Calgary </span>
               <span className="text-base font-bold text-[#38BDF8]">Konnect</span>
             </div>
           </button>
@@ -140,7 +145,7 @@ export default function MainApp() {
             </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="flex items-center justify-center w-10 h-10 rounded-lg bg-white/[0.06] border border-white/[0.08] text-white"
+              className="flex items-center justify-center w-10 h-10 rounded-lg bg-foreground/[0.06] border border-foreground/[0.08] text-foreground"
             >
               {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </button>
@@ -163,7 +168,7 @@ export default function MainApp() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25 }}
-              className="absolute right-0 top-0 bottom-0 w-[85%] max-w-[360px] bg-[#050B14]/98 backdrop-blur-2xl border-l border-white/[0.06] p-8"
+              className="absolute right-0 top-0 bottom-0 w-[85%] max-w-[360px] bg-background/98 backdrop-blur-2xl border-l border-foreground/[0.06] p-8"
               onClick={(e) => e.stopPropagation()}
             >
               <nav className="mt-12 space-y-3">
@@ -176,8 +181,8 @@ export default function MainApp() {
                     }}
                     className={`flex w-full items-center gap-5 rounded-2xl px-6 py-5 text-lg font-medium transition-all ${
                       activeTab === item.id
-                        ? "bg-white/[0.08] text-white border border-white/[0.12]"
-                        : "text-white/50 hover:bg-white/[0.04] hover:text-white/80"
+                        ? "bg-foreground/[0.08] text-foreground border border-foreground/[0.12]"
+                        : "text-foreground/50 hover:bg-foreground/[0.04] hover:text-foreground/80"
                     }`}
                   >
                     <item.icon className="h-6 w-6" />
@@ -186,13 +191,17 @@ export default function MainApp() {
                 ))}
               </nav>
 
-              <div className="mt-12 space-y-4 pt-10 border-t border-white/[0.06]">
+              <div className="mt-12 space-y-4 pt-10 border-t border-foreground/[0.06]">
+                <div className="flex items-center justify-between rounded-2xl bg-foreground/[0.03] border border-foreground/[0.06] px-6 py-4">
+                  <span className="text-base font-medium text-foreground/70">Appearance</span>
+                  <ThemeToggle />
+                </div>
                 <button
                   onClick={() => {
                     setShowRentShield(true);
                     setMobileMenuOpen(false);
                   }}
-                  className="flex w-full items-center gap-5 rounded-2xl bg-white/[0.03] border border-white/[0.06] px-6 py-5 text-base font-medium text-white/70"
+                  className="flex w-full items-center gap-5 rounded-2xl bg-foreground/[0.03] border border-foreground/[0.06] px-6 py-5 text-base font-medium text-foreground/70"
                 >
                   <Shield className="h-6 w-6 text-[#38BDF8]" />
                   RentShield
@@ -248,7 +257,7 @@ export default function MainApp() {
       </main>
 
       {/* Mobile Bottom Navigation */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#050B14]/95 backdrop-blur-2xl border-t border-white/[0.06] safe-area-pb">
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-background/95 backdrop-blur-2xl border-t border-foreground/[0.06] safe-area-pb">
         <div className="flex items-center justify-around px-2 py-2">
           {navItems.map((item) => (
             <button
@@ -259,7 +268,7 @@ export default function MainApp() {
                   ? item.highlight
                     ? "bg-gradient-to-br from-[#38BDF8] to-[#0284c7] text-white shadow-lg shadow-sky-500/30"
                     : "text-[#38BDF8]"
-                  : "text-white/40"
+                  : "text-foreground/40"
               }`}
             >
               <item.icon className="h-5 w-5" />

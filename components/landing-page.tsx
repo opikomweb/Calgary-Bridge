@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import {
-  ArrowRight, Sparkles, Search, Menu, X, ChevronDown,
+  ArrowRight, Sparkles, Smile, Search, Menu, X, ChevronDown,
   Home, Briefcase, Heart, Users, AlertTriangle, Building2, Baby,
   GraduationCap, Bus, Scale, HandHeart, Accessibility, Utensils, Brain,
 } from "lucide-react";
@@ -139,7 +139,7 @@ export default function LandingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#07111F] overflow-x-hidden">
+    <div className="dark min-h-screen bg-[#07111F] text-white overflow-x-hidden">
       {/* ========== GLASSY STICKY HEADER ========== */}
       <header
         className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
@@ -225,7 +225,7 @@ export default function LandingPage() {
                 onClick={handleAskAI}
                 className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/[0.06] transition-all"
               >
-                <Sparkles className="w-3.5 h-3.5 text-[#FBBF24]" />
+                <Smile className="w-3.5 h-3.5 text-[#FBBF24]" />
                 iKonnect Guide
               </button>
             </nav>
@@ -306,7 +306,7 @@ export default function LandingPage() {
                   }}
                   className="w-full flex items-center gap-2 px-4 py-3 mt-1 rounded-xl text-base font-medium text-white/75 hover:bg-white/[0.05] transition-all"
                 >
-                  <Sparkles className="w-4 h-4 text-[#FBBF24]" />
+                  <Smile className="w-4 h-4 text-[#FBBF24]" />
                   iKonnect Guide
                 </button>
 
@@ -467,7 +467,7 @@ export default function LandingPage() {
               onClick={handleAskAI}
               className="btn-secondary w-full sm:w-auto px-8 md:px-10 py-4 md:py-5 rounded-2xl flex items-center justify-center gap-3 text-base md:text-lg font-semibold"
             >
-              <Sparkles className="w-5 h-5 text-[#FBBF24]" />
+                <Smile className="w-5 h-5 text-[#FBBF24]" />
                 Ask the iKonnect Guide
             </motion.button>
           </motion.div>
@@ -589,7 +589,7 @@ export default function LandingPage() {
                 onClick={handleAskAI}
                 className="btn-primary px-7 md:px-8 py-4 rounded-2xl flex items-center gap-3 text-base md:text-lg font-semibold"
               >
-                <Sparkles className="w-5 h-5" />
+                <Smile className="w-5 h-5" />
                 Try the iKonnect Guide
               </motion.button>
             </motion.div>
@@ -610,8 +610,8 @@ export default function LandingPage() {
                   </div>
 
                   <div className="flex gap-3">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#38BDF8] to-[#0284c7] flex-shrink-0 flex items-center justify-center">
-                      <Sparkles className="w-4 h-4 text-white" />
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#38BDF8] to-[#0284c7] flex-shrink-0 flex items-center justify-center">
+                <Smile className="w-4 h-4 text-white" />
                     </div>
                     <div className="bg-white/[0.06] px-5 py-4 rounded-2xl rounded-bl-md max-w-[320px]">
                       <p className="text-sm md:text-[15px] text-white/90 leading-relaxed mb-3">
