@@ -7,7 +7,7 @@ import { resources } from "@/lib/data";
 import { 
   Search, ChevronDown, X, Home, Briefcase, Heart, Users, 
   AlertTriangle, Building2, Baby, GraduationCap, Bus,
-  Scale, HandHeart, Accessibility, Utensils, Brain, Check, Truck
+  Scale, HandHeart, Accessibility, Utensils, Brain, Check, Truck, MapPin
 } from "lucide-react";
 import ResourceCard from "../resource-card";
 import LiveResults from "../live-results";
@@ -30,6 +30,7 @@ const allCategories: { id: ResourceCategory | "all"; label: string; icon: React.
   { id: "education", label: "Education", icon: GraduationCap },
   { id: "legal", label: "Legal Help", icon: Scale },
   { id: "business", label: "Business & Licensing", icon: Building2 },
+  { id: "tourism", label: "Tourists & Visitors", icon: MapPin },
   { id: "logistics", label: "Shipping & Logistics", icon: Truck },
   { id: "volunteering", label: "Volunteering", icon: HandHeart },
   { id: "community", label: "Community", icon: Users },

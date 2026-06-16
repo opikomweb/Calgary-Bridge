@@ -7,54 +7,17 @@ import { useAppStore } from "@/lib/store";
 import { resources, categoryLabels } from "@/lib/data";
 import { 
   Send, User, ArrowRight, Phone, ExternalLink, 
-  Home, Briefcase, Heart, Users, Scale, Bus, 
-  CloudSnow, Calendar, TrendingUp
+  Home, CloudSnow, Calendar, TrendingUp
 } from "lucide-react";
 import type { Resource } from "@/lib/types";
 
-const conversationStarters = [
-  {
-    icon: Home,
-    label: "Housing",
-    query: "How do I find affordable housing in Calgary?",
-    color: "from-emerald-500/20 to-emerald-600/10",
-    iconColor: "text-emerald-400",
-  },
-  {
-    icon: Briefcase,
-    label: "Jobs",
-    query: "Help me find job training and employment programs",
-    color: "from-blue-500/20 to-blue-600/10",
-    iconColor: "text-blue-400",
-  },
-  {
-    icon: Heart,
-    label: "Healthcare",
-    query: "How do I register for healthcare and find a doctor?",
-    color: "from-rose-500/20 to-rose-600/10",
-    iconColor: "text-rose-400",
-  },
-  {
-    icon: Users,
-    label: "Newcomers",
-    query: "What settlement services are available for newcomers?",
-    color: "from-amber-500/20 to-amber-600/10",
-    iconColor: "text-amber-400",
-  },
-  {
-    icon: Scale,
-    label: "Legal",
-    query: "What are my tenant rights in Alberta?",
-    color: "from-purple-500/20 to-purple-600/10",
-    iconColor: "text-purple-400",
-  },
-  {
-    icon: Bus,
-    label: "Transit",
-    query: "How do I get a low-income transit pass?",
-    color: "from-cyan-500/20 to-cyan-600/10",
-    iconColor: "text-cyan-400",
-  },
+// Light, optional example prompts. These do NOT pre-fill the conversation —
+// they simply give first-time users an idea of what they can type.
+const examplePrompts = [
+  "How do I find affordable housing?",
+  "I'm new to Calgary — where do I start?",
+  "I'm visiting — what should I see?",
+  "Help me find a job or training",
 ];
 
 const popularQuestions = [
@@ -97,6 +60,7 @@ export default function AITab() {
       transit: ["transit", "bus", "train", "ctrain", "transportation", "pass"],
       education: ["education", "school", "english", "esl", "learn", "class"],
       senior: ["senior", "elderly", "retirement", "55+", "older"],
+      tourism: ["visit", "visiting", "tourist", "tour", "tours", "guide", "sightsee", "sightseeing", "things to do", "attraction", "hotel", "hotels", "stay", "restaurant", "dining", "eat", "explore calgary", "see", "trip", "vacation", "rockies", "banff"],
     };
 
     const matchedCategories: string[] = [];
@@ -135,6 +99,12 @@ export default function AITab() {
       responseText = "Legal help is available in Calgary:\n\n**Legal Aid Alberta** (1-866-845-2222) - Free legal advice for eligible residents\n\n**Your Tenant Rights:**\n• 24-hour notice required before landlord entry\n• Rent increases limited to once per year with 3 months notice\n• Eviction requires proper legal process\n\n**Community Legal Clinics** - Free advice on specific issues";
     } else if (lowerQuery.includes("transit") || lowerQuery.includes("bus") || lowerQuery.includes("pass")) {
       responseText = "Getting around Calgary is easy:\n\n**Calgary Transit** - Buses and CTrain throughout the city\n\n**Low-Income Transit Pass:**\n• Available for eligible residents\n• Apply through Fair Entry program\n• Significant savings on monthly passes\n\n**Plan your trip:** calgarytransit.com";
+    } else if (
+      lowerQuery.includes("visit") || lowerQuery.includes("tourist") || lowerQuery.includes("tour") ||
+      lowerQuery.includes("sightsee") || lowerQuery.includes("hotel") || lowerQuery.includes("restaurant") ||
+      lowerQuery.includes("things to do") || lowerQuery.includes("attraction") || lowerQuery.includes("see in")
+    ) {
+      responseText = "Welcome to Calgary! Here's the best of the city for visitors:\n\n**Top sights:** Calgary Tower, Heritage Park Historical Village, Studio Bell, Prince's Island Park and the Bow River pathways\n\n**Trusted local guides:**\n• **Toonie Tours** – gratuity-based walking & bike tours\n• **The History Wrangler (Rob Lennard)** – award-winning history tours\n• **Alberta Blue Sky Tours** – day trips to Banff & the Rockies\n\n**Where to stay:** Downtown hotels near Stephen Avenue keep you walking distance to dining and the CTrain\n\n**Dining:** Explore Stephen Avenue, Inglewood and 17th Ave for top-rated restaurants\n\nTap into the Tourists & Visitors category to browse curated, highly-rated options.";
     } else {
       responseText = "I'm here to help you navigate Calgary's resources and services. I can provide information about:\n\n• **Housing** - Affordable rentals, shelters, subsidies\n• **Jobs** - Training programs, resume help, career services\n• **Healthcare** - Doctors, clinics, mental health support\n• **Newcomers** - Settlement, ESL, integration programs\n• **Legal** - Tenant rights, free legal advice\n• **Transit** - Low-income passes, trip planning\n\nWhat would you like help with?";
     }
@@ -204,8 +174,24 @@ export default function AITab() {
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="text-center w-full max-w-lg"
+                  className="text-center w-full max-w-xl"
                 >
+                  {/* Avatar */}
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.1 }}
+                    className="mx-auto mb-6 flex h-16 w-16 md:h-20 md:w-20 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-[#0284c7] to-[#075985] shadow-xl shadow-sky-500/20 ring-1 ring-[#38BDF8]/30"
+                  >
+                    <Image
+                      src="/ikonnect-guide-avatar.png"
+                      alt="iKonnect Guide"
+                      width={80}
+                      height={80}
+                      className="h-full w-full object-cover"
+                    />
+                  </motion.div>
+
                   {/* Headline */}
                   <motion.h1
                     initial={{ opacity: 0, y: 10 }}
@@ -213,44 +199,45 @@ export default function AITab() {
                     transition={{ delay: 0.2 }}
                     className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4 tracking-tight"
                   >
-                    Calgary Bridge AI
+                    Hi, I&apos;m iKonnect
                   </motion.h1>
-                  
+
                   <motion.p
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
-                    className="text-base md:text-lg text-[var(--foreground-muted)] mb-8 md:mb-12 leading-relaxed"
+                    className="text-base md:text-lg text-[var(--foreground-muted)] mb-8 md:mb-10 leading-relaxed max-w-md mx-auto"
                   >
-                    Your personal guide to every resource and service in Calgary. Ask me anything.
+                    Your guide to everything in Calgary — housing, jobs, healthcare,
+                    newcomer support, things to do, and more. Tell me what you need
+                    and I&apos;ll point you to the right place.
                   </motion.p>
 
-                  {/* Conversation Starters - 2x3 Grid */}
+                  {/* Simple example prompts (optional starting points) */}
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 }}
-                    className="grid grid-cols-2 gap-3 md:gap-4"
+                    className="flex flex-col items-center gap-3"
                   >
-                    {conversationStarters.map((starter, index) => (
-                      <motion.button
-                        key={starter.label}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.5 + index * 0.08 }}
-                        whileHover={{ scale: 1.02, y: -2 }}
-                        whileTap={{ scale: 0.98 }}
-                        onClick={() => handleSuggestionClick(starter.query)}
-                        className={`group relative overflow-hidden rounded-xl md:rounded-2xl bg-gradient-to-br ${starter.color} border border-foreground/10 p-4 md:p-5 text-left transition-all hover:border-foreground/20 hover:shadow-lg`}
-                      >
-                        <div className={`mb-2 md:mb-3 flex h-10 w-10 md:h-11 md:w-11 items-center justify-center rounded-lg md:rounded-xl bg-foreground/10 ${starter.iconColor}`}>
-                          <starter.icon className="h-5 w-5" />
-                        </div>
-                        <h3 className="font-semibold text-foreground text-sm md:text-base mb-1">{starter.label}</h3>
-                        <p className="text-xs md:text-sm text-foreground/60 line-clamp-2">{starter.query}</p>
-                        <ArrowRight className="absolute bottom-4 right-4 w-4 h-4 text-foreground/30 group-hover:text-foreground/60 transition-colors" />
-                      </motion.button>
-                    ))}
+                    <p className="text-xs font-semibold uppercase tracking-[0.15em] text-foreground/40">
+                      Try asking
+                    </p>
+                    <div className="flex flex-wrap justify-center gap-2 md:gap-2.5">
+                      {examplePrompts.map((prompt, index) => (
+                        <motion.button
+                          key={prompt}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.5 + index * 0.06 }}
+                          whileTap={{ scale: 0.97 }}
+                          onClick={() => handleSuggestionClick(prompt)}
+                          className="rounded-full border border-foreground/10 bg-foreground/[0.04] px-4 py-2.5 text-sm font-medium text-foreground/75 transition-all hover:border-[#38BDF8]/40 hover:bg-[#38BDF8]/10 hover:text-foreground"
+                        >
+                          {prompt}
+                        </motion.button>
+                      ))}
+                    </div>
                   </motion.div>
                 </motion.div>
               </div>

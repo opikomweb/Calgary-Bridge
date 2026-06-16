@@ -304,6 +304,14 @@ export const categoryLabels: Record<ResourceCategory, Record<Language, string>> 
     ar: "الشحن والخدمات اللوجستية",
     zh: "运输与物流",
   },
+  tourism: {
+    en: "Tourists & Visitors",
+    fr: "Touristes et Visiteurs",
+    tl: "Turista at Bisita",
+    es: "Turistas y Visitantes",
+    ar: "السياح والزوار",
+    zh: "游客与访客",
+  },
 };
 
 export const languageNames: Record<Language, string> = {

@@ -62,6 +62,15 @@ const keywordMappings: Record<string, string[]> = {
   export: ["logistics", "customs", "freight", "shipping"],
   customs: ["logistics", "import", "export"],
   volunteer: ["volunteering", "community"],
+  tourist: ["tourism", "visit", "attraction", "sightseeing"],
+  tourism: ["visit", "attraction", "sightseeing", "tour"],
+  visit: ["tourism", "attraction", "sightseeing"],
+  tour: ["tourism", "tours", "guide", "sightseeing"],
+  sightseeing: ["tourism", "attraction", "tour"],
+  attraction: ["tourism", "sightseeing"],
+  hotel: ["tourism", "hotels", "lodging", "stay"],
+  restaurant: ["tourism", "dining", "restaurants"],
+  dining: ["tourism", "restaurant", "food"],
 };
 
 // Maps everyday search terms to the resource categories they should prioritize.
@@ -147,6 +156,22 @@ const categoryIntent: Record<string, ResourceCategory[]> = {
   logistics: ["logistics"],
   volunteer: ["volunteering"],
   volunteering: ["volunteering"],
+  tourist: ["tourism"],
+  tourism: ["tourism"],
+  visit: ["tourism"],
+  visiting: ["tourism"],
+  tour: ["tourism"],
+  tours: ["tourism"],
+  sightseeing: ["tourism"],
+  attraction: ["tourism"],
+  attractions: ["tourism"],
+  hotel: ["tourism"],
+  hotels: ["tourism"],
+  restaurant: ["tourism"],
+  restaurants: ["tourism"],
+  dining: ["tourism"],
+  "things to do": ["tourism"],
+  sightsee: ["tourism"],
 };
 
 function lc(s?: string) {

@@ -5,8 +5,8 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme inline {
-  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
-  --font-heading: "Inter", system-ui, -apple-system, sans-serif;
+  --font-sans: var(--font-poppins), "Poppins", system-ui, -apple-system, sans-serif;
+  --font-heading: var(--font-poppins), "Poppins", system-ui, -apple-system, sans-serif;
 
   /* Semantic color tokens -> Tailwind utilities (bg-background, text-foreground, etc.) */
   --color-background: var(--background);

@@ -4,7 +4,7 @@ import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import {
   ArrowRight, Sparkles, Search, Menu, X, ChevronDown,
   Home, Briefcase, Heart, Users, AlertTriangle, Building2, Baby,
-  GraduationCap, Bus, Scale, HandHeart, Accessibility, Utensils, Brain,
+  GraduationCap, Bus, Scale, HandHeart, Accessibility, Utensils, Brain, MapPin,
 } from "lucide-react";
 import Image from "next/image";
 import { RotatingLogo } from "@/components/rotating-logo";
@@ -101,6 +101,7 @@ export default function LandingPage() {
         { label: "Education", category: "education", icon: GraduationCap, desc: "Schools, classes & upgrading" },
         { label: "Legal Help", category: "legal", icon: Scale, desc: "Free legal clinics & rights" },
         { label: "Transit", category: "transit", icon: Bus, desc: "Getting around Calgary" },
+        { label: "Tourists & Visitors", category: "tourism", icon: MapPin, desc: "Sights, hotels, dining & tours" },
         { label: "Small Business", category: "business", icon: Building2, desc: "Start & grow a business" },
         { label: "Volunteering", category: "volunteering", icon: HandHeart, desc: "Give back locally" },
       ],
@@ -151,14 +152,17 @@ export default function LandingPage() {
       >
         <div className="max-w-[1400px] mx-auto px-5 md:px-8">
           <div className="flex items-center justify-between h-16 md:h-20">
-            {/* Logo — full brand lockup, large & clearly visible */}
+            {/* Logo — full brand lockup, large & clearly visible.
+                The artwork already contains the "Calgary Connect" wordmark, so
+                no separate text label is shown. A subtle glassy badge keeps the
+                dark logo crisp against the hero. */}
             <button
               onClick={() => enterApp("home")}
-              aria-label="Calgary Konnect — go to home"
+              aria-label="Calgary Connect — go to home"
               className="flex items-center transition-transform duration-300 hover:scale-105 active:scale-95"
             >
-              <div className="relative w-[150px] h-12 md:w-[210px] md:h-16 flex-shrink-0">
-                <RotatingLogo imgPadding="p-0" priority />
+              <div className="relative h-14 md:h-[72px] aspect-[1.62] flex-shrink-0 rounded-2xl bg-[#0a1424]/55 ring-1 ring-white/15 backdrop-blur-md shadow-lg shadow-black/30 overflow-hidden">
+                <RotatingLogo imgPadding="p-1.5" priority />
               </div>
             </button>
 
@@ -452,7 +456,7 @@ export default function LandingPage() {
                     setSearchQuery(q);
                     enterApp("home");
                   }}
-                  className="px-4 md:px-5 py-2 md:py-3 rounded-full bg-white/[0.04] border border-white/[0.08] text-xs md:text-sm text-white/60 hover:bg-white/[0.08] hover:border-white/[0.15] hover:text-white transition-all duration-300"
+                  className="px-4 md:px-5 py-2.5 md:py-3 rounded-full bg-white/[0.1] border border-white/20 text-sm md:text-base font-medium text-white/90 hover:bg-white/[0.18] hover:border-white/30 hover:text-white transition-all duration-300 backdrop-blur-md shadow-sm shadow-black/20"
                 >
                   {q}
                 </button>
@@ -489,7 +493,7 @@ export default function LandingPage() {
                   height={28}
                   className="w-7 h-7 rounded-full ring-1 ring-white/30 flex-shrink-0"
                 />
-                Ask the iKonnect Guide
+                iKonnect, Ask me.
             </motion.button>
           </motion.div>
         </motion.div>

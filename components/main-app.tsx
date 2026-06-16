@@ -59,14 +59,14 @@ export default function MainApp() {
       {/* Desktop Sidebar */}
       <aside className="hidden lg:flex lg:w-[340px] lg:flex-col lg:fixed lg:inset-y-0 lg:z-50">
         <div className="flex grow flex-col overflow-y-auto border-r border-foreground/[0.06] bg-background/70 backdrop-blur-3xl">
-          {/* Logo Section - Large Professional Logo */}
+          {/* Logo Section - Large Professional Logo (full brand lockup, no extra text) */}
           <div className="px-6 pt-8 pb-6 flex justify-center">
             <button
               onClick={goToLanding}
-              aria-label="Go to Calgary Konnect home page"
-              className="group relative w-40 h-40 xl:w-52 xl:h-52 flex-shrink-0 transition-transform duration-300 ease-out hover:scale-105 active:scale-95 cursor-pointer"
+              aria-label="Go to Calgary Connect home page"
+              className="group relative w-full max-w-[240px] aspect-[1.6] flex-shrink-0 rounded-3xl bg-[#0a1424] ring-1 ring-[#38BDF8]/20 shadow-xl shadow-black/20 overflow-hidden transition-transform duration-300 ease-out hover:scale-[1.03] active:scale-95 cursor-pointer"
             >
-              <RotatingLogo imgPadding="p-1" priority />
+              <RotatingLogo imgPadding="p-4" priority />
             </button>
           </div>
 
@@ -122,15 +122,13 @@ export default function MainApp() {
         <div className="flex items-center justify-between">
           <button
             onClick={goToLanding}
-            aria-label="Go to Calgary Konnect home page"
-            className="flex items-center gap-3"
+            aria-label="Go to Calgary Connect home page"
+            className="flex items-center"
           >
-            <div className="relative w-11 h-11 sm:w-12 sm:h-12 flex-shrink-0 transition-transform duration-300 active:scale-95">
-              <RotatingLogo imgPadding="p-0" priority />
-            </div>
-            <div>
-              <span className="text-base font-bold text-foreground">Calgary </span>
-              <span className="text-base font-bold text-[#38BDF8]">Konnect</span>
+            {/* Logo artwork already includes the "Calgary Connect" wordmark,
+                shown large on a dark badge so it stays crisp on the light header. */}
+            <div className="relative h-12 aspect-[1.62] flex-shrink-0 rounded-xl bg-[#0a1424] ring-1 ring-[#38BDF8]/20 shadow-md overflow-hidden transition-transform duration-300 active:scale-95">
+              <RotatingLogo imgPadding="p-1" priority />
             </div>
           </button>
           

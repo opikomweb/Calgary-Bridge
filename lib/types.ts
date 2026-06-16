@@ -23,7 +23,8 @@ export type ResourceCategory =
   | "indigenous"
   | "youth"
   | "arts"
-  | "logistics";
+  | "logistics"
+  | "tourism";
 
 export type Priority = ResourceCategory;
 

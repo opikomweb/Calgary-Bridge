@@ -290,7 +290,7 @@ export default function HomeTab() {
                 </motion.div>
                 
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs font-bold text-sky-200 uppercase tracking-[0.15em] mb-2">Calgary Bridge AI</p>
+                  <p className="text-xs font-bold text-sky-200 uppercase tracking-[0.15em] mb-2">iKonnect Guide</p>
                   <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2 leading-tight">
                     Get personalized guidance
                   </h3>
