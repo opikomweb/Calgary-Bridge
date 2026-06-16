@@ -43,7 +43,8 @@ export function RotatingLogo({ imgPadding = "p-3", interval = 3500, priority = f
           src={LOGOS[index].src || "/placeholder.svg"}
           alt={LOGOS[index].alt}
           fill
-          className={`object-contain ${imgPadding}`}
+          sizes="(max-width: 1024px) 64px, 224px"
+          className={`object-contain ${imgPadding} drop-shadow-[0_2px_10px_rgba(2,32,71,0.18)]`}
           priority={priority}
         />
       </motion.div>

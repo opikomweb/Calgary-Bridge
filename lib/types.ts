@@ -64,7 +64,7 @@ export interface ChatMessage {
   resources?: string[];
 }
 
-export type TabType = "home" | "explore" | "ai" | "shortlist" | "profile";
+export type TabType = "home" | "explore" | "ai" | "do-good" | "shortlist" | "profile";
 
 export type PageType = 
   | "landing" 

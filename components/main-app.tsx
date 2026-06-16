@@ -3,13 +3,14 @@
 import React from "react";
 import { useAppStore } from "@/lib/store";
 import { translations } from "@/lib/data";
-import { Home, Compass, Smile, Heart, User, AlertTriangle, Shield, Menu, X } from "lucide-react";
+import { Home, Compass, Smile, Heart, User, AlertTriangle, Shield, Menu, X, HandHeart } from "lucide-react";
 import { ThemeToggle } from "./theme-toggle";
 import { RotatingLogo } from "./rotating-logo";
 import { motion, AnimatePresence } from "framer-motion";
 import HomeTab from "./tabs/home-tab";
 import ExploreTab from "./tabs/explore-tab";
 import AITab from "./tabs/ai-tab";
+import DoGoodTab from "./tabs/do-good-tab";
 import ShortlistTab from "./tabs/shortlist-tab";
 import ProfileTab from "./tabs/profile-tab";
 import EmergencyHub from "./emergency-hub";
@@ -37,6 +38,7 @@ export default function MainApp() {
     { id: "home" as const, icon: Home, label: "Home", shortLabel: "Home", highlight: false },
     { id: "explore" as const, icon: Compass, label: "Explore", shortLabel: "Explore", highlight: false },
     { id: "ai" as const, icon: Smile, label: "iKonnect Guide", shortLabel: "Guide", highlight: true },
+    { id: "do-good" as const, icon: HandHeart, label: "Do Good", shortLabel: "Do Good", highlight: false },
     { id: "shortlist" as const, icon: Heart, label: "Saved", shortLabel: "Saved", highlight: false },
     { id: "profile" as const, icon: User, label: "Profile", shortLabel: "Profile", highlight: false },
   ];
@@ -54,9 +56,9 @@ export default function MainApp() {
             <button
               onClick={goToLanding}
               aria-label="Go to Calgary Konnect home page"
-              className="relative w-[200px] h-[200px] flex-shrink-0 rounded-3xl overflow-hidden bg-white p-3 border border-border shadow-2xl shadow-sky-500/10 transition-all duration-300 hover:border-sky-400/40 hover:shadow-sky-500/20 hover:scale-[1.02] cursor-pointer"
+              className="group relative w-40 h-40 xl:w-52 xl:h-52 flex-shrink-0 transition-transform duration-300 ease-out hover:scale-105 active:scale-95 cursor-pointer"
             >
-              <RotatingLogo imgPadding="p-3" priority />
+              <RotatingLogo imgPadding="p-1" priority />
             </button>
           </div>
 
@@ -115,8 +117,8 @@ export default function MainApp() {
             aria-label="Go to Calgary Konnect home page"
             className="flex items-center gap-3"
           >
-            <div className="relative w-10 h-10 rounded-lg overflow-hidden bg-white p-0.5 border border-border">
-              <RotatingLogo imgPadding="p-0.5" priority />
+            <div className="relative w-11 h-11 sm:w-12 sm:h-12 flex-shrink-0 transition-transform duration-300 active:scale-95">
+              <RotatingLogo imgPadding="p-0" priority />
             </div>
             <div>
               <span className="text-base font-bold text-foreground">Calgary </span>
@@ -224,8 +226,9 @@ export default function MainApp() {
           >
             {activeTab === "home" && <HomeTab />}
             {activeTab === "explore" && <ExploreTab />}
-            {activeTab === "ai" && <AITab />}
-            {activeTab === "shortlist" && <ShortlistTab />}
+              {activeTab === "ai" && <AITab />}
+              {activeTab === "do-good" && <DoGoodTab />}
+              {activeTab === "shortlist" && <ShortlistTab />}
             {activeTab === "profile" && <ProfileTab />}
           </motion.div>
         </AnimatePresence>
@@ -248,12 +251,12 @@ export default function MainApp() {
 
       {/* Mobile Bottom Navigation */}
       <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-background/95 backdrop-blur-2xl border-t border-foreground/[0.06] safe-area-pb">
-        <div className="flex items-center justify-around px-2 py-2">
+        <div className="flex items-center justify-around px-1 py-2">
           {navItems.map((item) => (
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id)}
-              className={`flex flex-col items-center gap-1 rounded-xl px-3 py-2 transition-all min-w-0 ${
+              className={`flex flex-col items-center gap-1 rounded-xl px-2 py-2 transition-all min-w-0 ${
                 activeTab === item.id
                   ? item.highlight
                     ? "bg-gradient-to-br from-[#38BDF8] to-[#0284c7] text-white shadow-lg shadow-sky-500/30"

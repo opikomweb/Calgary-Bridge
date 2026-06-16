@@ -7,6 +7,7 @@ import {
   GraduationCap, Bus, Scale, HandHeart, Accessibility, Utensils, Brain,
 } from "lucide-react";
 import Image from "next/image";
+import { RotatingLogo } from "@/components/rotating-logo";
 import { useAppStore } from "@/lib/store";
 import { useRef, useState, useEffect } from "react";
 import Footer from "@/components/footer";
@@ -151,15 +152,9 @@ export default function LandingPage() {
         <div className="max-w-[1400px] mx-auto px-5 md:px-8">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
-            <button onClick={() => enterApp("home")} className="flex items-center gap-3">
-              <div className="relative w-10 h-10 md:w-11 md:h-11 rounded-xl overflow-hidden bg-gradient-to-br from-[#0c1829] to-[#071119] p-0.5 border border-white/10">
-                <Image
-                  src="/calgary-connect-logo.png"
-                  alt="Calgary Konnect logo"
-                  fill
-                  className="object-contain p-0.5"
-                  priority
-                />
+            <button onClick={() => enterApp("home")} className="flex items-center gap-3 transition-transform duration-300 hover:scale-105 active:scale-95">
+              <div className="relative w-11 h-11 md:w-14 md:h-14 flex-shrink-0">
+                <RotatingLogo imgPadding="p-0" priority />
               </div>
               <span className="text-base md:text-lg font-bold tracking-tight">
                 <span className="text-white">Calgary </span>
