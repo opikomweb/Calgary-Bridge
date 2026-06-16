@@ -116,7 +116,7 @@ export default function ExploreTab() {
                 Explore <span className="text-calgary-red">Resources</span>
               </span>
             </h1>
-            <p className="text-base md:text-lg text-foreground/45 max-w-xl leading-relaxed">
+            <p className="text-base md:text-lg text-foreground/70 max-w-xl leading-relaxed">
               Every verified Calgary service and program, searchable and filterable.
             </p>
           </motion.div>
@@ -134,13 +134,13 @@ export default function ExploreTab() {
           >
             {/* Search Input */}
             <div className="relative flex-1">
-              <Search className="absolute left-4 md:left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-foreground/35" />
+              <Search className="absolute left-4 md:left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-foreground/55" />
               <input
                 type="text"
                 placeholder="Search resources..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full h-14 md:h-16 bg-foreground/[0.03] hover:bg-foreground/[0.05] border border-foreground/[0.06] hover:border-foreground/[0.1] focus:border-[#38BDF8]/30 focus:bg-foreground/[0.05] rounded-xl md:rounded-2xl text-base text-foreground placeholder:text-foreground/25 pl-12 md:pl-14 pr-4 outline-none transition-all duration-300 focus:shadow-[0_0_0_4px_rgba(56,189,248,0.06)]"
+                className="w-full h-14 md:h-16 bg-foreground/[0.04] hover:bg-foreground/[0.06] border border-foreground/[0.1] hover:border-foreground/[0.15] focus:border-[#1D4ED8]/40 focus:bg-foreground/[0.06] rounded-xl md:rounded-2xl text-base text-foreground placeholder:text-foreground/45 pl-12 md:pl-14 pr-4 outline-none transition-all duration-300 focus:shadow-[0_0_0_4px_rgba(29,78,216,0.08)]"
               />
             </div>
 
@@ -150,8 +150,8 @@ export default function ExploreTab() {
                 onClick={() => setDropdownOpen(!dropdownOpen)}
                 className={`h-14 md:h-16 px-5 md:px-6 rounded-xl md:rounded-2xl flex items-center gap-3 font-medium text-sm md:text-base transition-all w-full md:min-w-[240px] justify-between ${
                   activeCategory !== "all"
-                    ? "bg-[#38BDF8]/15 border border-[#38BDF8]/30 text-foreground"
-                    : "bg-foreground/[0.03] border border-foreground/[0.06] hover:border-foreground/[0.1] text-foreground/80"
+                    ? "bg-[#1D4ED8]/12 border border-[#1D4ED8]/35 text-foreground"
+                    : "bg-foreground/[0.04] border border-foreground/[0.1] hover:border-foreground/[0.18] text-foreground"
                 }`}
               >
                 <div className="flex items-center gap-2.5 min-w-0">
@@ -179,8 +179,8 @@ export default function ExploreTab() {
                         }}
                         className={`w-full flex items-center gap-3 px-4 md:px-5 py-3 md:py-4 text-left text-sm transition-all ${
                           activeCategory === category.id
-                            ? "bg-[#38BDF8]/10 text-[#38BDF8]"
-                            : "text-foreground/60 hover:bg-foreground/[0.03] hover:text-foreground"
+                            ? "bg-[#1D4ED8]/10 text-[#1D4ED8]"
+                            : "text-foreground/75 hover:bg-foreground/[0.04] hover:text-foreground"
                         }`}
                       >
                         <category.icon className="w-4 h-4 flex-shrink-0" />
@@ -267,7 +267,7 @@ export default function ExploreTab() {
       <section className="relative pb-4 md:pb-6">
         <div className="max-w-[1200px] mx-auto px-5 md:px-8">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <p className="text-base text-foreground/40">
+            <p className="text-base text-foreground/65">
               <span className="font-bold text-foreground text-lg md:text-xl">{filteredResources.length}</span>
               {" "}resource{filteredResources.length !== 1 ? "s" : ""} found
             </p>
@@ -275,7 +275,7 @@ export default function ExploreTab() {
             {activeCategory !== "all" && (
               <button
                 onClick={() => setActiveCategory("all")}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#38BDF8]/10 text-[#38BDF8] hover:bg-[#38BDF8]/15 transition-colors text-xs font-medium border border-[#38BDF8]/20"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#1D4ED8]/10 text-[#1D4ED8] hover:bg-[#1D4ED8]/15 transition-colors text-xs font-medium border border-[#1D4ED8]/25"
               >
                 <span className="truncate max-w-[120px]">{currentCategoryInfo.label}</span>
                 <X className="w-3.5 h-3.5 flex-shrink-0" />
@@ -310,8 +310,8 @@ export default function ExploreTab() {
               <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-foreground/[0.03] border border-foreground/[0.06] flex items-center justify-center mx-auto mb-8">
                 <Search className="w-10 h-10 md:w-14 md:h-14 text-foreground/25" />
               </div>
-              <p className="text-xl md:text-2xl font-semibold text-foreground/50 mb-3">No resources found</p>
-              <p className="text-base text-foreground/35 leading-relaxed">Try adjusting your search or filters</p>
+            <p className="text-xl md:text-2xl font-semibold text-foreground/75 mb-3">No resources found</p>
+            <p className="text-base text-foreground/60 leading-relaxed">Try adjusting your search or filters</p>
             </motion.div>
           )}
 
