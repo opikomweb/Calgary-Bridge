@@ -7,6 +7,7 @@ import {
   User,
   Globe,
   ChevronRight,
+  ChevronDown,
   LogOut,
   Bell,
   Shield,
@@ -70,15 +71,15 @@ export default function ProfileTab() {
 
               {/* Stats - Desktop inline */}
               <div className="flex gap-3 md:gap-4 mt-2 md:mt-0">
-                <div className="text-center px-4 py-3 md:px-5 md:py-4 rounded-xl md:rounded-2xl bg-[var(--surface)] border border-[var(--border)] flex-1 md:flex-initial">
+                <div className="text-center px-4 py-3 md:px-5 md:py-4 rounded-xl md:rounded-2xl bg-[var(--card)] backdrop-blur-md border border-[var(--border)] flex-1 md:flex-initial">
                   <p className="text-xl md:text-2xl font-bold text-[#0ea5e9]">{bookmarkedResources.length}</p>
                   <p className="text-xs text-[var(--foreground-muted)] mt-0.5">Saved</p>
                 </div>
-                <div className="text-center px-4 py-3 md:px-5 md:py-4 rounded-xl md:rounded-2xl bg-[var(--surface)] border border-[var(--border)] flex-1 md:flex-initial">
+                <div className="text-center px-4 py-3 md:px-5 md:py-4 rounded-xl md:rounded-2xl bg-[var(--card)] backdrop-blur-md border border-[var(--border)] flex-1 md:flex-initial">
                   <p className="text-xl md:text-2xl font-bold text-[#22c55e]">{priorities.length}</p>
                   <p className="text-xs text-[var(--foreground-muted)] mt-0.5">Priorities</p>
                 </div>
-                <div className="text-center px-4 py-3 md:px-5 md:py-4 rounded-xl md:rounded-2xl bg-[var(--surface)] border border-[var(--border)] flex-1 md:flex-initial">
+                <div className="text-center px-4 py-3 md:px-5 md:py-4 rounded-xl md:rounded-2xl bg-[var(--card)] backdrop-blur-md border border-[var(--border)] flex-1 md:flex-initial">
                   <p className="text-xl md:text-2xl font-bold text-[#f59e0b]">
                     {languageNames[activeLanguage]?.slice(0, 2).toUpperCase() || "EN"}
                   </p>
@@ -105,21 +106,20 @@ export default function ProfileTab() {
                 <Globe className="h-5 w-5 text-[#38BDF8]" />
                 <h2 className="text-lg md:text-xl font-bold">Language</h2>
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 md:gap-3">
-                {languages.map((lang) => (
-                  <button
-                    key={lang}
-                    onClick={() => setActiveLanguage(lang)}
-                    className={`flex items-center justify-between px-3 md:px-4 py-3 rounded-lg md:rounded-xl border transition-all text-sm ${
-                      activeLanguage === lang
-                        ? "bg-[#38BDF8]/15 border-[#38BDF8] text-[#38BDF8]"
-                        : "bg-[var(--surface)] border-[var(--border)] hover:border-[var(--border-hover)]"
-                    }`}
-                  >
-                    <span className="font-medium truncate">{languageNames[lang]}</span>
-                    {activeLanguage === lang && <Check className="h-4 w-4 flex-shrink-0" />}
-                  </button>
-                ))}
+              <div className="relative">
+                <select
+                  value={activeLanguage}
+                  onChange={(e) => setActiveLanguage(e.target.value as Language)}
+                  aria-label="Select language"
+                  className="w-full appearance-none rounded-xl border border-[var(--border)] bg-[var(--card)] backdrop-blur-md px-4 py-3.5 pr-11 text-sm font-medium text-[var(--foreground)] outline-none transition-colors focus:border-[#38BDF8] focus:ring-2 focus:ring-[#38BDF8]/30"
+                >
+                  {languages.map((lang) => (
+                    <option key={lang} value={lang}>
+                      {languageNames[lang]}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--foreground-muted)]" />
               </div>
             </motion.section>
 
@@ -138,10 +138,10 @@ export default function ProfileTab() {
                   <button
                     key={role}
                     onClick={() => setSelectedRole(role)}
-                    className={`flex items-center justify-between px-3 md:px-4 py-3 rounded-lg md:rounded-xl border transition-all text-sm ${
+                    className={`flex items-center justify-between px-3 md:px-4 py-2.5 rounded-lg md:rounded-xl border backdrop-blur-md transition-all text-sm ${
                       selectedRole === role
                         ? "bg-[#38BDF8]/15 border-[#38BDF8] text-[#38BDF8]"
-                        : "bg-[var(--surface)] border-[var(--border)] hover:border-[var(--border-hover)]"
+                        : "bg-[var(--card)] border-[var(--border)] hover:border-[var(--border-hover)]"
                     }`}
                   >
                     <span className="font-medium truncate">{roleLabels[role]?.[activeLanguage] || roleLabels[role]?.en}</span>
@@ -164,7 +164,7 @@ export default function ProfileTab() {
                 <Settings className="h-5 w-5 text-[#38BDF8]" />
                 <h2 className="text-lg md:text-xl font-bold">Settings</h2>
               </div>
-              <div className="bg-[var(--surface)] border border-[var(--border)] rounded-xl md:rounded-2xl overflow-hidden">
+              <div className="bg-[var(--card)] backdrop-blur-md border border-[var(--border)] rounded-xl md:rounded-2xl overflow-hidden">
                 <MenuItem icon={<Bell className="h-4 w-4 md:h-5 md:w-5" />} label="Notifications" />
                 <MenuItem icon={<Shield className="h-4 w-4 md:h-5 md:w-5" />} label="Privacy" />
                 <MenuItem icon={<HelpCircle className="h-4 w-4 md:h-5 md:w-5" />} label="Help & Support" />
