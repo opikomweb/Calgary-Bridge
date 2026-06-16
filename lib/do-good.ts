@@ -112,7 +112,7 @@ export const doGoodCategories: DoGoodCategory[] = [
     tagline:
       "Every dollar stays in Calgary. These registered charities turn donations directly into food, shelter, and safety.",
     icon: "Gift",
-    accent: "#0284c7",
+    accent: "#1D4ED8",
     items: [
       {
         id: "united-way",
@@ -236,7 +236,7 @@ export const doGoodCategories: DoGoodCategory[] = [
     tagline:
       "Small civic actions add up. Report problems, green your neighbourhood, and shape Calgary's future.",
     icon: "Building2",
-    accent: "#0284c7",
+    accent: "#1D4ED8",
     items: [
       {
         id: "calgary-311",
