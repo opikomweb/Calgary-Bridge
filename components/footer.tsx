@@ -581,7 +581,7 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
                       <li key={link.label}>
                         {link.onClick ? (
                         <button
-                          onClick={() => openModal(link.key)}
+                          onClick={() => openModal(link.key!)}
                           className="text-sm text-white/50 hover:text-[#E1251B] transition-colors text-left flex items-center gap-1.5 group"
                         >
                           <ChevronRight className="w-3 h-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-[#E1251B]" />
