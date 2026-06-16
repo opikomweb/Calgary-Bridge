@@ -278,11 +278,25 @@ p {
   border: 1px solid var(--border);
 }
 
+/* In dark mode, lock the glass bg to a solid dark value so no
+   light bleeds through the blur and creates the white/blurry haze. */
+.dark .glass {
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
 .glass-subtle {
   background: var(--surface);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border);
+}
+
+.dark .glass-subtle {
+  background: rgba(15, 23, 42, 0.80);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .glass-card {
@@ -292,25 +306,46 @@ p {
   border: 1px solid var(--border);
 }
 
+.dark .glass-card {
+  background: var(--card-solid);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
 /* Hero background with radial gradients */
 .bg-hero {
   background: 
-    radial-gradient(ellipse 120% 80% at 50% 0%, rgba(56, 189, 248, 0.12) 0%, transparent 50%),
-    radial-gradient(ellipse 80% 60% at 100% 100%, rgba(251, 191, 36, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse 60% 50% at 0% 80%, rgba(56, 189, 248, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse 120% 80% at 50% 0%, rgba(56, 189, 248, 0.10) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 60% at 100% 100%, rgba(251, 191, 36, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 50% at 0% 80%, rgba(56, 189, 248, 0.04) 0%, transparent 50%),
+    var(--background);
+}
+
+/* Dark mode: much more subtle so there's no white/blue haze */
+.dark .bg-hero {
+  background:
+    radial-gradient(ellipse 120% 80% at 50% 0%, rgba(56, 189, 248, 0.04) 0%, transparent 50%),
     var(--background);
 }
 
 .bg-gradient-hero {
   background: 
-    radial-gradient(ellipse 100% 100% at 50% 0%, rgba(56, 189, 248, 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse 100% 100% at 50% 0%, rgba(56, 189, 248, 0.12) 0%, transparent 60%),
     var(--background);
+}
+
+.dark .bg-gradient-hero {
+  background: var(--background);
 }
 
 .bg-section {
   background: 
-    radial-gradient(ellipse 80% 60% at 50% -20%, rgba(56, 189, 248, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 60% at 50% -20%, rgba(56, 189, 248, 0.05) 0%, transparent 50%),
     var(--background);
+}
+
+.dark .bg-section {
+  background: var(--background);
 }
 
 /* Emergency gradient */
@@ -671,10 +706,14 @@ p {
   position: absolute;
   inset: 0;
   background: 
-    radial-gradient(ellipse 80% 60% at 80% 20%, rgba(56, 189, 248, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse 60% 50% at 20% 80%, rgba(251, 191, 36, 0.05) 0%, transparent 50%);
+    radial-gradient(ellipse 80% 60% at 80% 20%, rgba(56, 189, 248, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 50% at 20% 80%, rgba(251, 191, 36, 0.04) 0%, transparent 50%);
   pointer-events: none;
   z-index: 0;
+}
+
+.dark .calgary-ambient::before {
+  background: none;
 }
 
 /* Smooth page transitions */

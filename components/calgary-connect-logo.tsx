@@ -40,12 +40,16 @@ export function CalgaryConnectLogo({
 }: CalgaryConnectLogoProps) {
   const { icon: iconSize, fontSize, gap } = sizes[size];
 
-  // Colors
-  const towerColor = "#C0121B";       // deep crimson — tower body
-  const towerAccent = "#E1251B";      // brighter red — observation deck ring lines
-  const bridgeColor = "#1D4ED8";      // deep blue — arch bridge
-  const waveColor = "#3B82F6";        // mid blue — swoosh wave
-  const navyText = darkSurface ? "#ffffff" : "#0b2239";
+  // Colors — bridge and tower always the same; wordmark uses CSS vars for auto dark-mode
+  const towerColor = "#C0121B";
+  const towerAccent = "#E1251B";
+  const bridgeColor = darkSurface ? "#60A5FA" : "#1D4ED8";
+  const waveColor   = darkSurface ? "#93C5FD" : "#3B82F6";
+  // Wordmark text colors via CSS variables so they respond to .dark class automatically
+  // If darkSurface is explicitly set, force the overridden colours
+  const navyStyle: React.CSSProperties = darkSurface
+    ? { color: "#ffffff" }
+    : { color: "var(--foreground, #0b2239)" };
   const redText = "#E1251B";
 
   return (
@@ -115,8 +119,8 @@ export function CalgaryConnectLogo({
               fontSize,
               fontWeight: 800,
               letterSpacing: "-0.02em",
-              color: navyText,
               lineHeight: 1.05,
+              ...navyStyle,
             }}
           >
             Calgary

@@ -113,7 +113,7 @@ export default function MainApp() {
                 onClick={() => setShowRentShield(true)}
                 className="flex w-full items-center gap-3 rounded-xl bg-foreground/[0.03] border border-foreground/[0.06] px-4 py-3 text-sm font-semibold text-foreground/70 transition-all duration-200 hover:bg-foreground/[0.07] hover:text-foreground"
               >
-                <Shield className="h-5 w-5 text-[#1D4ED8] shrink-0" />
+                <Shield className="h-5 w-5 text-[#1D4ED8] dark:text-[#38BDF8] shrink-0" />
                 RentShield
               </button>
               <button
@@ -130,8 +130,8 @@ export default function MainApp() {
 
       {/* Mobile / Tablet Header */}
       <header className="lg:hidden sticky top-0 z-40 bg-background/95 backdrop-blur-2xl border-b border-foreground/[0.08] px-4 sm:px-5 py-2">
-        {/* Calgary brand accent strip (deep blue → red) */}
-        <div className="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-[#0b2239] via-[#1D4ED8] to-[#E1251B]" />
+        {/* Calgary brand accent strip — red+blue in day, lighter blue+red in dark */}
+        <div className="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-[#1D4ED8] dark:from-[#38BDF8] via-[#1D4ED8]/60 dark:via-[#38BDF8]/40 to-[#E1251B]" />
         <div className="flex items-center justify-between gap-3">
           <button
             onClick={goToLanding}
@@ -218,7 +218,7 @@ export default function MainApp() {
                   }}
                   className="flex w-full items-center gap-3 rounded-xl bg-foreground/[0.03] border border-foreground/[0.06] px-4 py-3 text-sm font-semibold text-foreground/70 hover:bg-foreground/[0.07] hover:text-foreground transition-colors"
                 >
-                  <Shield className="h-5 w-5 text-[#1D4ED8] shrink-0" />
+                <Shield className="h-5 w-5 text-[#1D4ED8] dark:text-[#38BDF8] shrink-0" />
                   RentShield
                 </button>
                 <button

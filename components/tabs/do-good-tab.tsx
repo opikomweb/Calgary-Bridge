@@ -22,11 +22,44 @@ const ICONS = {
   GraduationCap,
 } as const;
 
+// Theme-aware Tailwind classes per accent type — no raw hex, no inline styles.
+// "red" = Calgary red (#E1251B), "blue" = deep blue (#1D4ED8)
+const ACCENT_CLASSES = {
+  red: {
+    badge:       "bg-[#E1251B]/10 border border-[#E1251B]/25 text-[#E1251B] dark:bg-[#E1251B]/15 dark:text-[#ff6b62]",
+    iconWrap:    "bg-[#E1251B]/10 border border-[#E1251B]/25 dark:bg-[#E1251B]/15",
+    icon:        "text-[#E1251B] dark:text-[#ff6b62]",
+    navIcon:     "text-[#E1251B] dark:text-[#ff6b62]",
+    dot:         "bg-[#E1251B] dark:bg-[#ff6b62]",
+    arrowWrap:   "bg-[#E1251B]/10 dark:bg-[#E1251B]/15",
+    arrow:       "text-[#E1251B] dark:text-[#ff6b62]",
+    actionBtn:   "bg-[#E1251B] hover:bg-[#B91C1C] text-white dark:bg-[#E1251B]/90 dark:hover:bg-[#B91C1C]",
+  },
+  blue: {
+    badge:       "bg-[#1D4ED8]/10 border border-[#1D4ED8]/25 text-[#1D4ED8] dark:bg-[#38BDF8]/15 dark:border-[#38BDF8]/20 dark:text-[#38BDF8]",
+    iconWrap:    "bg-[#1D4ED8]/10 border border-[#1D4ED8]/25 dark:bg-[#38BDF8]/10 dark:border-[#38BDF8]/20",
+    icon:        "text-[#1D4ED8] dark:text-[#38BDF8]",
+    navIcon:     "text-[#1D4ED8] dark:text-[#38BDF8]",
+    dot:         "bg-[#1D4ED8] dark:bg-[#38BDF8]",
+    arrowWrap:   "bg-[#1D4ED8]/10 dark:bg-[#38BDF8]/10",
+    arrow:       "text-[#1D4ED8] dark:text-[#38BDF8]",
+    actionBtn:   "bg-[#1D4ED8] hover:bg-[#1e40af] text-white dark:bg-[#38BDF8]/20 dark:hover:bg-[#38BDF8]/30 dark:text-[#38BDF8] dark:border dark:border-[#38BDF8]/30",
+  },
+} as const;
+
+type AccentKey = keyof typeof ACCENT_CLASSES;
+
+function getCatAccent(accent: string): AccentKey {
+  return accent.toLowerCase().startsWith("#1d4") || accent.toLowerCase().startsWith("#38b")
+    ? "blue"
+    : "red";
+}
+
 export default function DoGoodTab() {
   return (
-    <div className="min-h-screen relative">
+    <div className="min-h-screen bg-background">
       {/* ========== HERO ========== */}
-      <section className="relative pt-16 pb-10 md:pt-24 md:pb-14 lg:pt-28">
+      <section className="pt-16 pb-10 md:pt-24 md:pb-14 lg:pt-28">
         <div className="max-w-[1100px] mx-auto px-6 md:px-8 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -34,12 +67,13 @@ export default function DoGoodTab() {
             transition={{ duration: 0.5 }}
             className="flex flex-col items-start gap-5"
           >
-            <span className="inline-flex items-center gap-2 rounded-full bg-[#E1251B]/10 border border-[#E1251B]/25 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.15em] text-[#E1251B]">
+            <span className={`inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-[0.15em] ${ACCENT_CLASSES.red.badge}`}>
               <HandHeart className="w-3.5 h-3.5" />
               Give back to Calgary
             </span>
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-[-0.02em] text-foreground text-balance leading-[1.05]">
-              Do good for <span className="text-[#E1251B]">your city</span>.
+              Do good for{" "}
+              <span className={ACCENT_CLASSES.red.icon}>your city</span>.
             </h1>
             <p className="text-sm md:text-base text-foreground/70 leading-relaxed max-w-xl text-pretty">
               Curated ways to help your neighbours — volunteer, donate, sponsor a family, and improve our streets. Every link goes straight to a trusted Calgary organization.
@@ -66,13 +100,14 @@ export default function DoGoodTab() {
           <nav className="mt-8 flex flex-wrap gap-2">
             {doGoodCategories.map((cat) => {
               const Icon = ICONS[cat.icon];
+              const ac = getCatAccent(cat.accent);
               return (
                 <a
                   key={cat.id}
                   href={`#dg-${cat.id}`}
-                  className="inline-flex items-center gap-2 rounded-full bg-foreground/[0.06] hover:bg-foreground/[0.1] border border-border px-4 py-2 text-sm font-semibold text-foreground/80 hover:text-foreground transition-colors"
+                  className={`inline-flex items-center gap-2 rounded-full bg-foreground/[0.06] hover:bg-foreground/[0.10] border border-border px-4 py-2 text-sm font-semibold text-foreground/80 hover:text-foreground transition-colors`}
                 >
-                  <Icon className="w-4 h-4" style={{ color: cat.accent }} />
+                  <Icon className={`w-4 h-4 ${ACCENT_CLASSES[ac].navIcon}`} />
                   {cat.title}
                 </a>
               );
@@ -86,20 +121,20 @@ export default function DoGoodTab() {
         <CategorySection key={cat.id} category={cat} />
       ))}
 
-      {/* ========== CLOSING ========== */}
-      <section className="relative pb-24 md:pb-16 pt-4">
+      {/* ========== CLOSING CTA ========== */}
+      <section className="pb-24 md:pb-16 pt-4">
         <div className="max-w-[1100px] mx-auto px-6 md:px-8 lg:px-12">
-          <div className="rounded-3xl bg-gradient-to-br from-[#0b2239] to-[#071a2e] p-7 md:p-10 text-center">
-            <HandHeart className="w-9 h-9 text-[#E1251B] mx-auto mb-4" />
-            <h2 className="text-xl md:text-2xl font-bold text-white text-balance mb-2">
+          <div className="rounded-3xl bg-card border border-border p-7 md:p-10 text-center">
+            <HandHeart className={`w-9 h-9 mx-auto mb-4 ${ACCENT_CLASSES.red.icon}`} />
+            <h2 className="text-xl md:text-2xl font-bold text-foreground text-balance mb-2">
               Calgary is built by neighbours helping neighbours.
             </h2>
-            <p className="text-white/65 max-w-md mx-auto leading-relaxed text-sm text-pretty mb-6">
+            <p className="text-foreground/65 max-w-md mx-auto leading-relaxed text-sm text-pretty mb-6">
               Pick one thing this week. A single shift, a small donation, or one report to 311 makes the whole city stronger.
             </p>
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#E1251B] text-white text-sm font-bold hover:bg-[#B91C1C] transition-colors shadow-md shadow-red-900/40"
+              className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold transition-colors shadow-sm ${ACCENT_CLASSES.red.actionBtn}`}
             >
               <ChevronUp className="w-4 h-4" strokeWidth={2.5} />
               Back to top
@@ -113,16 +148,16 @@ export default function DoGoodTab() {
 
 function CategorySection({ category }: { category: DoGoodCategory }) {
   const Icon = ICONS[category.icon];
+  const ac = getCatAccent(category.accent);
+  const cls = ACCENT_CLASSES[ac];
+
   return (
-    <section id={`dg-${category.id}`} className="relative py-8 md:py-10 scroll-mt-24">
+    <section id={`dg-${category.id}`} className="py-8 md:py-10 scroll-mt-24 bg-background">
       <div className="max-w-[1100px] mx-auto px-6 md:px-8 lg:px-12">
         {/* Section header */}
         <div className="flex items-start gap-4 mb-6">
-          <div
-            className="flex-shrink-0 flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-2xl"
-            style={{ backgroundColor: `${category.accent}1a`, border: `1px solid ${category.accent}40` }}
-          >
-            <Icon className="w-6 h-6 md:w-7 md:h-7" style={{ color: category.accent }} />
+          <div className={`flex-shrink-0 flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-2xl ${cls.iconWrap}`}>
+            <Icon className={`w-6 h-6 md:w-7 md:h-7 ${cls.icon}`} />
           </div>
           <div className="flex-1 min-w-0">
             <h2 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">{category.title}</h2>
@@ -144,19 +179,15 @@ function CategorySection({ category }: { category: DoGoodCategory }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.35, delay: (i % 2) * 0.05 }}
-              className="group relative flex flex-col rounded-2xl bg-card border border-border hover:border-foreground/20 p-5 md:p-6 shadow-lg transition-all duration-300 hover:-translate-y-0.5"
+              className="group relative flex flex-col rounded-2xl bg-card border border-border hover:border-foreground/20 p-5 md:p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5"
             >
               <div className="flex items-start justify-between gap-3 mb-2">
                 <h3 className="text-base md:text-lg font-bold text-foreground leading-tight pr-2">
                   {item.name}
                 </h3>
-                <span
-                  className="flex-shrink-0 flex items-center justify-center w-9 h-9 rounded-full transition-colors"
-                  style={{ backgroundColor: `${category.accent}14` }}
-                >
+                <span className={`flex-shrink-0 flex items-center justify-center w-9 h-9 rounded-full transition-colors ${cls.arrowWrap}`}>
                   <ArrowUpRight
-                    className="w-5 h-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                    style={{ color: category.accent }}
+                    className={`w-5 h-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 ${cls.arrow}`}
                   />
                 </span>
               </div>
@@ -165,10 +196,7 @@ function CategorySection({ category }: { category: DoGoodCategory }) {
 
               <div className="mt-auto flex flex-col gap-2">
                 <div className="flex items-start gap-2">
-                  <span
-                    className="mt-1 flex-shrink-0 w-1.5 h-1.5 rounded-full"
-                    style={{ backgroundColor: category.accent }}
-                  />
+                  <span className={`mt-1 flex-shrink-0 w-1.5 h-1.5 rounded-full ${cls.dot}`} />
                   <p className="text-sm font-semibold text-foreground/85 leading-snug">{item.need}</p>
                 </div>
                 {item.commitment && (
@@ -179,10 +207,7 @@ function CategorySection({ category }: { category: DoGoodCategory }) {
                 )}
               </div>
 
-              <div
-                className="mt-4 inline-flex w-fit items-center gap-1.5 rounded-xl px-4 py-2 text-sm font-bold text-white transition-transform group-hover:scale-[1.02]"
-                style={{ backgroundColor: category.accent }}
-              >
+              <div className={`mt-4 inline-flex w-fit items-center gap-1.5 rounded-xl px-4 py-2 text-sm font-bold transition-all group-hover:scale-[1.02] ${cls.actionBtn}`}>
                 {item.action}
                 <ArrowUpRight className="w-4 h-4" />
               </div>
