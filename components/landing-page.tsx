@@ -38,7 +38,7 @@ export default function LandingPage() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const enterApp = (tab: "home" | "ai" | "explore") => {
+  const enterApp = (tab: "home" | "ai" | "explore" | "do-good") => {
     setHasOnboarded(true);
     setCurrentPage("main");
     setActiveTab(tab);
@@ -222,6 +222,14 @@ export default function LandingPage() {
               >
                 <Smile className="w-3.5 h-3.5 text-[#FBBF24]" />
                 iKonnect Guide
+              </button>
+
+              <button
+                onClick={() => enterApp("do-good")}
+                className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium text-white/60 hover:text-white hover:bg-white/[0.06] transition-all"
+              >
+                <HandHeart className="w-3.5 h-3.5 text-[#EF4444]" />
+                Do Good
               </button>
             </nav>
 
