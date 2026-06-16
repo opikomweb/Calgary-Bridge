@@ -266,9 +266,12 @@ function scoreResource(
       return titleHasQuery ? score : 0;
     }
 
-    // Primary-category providers are the most relevant; secondary far less.
-    score += matchIndex === 0 ? 90 : 28;
-    if (r.category.length === 1 && matchIndex === 0) score += 25; // single-purpose focus
+    // Primary-category providers (the MAIN services for this category) must
+    // always rank above resources that only list it as a secondary/related
+    // category. A large fixed gap guarantees this regardless of priority.
+    const isPrimary = matchIndex === 0;
+    score += isPrimary ? 500 : 60;
+    if (r.category.length === 1 && isPrimary) score += 25; // single-purpose focus
 
     // Refine ranking by how directly the resource matches the meaningful
     // query tokens (e.g. a daycare whose services list "childcare").
@@ -281,8 +284,10 @@ function scoreResource(
     if (r.featured) score += 5;
     if (r.cost === "free") score += 2;
     // Trust ranking: vetted platforms (RentFaster, liv.rent, Boardwalk…) rank
-    // above social-media classifieds (Kijiji, Facebook Marketplace).
-    if (r.priority) score += r.priority;
+    // above social-media classifieds. Priority orders resources WITHIN a tier;
+    // it is dampened for secondary matches so a high-priority "related" org
+    // can never jump ahead of the category's main providers.
+    if (r.priority) score += isPrimary ? r.priority : r.priority * 0.2;
     return score;
   }
 
@@ -369,11 +374,17 @@ export function filterResources(
 function categoryRank(r: Resource, category: ResourceCategory): number {
   let score = 0;
   const idx = r.category.indexOf(category);
-  if (idx === 0) score += 40; // primary focus
-  else if (idx > 0) score += 12; // secondary focus
-  if (r.category.length === 1 && idx === 0) score += 20; // single-purpose provider
+  // Main providers (this is their PRIMARY category) always come before
+  // resources that only list it as a secondary/related category. The large
+  // gap guarantees ordering regardless of an individual resource's priority.
+  const isPrimary = idx === 0;
+  if (isPrimary) score += 500; // primary focus — main key providers first
+  else if (idx > 0) score += 60; // secondary / related
+  if (r.category.length === 1 && isPrimary) score += 20; // single-purpose provider
   if (r.featured) score += 6;
   if (r.cost === "free") score += 2;
-  if (r.priority) score += r.priority;
+  // Priority orders WITHIN a tier; dampened for secondary so related orgs
+  // never leapfrog the category's primary providers.
+  if (r.priority) score += isPrimary ? r.priority : r.priority * 0.2;
   return score;
 }

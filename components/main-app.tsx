@@ -137,9 +137,13 @@ export default function MainApp() {
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileMenuOpen}
-            className="flex items-center justify-center w-12 h-12 sm:w-[52px] sm:h-[52px] rounded-2xl bg-gradient-to-br from-[#38BDF8] to-[#0284c7] text-white shadow-lg shadow-sky-500/30 transition-all duration-300 active:scale-90 hover:shadow-xl hover:shadow-sky-500/40"
+            className="group flex items-center justify-center w-[52px] h-[52px] sm:w-14 sm:h-14 rounded-2xl border-t border-white/40 bg-gradient-to-b from-[#F4493C] via-[#E1251B] to-[#B91C1C] text-white ring-1 ring-inset ring-white/15 shadow-[0_6px_0_-1px_#8f1410,0_12px_22px_-6px_rgba(225,37,27,0.55)] transition-all duration-150 hover:shadow-[0_6px_0_-1px_#8f1410,0_16px_28px_-6px_rgba(225,37,27,0.7)] active:translate-y-[3px] active:shadow-[0_3px_0_-1px_#8f1410,0_8px_16px_-6px_rgba(225,37,27,0.5)]"
           >
-            {mobileMenuOpen ? <X className="h-6 w-6" strokeWidth={2.5} /> : <Menu className="h-6 w-6" strokeWidth={2.5} />}
+            {mobileMenuOpen ? (
+              <X className="h-7 w-7 drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]" strokeWidth={2.75} />
+            ) : (
+              <Menu className="h-7 w-7 drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]" strokeWidth={2.75} />
+            )}
           </button>
         </div>
       </header>
@@ -252,7 +256,7 @@ export default function MainApp() {
 
       {/* Mobile Bottom Navigation */}
       <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-background/95 backdrop-blur-2xl border-t border-foreground/[0.06] safe-area-pb">
-        <div className="flex items-center justify-between gap-1 px-2 py-2">
+        <div className="flex items-center justify-between gap-1 px-2 py-2.5">
           {navItems.map((item) => {
             const active = activeTab === item.id;
             return (
@@ -261,17 +265,17 @@ export default function MainApp() {
                 onClick={() => setActiveTab(item.id)}
                 aria-label={item.label}
                 aria-current={active ? "page" : undefined}
-                className={`flex items-center justify-center gap-1.5 rounded-full transition-all duration-300 ${
+                className={`flex items-center justify-center gap-2 rounded-full transition-all duration-200 ${
                   active
                     ? item.highlight
-                      ? "bg-gradient-to-r from-[#38BDF8] to-[#0284c7] text-white shadow-lg shadow-sky-500/30 px-3.5 py-2.5"
-                      : "bg-[#38BDF8]/[0.14] text-[#0284c7] px-3.5 py-2.5"
-                    : "text-foreground/45 px-2.5 py-2.5 active:scale-90"
+                      ? "border-t border-white/40 bg-gradient-to-b from-[#F4493C] via-[#E1251B] to-[#B91C1C] text-white ring-1 ring-inset ring-white/15 shadow-[0_4px_0_-1px_#8f1410,0_8px_16px_-5px_rgba(225,37,27,0.55)] px-4 py-2.5"
+                      : "bg-[#38BDF8]/[0.16] text-[#0284c7] px-4 py-2.5"
+                    : "text-foreground/55 px-3 py-2.5 active:scale-90"
                 }`}
               >
-                <item.icon className="h-5 w-5 shrink-0" />
+                <item.icon className={`h-6 w-6 shrink-0 ${active && item.highlight ? "drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]" : ""}`} strokeWidth={active ? 2.4 : 2} />
                 {active && (
-                  <span className="text-xs font-bold tracking-tight whitespace-nowrap">{item.shortLabel}</span>
+                  <span className="text-[13px] font-bold tracking-tight whitespace-nowrap">{item.shortLabel}</span>
                 )}
               </button>
             );

@@ -1246,7 +1246,7 @@ export const calgaryResources: Resource[] = [
       fr: "Préparation d'impôts gratuite pour les aînés à revenu modeste.",
       tl: "Libreng tax preparation para sa seniors na may katamtamang kita.",
       es: "Preparación de impuestos gratuita para mayores con ingresos modestos.",
-      ar: "إعداد ضرائب مجاني لكبار السن ذوي الدخل المتواضع.",
+      ar: "��عداد ضرائب مجاني لكبار السن ذوي الدخل المتواضع.",
       zh: "为收入中等的老年人提供免费报税服务。",
     },
     servicesOffered: [
@@ -3200,7 +3200,7 @@ export const calgaryResources: Resource[] = [
       tl: "Ang energy at construction sectors ng Alberta ay nangangailangan ng welder buong taon.",
       es: "Los sectores de energía y construcción de Alberta necesitan soldadores todo el año.",
       ar: "تحتاج قطاعات الطاقة والبناء في ألبرتا إلى لحّامين على مدار العام.",
-      zh: "艾伯塔的能源、管道和建筑行业全年需要焊工��尤其是��将开���的管��项目���",
+      zh: "艾伯塔的能源、管道和建筑行业全年需要焊工���尤其是��将开���的管��项目���",
     },
     servicesOffered: [
       "Welding & pipefitting careers",
@@ -3635,7 +3635,7 @@ export const calgaryResources: Resource[] = [
   },
   {
     id: "stephen-avenue-dining",
-    category: ["tourism", "food"],
+    category: ["tourism"],
     userTypes: ["family", "student"],
     title: {
       en: "Stephen Avenue & 17th Ave — Dining Districts",
@@ -3846,7 +3846,7 @@ export const calgaryResources: Resource[] = [
   // ============================================
   {
     id: "a-mart-korean-grocer",
-    category: ["ethnic-market", "food"],
+    category: ["ethnic-market", "essentials"],
     userTypes: ["newcomer", "family", "student"],
     title: {
       en: "A-Mart (Korean & Asian Grocer)",
@@ -3882,7 +3882,7 @@ export const calgaryResources: Resource[] = [
   },
   {
     id: "unimarket-latin-grocer",
-    category: ["ethnic-market", "food"],
+    category: ["ethnic-market", "essentials"],
     userTypes: ["newcomer", "family", "student"],
     title: {
       en: "Unimarket (Latin American Food & Importers)",
@@ -3918,7 +3918,7 @@ export const calgaryResources: Resource[] = [
   },
   {
     id: "sanaza-fine-foods",
-    category: ["ethnic-market", "food"],
+    category: ["ethnic-market", "essentials"],
     userTypes: ["newcomer", "family", "student"],
     title: {
       en: "Sanaza Fine Foods (South Asian & Halal Grocer)",
@@ -3958,7 +3958,7 @@ export const calgaryResources: Resource[] = [
   // ============================================
   {
     id: "calgary-farmers-market",
-    category: ["farmers-market", "food"],
+    category: ["farmers-market", "essentials"],
     userTypes: ["family", "newcomer", "senior", "student"],
     title: {
       en: "Calgary Farmers' Market (West & South Locations)",
@@ -3995,7 +3995,7 @@ export const calgaryResources: Resource[] = [
   },
   {
     id: "crossroads-market",
-    category: ["farmers-market", "food"],
+    category: ["farmers-market", "essentials"],
     userTypes: ["family", "newcomer", "senior", "student"],
     title: {
       en: "Crossroads Market",
@@ -4031,7 +4031,7 @@ export const calgaryResources: Resource[] = [
   },
   {
     id: "tk-ranch-farm-delivery",
-    category: ["farmers-market", "food"],
+    category: ["farmers-market", "essentials"],
     userTypes: ["family", "newcomer", "senior"],
     title: {
       en: "TK Ranch (Online Farm Delivery to Calgary)",
@@ -4147,7 +4147,7 @@ export const calgaryResources: Resource[] = [
   // ============================================
   {
     id: "bow-valley-college-main",
-    category: ["education", "jobs", "newcomer"],
+    category: ["education", "newcomer"],
     userTypes: ["newcomer", "student", "family", "senior"],
     title: {
       en: "Bow Valley College",
@@ -4185,7 +4185,7 @@ export const calgaryResources: Resource[] = [
   },
   {
     id: "sait-continuing-education",
-    category: ["education", "jobs"],
+    category: ["education"],
     userTypes: ["student", "newcomer", "business"],
     title: {
       en: "SAIT — Continuing Education & Professional Studies",
@@ -4312,7 +4312,7 @@ export const calgaryResources: Resource[] = [
       fr: "À savoir : vérifiez la licence albertaine, le programme de subvention abordable et privilégiez Montessori ou l'apprentissage par le jeu. Cherchez près de chez vous sur Google Maps et choisissez les mieux notés.",
       tl: "Dapat malaman: tingnan ang Alberta licence, ang affordability grant, at piliin ang Montessori o play-based. Maghanap malapit sa inyo sa Google Maps at piliin ang may pinakamagandang reviews.",
       es: "Qué saber: verifique la licencia de Alberta, el subsidio de asequibilidad y prefiera Montessori o aprendizaje por juego. Busque cerca de su casa en Google Maps y elija los mejor valorados.",
-      ar: "ما يجب معرفته: تحقق من ترخيص ألبرتا ومنحة القدرة على تحمل التكاليف وفضّل برامج مونتيسوري أو التعلم باللعب. ابحث بالقرب منك على خرائط جوجل واختر الأعلى تقييماً.",
+      ar: "ما يجب معرفته: تحق�� من ترخيص ألبرتا ومنحة القدرة على تحمل التكاليف وفضّل برامج مونتيسوري أو التعلم باللعب. ابحث بالقرب منك على خرائط جوجل واختر الأعلى تقييماً.",
       zh: "家长须知：确认阿尔伯塔牌照、可负担补贴，并优先选择蒙特梭利或游戏式课程。在谷歌地图搜索附近机构并选择评价最高者。",
     },
     summary: {
@@ -4449,7 +4449,7 @@ export const calgaryResources: Resource[] = [
   },
   {
     id: "sait-main",
-    category: ["education", "jobs"],
+    category: ["education"],
     userTypes: ["student", "newcomer"],
     title: {
       en: "Southern Alberta Institute of Technology (SAIT)",
