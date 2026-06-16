@@ -40,15 +40,26 @@ export default function AITab() {
   // Calgary Pulse side panel can be collapsed to give the chat more room.
   const [pulseOpen, setPulseOpen] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  // Scroll ONLY the inner messages container (not the page/window). Using
+  // scrollIntoView here would bubble up to the window and the sticky header,
+  // jumping the whole page and hiding messages under the header. Setting
+  // scrollTop on the container keeps the scroll contained to the chat pane.
+  const scrollToBottom = (behavior: ScrollBehavior = "smooth") => {
+    const el = messagesContainerRef.current;
+    if (!el) return;
+    el.scrollTo({ top: el.scrollHeight, behavior });
   };
 
+  // Re-scroll whenever messages change or the typing indicator toggles so the
+  // newest answer (and the typing dots) are always brought into view.
   useEffect(() => {
-    scrollToBottom();
-  }, [chatMessages]);
+    // rAF ensures the new DOM (message/typing bubble) is laid out first.
+    const id = requestAnimationFrame(() => scrollToBottom());
+    return () => cancelAnimationFrame(id);
+  }, [chatMessages, isTyping]);
 
   // Auto-focus the query bar so the user can start typing immediately —
   // keeps the focus on what they want to ask.
@@ -180,7 +191,10 @@ export default function AITab() {
               Calgary Pulse
             </button>
           )}
-          <div className="flex-1 overflow-y-auto scroll-pt-6 overscroll-contain">
+          <div
+            ref={messagesContainerRef}
+            className="flex-1 min-h-0 overflow-y-auto scroll-pt-6 overscroll-contain"
+          >
             {chatMessages.length === 0 ? (
               /* Empty State */
               <div className="flex flex-col items-center justify-center min-h-full px-5 md:px-8 py-10 md:py-16">
