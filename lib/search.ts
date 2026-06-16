@@ -192,6 +192,68 @@ const categoryIntent: Record<string, ResourceCategory[]> = {
   dining: ["tourism"],
   "things to do": ["tourism"],
   sightsee: ["tourism"],
+  // ===== Previously-unmapped categories (these used to fall through to the
+  // loose text-match path, pulling in unrelated resources) =====
+  emergency: ["emergency"],
+  urgent: ["emergency"],
+  crisis: ["emergency", "mental-health"],
+  distress: ["emergency", "mental-health"],
+  community: ["community"],
+  neighbourhood: ["community"],
+  neighborhood: ["community"],
+  meetup: ["community"],
+  lgbtq: ["lgbtq"],
+  lgbt: ["lgbtq"],
+  gay: ["lgbtq"],
+  lesbian: ["lgbtq"],
+  queer: ["lgbtq"],
+  transgender: ["lgbtq"],
+  trans: ["lgbtq"],
+  pride: ["lgbtq"],
+  bisexual: ["lgbtq"],
+  indigenous: ["indigenous"],
+  "first nations": ["indigenous"],
+  metis: ["indigenous"],
+  inuit: ["indigenous"],
+  aboriginal: ["indigenous"],
+  native: ["indigenous"],
+  art: ["arts"],
+  arts: ["arts"],
+  music: ["arts"],
+  theatre: ["arts"],
+  theater: ["arts"],
+  gallery: ["arts"],
+  museum: ["arts", "tourism"],
+  culture: ["arts", "community"],
+  cultural: ["arts", "community"],
+  dance: ["arts"],
+  creative: ["arts"],
+  youth: ["youth"],
+  teen: ["youth"],
+  teenager: ["youth"],
+  workspace: ["workspace"],
+  coworking: ["workspace"],
+  "co-working": ["workspace"],
+  office: ["workspace"],
+  desk: ["workspace"],
+  studio: ["workspace", "arts"],
+  storage: ["storage"],
+  locker: ["storage"],
+  warehouse: ["storage", "logistics"],
+  "self storage": ["storage"],
+  market: ["farmers-market", "ethnic-market"],
+  "farmers market": ["farmers-market"],
+  farmer: ["farmers-market"],
+  farmers: ["farmers-market"],
+  produce: ["farmers-market", "food"],
+  halal: ["ethnic-market"],
+  ethnic: ["ethnic-market"],
+  "ethnic market": ["ethnic-market"],
+  international: ["ethnic-market"],
+  grocery: ["ethnic-market", "essentials", "food"],
+  essentials: ["essentials"],
+  household: ["essentials"],
+  basics: ["essentials"],
 };
 
 function lc(s?: string) {
@@ -388,6 +450,88 @@ export function filterResources(
   }
 
   return searchResources(byCategory, rawQuery, activeLanguage);
+}
+
+// Maps each category to adjacent categories that often help with the same
+// underlying need. Used to offer "similar categories" when a search is gated
+// to a specific intent so users can broaden without starting over.
+const relatedCategories: Record<ResourceCategory, ResourceCategory[]> = {
+  housing: ["legal", "emergency", "newcomer", "essentials"],
+  jobs: ["education", "business", "newcomer"],
+  food: ["emergency", "farmers-market", "ethnic-market", "essentials", "community"],
+  "mental-health": ["healthcare", "community", "youth", "emergency"],
+  healthcare: ["mental-health", "senior", "disability", "emergency"],
+  newcomer: ["education", "jobs", "community", "legal", "ethnic-market"],
+  family: ["youth", "education", "community", "arts", "tourism"],
+  senior: ["healthcare", "disability", "community", "transit"],
+  disability: ["healthcare", "senior", "transit", "community"],
+  transit: ["essentials", "community"],
+  education: ["jobs", "newcomer", "youth", "family"],
+  legal: ["housing", "newcomer", "emergency"],
+  business: ["jobs", "workspace", "logistics", "storage"],
+  volunteering: ["community", "arts", "youth"],
+  emergency: ["housing", "food", "mental-health", "healthcare"],
+  community: ["arts", "volunteering", "family", "youth", "indigenous", "lgbtq"],
+  lgbtq: ["community", "mental-health", "youth", "healthcare"],
+  indigenous: ["community", "arts", "healthcare", "education"],
+  youth: ["family", "education", "arts", "community", "mental-health"],
+  arts: ["community", "tourism", "youth", "family"],
+  logistics: ["business", "storage", "workspace"],
+  tourism: ["arts", "family", "community", "farmers-market"],
+  workspace: ["business", "storage", "logistics"],
+  storage: ["logistics", "business", "workspace"],
+  "ethnic-market": ["farmers-market", "food", "essentials", "newcomer"],
+  "farmers-market": ["ethnic-market", "food", "essentials", "tourism"],
+  essentials: ["food", "farmers-market", "ethnic-market", "transit"],
+};
+
+export interface SimilarGroup {
+  category: ResourceCategory;
+  resources: Resource[];
+}
+
+/**
+ * Returns resources from categories ADJACENT to a query's detected intent —
+ * i.e. not an exact match but related/overlapping. Only runs when the query
+ * clearly names a category, so we never surface random "similar" noise.
+ * Excludes anything already shown in the main results.
+ */
+export function getSimilarResources(
+  list: Resource[],
+  rawQuery: string,
+  activeLanguage: Language,
+  excludeIds: Set<string>,
+  maxGroups = 4,
+  maxPerGroup = 3
+): SimilarGroup[] {
+  const query = rawQuery.toLowerCase().trim();
+  if (!query) return [];
+
+  const intents = detectIntents(query);
+  if (intents.length === 0) return [];
+
+  // Collect related categories (excluding the directly-matched intents).
+  const relatedSet = new Set<ResourceCategory>();
+  for (const intent of intents) {
+    for (const rel of relatedCategories[intent] ?? []) {
+      if (!intents.includes(rel)) relatedSet.add(rel);
+    }
+  }
+  if (relatedSet.size === 0) return [];
+
+  const groups: SimilarGroup[] = [];
+  for (const cat of relatedSet) {
+    const matches = list
+      .filter((r) => !excludeIds.has(r.id) && r.category.includes(cat))
+      .sort((a, b) => categoryRank(b, cat) - categoryRank(a, cat))
+      .slice(0, maxPerGroup);
+    if (matches.length > 0) groups.push({ category: cat, resources: matches });
+  }
+
+  // Show the richest groups first and cap how many we display.
+  return groups
+    .sort((a, b) => b.resources.length - a.resources.length)
+    .slice(0, maxGroups);
 }
 
 /** Ranks a resource's relevance to a selected category filter. */

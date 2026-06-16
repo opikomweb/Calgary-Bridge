@@ -5,7 +5,8 @@ import { useAppStore } from "@/lib/store";
 import { resources } from "@/lib/data";
 import { Search, ArrowRight, MessagesSquare, MapPin, ChevronRight, Home, Briefcase, Heart, Users } from "lucide-react";
 import ResourceCard from "../resource-card";
-import { searchResources } from "@/lib/search";
+import SearchExtras from "../search-extras";
+import { searchResources, getSimilarResources } from "@/lib/search";
 
 export default function HomeTab() {
   const { activeLanguage, searchQuery, setSearchQuery, setActiveTab } = useAppStore();
@@ -15,6 +16,11 @@ export default function HomeTab() {
 
   // Comprehensive search across all resource fields (shared utility)
   const filteredResources = searchResources(resources, searchQuery, activeLanguage);
+
+  // Resources from adjacent/related categories (shown in the "similar
+  // categories" accordion), excluding anything already in the main results.
+  const shownIds = new Set(filteredResources.map((r) => r.id));
+  const similarGroups = getSimilarResources(resources, searchQuery, activeLanguage, shownIds);
 
   // Solution-first pathways with icons - GLASSY PREMIUM
   const pathways = [
@@ -181,6 +187,9 @@ export default function HomeTab() {
               </button>
             </div>
           )}
+
+          {/* Similar categories accordion + live Google / Google Maps search */}
+          <SearchExtras query={searchQuery} similar={similarGroups} />
         </section>
       )}
 
