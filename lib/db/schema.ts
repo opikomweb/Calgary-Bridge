@@ -58,7 +58,8 @@ export const verification = pgTable("verification", {
 // No foreign keys (keeps schema iteration easy); the `userId` column is what matters.
 
 // Each row = one resource a user has saved/bookmarked.
-export const savedResource = pgTable("saved_resource", {
+// Unique index on (userId, resourceId) prevents duplicates.
+export const savedResource = pgTable("saved_resources", {
   id: serial("id").primaryKey(),
   userId: text("userId").notNull(),
   resourceId: text("resourceId").notNull(),
@@ -66,11 +67,10 @@ export const savedResource = pgTable("saved_resource", {
 })
 
 // One row per user holding their profile preferences.
-export const userPreference = pgTable("user_preference", {
+export const userPreference = pgTable("user_preferences", {
   userId: text("userId").primaryKey(),
   role: text("role"),
   language: text("language").notNull().default("en"),
-  // JSON-encoded string array of selected priorities.
-  priorities: text("priorities").notNull().default("[]"),
+  notifications: boolean("notifications").notNull().default(true),
   updatedAt: timestamp("updatedAt").notNull().defaultNow(),
 })
