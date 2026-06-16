@@ -5,103 +5,14 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAppStore } from "@/lib/store";
 import { resources, categoryLabels } from "@/lib/data";
-import { 
-  Send, User, ArrowRight, Phone, ExternalLink, 
-  Home, Cloud, Sun, CloudSnow, CloudRain, CloudSun, Thermometer,
-  Calendar, TrendingUp, PanelRightClose, PanelRightOpen, Search, MapPin, Wind, Loader2
+import {
+  Send, User, ArrowRight, Phone, ExternalLink,
+  TrendingUp, PanelRightClose, PanelRightOpen, Search, MapPin,
 } from "lucide-react";
 import type { Resource } from "@/lib/types";
+import { CalgaryPulsePanel } from "@/components/calgary-pulse-panel";
 
-// ---- Calgary Open-Meteo weather (WMO codes) ---------------------------------
-
-type WeatherData = {
-  temp: number;
-  feelsLike: number;
-  desc: string;
-  wmoCode: number;
-  isDay: boolean;
-};
-
-function wmoToDesc(code: number): string {
-  if (code === 0) return "Clear sky";
-  if (code <= 2) return "Partly cloudy";
-  if (code === 3) return "Overcast";
-  if (code <= 49) return "Fog";
-  if (code <= 57) return "Drizzle";
-  if (code <= 67) return "Rain";
-  if (code <= 77) return "Snow";
-  if (code <= 82) return "Rain showers";
-  if (code <= 86) return "Snow showers";
-  if (code <= 99) return "Thunderstorm";
-  return "Variable";
-}
-
-function getSeasonLabel(temp: number, wmo: number): string {
-  const month = new Date().getMonth(); // 0=Jan
-  const isSummer = month >= 5 && month <= 8; // Jun–Sep
-  const isWinter = month === 11 || month <= 1; // Dec–Feb
-  const isSnowing = wmo >= 71 && wmo <= 77;
-  const isRaining = (wmo >= 51 && wmo <= 67) || (wmo >= 80 && wmo <= 82);
-  if (isSnowing) return "Snow Alert";
-  if (isRaining) return "Rainy Day";
-  if (isSummer && temp >= 22) return "Warm Summer Day";
-  if (isSummer) return "Summer Weather";
-  if (isWinter) return "Winter Weather";
-  if (month >= 2 && month <= 4) return "Spring Weather";
-  return "Autumn Weather";
-}
-
-function getAdvisory(temp: number, wmo: number): string {
-  if (wmo >= 95) return "Thunderstorm warning — stay indoors and away from trees.";
-  if (wmo >= 71 && wmo <= 77) return "Snow on roads — drive carefully, layer up and use transit where possible.";
-  if (wmo >= 51 && wmo <= 67) return "Rain expected — carry an umbrella and watch for wet roads.";
-  if (temp >= 30) return "Heat advisory — stay hydrated and seek shade during peak hours.";
-  if (temp >= 22) return "Great day to explore Calgary's parks and outdoor spaces!";
-  if (temp >= 10) return "Mild and pleasant — a light jacket is recommended.";
-  if (temp >= 0) return "Cool day ahead — dress in layers for comfort.";
-  if (temp >= -10) return "Cold temperatures — wear a warm coat, hat, and gloves.";
-  return "Extreme cold — dress warmly! Free warming centres are open at downtown shelters.";
-}
-
-// Icon component mapped to WMO code + daytime
-function WeatherIcon({ wmo, isDay, className }: { wmo: number; isDay: boolean; className?: string }) {
-  if (wmo >= 71 && wmo <= 77) return <CloudSnow className={className} />;
-  if (wmo >= 51 && wmo <= 82) return <CloudRain className={className} />;
-  if (wmo >= 3) return <Cloud className={className} />;
-  if (wmo >= 1) return isDay ? <CloudSun className={className} /> : <Cloud className={className} />;
-  return isDay ? <Sun className={className} /> : <Cloud className={className} />;
-}
-
-// Card bg gradient that reflects conditions
-function weatherGradient(wmo: number, temp: number): string {
-  if (wmo >= 71 && wmo <= 77) return "from-[#0A2540] via-[#0E2E52] to-[#15396b]"; // snow → dark blue
-  if (wmo >= 51 && wmo <= 82) return "from-[#1C3A4A] via-[#1e4060] to-[#1a3550]"; // rain → slate blue
-  if (temp >= 28) return "from-[#7C1D10] via-[#9B2A1A] to-[#B43A25]";            // hot → deep red-orange
-  if (temp >= 18) return "from-[#0A4A2A] via-[#0D5C34] to-[#0E6B3C]";            // warm → rich green
-  if (temp >= 5)  return "from-[#1A3A5C] via-[#1e4878] to-[#163D6E]";            // mild → mid blue
-  return "from-[#0A2540] via-[#0E2E52] to-[#15396b]";                             // cold → dark navy
-}
-
-async function fetchCalgaryWeather(): Promise<WeatherData> {
-  const url =
-    "https://api.open-meteo.com/v1/forecast?latitude=51.0447&longitude=-114.0719" +
-    "&current=temperature_2m,apparent_temperature,weather_code,is_day" +
-    "&temperature_unit=celsius&timezone=America%2FDenver";
-  const res = await fetch(url, { next: { revalidate: 1800 } });
-  if (!res.ok) throw new Error("weather fetch failed");
-  const json = await res.json();
-  const c = json.current;
-  return {
-    temp: Math.round(c.temperature_2m),
-    feelsLike: Math.round(c.apparent_temperature),
-    desc: wmoToDesc(c.weather_code),
-    wmoCode: c.weather_code,
-    isDay: c.is_day === 1,
-  };
-}
-
-// ---- Static Calgary insights -----------------------------------------------
-
+// Popular chat questions shown below the pulse panel
 const popularQuestions = [
   "How do I apply for rental assistance?",
   "Where can I get free tax help?",
@@ -109,13 +20,7 @@ const popularQuestions = [
   "How do I find ESL classes near me?",
 ];
 
-const calgaryInsights = [
-  { icon: TrendingUp, label: "340+ jobs posted this week",    chip: "bg-[#1D4ED8]/15 text-[#1D4ED8] dark:text-[#60A5FA] ring-1 ring-[#1D4ED8]/30" },
-  { icon: Home,       label: "12 housing programs available", chip: "bg-[#1D4ED8]/15 text-[#1D4ED8] dark:text-[#60A5FA] ring-1 ring-[#1D4ED8]/30" },
-  { icon: Calendar,   label: "Free tax clinics open now",     chip: "bg-[#E12521]/12 text-[#E1251B] ring-1 ring-[#E12521]/30" },
-];
-
-// Light, optional example prompts
+// Example prompts shown on the empty chat state
 const examplePrompts = [
   "How do I find affordable housing?",
   "I'm new to Calgary — where do I start?",
@@ -128,49 +33,21 @@ export default function AITab() {
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [pulseOpen, setPulseOpen] = useState(true);
-  const [weather, setWeather] = useState<WeatherData | null>(null);
-  const [weatherError, setWeatherError] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Scroll ONLY the inner messages container (not the page/window). Using
-  // scrollIntoView here would bubble up to the window and the sticky header,
-  // jumping the whole page and hiding messages under the header. Setting
-  // scrollTop on the container keeps the scroll contained to the chat pane.
   const scrollToBottom = (behavior: ScrollBehavior = "smooth") => {
     const el = messagesContainerRef.current;
     if (!el) return;
     el.scrollTo({ top: el.scrollHeight, behavior });
   };
 
-  // Re-scroll whenever messages change or the typing indicator toggles so the
-  // newest answer (and the typing dots) are always brought into view.
   useEffect(() => {
-    // rAF ensures the new DOM (message/typing bubble) is laid out first.
     const id = requestAnimationFrame(() => scrollToBottom());
     return () => cancelAnimationFrame(id);
   }, [chatMessages, isTyping]);
 
-  // Fetch live Calgary weather from Open-Meteo (free, no API key required).
-  // Refresh every 30 minutes so data stays current without hammering the API.
-  useEffect(() => {
-    let cancelled = false;
-    const load = async () => {
-      try {
-        const data = await fetchCalgaryWeather();
-        if (!cancelled) setWeather(data);
-      } catch {
-        if (!cancelled) setWeatherError(true);
-      }
-    };
-    load();
-    const interval = setInterval(load, 30 * 60 * 1000);
-    return () => { cancelled = true; clearInterval(interval); };
-  }, []);
-
-  // Auto-focus the query bar so the user can start typing immediately —
-  // keeps the focus on what they want to ask.
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
@@ -526,80 +403,15 @@ export default function AITab() {
               </div>
             </div>
 
-            {/* Live Weather Card — data from Open-Meteo, updates every 30 min */}
+            {/* Live Calgary Pulse — weather, AQHI, weather alerts */}
+            <CalgaryPulsePanel />
+
+            {/* Popular Questions */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className={`relative overflow-hidden rounded-2xl p-5 xl:p-6 mb-6 bg-gradient-to-br ${
-                weather ? weatherGradient(weather.wmoCode, weather.temp) : "from-[#0A2540] via-[#0E2E52] to-[#15396b]"
-              } border border-white/10 shadow-lg shadow-black/20`}
-            >
-              {/* Ambient glow */}
-              <div className="pointer-events-none absolute -top-10 -right-8 h-32 w-32 rounded-full bg-white/10 blur-3xl" />
-              <div className="pointer-events-none absolute -bottom-12 -left-6 h-28 w-28 rounded-full bg-white/8 blur-3xl" />
-
-              {!weather && !weatherError && (
-                <div className="relative flex items-center gap-3 text-white/70">
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                  <span className="text-sm">Fetching Calgary weather…</span>
-                </div>
-              )}
-
-              {weatherError && (
-                <div className="relative flex items-center gap-3 text-white/70">
-                  <Thermometer className="w-5 h-5" />
-                  <div>
-                    <p className="font-semibold text-white text-base">Calgary Weather</p>
-                    <p className="text-sm text-white/60 mt-0.5">Unable to load — check back shortly.</p>
-                  </div>
-                </div>
-              )}
-
-              {weather && (
-                <>
-                  <div className="relative flex items-center gap-4 mb-4">
-                    <div className="w-12 h-12 xl:w-14 xl:h-14 flex-shrink-0 rounded-2xl bg-white/10 ring-1 ring-white/15 flex items-center justify-center">
-                      <WeatherIcon wmo={weather.wmoCode} isDay={weather.isDay} className="w-6 h-6 xl:w-7 xl:h-7 text-white" />
-                    </div>
-                    <div className="min-w-0">
-                      <p className="font-bold text-lg xl:text-xl leading-tight text-white">
-                        {getSeasonLabel(weather.temp, weather.wmoCode)}
-                      </p>
-                      <p className="text-sm xl:text-base text-white/70 mt-0.5 leading-relaxed">
-                        {weather.temp}°C · feels like {weather.feelsLike}°C · {weather.desc}
-                      </p>
-                    </div>
-                  </div>
-                  <p className="relative text-sm xl:text-base text-white/85 leading-relaxed">
-                    {getAdvisory(weather.temp, weather.wmoCode)}
-                  </p>
-                </>
-              )}
-            </motion.div>
-
-            {/* Live Stats */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="space-y-3 mb-8"
-            >
-              {calgaryInsights.map((insight, i) => (
-                <div key={i} className="flex items-center gap-3.5 p-4 rounded-2xl bg-foreground/[0.04] border border-foreground/[0.08]">
-                  <div className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl ${insight.chip}`}>
-                    <insight.icon className="w-5 h-5" />
-                  </div>
-                  <span className="text-sm xl:text-base font-semibold leading-snug text-foreground/90">{insight.label}</span>
-                </div>
-              ))}
-            </motion.div>
-
-            {/* Popular Questions */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
+              className="mt-8"
             >
               <h3 className="text-lg xl:text-xl font-bold mb-5 flex items-center gap-3">
                 <TrendingUp className="w-5 h-5 xl:w-6 xl:h-6 text-[#1D4ED8]" />
