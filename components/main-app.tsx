@@ -128,7 +128,7 @@ export default function MainApp() {
             className="flex items-center"
           >
             {/* Square brand lockup (Calgary Tower + bridge + wordmark) */}
-            <div className="relative h-[64px] w-[64px] sm:h-[72px] sm:w-[72px] flex-shrink-0 transition-transform duration-300 active:scale-95">
+            <div className="relative h-[78px] w-[78px] sm:h-[92px] sm:w-[92px] flex-shrink-0 transition-transform duration-300 active:scale-95">
               <RotatingLogo imgPadding="p-0" priority />
             </div>
           </button>
@@ -163,7 +163,7 @@ export default function MainApp() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25 }}
-              className="absolute right-0 top-0 bottom-0 w-[85%] max-w-[360px] bg-background/98 backdrop-blur-2xl border-l border-foreground/[0.06] p-8"
+              className="absolute right-0 top-0 bottom-0 w-[85%] max-w-[360px] bg-background/70 backdrop-blur-2xl backdrop-saturate-150 border-l border-white/15 shadow-2xl shadow-black/30 ring-1 ring-inset ring-white/10 p-8"
               onClick={(e) => e.stopPropagation()}
             >
               <nav className="mt-12 space-y-3">

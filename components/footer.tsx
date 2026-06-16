@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import { RotatingLogo } from "./rotating-logo";
 import { 
   MapPin, 
   Mail, 
@@ -548,13 +549,9 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
               <div className="grid md:grid-cols-12 gap-8 md:gap-6 items-start">
                 {/* Brand Column - Logo Only */}
                 <div className="md:col-span-3 flex flex-col items-center md:items-start">
-                  <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden bg-gradient-to-br from-[#0c1829] to-[#050B14] p-1.5 border border-white/[0.08] shadow-lg shadow-sky-500/5">
-                    <Image
-                      src="/calgary-connect-logo.png"
-                      alt="Calgary Konnect"
-                      fill
-                      className="object-contain p-1.5"
-                    />
+                  {/* Same brand lockup as the app header (dark-surface variant) */}
+                  <div className="relative w-28 h-28 md:w-32 md:h-32">
+                    <RotatingLogo imgPadding="p-0" variant="dark" />
                   </div>
                   <p className="text-xs text-white/30 mt-3 text-center md:text-left">Everything Calgary. One Place.</p>
                 </div>

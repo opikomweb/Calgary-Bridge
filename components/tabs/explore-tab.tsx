@@ -7,7 +7,7 @@ import { resources } from "@/lib/data";
 import { 
   Search, ChevronDown, X, Home, Briefcase, Heart, Users, 
   AlertTriangle, Building2, Baby, GraduationCap, Bus,
-  Scale, HandHeart, Accessibility, Utensils, Brain, Check, Truck, MapPin,
+  Scale, Accessibility, Utensils, Brain, Check, Truck, MapPin,
   Laptop, Package, Store, Sprout, Wrench
 } from "lucide-react";
 import ResourceCard from "../resource-card";
@@ -38,7 +38,6 @@ const allCategories: { id: ResourceCategory | "all"; label: string; icon: React.
   { id: "essentials", label: "Local Essentials", icon: Wrench },
   { id: "tourism", label: "Tourists & Visitors", icon: MapPin },
   { id: "logistics", label: "Shipping & Logistics", icon: Truck },
-  { id: "volunteering", label: "Volunteering", icon: HandHeart },
   { id: "community", label: "Community", icon: Users },
 ];
 
