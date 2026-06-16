@@ -16,7 +16,7 @@ export interface NavItem {
 export const NAV_ITEMS: NavItem[] = [
   { id: "home",      icon: Home,      label: "Home",           shortLabel: "Home",     highlight: false },
   { id: "explore",   icon: Compass,   label: "Explore",        shortLabel: "Explore",  highlight: false },
-  { id: "ai",        icon: null,      label: "iKonnect Guide", shortLabel: "iKonnect", highlight: true  },
+  { id: "ai",        icon: null,      label: "Askonnect",      shortLabel: "Askonnect", highlight: true  },
   { id: "do-good",   icon: HandHeart, label: "Do Good",        shortLabel: "Do Good",  highlight: false },
   { id: "shortlist", icon: Heart,     label: "Saved",          shortLabel: "Saved",    highlight: false },
   { id: "profile",   icon: User,      label: "Profile",        shortLabel: "Profile",  highlight: false },

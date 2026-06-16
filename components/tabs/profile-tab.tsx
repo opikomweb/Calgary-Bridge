@@ -281,7 +281,7 @@ export default function ProfileTab() {
             </Section>
 
             <div className="text-center lg:text-left">
-              <p className="text-xs text-[var(--foreground-muted)]">Calgary Connect v1.0.0</p>
+              <p className="text-xs text-[var(--foreground-muted)]">Calgary Connect</p>
               <p className="text-xs text-[var(--foreground-muted)] mt-0.5">
                 Made with care for Calgary residents
               </p>

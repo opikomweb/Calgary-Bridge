@@ -24,7 +24,7 @@ function SignUpForm() {
 
         <div className="bg-card border border-border rounded-2xl p-6 shadow-xl">
           <h1 className="text-xl font-bold text-foreground mb-1">Create your account</h1>
-          <p className="text-sm text-foreground/60 mb-6">Join iKonnect — everything Calgary, one place.</p>
+          <p className="text-sm text-foreground/60 mb-6">Join Askonnect — everything Calgary, one place.</p>
 
           <form
             onSubmit={async (e) => {

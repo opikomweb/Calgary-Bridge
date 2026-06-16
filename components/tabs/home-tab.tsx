@@ -115,7 +115,7 @@ export default function HomeTab() {
             transition={{ delay: 0.15, duration: 0.6 }}
             className="text-base md:text-lg text-foreground/70 mt-4 md:mt-6 mb-8 md:mb-10 leading-relaxed"
           >
-            Search for housing, jobs, healthcare, or ask iKonnect anything about Calgary.
+            Search for housing, jobs, healthcare, or ask Askonnect anything about Calgary.
           </motion.p>
 
           {/* Search bar */}
@@ -325,7 +325,7 @@ export default function HomeTab() {
                 </motion.div>
                 
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs font-bold text-[#E1251B] uppercase tracking-[0.15em] mb-1.5">iKonnect Guide</p>
+                  <p className="text-xs font-bold text-[#E1251B] uppercase tracking-[0.15em] mb-1.5">Askonnect</p>
                   <h3 className="text-lg md:text-2xl font-bold text-white mb-1 leading-tight">
                     Get personalized guidance
                   </h3>
@@ -348,7 +348,7 @@ export default function HomeTab() {
                 transition={{ delay: 0.6 }}
                 className="text-center"
               >
-                <p className="text-xs font-semibold text-[var(--foreground-muted)] uppercase tracking-[0.15em] mb-3">Specialized Support</p>
+                <p className="text-xs font-semibold text-[#1D4ED8] dark:text-[#38BDF8] uppercase tracking-[0.15em] mb-3">Specialized Support</p>
                 <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">For specific situations.</h2>
               </motion.div>
             </div>
@@ -362,10 +362,10 @@ export default function HomeTab() {
                   transition={{ delay: 0.65 + index * 0.05 }}
                   whileHover={{ y: -4, scale: 1.02 }}
                   onClick={() => setActiveTab("explore")}
-                  className="group p-3 md:p-6 rounded-xl md:rounded-2xl bg-foreground/[0.04] border border-foreground/[0.06] hover:bg-foreground/[0.08] hover:border-foreground/[0.15] transition-all duration-300 flex flex-col items-center text-center"
+                  className="group p-4 md:p-6 rounded-2xl bg-white dark:bg-foreground/[0.06] border border-foreground/[0.10] dark:border-foreground/[0.08] hover:border-[#1D4ED8]/40 dark:hover:border-white/20 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col items-center text-center"
                 >
-                  <h3 className="text-xs sm:text-sm md:text-base font-bold text-foreground mb-1 md:mb-2 leading-tight">{item.label}</h3>
-                  <p className="text-[10px] sm:text-xs md:text-sm text-foreground/60 mb-2 md:mb-3 leading-relaxed">{item.description}</p>
+                  <h3 className="text-xs sm:text-sm md:text-base font-bold text-[#0b2239] dark:text-foreground mb-1 md:mb-2 leading-tight">{item.label}</h3>
+                  <p className="text-[10px] sm:text-xs md:text-sm text-foreground/65 dark:text-foreground/55 mb-3 md:mb-4 leading-relaxed">{item.description}</p>
                   <div className="flex items-center gap-1 text-[#E1251B] text-xs md:text-sm font-bold mt-auto">
                     <span>View</span>
                     <ChevronRight className="w-3 h-3 md:w-3.5 md:h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -376,10 +376,10 @@ export default function HomeTab() {
           </section>
 
           {/* ========== FEATURED RESOURCES ========== */}
-          <section className="px-6 md:px-8 lg:px-12 pt-4 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
+          <section className="px-6 md:px-8 lg:px-12 pt-4 pb-16 md:pb-28 max-w-[1200px] mx-auto relative z-10">
             <div className="pb-8 md:pb-10">
               <div className="text-center">
-                <p className="text-xs font-bold text-[#1D4ED8] dark:text-[#0284c7] uppercase tracking-[0.15em] mb-3">Recommended</p>
+                <p className="text-xs font-bold text-[#1D4ED8] dark:text-[#38BDF8] uppercase tracking-[0.15em] mb-3">Recommended</p>
                 <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">Top resources this month.</h2>
                 <button
                   onClick={() => setActiveTab("explore")}
@@ -409,7 +409,7 @@ export default function HomeTab() {
             <section className="px-6 md:px-8 lg:px-12 pt-4 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
               <div className="pb-8 md:pb-10">
                 <div className="text-center">
-                  <p className="text-xs font-bold text-[#1D4ED8] dark:text-[#0284c7] uppercase tracking-[0.15em] mb-3">Hidden Gems</p>
+                  <p className="text-xs font-bold text-[#1D4ED8] dark:text-[#38BDF8] uppercase tracking-[0.15em] mb-3">Hidden Gems</p>
                   <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">Programs most people miss.</h2>
                   <button
                     onClick={() => setActiveTab("explore")}
@@ -436,11 +436,11 @@ export default function HomeTab() {
           )}
 
           {/* ========== NEAR YOU ========== */}
-          <section className="px-6 md:px-8 lg:px-12 pb-24 md:pb-32 max-w-[1200px] mx-auto relative z-10">
-            <div className="pb-16 md:pb-20 lg:pb-24">
+          <section className="px-6 md:px-8 lg:px-12 pb-52 md:pb-64 max-w-[1200px] mx-auto relative z-10">
+            <div className="pb-8 md:pb-10">
               <div className="flex items-center gap-2 mb-3">
-                <MapPin className="w-4 h-4 text-[#1D4ED8] dark:text-[#0284c7]" />
-                <p className="text-xs font-bold text-[#1D4ED8] dark:text-[#0284c7] uppercase tracking-[0.15em]">Near You</p>
+                <MapPin className="w-4 h-4 text-[#1D4ED8] dark:text-[#38BDF8]" />
+                <p className="text-xs font-bold text-[#1D4ED8] dark:text-[#38BDF8] uppercase tracking-[0.15em]">Near You</p>
               </div>
               <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">Services in your area.</h2>
             </div>

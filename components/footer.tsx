@@ -463,9 +463,14 @@ function ContentModal({
 export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: FooterProps) {
   const currentYear = new Date().getFullYear();
   const [activeModal, setActiveModal] = useState<string | null>(null);
+  const [disclaimerOpen, setDisclaimerOpen] = useState(false);
+  const [openColumns, setOpenColumns] = useState<Record<string, boolean>>({});
 
   const openModal = (key: string) => setActiveModal(key);
   const closeModal = () => setActiveModal(null);
+
+  const toggleColumn = (key: string) =>
+    setOpenColumns((prev) => ({ ...prev, [key]: !prev[key] }));
 
   const legalLinks = [
     { label: "Terms of Service", key: "terms" },
@@ -548,17 +553,50 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
             <div className="max-w-[1200px] mx-auto">
               <div className="grid md:grid-cols-12 gap-8 md:gap-6 items-start">
                 {/* Brand Column — dark surface logo */}
-                <div className="md:col-span-3 flex flex-col items-center md:items-start">
+                <div className="md:col-span-3 flex flex-col items-start">
                   <CalgaryConnectLogo size="md" darkSurface />
-                  <p className="text-xs text-white/30 mt-3 text-center md:text-left">Everything Calgary. One Place.</p>
+                  <p className="text-xs text-white/30 mt-3 text-left">Everything Calgary. One Place.</p>
                 </div>
 
               {/* Link Columns Container */}
-              <div className="md:col-span-9 grid grid-cols-2 sm:grid-cols-3 gap-6 md:gap-6">
+              <div className="md:col-span-9 grid grid-cols-1 sm:grid-cols-3 gap-0 sm:gap-6 md:gap-6">
                 {/* Resources Column */}
-                <div>
-                  <h4 className="text-sm font-bold text-white mb-4 pb-2 border-b border-white/[0.06]">Resources</h4>
-                  <ul className="space-y-2.5">
+                <div className="border-b border-white/[0.06] sm:border-none">
+                  <button
+                    onClick={() => toggleColumn("resources")}
+                    className="w-full flex items-center justify-between py-3 sm:py-0 sm:cursor-default"
+                    aria-expanded={!!openColumns["resources"]}
+                  >
+                    <h4 className="text-sm font-bold text-white sm:mb-4 sm:pb-2 sm:border-b sm:border-white/[0.06] w-full text-left">Resources</h4>
+                    <ChevronUp
+                      className={`w-4 h-4 text-white/40 flex-shrink-0 transition-transform sm:hidden ${openColumns["resources"] ? "rotate-0" : "rotate-180"}`}
+                    />
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {(openColumns["resources"]) && (
+                      <motion.ul
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.22, ease: "easeInOut" }}
+                        className="overflow-hidden sm:!h-auto sm:!opacity-100 space-y-2.5 pb-3 sm:pb-0"
+                      >
+                        {resourceLinks.map((link) => (
+                          <li key={link.label}>
+                            <button
+                              onClick={() => openModal(link.key)}
+                              className="text-sm text-white/50 hover:text-[#E1251B] transition-colors text-left flex items-center gap-1.5 group"
+                            >
+                              <ChevronRight className="w-3 h-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-[#E1251B]" />
+                              {link.label}
+                            </button>
+                          </li>
+                        ))}
+                      </motion.ul>
+                    )}
+                  </AnimatePresence>
+                  {/* Always visible on sm+ */}
+                  <ul className="hidden sm:block space-y-2.5">
                     {resourceLinks.map((link) => (
                       <li key={link.label}>
                         <button
@@ -574,37 +612,91 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
                 </div>
 
                 {/* For Businesses Column */}
-                <div>
-                  <h4 className="text-sm font-bold text-white mb-4 pb-2 border-b border-white/[0.06]">For Businesses</h4>
-                  <ul className="space-y-2.5">
+                <div className="border-b border-white/[0.06] sm:border-none">
+                  <button
+                    onClick={() => toggleColumn("business")}
+                    className="w-full flex items-center justify-between py-3 sm:py-0 sm:cursor-default"
+                    aria-expanded={!!openColumns["business"]}
+                  >
+                    <h4 className="text-sm font-bold text-white sm:mb-4 sm:pb-2 sm:border-b sm:border-white/[0.06] w-full text-left">For Businesses</h4>
+                    <ChevronUp
+                      className={`w-4 h-4 text-white/40 flex-shrink-0 transition-transform sm:hidden ${openColumns["business"] ? "rotate-0" : "rotate-180"}`}
+                    />
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {openColumns["business"] && (
+                      <motion.ul
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.22, ease: "easeInOut" }}
+                        className="overflow-hidden space-y-2.5 pb-3 sm:pb-0"
+                      >
+                        {businessLinks.map((link) => (
+                          <li key={link.label}>
+                            <button
+                              onClick={link.onClick ?? (() => openModal(link.key!))}
+                              className="text-sm text-white/50 hover:text-[#E1251B] transition-colors text-left flex items-center gap-1.5 group"
+                            >
+                              <ChevronRight className="w-3 h-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-[#E1251B]" />
+                              {link.label}
+                            </button>
+                          </li>
+                        ))}
+                      </motion.ul>
+                    )}
+                  </AnimatePresence>
+                  <ul className="hidden sm:block space-y-2.5">
                     {businessLinks.map((link) => (
                       <li key={link.label}>
-                        {link.onClick ? (
                         <button
-                          onClick={() => openModal(link.key!)}
+                          onClick={link.onClick ?? (() => openModal(link.key!))}
                           className="text-sm text-white/50 hover:text-[#E1251B] transition-colors text-left flex items-center gap-1.5 group"
                         >
                           <ChevronRight className="w-3 h-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-[#E1251B]" />
-                            {link.label}
-                          </button>
-                        ) : (
-                          <button
-                            onClick={() => openModal(link.key!)}
-                            className="text-sm text-white/50 hover:text-[#E1251B] transition-colors text-left flex items-center gap-1.5 group"
-                          >
-                            <ChevronRight className="w-3 h-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-[#E1251B]" />
-                            {link.label}
-                          </button>
-                        )}
+                          {link.label}
+                        </button>
                       </li>
                     ))}
                   </ul>
                 </div>
 
                 {/* Community Column */}
-                <div className="col-span-2 sm:col-span-1">
-                  <h4 className="text-sm font-bold text-white mb-4 pb-2 border-b border-white/[0.06]">Community</h4>
-                  <ul className="space-y-2.5">
+                <div className="border-b border-white/[0.06] sm:border-none">
+                  <button
+                    onClick={() => toggleColumn("community")}
+                    className="w-full flex items-center justify-between py-3 sm:py-0 sm:cursor-default"
+                    aria-expanded={!!openColumns["community"]}
+                  >
+                    <h4 className="text-sm font-bold text-white sm:mb-4 sm:pb-2 sm:border-b sm:border-white/[0.06] w-full text-left">Community</h4>
+                    <ChevronUp
+                      className={`w-4 h-4 text-white/40 flex-shrink-0 transition-transform sm:hidden ${openColumns["community"] ? "rotate-0" : "rotate-180"}`}
+                    />
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {openColumns["community"] && (
+                      <motion.ul
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.22, ease: "easeInOut" }}
+                        className="overflow-hidden space-y-2.5 pb-3 sm:pb-0"
+                      >
+                        {communityLinks.map((link) => (
+                          <li key={link.label}>
+                            <button
+                              onClick={() => openModal(link.key)}
+                              className="text-sm text-white/50 hover:text-[#E1251B] transition-colors text-left flex items-center gap-1.5 group"
+                            >
+                              <ChevronRight className="w-3 h-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-[#E1251B]" />
+                              {link.label}
+                            </button>
+                          </li>
+                        ))}
+                      </motion.ul>
+                    )}
+                  </AnimatePresence>
+                  <ul className="hidden sm:block space-y-2.5">
                     {communityLinks.map((link) => (
                       <li key={link.label}>
                         <button
@@ -623,20 +715,50 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
           </div>
         </div>
 
-        {/* Disclaimer Section */}
-        <div className="relative border-t border-white/[0.04] py-8 md:py-10 px-5 md:px-8">
+        {/* Disclaimer Section — accordion on mobile, always open on md+ */}
+        <div className="relative border-t border-white/[0.04] py-6 md:py-10 px-5 md:px-8">
           <div className="max-w-[1200px] mx-auto">
-            <div className="flex items-start gap-3 md:gap-4 p-5 md:p-6 rounded-xl md:rounded-2xl bg-gradient-to-r from-[#E1251B]/[0.08] via-[#E1251B]/[0.04] to-transparent border border-[#E1251B]/15">
-              <div className="w-10 h-10 rounded-lg bg-[#E1251B]/15 flex items-center justify-center flex-shrink-0">
-                <AlertCircle className="w-5 h-5 text-[#E1251B]" />
+            <button
+              onClick={() => setDisclaimerOpen((o) => !o)}
+              className="w-full md:cursor-default"
+              aria-expanded={disclaimerOpen}
+            >
+              <div className="flex items-center gap-3 md:gap-4 p-4 md:p-6 rounded-xl md:rounded-2xl bg-gradient-to-r from-[#E1251B]/[0.08] via-[#E1251B]/[0.04] to-transparent border border-[#E1251B]/15">
+                <div className="w-10 h-10 rounded-lg bg-[#E1251B]/15 flex items-center justify-center flex-shrink-0">
+                  <AlertCircle className="w-5 h-5 text-[#E1251B]" />
+                </div>
+                <div className="flex-1 min-w-0 text-left">
+                  <div className="flex items-center justify-between gap-3">
+                    <strong className="text-[#E1251B] text-sm font-bold">Important Disclaimer</strong>
+                    <ChevronUp
+                      className={`w-4 h-4 text-[#E1251B]/70 flex-shrink-0 transition-transform md:hidden ${disclaimerOpen ? "rotate-0" : "rotate-180"}`}
+                    />
+                  </div>
+                  {/* Body — visible always on md+, toggles on mobile */}
+                  <AnimatePresence initial={false}>
+                    {disclaimerOpen && (
+                      <motion.p
+                        initial={{ height: 0, opacity: 0, marginTop: 0 }}
+                        animate={{ height: "auto", opacity: 1, marginTop: 4 }}
+                        exit={{ height: 0, opacity: 0, marginTop: 0 }}
+                        transition={{ duration: 0.22, ease: "easeInOut" }}
+                        className="overflow-hidden text-sm text-white/60 leading-relaxed md:hidden"
+                      >
+                        Calgary Konnect is an independent platform and is not affiliated with, endorsed by, or connected to the City of Calgary,
+                        the Government of Alberta, or any official government body. Information provided is for general reference only.
+                        Always verify details directly with service providers. For emergencies, call 911.
+                      </motion.p>
+                    )}
+                  </AnimatePresence>
+                  {/* Always visible on md+ */}
+                  <p className="hidden md:block mt-1 text-sm text-white/60 leading-relaxed">
+                    Calgary Konnect is an independent platform and is not affiliated with, endorsed by, or connected to the City of Calgary,
+                    the Government of Alberta, or any official government body. Information provided is for general reference only.
+                    Always verify details directly with service providers. For emergencies, call 911.
+                  </p>
+                </div>
               </div>
-              <div className="text-sm text-white/60 leading-relaxed min-w-0">
-                <strong className="text-[#E1251B] block mb-1">Important Disclaimer</strong>
-                Calgary Konnect is an independent platform and is not affiliated with, endorsed by, or connected to the City of Calgary, 
-                the Government of Alberta, or any official government body. Information provided is for general reference only. 
-                Always verify details directly with service providers. For emergencies, call 911.
-              </div>
-            </div>
+            </button>
           </div>
         </div>
 

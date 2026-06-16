@@ -28,7 +28,7 @@ function LoginForm() {
 
         <div className="bg-card border border-border rounded-2xl p-6 shadow-xl">
           <h1 className="text-xl font-bold text-foreground mb-1">Welcome back</h1>
-          <p className="text-sm text-foreground/60 mb-6">Sign in to your iKonnect account</p>
+          <p className="text-sm text-foreground/60 mb-6">Sign in to your Askonnect account</p>
 
           <form
             onSubmit={async (e) => {

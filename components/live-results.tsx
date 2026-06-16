@@ -157,7 +157,7 @@ function LivePlaceCard({ place, index }: { place: LivePlace; index: number }) {
       <div className="flex items-start justify-between gap-3">
         <h4 className="font-semibold text-foreground leading-snug text-balance">{place.name}</h4>
         {typeof place.rating === "number" && (
-          <span className="flex-shrink-0 inline-flex items-center gap-1 px-2 py-1 rounded-full bg-foreground/[0.08] text-foreground/80 text-xs font-semibold">
+          <span className="flex-shrink-0 inline-flex items-center gap-1 px-2 py-1 rounded-full bg-foreground/[0.10] text-foreground text-xs font-semibold">
             <Star className="h-3 w-3 fill-current text-[#38BDF8]" />
             {place.rating.toFixed(1)}
           </span>
@@ -165,12 +165,12 @@ function LivePlaceCard({ place, index }: { place: LivePlace; index: number }) {
       </div>
 
       {(place.reviews || place.openNow !== undefined) && (
-        <div className="mt-1.5 flex items-center gap-2 text-xs text-foreground/45">
+        <div className="mt-1.5 flex items-center gap-2 text-xs text-foreground/65">
           {place.reviews ? <span>{place.reviews} Google reviews</span> : null}
           {place.openNow !== undefined && (
             <>
-              {place.reviews ? <span className="text-foreground/20">&middot;</span> : null}
-              <span className={place.openNow ? "text-[#38BDF8] font-medium" : "text-foreground/45"}>
+              {place.reviews ? <span className="text-foreground/30">&middot;</span> : null}
+              <span className={place.openNow ? "text-[#22C55E] font-semibold" : "text-foreground/55"}>
                 {place.openNow ? "Open now" : "Closed now"}
               </span>
             </>
@@ -179,8 +179,8 @@ function LivePlaceCard({ place, index }: { place: LivePlace; index: number }) {
       )}
 
       {place.address && (
-        <p className="mt-3 flex items-start gap-2 text-sm text-foreground/55 leading-relaxed">
-          <MapPin className="h-4 w-4 flex-shrink-0 mt-0.5 text-foreground/35" />
+        <p className="mt-3 flex items-start gap-2 text-sm text-foreground/80 leading-relaxed">
+          <MapPin className="h-4 w-4 flex-shrink-0 mt-0.5 text-foreground/50" />
           <span>{place.address}</span>
         </p>
       )}

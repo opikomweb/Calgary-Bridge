@@ -5,21 +5,14 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAppStore } from "@/lib/store";
 import { resources, categoryLabels } from "@/lib/data";
-import { 
-  Send, User, ArrowRight, Phone, ExternalLink, 
-  Home, CloudSnow, Calendar, TrendingUp, PanelRightClose, PanelRightOpen, Search, MapPin
+import {
+  Send, User, ArrowRight, Phone, ExternalLink,
+  TrendingUp, PanelRightClose, PanelRightOpen, Search, MapPin,
 } from "lucide-react";
 import type { Resource } from "@/lib/types";
+import { CalgaryPulsePanel } from "@/components/calgary-pulse-panel";
 
-// Light, optional example prompts. These do NOT pre-fill the conversation —
-// they simply give first-time users an idea of what they can type.
-const examplePrompts = [
-  "How do I find affordable housing?",
-  "I'm new to Calgary — where do I start?",
-  "I'm visiting — what should I see?",
-  "Help me find a job or training",
-];
-
+// Popular chat questions shown below the pulse panel
 const popularQuestions = [
   "How do I apply for rental assistance?",
   "Where can I get free tax help?",
@@ -27,42 +20,34 @@ const popularQuestions = [
   "How do I find ESL classes near me?",
 ];
 
-  const calgaryInsights = [
-  { icon: TrendingUp, label: "340+ jobs posted this week", chip: "bg-[#1D4ED8]/15 text-[#1D4ED8] dark:text-[#60A5FA] ring-1 ring-[#1D4ED8]/30" },
-  { icon: Home, label: "12 housing programs available", chip: "bg-[#1D4ED8]/15 text-[#1D4ED8] dark:text-[#60A5FA] ring-1 ring-[#1D4ED8]/30" },
-  { icon: Calendar, label: "Free tax clinics open now", chip: "bg-[#E12521]/12 text-[#E1251B] ring-1 ring-[#E12521]/30" },
+// Example prompts shown on the empty chat state
+const examplePrompts = [
+  "How do I find affordable housing?",
+  "I'm new to Calgary — where do I start?",
+  "I'm visiting — what should I see?",
+  "Help me find a job or training",
 ];
 
 export default function AITab() {
   const { activeLanguage, chatMessages, addChatMessage } = useAppStore();
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
-  // Calgary Pulse side panel can be collapsed to give the chat more room.
   const [pulseOpen, setPulseOpen] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Scroll ONLY the inner messages container (not the page/window). Using
-  // scrollIntoView here would bubble up to the window and the sticky header,
-  // jumping the whole page and hiding messages under the header. Setting
-  // scrollTop on the container keeps the scroll contained to the chat pane.
   const scrollToBottom = (behavior: ScrollBehavior = "smooth") => {
     const el = messagesContainerRef.current;
     if (!el) return;
     el.scrollTo({ top: el.scrollHeight, behavior });
   };
 
-  // Re-scroll whenever messages change or the typing indicator toggles so the
-  // newest answer (and the typing dots) are always brought into view.
   useEffect(() => {
-    // rAF ensures the new DOM (message/typing bubble) is laid out first.
     const id = requestAnimationFrame(() => scrollToBottom());
     return () => cancelAnimationFrame(id);
   }, [chatMessages, isTyping]);
 
-  // Auto-focus the query bar so the user can start typing immediately —
-  // keeps the focus on what they want to ask.
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
@@ -198,8 +183,8 @@ export default function AITab() {
                     className="mx-auto mb-6 flex h-20 w-20 md:h-24 md:w-24 items-center justify-center"
                   >
                     <Image
-                      src="/ikonnect-guide-avatar.png"
-                      alt="iKonnect Guide"
+                      src="/askonnect-avatar.png"
+                      alt="Askonnect"
                       width={96}
                       height={96}
                       className="h-full w-full object-contain"
@@ -213,7 +198,7 @@ export default function AITab() {
                     transition={{ delay: 0.2 }}
                     className="text-2xl md:text-3xl lg:text-4xl font-bold mb-8 md:mb-10 tracking-tight text-balance max-w-md mx-auto"
                   >
-                    How can we help you thrive in Calgary today?
+                    What do you need in Calgary?
                   </motion.h1>
 
                   {/* Simple example prompts (optional starting points) */}
@@ -267,8 +252,8 @@ export default function AITab() {
                             <User className="h-5 w-5 text-white" />
                           ) : (
                             <Image
-                              src="/ikonnect-guide-avatar.png"
-                              alt="iKonnect Guide"
+                              src="/askonnect-avatar.png"
+                              alt="Askonnect"
                               width={44}
                               height={44}
                               className="h-full w-full object-contain"
@@ -344,8 +329,8 @@ export default function AITab() {
                     >
                       <div className="flex h-10 w-10 md:h-11 md:w-11 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl md:rounded-2xl">
                         <Image
-                          src="/ikonnect-guide-avatar.png"
-                          alt="iKonnect Guide"
+                          src="/askonnect-avatar.png"
+                          alt="Askonnect"
                           width={44}
                           height={44}
                           className="h-full w-full object-contain"
@@ -376,7 +361,7 @@ export default function AITab() {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSend(input)}
-                  placeholder="Ask iKonnect anything..."
+                  placeholder="Ask Askonnect anything..."
                   className="flex-1 bg-transparent px-3 md:px-4 py-2.5 md:py-3 text-foreground placeholder:text-foreground/50 focus:outline-none text-sm md:text-base min-w-0"
                 />
                 <motion.button
@@ -418,54 +403,15 @@ export default function AITab() {
               </div>
             </div>
 
-            {/* Weather/Alert Card — deep dark-blue Calgary winter-sky treatment
-                with matching light text for strong contrast and readability. */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="relative overflow-hidden rounded-2xl p-5 xl:p-6 mb-6 bg-gradient-to-br from-[#0A2540] via-[#0E2E52] to-[#15396b] border border-white/10 shadow-lg shadow-[#0A2540]/30"
-            >
-              {/* Soft cloud / snow glow accents */}
-              <div className="pointer-events-none absolute -top-10 -right-8 h-32 w-32 rounded-full bg-[#3B82F6]/20 blur-3xl" />
-              <div className="pointer-events-none absolute -bottom-12 -left-6 h-28 w-28 rounded-full bg-[#60A5FA]/15 blur-3xl" />
-
-              <div className="relative flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 xl:w-14 xl:h-14 flex-shrink-0 rounded-2xl bg-white/10 ring-1 ring-white/15 flex items-center justify-center">
-                  <CloudSnow className="w-6 h-6 xl:w-7 xl:h-7 text-[#BFDBFE]" />
-                </div>
-                <div className="min-w-0">
-                  <p className="font-bold text-lg xl:text-xl leading-tight text-white">Winter Weather</p>
-                  <p className="text-sm xl:text-base text-blue-100/70 mt-0.5 leading-relaxed">-8°C, light snow expected</p>
-                </div>
-              </div>
-              <p className="relative text-sm xl:text-base text-blue-50/85 leading-relaxed">
-                Dress warmly! Free warming centers available at downtown shelters.
-              </p>
-            </motion.div>
-
-            {/* Live Stats */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="space-y-3 mb-8"
-            >
-              {calgaryInsights.map((insight, i) => (
-                <div key={i} className="flex items-center gap-3.5 p-4 rounded-2xl bg-foreground/[0.04] border border-foreground/[0.08]">
-                  <div className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl ${insight.chip}`}>
-                    <insight.icon className="w-5 h-5" />
-                  </div>
-                  <span className="text-sm xl:text-base font-semibold leading-snug text-foreground/90">{insight.label}</span>
-                </div>
-              ))}
-            </motion.div>
+            {/* Live Calgary Pulse — weather, AQHI, weather alerts */}
+            <CalgaryPulsePanel />
 
             {/* Popular Questions */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
+              className="mt-8"
             >
               <h3 className="text-lg xl:text-xl font-bold mb-5 flex items-center gap-3">
                 <TrendingUp className="w-5 h-5 xl:w-6 xl:h-6 text-[#1D4ED8]" />
