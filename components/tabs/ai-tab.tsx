@@ -161,10 +161,9 @@ export default function AITab() {
       </div>
 
       {/* Split Layout - Chat Left, Intelligence Right.
-          Mobile reserves space for the sticky header (~88px) AND the fixed
-          bottom nav (~72px) so the docked input + last message never hide
-          behind the nav bar. */}
-      <div className="flex h-[calc(100dvh-192px)] sm:h-[calc(100dvh-204px)] lg:h-[calc(100vh-100px)]">
+          Mobile: use dvh minus the sticky header (~56px) and fixed bottom nav (~64px).
+          The extra subtraction removes the blank dead-zone that appeared on mobile. */}
+      <div className="flex h-[calc(100dvh-120px)] sm:h-[calc(100dvh-130px)] lg:h-[calc(100vh-80px)]">
         {/* Left Side - AI Conversation. Expands to full width when the
             Calgary Pulse panel is collapsed. */}
         <div className={`relative flex-1 flex flex-col min-w-0 ${pulseOpen ? "lg:max-w-[65%]" : "lg:max-w-full"}`}>

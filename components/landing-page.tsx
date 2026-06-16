@@ -7,7 +7,7 @@ import {
   GraduationCap, Bus, Scale, HandHeart, Accessibility, Utensils, Brain, MapPin,
 } from "lucide-react";
 import Image from "next/image";
-import { RotatingLogo } from "@/components/rotating-logo";
+import { CalgaryConnectLogo } from "@/components/calgary-connect-logo";
 import { useAppStore } from "@/lib/store";
 import { useRef, useState, useEffect } from "react";
 import Footer from "@/components/footer";
@@ -169,9 +169,7 @@ export default function LandingPage() {
               aria-label="Calgary Connect — go to home"
               className="flex items-center transition-transform duration-300 hover:scale-105 active:scale-95"
             >
-              <div className="relative h-16 w-20 md:h-[88px] md:w-28 flex-shrink-0 drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)]">
-                <RotatingLogo imgPadding="p-0" variant="dark" priority />
-              </div>
+              <CalgaryConnectLogo size="lg" darkSurface />
             </button>
 
             {/* Desktop nav — professional grouped dropdowns */}

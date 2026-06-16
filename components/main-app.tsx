@@ -3,9 +3,10 @@
 import React from "react";
 import { useAppStore } from "@/lib/store";
 import { translations } from "@/lib/data";
-import { Home, Compass, MessageSquare, Heart, User, AlertTriangle, Shield, Menu, X, HandHeart } from "lucide-react";
+import Image from "next/image";
+import { Home, Compass, Heart, User, AlertTriangle, Shield, Menu, X, HandHeart } from "lucide-react";
 import { ThemeToggle } from "./theme-toggle";
-import { RotatingLogo } from "./rotating-logo";
+import { CalgaryConnectLogo } from "./calgary-connect-logo";
 import { motion, AnimatePresence } from "framer-motion";
 import HomeTab from "./tabs/home-tab";
 import ExploreTab from "./tabs/explore-tab";
@@ -45,7 +46,7 @@ export default function MainApp() {
   const navItems = [
     { id: "home" as const, icon: Home, label: "Home", shortLabel: "Home", highlight: false },
     { id: "explore" as const, icon: Compass, label: "Explore", shortLabel: "Explore", highlight: false },
-    { id: "ai" as const, icon: MessageSquare, label: "iKonnect Guide", shortLabel: "Guide", highlight: true },
+    { id: "ai" as const, icon: null, label: "iKonnect Guide", shortLabel: "iKonnect", highlight: true },
     { id: "do-good" as const, icon: HandHeart, label: "Do Good", shortLabel: "Do Good", highlight: false },
     { id: "shortlist" as const, icon: Heart, label: "Saved", shortLabel: "Saved", highlight: false },
     { id: "profile" as const, icon: User, label: "Profile", shortLabel: "Profile", highlight: false },
@@ -59,20 +60,14 @@ export default function MainApp() {
       {/* Desktop Sidebar */}
       <aside className="hidden lg:flex lg:w-[340px] lg:flex-col lg:fixed lg:inset-y-0 lg:z-50">
         <div className="flex grow flex-col overflow-y-auto border-r border-foreground/[0.08] bg-background/95 backdrop-blur-3xl shadow-sm">
-          {/* Logo Section - compact horizontal lockup */}
+          {/* Logo Section */}
           <div className="px-5 pt-5 pb-4 border-b border-foreground/[0.06]">
             <button
               onClick={goToLanding}
               aria-label="Go to Calgary Connect home page"
-              className="group flex items-center gap-3 w-full transition-opacity hover:opacity-80 active:opacity-60 cursor-pointer"
+              className="group w-full transition-opacity hover:opacity-80 active:opacity-60 cursor-pointer"
             >
-              <div className="relative h-12 w-12 flex-shrink-0">
-                <RotatingLogo imgPadding="p-0" priority />
-              </div>
-              <div className="text-left leading-none">
-                <span className="block text-lg font-bold text-[#0b2239] dark:text-white tracking-tight">Calgary</span>
-                <span className="block text-lg font-bold text-[#E1251B] tracking-tight -mt-0.5">Connect</span>
-              </div>
+              <CalgaryConnectLogo size="md" />
             </button>
           </div>
 
@@ -91,7 +86,17 @@ export default function MainApp() {
                         : "text-foreground/70 hover:bg-foreground/[0.06] hover:text-foreground"
                     }`}
                   >
-                    <item.icon className="h-5 w-5 shrink-0" strokeWidth={activeTab === item.id ? 2.3 : 2} />
+                    {item.icon ? (
+                      <item.icon className="h-5 w-5 shrink-0" strokeWidth={activeTab === item.id ? 2.3 : 2} />
+                    ) : (
+                      <Image
+                        src="/ikonnect-guide-avatar.png"
+                        alt=""
+                        width={20}
+                        height={20}
+                        className="h-5 w-5 shrink-0 object-contain"
+                      />
+                    )}
                     <span className="truncate">{item.label}</span>
                   </button>
                 </li>
@@ -131,15 +136,9 @@ export default function MainApp() {
           <button
             onClick={goToLanding}
             aria-label="Go to Calgary Connect home page"
-            className="flex items-center gap-2.5 transition-opacity hover:opacity-80 active:opacity-60"
+            className="flex items-center transition-opacity hover:opacity-80 active:opacity-60"
           >
-            <div className="relative h-9 w-9 flex-shrink-0">
-              <RotatingLogo imgPadding="p-0" priority />
-            </div>
-            <div className="text-left leading-none">
-              <span className="block text-sm font-bold text-[#0b2239] dark:text-white tracking-tight">Calgary</span>
-              <span className="block text-sm font-bold text-[#E1251B] tracking-tight -mt-px">Connect</span>
-            </div>
+            <CalgaryConnectLogo size="sm" />
           </button>
 
           <button
@@ -191,7 +190,17 @@ export default function MainApp() {
                         : "text-foreground/70 hover:bg-foreground/[0.06] hover:text-foreground"
                     }`}
                   >
-                    <item.icon className="h-5 w-5 shrink-0" strokeWidth={activeTab === item.id ? 2.3 : 2} />
+                    {item.icon ? (
+                      <item.icon className="h-5 w-5 shrink-0" strokeWidth={activeTab === item.id ? 2.3 : 2} />
+                    ) : (
+                      <Image
+                        src="/ikonnect-guide-avatar.png"
+                        alt=""
+                        width={20}
+                        height={20}
+                        className="h-5 w-5 shrink-0 object-contain"
+                      />
+                    )}
                     <span className="truncate">{item.label}</span>
                   </button>
                 ))}
@@ -284,16 +293,40 @@ export default function MainApp() {
               >
                 {active && item.highlight ? (
                   <div className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-[#E1251B] text-white shadow-md shadow-red-700/30">
-                    <item.icon className="h-5 w-5 shrink-0" strokeWidth={2.3} />
+                    <Image
+                      src="/ikonnect-guide-avatar.png"
+                      alt=""
+                      width={20}
+                      height={20}
+                      className="h-5 w-5 object-contain shrink-0"
+                    />
                     <span className="text-[12px] font-bold tracking-tight">{item.shortLabel}</span>
                   </div>
                 ) : active ? (
                   <>
-                    <item.icon className="h-5 w-5 shrink-0" strokeWidth={2.3} />
+                    {item.icon ? (
+                      <item.icon className="h-5 w-5 shrink-0" strokeWidth={2.3} />
+                    ) : (
+                      <Image
+                        src="/ikonnect-guide-avatar.png"
+                        alt=""
+                        width={20}
+                        height={20}
+                        className="h-5 w-5 object-contain shrink-0"
+                      />
+                    )}
                     <span className="text-[10px] font-bold tracking-tight">{item.shortLabel}</span>
                   </>
-                ) : (
+                ) : item.icon ? (
                   <item.icon className="h-5 w-5 shrink-0" strokeWidth={2} />
+                ) : (
+                  <Image
+                    src="/ikonnect-guide-avatar.png"
+                    alt=""
+                    width={20}
+                    height={20}
+                    className="h-5 w-5 object-contain shrink-0 opacity-45"
+                  />
                 )}
               </button>
             );
