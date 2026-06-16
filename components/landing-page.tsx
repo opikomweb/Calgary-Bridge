@@ -119,44 +119,65 @@ export default function LandingPage() {
   ];
 
   // Immersive pathways — solutions first, not organizations
-  const pathways = [
+  const pathways: {
+    id: ResourceCategory;
+    solution: string;
+    sub: string;
+    preview: string[];
+    gradient: string;
+    glassColor: string;
+    accent: string;
+    accentText: string;
+  }[] = [
     {
       id: "housing",
       solution: "Find Housing & Rent Support",
+      sub: "Affordable rentals, subsidies & tenant rights",
       preview: ["Affordable rentals", "Subsidized programs", "Tenant help"],
-      image: "linear-gradient(135deg, #0c4a6e 0%, #0369a1 50%, #075985 100%)",
+      gradient: "linear-gradient(135deg, rgba(14,68,120,0.75) 0%, rgba(12,90,160,0.65) 50%, rgba(14,68,120,0.75) 100%)",
+      glassColor: "rgba(56,189,248,0.07)",
       accent: "#38BDF8",
+      accentText: "#bae6fd",
     },
     {
       id: "jobs",
       solution: "Looking for Work?",
+      sub: "Resume help, hiring companies & job fairs",
       preview: ["Resume help", "Hiring companies", "Job fairs"],
-      image: "linear-gradient(135deg, #0a2540 0%, #0e3a63 50%, #0a2540 100%)",
-      accent: "#38BDF8",
+      gradient: "linear-gradient(135deg, rgba(10,40,80,0.75) 0%, rgba(15,58,112,0.65) 50%, rgba(10,40,80,0.75) 100%)",
+      glassColor: "rgba(99,179,237,0.07)",
+      accent: "#60A5FA",
+      accentText: "#bfdbfe",
     },
     {
-      id: "health",
+      id: "healthcare",
       solution: "Get Healthcare Access",
+      sub: "Walk-in clinics, family doctors & mental health",
       preview: ["Walk-in clinics", "Family doctors", "Mental health"],
-      image: "linear-gradient(135deg, #3a0a0a 0%, #6b1410 50%, #3a0a0a 100%)",
+      gradient: "linear-gradient(135deg, rgba(16,42,86,0.75) 0%, rgba(20,56,110,0.65) 50%, rgba(16,42,86,0.75) 100%)",
+      glassColor: "rgba(225,37,27,0.10)",
       accent: "#E1251B",
+      accentText: "#fca5a5",
     },
     {
       id: "newcomer",
       solution: "New to Calgary?",
+      sub: "Settlement services, language classes & community",
       preview: ["Settlement services", "Language classes", "Community connections"],
-      image: "linear-gradient(135deg, #071a2e 0%, #0c2d4d 50%, #071a2e 100%)",
+      gradient: "linear-gradient(135deg, rgba(10,36,72,0.75) 0%, rgba(14,52,104,0.65) 50%, rgba(10,36,72,0.75) 100%)",
+      glassColor: "rgba(56,189,248,0.07)",
       accent: "#38BDF8",
+      accentText: "#bae6fd",
     },
   ];
 
   return (
-    <div className="dark min-h-screen bg-[#07111F] text-white overflow-x-hidden">
+    <div className="dark min-h-screen bg-[#061528] text-white overflow-x-hidden" style={{ background: "linear-gradient(160deg, #0d2044 0%, #071630 40%, #050e20 100%)" }}>
       {/* ========== GLASSY STICKY HEADER ========== */}
       <header
         className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "bg-[#07111F]/70 backdrop-blur-2xl border-b border-white/[0.08] shadow-lg shadow-black/20"
+            ? "bg-[#0d2044]/80 backdrop-blur-2xl border-b border-white/[0.08] shadow-lg shadow-black/20"
             : "bg-transparent border-b border-transparent"
         }`}
       >
@@ -276,7 +297,7 @@ export default function LandingPage() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className="md:hidden bg-[#07111F]/97 backdrop-blur-2xl border-t border-white/[0.06] overflow-hidden"
+              className="md:hidden bg-[#0d2044]/97 backdrop-blur-2xl border-t border-white/[0.06] overflow-hidden"
             >
               <nav className="flex flex-col gap-1 px-4 py-4 max-h-[70vh] overflow-y-auto">
                 {menuGroups.map((group) => (
@@ -359,7 +380,7 @@ export default function LandingPage() {
         {/* Authentic Calgary daytime skyline background */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           {/* Base sky gradient (matches the photo's blue sky) */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#1b3a5c] via-[#0f2742] to-[#07111F]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#1e4a80] via-[#0f2e5c] to-[#061020]" />
 
           {/* Real bright daytime Calgary skyline photo */}
           <Image
@@ -371,10 +392,10 @@ export default function LandingPage() {
           />
 
           {/* Readability scrims — keep the photo bright while text stays legible */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#07111F]/35 via-[#07111F]/30 to-[#07111F]/75" />
-          <div className="absolute inset-0 bg-[#07111F]/25" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#061020]/35 via-[#061020]/30 to-[#061020]/75" />
+          <div className="absolute inset-0 bg-[#061020]/25" />
           {/* Fade base into the dark page below */}
-          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-[#07111F]" />
+          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-[#061020]" />
         </div>
 
         {/* Hero content */}
@@ -507,64 +528,96 @@ export default function LandingPage() {
 
       {/* ========== IMMERSIVE PATHWAYS — Solutions First ========== */}
       <section className="relative py-14 md:py-20 lg:py-24">
-        <div className="max-w-[1400px] mx-auto px-5 md:px-8">
+        {/* Subtle blue ambient glow behind the cards */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-[#1D4ED8]/10 blur-[120px] rounded-full" />
+        </div>
+
+        <div className="max-w-[1100px] mx-auto px-5 md:px-8 relative z-10">
           {/* Section header */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            className="text-center mb-12 md:mb-20"
+            className="text-center mb-12 md:mb-16"
           >
-            <h2 className="text-[clamp(28px,5vw,48px)] font-bold tracking-tight mb-4 md:mb-6 text-balance">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#38BDF8]/70 mb-4">Find Your Path</p>
+            <h2 className="text-[clamp(28px,5vw,48px)] font-bold tracking-tight mb-4 text-balance">
               What do you need?
             </h2>
-            <p className="text-base md:text-xl text-white/60 max-w-2xl mx-auto text-pretty">
-              Start with your situation. We&apos;ll show you the path forward.
+            <p className="text-base md:text-lg text-white/50 max-w-lg mx-auto text-pretty">
+              Start with your situation. We&apos;ll take you straight there.
             </p>
           </motion.div>
 
-          {/* Pathway cards */}
-          <div className="space-y-5 md:space-y-8">
+          {/* Pathway cards — 2-col on md+, 1-col on mobile */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
             {pathways.map((pathway, index) => (
               <motion.button
                 key={pathway.id}
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 32 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ delay: index * 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                whileHover={{ scale: 1.01, y: -4 }}
-                whileTap={{ scale: 0.99 }}
-                onClick={handleExplore}
-                className="group w-full relative overflow-hidden rounded-2xl md:rounded-3xl text-left"
-                style={{ minHeight: "150px" }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ delay: index * 0.08, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ y: -5, scale: 1.015 }}
+                whileTap={{ scale: 0.985 }}
+                onClick={() => openCategory(pathway.id)}
+                className="group w-full relative overflow-hidden rounded-2xl text-left"
+                style={{ minHeight: "148px" }}
               >
+                {/* Glass layer base */}
                 <div
-                  className="absolute inset-0 transition-all duration-500 group-hover:scale-105"
-                  style={{ background: pathway.image }}
+                  className="absolute inset-0"
+                  style={{ background: pathway.gradient }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
+                {/* Inner glass shimmer */}
+                <div
+                  className="absolute inset-0 backdrop-blur-sm"
+                  style={{ background: pathway.glassColor }}
+                />
+                {/* Top-left light refraction */}
+                <div className="absolute -top-10 -left-10 w-36 h-36 rounded-full blur-3xl opacity-20"
+                  style={{ background: pathway.accent }} />
+                {/* Bottom-right depth */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/[0.04] via-transparent to-black/20" />
+                {/* Subtle top border highlight */}
+                <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
-                <div className="relative z-10 p-7 md:p-10 flex flex-col md:flex-row md:items-center justify-between h-full gap-6">
-                  <div className="space-y-4 md:space-y-5">
-                    <h3 className="text-2xl md:text-4xl font-bold text-white leading-[1.15] text-balance">
-                      {pathway.solution}
-                    </h3>
-                    <div className="flex flex-wrap gap-2 md:gap-2.5">
-                      {pathway.preview.map((item) => (
-                        <span
-                          key={item}
-                          className="px-3 md:px-4 py-1.5 md:py-2 rounded-full text-xs md:text-sm font-medium leading-none"
-                          style={{ backgroundColor: `${pathway.accent}20`, color: pathway.accent }}
-                        >
-                          {item}
-                        </span>
-                      ))}
+                <div className="relative z-10 p-6 md:p-7 flex flex-col h-full gap-4">
+                  {/* Title row */}
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <h3 className="text-lg md:text-xl font-bold text-white leading-snug text-balance">
+                        {pathway.solution}
+                      </h3>
+                      <p className="text-xs md:text-sm mt-1 leading-relaxed" style={{ color: `${pathway.accentText}99` }}>
+                        {pathway.sub}
+                      </p>
+                    </div>
+                    {/* Arrow pill */}
+                    <div
+                      className="flex-shrink-0 flex items-center justify-center w-9 h-9 rounded-full transition-transform duration-300 group-hover:translate-x-1 group-hover:scale-110"
+                      style={{ background: `${pathway.accent}22`, border: `1px solid ${pathway.accent}40` }}
+                    >
+                      <ArrowRight className="w-4 h-4" style={{ color: pathway.accent }} />
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 text-white/80 group-hover:text-white transition-colors flex-shrink-0">
-                    <span className="text-base md:text-lg font-medium">Explore</span>
-                    <ArrowRight className="w-5 h-5 md:w-6 md:h-6 group-hover:translate-x-2 transition-transform" />
+                  {/* Tag pills */}
+                  <div className="flex flex-wrap gap-1.5 mt-auto">
+                    {pathway.preview.map((item) => (
+                      <span
+                        key={item}
+                        className="px-2.5 py-1 rounded-full text-[11px] font-semibold leading-none border"
+                        style={{
+                          backgroundColor: `${pathway.accent}15`,
+                          color: pathway.accentText,
+                          borderColor: `${pathway.accent}25`,
+                        }}
+                      >
+                        {item}
+                      </span>
+                    ))}
                   </div>
                 </div>
               </motion.button>
@@ -625,7 +678,7 @@ export default function LandingPage() {
               <div className="glass rounded-3xl p-6 md:p-8 border border-white/10">
                 <div className="space-y-5 md:space-y-6 mb-6 md:mb-8">
                   <div className="flex justify-end">
-                    <div className="bg-[#38BDF8] text-[#07111F] px-5 py-3 rounded-2xl rounded-br-md max-w-[280px] text-sm md:text-[15px] font-medium">
+                    <div className="bg-[#38BDF8] text-[#061020] px-5 py-3 rounded-2xl rounded-br-md max-w-[280px] text-sm md:text-[15px] font-medium">
                       Can my landlord raise rent mid-lease?
                     </div>
                   </div>
@@ -664,7 +717,7 @@ export default function LandingPage() {
                     aria-label="Send"
                     className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-lg bg-[#38BDF8] flex items-center justify-center"
                   >
-                    <ArrowRight className="w-5 h-5 text-[#07111F]" />
+                    <ArrowRight className="w-5 h-5 text-[#061020]" />
                   </button>
                 </div>
               </div>
