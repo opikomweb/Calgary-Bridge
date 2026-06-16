@@ -7,7 +7,7 @@ import { useAppStore } from "@/lib/store";
 import { resources, categoryLabels } from "@/lib/data";
 import { 
   Send, User, ArrowRight, Phone, ExternalLink, 
-  Home, CloudSnow, Calendar, TrendingUp
+  Home, CloudSnow, Calendar, TrendingUp, PanelRightClose, PanelRightOpen
 } from "lucide-react";
 import type { Resource } from "@/lib/types";
 
@@ -28,8 +28,8 @@ const popularQuestions = [
 ];
 
 const calgaryInsights = [
-  { icon: TrendingUp, label: "340+ jobs posted this week", chip: "bg-sky-500/15 text-sky-600 dark:text-sky-400 ring-1 ring-sky-500/30" },
-  { icon: Home, label: "12 housing programs available", chip: "bg-sky-500/15 text-sky-600 dark:text-sky-400 ring-1 ring-sky-500/30" },
+  { icon: TrendingUp, label: "340+ jobs posted this week", chip: "bg-[#1D4ED8]/15 text-[#1D4ED8] dark:text-[#60A5FA] ring-1 ring-[#1D4ED8]/30" },
+  { icon: Home, label: "12 housing programs available", chip: "bg-[#1D4ED8]/15 text-[#1D4ED8] dark:text-[#60A5FA] ring-1 ring-[#1D4ED8]/30" },
   { icon: Calendar, label: "Free tax clinics open now", chip: "bg-[#E12521]/12 text-[#E12521] ring-1 ring-[#E12521]/30" },
 ];
 
@@ -37,6 +37,8 @@ export default function AITab() {
   const { activeLanguage, chatMessages, addChatMessage } = useAppStore();
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  // Calgary Pulse side panel can be collapsed to give the chat more room.
+  const [pulseOpen, setPulseOpen] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -164,8 +166,20 @@ export default function AITab() {
           bottom nav (~72px) so the docked input + last message never hide
           behind the nav bar. */}
       <div className="flex h-[calc(100dvh-160px)] lg:h-[calc(100vh-100px)]">
-        {/* Left Side - AI Conversation (full on mobile, 60% on desktop) */}
-        <div className="flex-1 flex flex-col min-w-0 lg:max-w-[65%]">
+        {/* Left Side - AI Conversation. Expands to full width when the
+            Calgary Pulse panel is collapsed. */}
+        <div className={`relative flex-1 flex flex-col min-w-0 ${pulseOpen ? "lg:max-w-[65%]" : "lg:max-w-full"}`}>
+          {/* Desktop-only toggle to re-open the Pulse panel when collapsed */}
+          {!pulseOpen && (
+            <button
+              onClick={() => setPulseOpen(true)}
+              aria-label="Show Calgary Pulse panel"
+              className="hidden lg:flex absolute top-4 right-4 z-10 items-center gap-2 rounded-full border border-[#1D4ED8]/25 bg-[#1D4ED8]/10 px-4 py-2 text-sm font-semibold text-[#1D4ED8] hover:bg-[#1D4ED8]/15 transition-colors"
+            >
+              <PanelRightOpen className="w-4 h-4" />
+              Calgary Pulse
+            </button>
+          )}
           <div className="flex-1 overflow-y-auto">
             {chatMessages.length === 0 ? (
               /* Empty State */
@@ -352,19 +366,28 @@ export default function AITab() {
           </div>
         </div>
 
-        {/* Right Side - Calgary Intelligence Panel (40%) - Desktop Only */}
+        {/* Right Side - Calgary Intelligence Panel (40%) - Desktop Only.
+            Collapsible so users get more space while chatting. */}
+        {pulseOpen && (
         <div className="hidden lg:flex w-[38%] xl:w-[40%] border-l border-[var(--border)] bg-gradient-to-b from-[var(--background)] to-[var(--background-secondary)] flex-col">
           <div className="flex-1 overflow-y-auto px-6 xl:px-8 py-8 xl:py-10">
             {/* Calgary Insights Header - Clean Icon */}
             <div className="mb-8">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 xl:w-14 xl:h-14 flex-shrink-0 rounded-2xl bg-gradient-to-br from-[#38BDF8]/20 to-[#0284c7]/10 flex items-center justify-center border border-[#38BDF8]/20">
-                  <TrendingUp className="w-6 h-6 xl:w-7 xl:h-7 text-[#38BDF8]" />
+                <div className="w-12 h-12 xl:w-14 xl:h-14 flex-shrink-0 rounded-2xl bg-gradient-to-br from-[#1D4ED8]/20 to-[#0A2540]/10 flex items-center justify-center border border-[#1D4ED8]/20">
+                  <TrendingUp className="w-6 h-6 xl:w-7 xl:h-7 text-[#1D4ED8]" />
                 </div>
-                <div className="min-w-0">
+                <div className="min-w-0 flex-1">
                   <h2 className="text-xl xl:text-2xl font-bold tracking-tight leading-tight">Calgary Pulse</h2>
                   <p className="text-sm xl:text-base text-foreground/50 mt-0.5 leading-relaxed">Live insights from your city</p>
                 </div>
+                <button
+                  onClick={() => setPulseOpen(false)}
+                  aria-label="Collapse Calgary Pulse panel"
+                  className="flex-shrink-0 flex h-10 w-10 items-center justify-center rounded-xl text-foreground/50 hover:text-foreground hover:bg-foreground/[0.06] transition-colors"
+                >
+                  <PanelRightClose className="w-5 h-5" />
+                </button>
               </div>
             </div>
 
@@ -413,7 +436,7 @@ export default function AITab() {
               transition={{ delay: 0.4 }}
             >
               <h3 className="text-lg xl:text-xl font-bold mb-5 flex items-center gap-3">
-                <TrendingUp className="w-5 h-5 xl:w-6 xl:h-6 text-[#0284c7]" />
+                <TrendingUp className="w-5 h-5 xl:w-6 xl:h-6 text-[#1D4ED8]" />
                 Popular This Week
               </h3>
               <div className="space-y-3">
@@ -431,6 +454,7 @@ export default function AITab() {
 
           </div>
         </div>
+        )}
       </div>
     </div>
   );
