@@ -16,7 +16,8 @@ import {
   Users,
   X,
   Building2,
-  Globe
+  Globe,
+  ChevronUp
 } from "lucide-react";
 
 interface FooterProps {
@@ -36,7 +37,7 @@ const pageContent: Record<string, { title: string; content: React.ReactNode }> =
 
         <div className="p-6 rounded-2xl bg-gradient-to-br from-sky-500/10 to-sky-500/5 border border-sky-500/20">
           <div className="flex items-center gap-3 mb-4">
-            <Globe className="w-6 h-6 text-sky-400" />
+            <Globe className="w-6 h-6 text-[#E1251B]" />
             <h3 className="text-xl font-bold text-white">Why Calgary Needs Calgary Konnect</h3>
           </div>
           <p className="text-white/60 leading-relaxed">
@@ -377,7 +378,7 @@ const pageContent: Record<string, { title: string; content: React.ReactNode }> =
         </p>
         <div className="p-6 rounded-2xl bg-gradient-to-br from-sky-500/10 to-sky-500/5 border border-sky-500/20">
           <div className="flex items-center gap-3 mb-4">
-            <Building2 className="w-6 h-6 text-sky-400" />
+            <Building2 className="w-6 h-6 text-[#E1251B]" />
             <h3 className="text-xl font-bold text-white">Calgary Konnect</h3>
           </div>
           <p className="text-white/60 mb-6">
@@ -388,11 +389,11 @@ const pageContent: Record<string, { title: string; content: React.ReactNode }> =
               href="mailto:tech@wilglobo.com" 
               className="flex items-center gap-3 text-white/70 hover:text-white transition-colors"
             >
-              <Mail className="w-5 h-5 text-sky-400" />
+              <Mail className="w-5 h-5 text-[#E1251B]" />
               <span className="font-semibold">tech@wilglobo.com</span>
             </a>
             <div className="flex items-center gap-3 text-white/70">
-              <MapPin className="w-5 h-5 text-sky-400" />
+              <MapPin className="w-5 h-5 text-[#E1251B]" />
               <span>Calgary, Alberta, Canada</span>
             </div>
           </div>
@@ -511,33 +512,32 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
             backgroundSize: '40px 40px'
           }} />
 
-          {/* Trust Banner */}
-          <div className="relative border-b border-white/[0.04] py-5 md:py-6 px-5 md:px-8 bg-gradient-to-r from-sky-500/[0.03] via-transparent to-sky-500/[0.03]">
+          <div className="relative border-b border-white/[0.04] py-4 md:py-5 px-5 md:px-8">
             <div className="max-w-[1200px] mx-auto">
               <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-sky-500/10 flex items-center justify-center">
-                    <Shield className="w-4 h-4 text-sky-400" />
+                  <div className="w-7 h-7 rounded-lg bg-[#1D4ED8]/15 flex items-center justify-center">
+                    <Shield className="w-3.5 h-3.5 text-[#1D4ED8]" />
                   </div>
-                  <span className="text-xs font-medium text-white/60">Verified</span>
+                  <span className="text-xs font-semibold text-white/70">Verified</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-sky-500/10 flex items-center justify-center">
-                    <FileText className="w-4 h-4 text-sky-400" />
+                  <div className="w-7 h-7 rounded-lg bg-[#1D4ED8]/15 flex items-center justify-center">
+                    <FileText className="w-3.5 h-3.5 text-[#1D4ED8]" />
                   </div>
-                  <span className="text-xs font-medium text-white/60">Updated monthly</span>
+                  <span className="text-xs font-semibold text-white/70">Updated monthly</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-[#E1251B]/10 flex items-center justify-center">
-                    <Users className="w-4 h-4 text-[#E1251B]" />
+                  <div className="w-7 h-7 rounded-lg bg-[#E1251B]/15 flex items-center justify-center">
+                    <Users className="w-3.5 h-3.5 text-[#E1251B]" />
                   </div>
-                  <span className="text-xs font-medium text-white/60">Community-driven</span>
+                  <span className="text-xs font-semibold text-white/70">Community-driven</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-[#E1251B]/10 flex items-center justify-center">
-                    <Heart className="w-4 h-4 text-[#E1251B]" />
+                  <div className="w-7 h-7 rounded-lg bg-[#E1251B]/15 flex items-center justify-center">
+                    <Heart className="w-3.5 h-3.5 text-[#E1251B]" />
                   </div>
-                  <span className="text-xs font-medium text-white/60">Free to use</span>
+                  <span className="text-xs font-semibold text-white/70">Free to use</span>
                 </div>
               </div>
             </div>
@@ -566,9 +566,9 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
                       <li key={link.label}>
                         <button
                           onClick={() => openModal(link.key)}
-                          className="text-sm text-white/50 hover:text-sky-400 transition-colors text-left flex items-center gap-1.5 group"
+                          className="text-sm text-white/50 hover:text-[#E1251B] transition-colors text-left flex items-center gap-1.5 group"
                         >
-                          <ChevronRight className="w-3 h-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-sky-400" />
+                          <ChevronRight className="w-3 h-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-[#E1251B]" />
                           {link.label}
                         </button>
                       </li>
@@ -583,19 +583,19 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
                     {businessLinks.map((link) => (
                       <li key={link.label}>
                         {link.onClick ? (
-                          <button
-                            onClick={link.onClick}
-                            className="text-sm text-white/50 hover:text-sky-400 transition-colors text-left flex items-center gap-1.5 group"
-                          >
-                            <ChevronRight className="w-3 h-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-sky-400" />
+                        <button
+                          onClick={() => openModal(link.key)}
+                          className="text-sm text-white/50 hover:text-[#E1251B] transition-colors text-left flex items-center gap-1.5 group"
+                        >
+                          <ChevronRight className="w-3 h-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-[#E1251B]" />
                             {link.label}
                           </button>
                         ) : (
                           <button
                             onClick={() => openModal(link.key!)}
-                            className="text-sm text-white/50 hover:text-sky-400 transition-colors text-left flex items-center gap-1.5 group"
+                            className="text-sm text-white/50 hover:text-[#E1251B] transition-colors text-left flex items-center gap-1.5 group"
                           >
-                            <ChevronRight className="w-3 h-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-sky-400" />
+                            <ChevronRight className="w-3 h-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-[#E1251B]" />
                             {link.label}
                           </button>
                         )}
@@ -612,9 +612,9 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
                       <li key={link.label}>
                         <button
                           onClick={() => openModal(link.key)}
-                          className="text-sm text-white/50 hover:text-sky-400 transition-colors text-left flex items-center gap-1.5 group"
+                          className="text-sm text-white/50 hover:text-[#E1251B] transition-colors text-left flex items-center gap-1.5 group"
                         >
-                          <ChevronRight className="w-3 h-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-sky-400" />
+                          <ChevronRight className="w-3 h-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-[#E1251B]" />
                           {link.label}
                         </button>
                       </li>
@@ -644,11 +644,11 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
         </div>
 
         {/* Bottom Bar */}
-        <div className="relative border-t border-white/[0.04] py-5 md:py-6 px-5 md:px-8 bg-black/30">
-          <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+        <div className="relative border-t border-white/[0.04] py-4 md:py-5 px-5 md:px-8 bg-black/30">
+          <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
+            <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2">
               {legalLinks.map((link, index) => (
-                <span key={link.label} className="flex items-center gap-4">
+                <span key={link.label} className="flex items-center gap-3">
                   <button
                     onClick={() => openModal(link.key)}
                     className="text-xs text-white/40 hover:text-white transition-colors"
@@ -662,9 +662,18 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
               ))}
             </div>
 
-            <p className="text-xs text-white/40 font-medium">
-              &copy; {currentYear} <span className="text-white/60">Calgary Konnect.</span> All rights reserved.
-            </p>
+            <div className="flex items-center gap-4">
+              <p className="text-xs text-white/40 font-medium">
+                &copy; {currentYear} <span className="text-white/60">Calgary Konnect.</span> All rights reserved.
+              </p>
+              <button
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                aria-label="Scroll to top"
+                className="flex items-center justify-center w-8 h-8 rounded-lg bg-white/[0.06] hover:bg-[#E1251B] text-white/50 hover:text-white transition-colors flex-shrink-0"
+              >
+                <ChevronUp className="w-4 h-4" strokeWidth={2.5} />
+              </button>
+            </div>
           </div>
         </div>
         </div>

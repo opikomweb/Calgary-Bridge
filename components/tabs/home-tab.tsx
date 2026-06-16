@@ -1,15 +1,23 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useAppStore } from "@/lib/store";
 import { resources } from "@/lib/data";
-import { Search, ArrowRight, MessagesSquare, MapPin, ChevronRight, Home, Briefcase, Heart, Users } from "lucide-react";
+import { Search, ArrowRight, MessageSquare, MapPin, ChevronRight, Home, Briefcase, Heart, Users, ChevronUp } from "lucide-react";
 import ResourceCard from "../resource-card";
 import SearchExtras from "../search-extras";
 import { searchResources, getSimilarResources } from "@/lib/search";
+import React from "react";
 
 export default function HomeTab() {
   const { activeLanguage, searchQuery, setSearchQuery, setActiveTab } = useAppStore();
+  const [showScrollTop, setShowScrollTop] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleScroll = () => setShowScrollTop(window.scrollY > 400);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const featuredResources = resources.filter((r) => r.featured).slice(0, 4);
   const hiddenGems = resources.filter((r) => r.hiddenGem).slice(0, 3);
@@ -72,6 +80,22 @@ export default function HomeTab() {
 
   return (
     <div className="min-h-screen relative">
+
+      {/* Scroll-to-top button */}
+      <AnimatePresence>
+        {showScrollTop && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            aria-label="Scroll to top"
+            className="fixed bottom-24 lg:bottom-8 right-4 lg:right-8 z-50 flex items-center justify-center w-11 h-11 rounded-full bg-[#0b2239] dark:bg-[#1D4ED8] text-white shadow-lg shadow-blue-900/30 hover:bg-[#E1251B] transition-colors duration-200"
+          >
+            <ChevronUp className="w-5 h-5" strokeWidth={2.5} />
+          </motion.button>
+        )}
+      </AnimatePresence>
 
       {/* ========== HERO SEARCH ========== */}
       <section className="relative pt-8 pb-10 md:pt-24 md:pb-20 lg:pt-32 lg:pb-28">
@@ -282,33 +306,35 @@ export default function HomeTab() {
               onClick={() => setActiveTab("ai")}
               className="group w-full relative overflow-hidden rounded-2xl md:rounded-3xl text-left shadow-xl"
             >
-              {/* Animated gradient background */}
-              <div className="absolute inset-0 bg-gradient-to-r from-[#0c4a6e] via-[#0369a1] to-[#0284c7]" />
+              {/* Deep navy → red Calgary gradient background */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#0b2239] via-[#0A2540] to-[#1a0a0a]" />
+              {/* Subtle red accent at the right edge */}
+              <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-gradient-to-l from-[#E1251B]/30 to-transparent" />
               <motion.div
                 animate={{ x: ["-100%", "100%"] }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.05] to-transparent"
               />
               
-              <div className="relative z-10 p-6 md:p-10 lg:p-12 flex flex-col md:flex-row md:items-center gap-5 md:gap-8">
+              <div className="relative z-10 p-5 md:p-8 lg:p-10 flex flex-col sm:flex-row sm:items-center gap-4 md:gap-6">
                 <motion.div 
                   whileHover={{ rotate: 5 }}
-                  className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br from-[#38BDF8] to-[#0284c7] flex items-center justify-center flex-shrink-0 shadow-xl shadow-sky-500/30"
+                  className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-[#E1251B] flex items-center justify-center flex-shrink-0 shadow-xl shadow-red-900/40"
                 >
-                  <MessagesSquare className="w-8 h-8 md:w-10 md:h-10 text-white" />
+                  <MessageSquare className="w-7 h-7 md:w-8 md:h-8 text-white" />
                 </motion.div>
                 
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs font-bold text-sky-200 uppercase tracking-[0.15em] mb-2">iKonnect Guide</p>
-                  <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2 leading-tight">
+                  <p className="text-xs font-bold text-[#E1251B] uppercase tracking-[0.15em] mb-1.5">iKonnect Guide</p>
+                  <h3 className="text-lg md:text-2xl font-bold text-white mb-1 leading-tight">
                     Get personalized guidance
                   </h3>
-                  <p className="text-sm md:text-base text-white/70 leading-relaxed line-clamp-2">
-                    Not just links — real answers, step-by-step instructions, and matched resources.
+                  <p className="text-sm text-white/65 leading-relaxed">
+                    Real answers, step-by-step help, and matched Calgary resources.
                   </p>
                 </div>
                 
-                <ArrowRight className="hidden md:block w-8 h-8 text-white/60 flex-shrink-0 group-hover:text-white group-hover:translate-x-2 transition-all duration-300" />
+                <ArrowRight className="hidden sm:block w-6 h-6 text-white/50 flex-shrink-0 group-hover:text-white group-hover:translate-x-2 transition-all duration-300" />
               </div>
             </motion.button>
           </section>
@@ -336,13 +362,13 @@ export default function HomeTab() {
                   transition={{ delay: 0.65 + index * 0.05 }}
                   whileHover={{ y: -4, scale: 1.02 }}
                   onClick={() => setActiveTab("explore")}
-                  className="group p-4 md:p-6 rounded-xl md:rounded-2xl bg-foreground/[0.04] border border-foreground/[0.06] hover:bg-foreground/[0.08] hover:border-foreground/[0.15] transition-all duration-300 flex flex-col items-center text-center"
+                  className="group p-3 md:p-6 rounded-xl md:rounded-2xl bg-foreground/[0.04] border border-foreground/[0.06] hover:bg-foreground/[0.08] hover:border-foreground/[0.15] transition-all duration-300 flex flex-col items-center text-center"
                 >
-                  <h3 className="text-sm md:text-base font-bold text-foreground mb-1 md:mb-2">{item.label}</h3>
-                  <p className="text-xs md:text-sm text-[var(--foreground-muted)] mb-3 leading-relaxed line-clamp-2">{item.description}</p>
-                  <div className="flex items-center gap-1.5 text-[#1D4ED8] dark:text-[#38BDF8] text-xs md:text-sm font-semibold mt-auto">
+                  <h3 className="text-xs sm:text-sm md:text-base font-bold text-foreground mb-1 md:mb-2 leading-tight">{item.label}</h3>
+                  <p className="text-[10px] sm:text-xs md:text-sm text-foreground/60 mb-2 md:mb-3 leading-relaxed">{item.description}</p>
+                  <div className="flex items-center gap-1 text-[#E1251B] text-xs md:text-sm font-bold mt-auto">
                     <span>View</span>
-                    <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                    <ChevronRight className="w-3 h-3 md:w-3.5 md:h-3.5 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </motion.button>
               ))}
@@ -357,7 +383,7 @@ export default function HomeTab() {
                 <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">Top resources this month.</h2>
                 <button
                   onClick={() => setActiveTab("explore")}
-                  className="text-[#38BDF8] text-sm font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all mt-3"
+                  className="text-[#E1251B] text-sm font-bold inline-flex items-center gap-1.5 hover:gap-2 transition-all mt-3"
                 >
                   View all <ArrowRight className="w-4 h-4" />
                 </button>
@@ -387,7 +413,7 @@ export default function HomeTab() {
                   <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">Programs most people miss.</h2>
                   <button
                     onClick={() => setActiveTab("explore")}
-                  className="text-[#1D4ED8] dark:text-[#38BDF8] text-sm font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all mt-3"
+                  className="text-[#E1251B] text-sm font-bold inline-flex items-center gap-1.5 hover:gap-2 transition-all mt-3"
                   >
                     View all <ArrowRight className="w-4 h-4" />
                   </button>

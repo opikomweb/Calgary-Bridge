@@ -9,8 +9,10 @@ import {
   GraduationCap,
   ArrowUpRight,
   Clock,
+  ChevronUp,
 } from "lucide-react";
 import { doGoodCategories, doGoodImpactStats, type DoGoodCategory } from "@/lib/do-good";
+import React from "react";
 
 const ICONS = {
   HandHeart,
@@ -36,13 +38,11 @@ export default function DoGoodTab() {
               <HandHeart className="w-3.5 h-3.5" />
               Give back to Calgary
             </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-[-0.02em] text-foreground text-balance leading-[1.05]">
-              Do good for <span className="text-[#1D4ED8]">your city</span>.
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-[-0.02em] text-foreground text-balance leading-[1.05]">
+              Do good for <span className="text-[#E1251B]">your city</span>.
             </h1>
-            <p className="text-base md:text-lg text-foreground/70 leading-relaxed max-w-2xl text-pretty">
-              Real, researched ways to help your neighbours — volunteer, donate, sponsor a family,
-              improve our streets, and learn to give better. Every link goes straight to a trusted
-              Calgary organization.
+            <p className="text-sm md:text-base text-foreground/70 leading-relaxed max-w-xl text-pretty">
+              Curated ways to help your neighbours — volunteer, donate, sponsor a family, and improve our streets. Every link goes straight to a trusted Calgary organization.
             </p>
           </motion.div>
 
@@ -87,17 +87,23 @@ export default function DoGoodTab() {
       ))}
 
       {/* ========== CLOSING ========== */}
-      <section className="relative pb-28 md:pb-20 pt-4">
+      <section className="relative pb-24 md:pb-16 pt-4">
         <div className="max-w-[1100px] mx-auto px-6 md:px-8 lg:px-12">
-          <div className="rounded-3xl bg-gradient-to-br from-[#0c2d4d] to-[#071a2e] p-8 md:p-12 text-center">
-            <HandHeart className="w-10 h-10 text-[#E1251B] mx-auto mb-4" />
-            <h2 className="text-2xl md:text-3xl font-bold text-white text-balance mb-3">
+          <div className="rounded-3xl bg-gradient-to-br from-[#0b2239] to-[#071a2e] p-7 md:p-10 text-center">
+            <HandHeart className="w-9 h-9 text-[#E1251B] mx-auto mb-4" />
+            <h2 className="text-xl md:text-2xl font-bold text-white text-balance mb-2">
               Calgary is built by neighbours helping neighbours.
             </h2>
-            <p className="text-white/70 max-w-xl mx-auto leading-relaxed text-pretty">
-              Pick one thing this week. A single shift, a small donation, or one report to 311 makes
-              the whole city stronger.
+            <p className="text-white/65 max-w-md mx-auto leading-relaxed text-sm text-pretty mb-6">
+              Pick one thing this week. A single shift, a small donation, or one report to 311 makes the whole city stronger.
             </p>
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#E1251B] text-white text-sm font-bold hover:bg-[#B91C1C] transition-colors shadow-md shadow-red-900/40"
+            >
+              <ChevronUp className="w-4 h-4" strokeWidth={2.5} />
+              Back to top
+            </button>
           </div>
         </div>
       </section>
