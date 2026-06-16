@@ -4,9 +4,10 @@ import React from "react";
 import { useAppStore } from "@/lib/store";
 import { translations } from "@/lib/data";
 import Image from "next/image";
-import { Home, Compass, Heart, User, AlertTriangle, Shield, Menu, X, HandHeart } from "lucide-react";
+import { AlertTriangle, Shield, Menu, X } from "lucide-react";
 import { ThemeToggle } from "./theme-toggle";
 import { CalgaryConnectLogo } from "./calgary-connect-logo";
+import { NAV_ITEMS } from "./nav-items";
 import { motion, AnimatePresence } from "framer-motion";
 import HomeTab from "./tabs/home-tab";
 import ExploreTab from "./tabs/explore-tab";
@@ -43,14 +44,7 @@ export default function MainApp() {
 
   const t = (key: string) => translations[key]?.[activeLanguage] || translations[key]?.en || key;
 
-  const navItems = [
-    { id: "home" as const, icon: Home, label: "Home", shortLabel: "Home", highlight: false },
-    { id: "explore" as const, icon: Compass, label: "Explore", shortLabel: "Explore", highlight: false },
-    { id: "ai" as const, icon: null, label: "iKonnect Guide", shortLabel: "iKonnect", highlight: true },
-    { id: "do-good" as const, icon: HandHeart, label: "Do Good", shortLabel: "Do Good", highlight: false },
-    { id: "shortlist" as const, icon: Heart, label: "Saved", shortLabel: "Saved", highlight: false },
-    { id: "profile" as const, icon: User, label: "Profile", shortLabel: "Profile", highlight: false },
-  ];
+  const navItems = NAV_ITEMS;
 
   return (
     <div className="min-h-screen bg-background relative">

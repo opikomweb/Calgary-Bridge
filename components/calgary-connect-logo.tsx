@@ -56,6 +56,7 @@ export function CalgaryConnectLogo({
     <div
       className={`flex items-center select-none ${className}`}
       style={{ gap: iconOnly ? 0 : gap }}
+      role="img"
       aria-label="Calgary Connect"
     >
       {/* ── Tower + Bridge SVG mark ── */}
