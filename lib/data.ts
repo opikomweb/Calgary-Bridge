@@ -296,6 +296,14 @@ export const categoryLabels: Record<ResourceCategory, Record<Language, string>> 
     ar: "الفنون والثقافة",
     zh: "艺术和文化",
   },
+  logistics: {
+    en: "Shipping & Logistics",
+    fr: "Expédition et Logistique",
+    tl: "Pagpapadala at Logistik",
+    es: "Envíos y Logística",
+    ar: "الشحن والخدمات اللوجستية",
+    zh: "运输与物流",
+  },
 };
 
 export const languageNames: Record<Language, string> = {

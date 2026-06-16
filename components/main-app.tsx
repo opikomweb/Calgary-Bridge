@@ -32,6 +32,14 @@ export default function MainApp() {
     setCurrentPage("landing");
   };
 
+  // Always scroll to the top when switching tabs so the user lands on the
+  // heading of the section they tapped, even if they were scrolled to the bottom.
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [activeTab]);
+
   const t = (key: string) => translations[key]?.[activeLanguage] || translations[key]?.en || key;
 
   const navItems = [
@@ -126,20 +134,13 @@ export default function MainApp() {
             </div>
           </button>
           
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => setShowEmergency(true)}
-              className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-[#E1251B] to-[#b91c1c] text-white shadow-lg shadow-red-500/30"
-            >
-              <AlertTriangle className="h-4 w-4" />
-            </button>
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="flex items-center justify-center w-10 h-10 rounded-lg bg-foreground/[0.06] border border-foreground/[0.08] text-foreground"
-            >
-              {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-            </button>
-          </div>
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+            className="flex items-center justify-center w-10 h-10 rounded-lg bg-foreground/[0.06] border border-foreground/[0.08] text-foreground"
+          >
+            {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+          </button>
         </div>
       </header>
 
@@ -251,23 +252,30 @@ export default function MainApp() {
 
       {/* Mobile Bottom Navigation */}
       <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-background/95 backdrop-blur-2xl border-t border-foreground/[0.06] safe-area-pb">
-        <div className="flex items-center justify-around px-1 py-2">
-          {navItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => setActiveTab(item.id)}
-              className={`flex flex-col items-center gap-1 rounded-xl px-2 py-2 transition-all min-w-0 ${
-                activeTab === item.id
-                  ? item.highlight
-                    ? "bg-gradient-to-br from-[#38BDF8] to-[#0284c7] text-white shadow-lg shadow-sky-500/30"
-                    : "text-[#38BDF8]"
-                  : "text-foreground/40"
-              }`}
-            >
-              <item.icon className="h-5 w-5" />
-              <span className="text-[10px] font-bold tracking-tight">{item.shortLabel}</span>
-            </button>
-          ))}
+        <div className="flex items-center justify-between gap-1 px-2 py-2">
+          {navItems.map((item) => {
+            const active = activeTab === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => setActiveTab(item.id)}
+                aria-label={item.label}
+                aria-current={active ? "page" : undefined}
+                className={`flex items-center justify-center gap-1.5 rounded-full transition-all duration-300 ${
+                  active
+                    ? item.highlight
+                      ? "bg-gradient-to-r from-[#38BDF8] to-[#0284c7] text-white shadow-lg shadow-sky-500/30 px-3.5 py-2.5"
+                      : "bg-[#38BDF8]/[0.14] text-[#0284c7] px-3.5 py-2.5"
+                    : "text-foreground/45 px-2.5 py-2.5 active:scale-90"
+                }`}
+              >
+                <item.icon className="h-5 w-5 shrink-0" />
+                {active && (
+                  <span className="text-xs font-bold tracking-tight whitespace-nowrap">{item.shortLabel}</span>
+                )}
+              </button>
+            );
+          })}
         </div>
       </nav>
 

@@ -192,6 +192,13 @@ export const LIVE_SEARCH_INTENTS: Record<ResourceCategory, LiveSearchIntent> = {
     mustMatch: ["art", "culture", "gallery", "studio", "theatre", "theater", "music", "creative"],
     exclude: [],
   },
+  logistics: {
+    label: "Shipping & courier services",
+    query: "shipping courier and parcel service",
+    allowTypes: ["courier_service", "post_office", "moving_company", "storage", "establishment"],
+    mustMatch: ["ship", "courier", "parcel", "cargo", "freight", "logistics", "post", "mail", "delivery"],
+    exclude: ["restaurant", "food delivery", "pizza"],
+  },
 };
 
 /**

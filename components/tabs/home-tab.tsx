@@ -68,7 +68,7 @@ export default function HomeTab() {
     <div className="min-h-screen relative">
 
       {/* ========== HERO SEARCH ========== */}
-      <section className="relative pt-16 pb-16 md:pt-24 md:pb-20 lg:pt-32 lg:pb-28">
+      <section className="relative pt-8 pb-10 md:pt-24 md:pb-20 lg:pt-32 lg:pb-28">
         <div className="max-w-[720px] mx-auto px-6 md:px-8 lg:px-12 relative z-10">
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
@@ -76,7 +76,7 @@ export default function HomeTab() {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="text-[clamp(32px,7vw,56px)] font-bold tracking-[-0.02em] leading-[1.1]"
           >
-            What do you need?
+            What do you <span className="text-calgary-red">need?</span>
           </motion.h1>
 
           <motion.p
@@ -188,8 +188,8 @@ export default function HomeTab() {
       {!searchQuery && (
         <>
           {/* ========== SOLUTION PATHWAYS ========== */}
-          <section className="px-6 md:px-8 lg:px-12 pb-16 md:pb-24 max-w-[1200px] mx-auto relative z-10">
-            <div className="pb-16 md:pb-20 lg:pb-24">
+          <section className="px-6 md:px-8 lg:px-12 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
+            <div className="pb-8 md:pb-10">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -197,7 +197,7 @@ export default function HomeTab() {
                 className="text-center"
               >
                 <p className="text-xs font-semibold text-[#38BDF8] uppercase tracking-[0.15em] mb-3">Start Here</p>
-                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight">What most Calgarians need.</h2>
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight">What most <span className="text-calgary-red">Calgarians</span> need.</h2>
               </motion.div>
             </div>
 
@@ -305,8 +305,8 @@ export default function HomeTab() {
           </section>
 
           {/* ========== SPECIALIZED PATHWAYS ========== */}
-          <section className="px-6 md:px-8 lg:px-12 pt-8 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
-            <div className="pb-16 md:pb-20 lg:pb-24">
+          <section className="px-6 md:px-8 lg:px-12 pt-4 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
+            <div className="pb-8 md:pb-10">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -341,8 +341,8 @@ export default function HomeTab() {
           </section>
 
           {/* ========== FEATURED RESOURCES ========== */}
-          <section className="px-6 md:px-8 lg:px-12 pt-8 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
-            <div className="pb-16 md:pb-20 lg:pb-24">
+          <section className="px-6 md:px-8 lg:px-12 pt-4 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
+            <div className="pb-8 md:pb-10">
               <div className="text-center">
                 <p className="text-xs font-bold text-[#FBBF24] uppercase tracking-[0.15em] mb-3">Recommended</p>
                 <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">Top resources this month.</h2>
@@ -371,8 +371,8 @@ export default function HomeTab() {
 
           {/* ========== HIDDEN GEMS ========== */}
           {hiddenGems.length > 0 && (
-            <section className="px-6 md:px-8 lg:px-12 pt-8 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
-              <div className="pb-16 md:pb-20 lg:pb-24">
+            <section className="px-6 md:px-8 lg:px-12 pt-4 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
+              <div className="pb-8 md:pb-10">
                 <div className="text-center">
                   <p className="text-xs font-bold text-[#a855f7] uppercase tracking-[0.15em] mb-3">Hidden Gems</p>
                   <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">Programs most people miss.</h2>

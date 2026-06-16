@@ -7,7 +7,7 @@ import { resources } from "@/lib/data";
 import { 
   Search, ChevronDown, X, Home, Briefcase, Heart, Users, 
   AlertTriangle, Building2, Baby, GraduationCap, Bus,
-  Scale, HandHeart, Accessibility, Utensils, Brain, Check
+  Scale, HandHeart, Accessibility, Utensils, Brain, Check, Truck
 } from "lucide-react";
 import ResourceCard from "../resource-card";
 import LiveResults from "../live-results";
@@ -29,7 +29,8 @@ const allCategories: { id: ResourceCategory | "all"; label: string; icon: React.
   { id: "transit", label: "Transit", icon: Bus },
   { id: "education", label: "Education", icon: GraduationCap },
   { id: "legal", label: "Legal Help", icon: Scale },
-  { id: "business", label: "Small Business", icon: Building2 },
+  { id: "business", label: "Business & Licensing", icon: Building2 },
+  { id: "logistics", label: "Shipping & Logistics", icon: Truck },
   { id: "volunteering", label: "Volunteering", icon: HandHeart },
   { id: "community", label: "Community", icon: Users },
 ];
@@ -93,15 +94,15 @@ export default function ExploreTab() {
     <div className="min-h-screen relative">
 
       {/* ========== PAGE HEADER ========== */}
-      <section className="relative pt-12 pb-8 md:pt-20 md:pb-12 lg:pt-24 lg:pb-16">
+      <section className="relative pt-6 pb-6 md:pt-20 md:pb-12 lg:pt-24 lg:pb-16">
         <div className="max-w-[1200px] mx-auto px-5 md:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-[clamp(32px,6vw,56px)] font-bold tracking-[-0.02em] leading-[1.1] mb-4">
-              Explore Resources
+            <h1 className="heading-accent text-[clamp(32px,6vw,56px)] font-bold tracking-[-0.02em] leading-[1.1] mb-4">
+              Explore <span className="text-calgary-red">Resources</span>
             </h1>
             <p className="text-base md:text-lg text-foreground/45 max-w-xl leading-relaxed">
               Every verified Calgary service and program, searchable and filterable.
