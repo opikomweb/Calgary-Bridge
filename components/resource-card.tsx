@@ -67,45 +67,45 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
       <motion.div
         whileHover={{ y: -4 }}
         transition={{ duration: 0.3 }}
-        className={`group relative overflow-hidden rounded-2xl md:rounded-3xl bg-card border border-border hover:border-foreground/20 p-5 md:p-6 lg:p-8 transition-all duration-400 shadow-lg ${isCompleted && showNotes ? "opacity-60" : ""}`}
+        className={`group relative overflow-hidden rounded-2xl md:rounded-3xl bg-card border border-border hover:border-foreground/20 p-4 md:p-6 lg:p-8 transition-all duration-400 shadow-lg w-full ${isCompleted && showNotes ? "opacity-60" : ""}`}
       >
         {/* Hover glow effect */}
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-sky-500/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-[#1D4ED8]/5 via-transparent to-transparent" />
         
-        <div className="relative z-10">
+        <div className="relative z-10 w-full min-w-0">
           {/* Header Row: Tags + Actions */}
-          <div className="flex items-start justify-between gap-3 mb-4">
+          <div className="flex items-start justify-between gap-2 mb-3">
             {/* Category Tags - Horizontal */}
-            <div className="flex flex-wrap gap-1.5 md:gap-2 min-w-0">
+            <div className="flex flex-wrap gap-1 md:gap-1.5 min-w-0 flex-1">
               {resource.category.slice(0, 2).map((cat) => (
                 <span
                   key={cat}
-                  className="px-2.5 py-1 md:px-3 md:py-1.5 rounded-full text-xs font-semibold bg-[#1D4ED8]/12 dark:bg-sky-500/15 text-[#1D4ED8] dark:text-sky-400 truncate"
+                  className="px-2 py-0.5 md:px-2.5 md:py-1 rounded-full text-[10px] md:text-xs font-semibold bg-[#1D4ED8]/12 dark:bg-sky-500/15 text-[#1D4ED8] dark:text-sky-400 max-w-[120px] truncate"
                 >
                   {categoryLabels[cat]?.[activeLanguage] || cat}
                 </span>
               ))}
               {resource.hiddenGem && (
-                <span className="px-2.5 py-1 md:px-3 md:py-1.5 rounded-full text-xs font-semibold bg-[#E1251B]/12 text-[#E1251B] flex items-center gap-1">
-                  <Gem className="w-3 h-3" />
+                <span className="px-2 py-0.5 md:px-2.5 md:py-1 rounded-full text-[10px] md:text-xs font-semibold bg-[#E1251B]/12 text-[#E1251B] flex items-center gap-1">
+                  <Gem className="w-2.5 h-2.5 md:w-3 md:h-3 flex-shrink-0" />
                   <span className="hidden sm:inline">Hidden Gem</span>
                 </span>
               )}
             </div>
             
             {/* Action Buttons */}
-            <div className="flex items-center gap-1.5 flex-shrink-0">
+            <div className="flex items-center gap-1 flex-shrink-0">
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => toggleBookmark(resource.id)}
-                className={`rounded-lg md:rounded-xl p-2 md:p-2.5 transition-all ${
+                className={`rounded-lg p-2 transition-all ${
                   isBookmarked
                     ? "bg-[#E1251B]/15 text-[#E1251B]"
                     : "bg-foreground/[0.06] text-[var(--foreground-muted)] hover:text-foreground hover:bg-foreground/[0.1]"
                 }`}
               >
-                <Heart className={`h-4 w-4 md:h-5 md:w-5 ${isBookmarked ? "fill-current" : ""}`} />
+                <Heart className={`h-4 w-4 ${isBookmarked ? "fill-current" : ""}`} />
               </motion.button>
 
               <div className="relative">
@@ -113,9 +113,9 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   onClick={() => setShowMenu(!showMenu)}
-                  className="rounded-lg md:rounded-xl p-2 md:p-2.5 bg-foreground/[0.06] text-[var(--foreground-muted)] hover:text-foreground hover:bg-foreground/[0.1] transition-all"
+                  className="rounded-lg p-2 bg-foreground/[0.06] text-[var(--foreground-muted)] hover:text-foreground hover:bg-foreground/[0.1] transition-all"
                 >
-                  <MoreHorizontal className="h-4 w-4 md:h-5 md:w-5" />
+                  <MoreHorizontal className="h-4 w-4" />
                 </motion.button>
                 
                 <AnimatePresence>
@@ -124,26 +124,20 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
                       initial={{ opacity: 0, scale: 0.95, y: -8 }}
                       animate={{ opacity: 1, scale: 1, y: 0 }}
                       exit={{ opacity: 0, scale: 0.95, y: -8 }}
-                      className="absolute right-0 top-full mt-2 w-48 md:w-56 rounded-xl md:rounded-2xl bg-popover border border-border shadow-2xl overflow-hidden z-20"
+                      className="absolute right-0 top-full mt-2 w-44 rounded-xl bg-popover border border-border shadow-2xl overflow-hidden z-20"
                     >
                       <button
-                        onClick={() => {
-                          onClaimBusiness?.(resource.id);
-                          setShowMenu(false);
-                        }}
+                        onClick={() => { onClaimBusiness?.(resource.id); setShowMenu(false); }}
                         className="w-full flex items-center gap-2.5 px-4 py-3 text-left text-sm text-foreground/70 hover:bg-foreground/[0.06] hover:text-foreground transition-colors"
                       >
-                        <Building2 className="w-4 h-4" />
+                        <Building2 className="w-4 h-4 flex-shrink-0" />
                         Claim this business
                       </button>
                       <button
-                        onClick={() => {
-                          onReport?.(resource.id);
-                          setShowMenu(false);
-                        }}
+                        onClick={() => { onReport?.(resource.id); setShowMenu(false); }}
                         className="w-full flex items-center gap-2.5 px-4 py-3 text-left text-sm text-foreground/70 hover:bg-foreground/[0.06] hover:text-foreground transition-colors border-t border-foreground/[0.06]"
                       >
-                        <Flag className="w-4 h-4" />
+                        <Flag className="w-4 h-4 flex-shrink-0" />
                         Report an issue
                       </button>
                     </motion.div>
@@ -153,32 +147,32 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
             </div>
           </div>
 
-          {/* Title - Full Width */}
-          <h3 className="font-bold text-lg md:text-xl lg:text-2xl mb-2 md:mb-3 leading-tight text-foreground">
+          {/* Title */}
+          <h3 className="font-bold text-base md:text-xl lg:text-2xl mb-2 leading-tight text-foreground break-words">
             {resource.title[activeLanguage]}
           </h3>
           
-          {/* Description - Full Width with Better Line Height */}
-          <p className="text-foreground/60 text-sm md:text-base leading-relaxed mb-4 line-clamp-2 md:line-clamp-3">
+          {/* Description — break-words prevents overflow on narrow screens */}
+          <p className="text-foreground/60 text-xs md:text-sm lg:text-base leading-relaxed mb-3 break-words">
             {resource.summary?.[activeLanguage] || resource.description[activeLanguage]}
           </p>
 
           {/* Cost Badge */}
           {resource.cost && (
-            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 md:px-3 md:py-1.5 rounded-full text-xs font-semibold mb-4 ${costLabels[resource.cost]?.color || ""}`}>
-              <DollarSign className="w-3.5 h-3.5" />
+            <span className={`inline-flex items-center gap-1 px-2 py-0.5 md:px-2.5 md:py-1 rounded-full text-[10px] md:text-xs font-semibold mb-3 ${costLabels[resource.cost]?.color || ""}`}>
+              <DollarSign className="w-3 h-3" />
               {costLabels[resource.cost]?.label || resource.cost}
             </span>
           )}
 
-          {/* Quick Action Buttons - Full Width */}
-          <div className="flex flex-wrap gap-2 md:gap-2.5">
+          {/* Quick Action Buttons */}
+          <div className="flex flex-wrap gap-1.5 md:gap-2">
             {resource.phone && (
               <a
                 href={`tel:${resource.phone}`}
-                className="flex items-center gap-1.5 md:gap-2 rounded-xl md:rounded-2xl bg-[#1D4ED8] dark:bg-sky-500/15 px-3 md:px-4 py-2 md:py-2.5 text-sm font-semibold text-white dark:text-sky-400 transition-all hover:bg-[#1e40af] dark:hover:bg-sky-500/25 active:scale-95"
+                className="flex items-center gap-1.5 rounded-xl bg-[#1D4ED8] dark:bg-sky-500/15 px-3 py-2 text-xs md:text-sm font-semibold text-white dark:text-sky-400 transition-all hover:bg-[#1e40af] active:scale-95"
               >
-                <Phone className="h-4 w-4" />
+                <Phone className="h-3.5 w-3.5 flex-shrink-0" />
                 Call
               </a>
             )}
@@ -187,11 +181,10 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
                 href={googleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 md:gap-2 rounded-xl md:rounded-2xl bg-foreground/[0.06] border border-foreground/[0.08] px-3 md:px-4 py-2 md:py-2.5 text-sm font-semibold text-foreground transition-all hover:bg-foreground/[0.1] active:scale-95"
+                className="flex items-center gap-1.5 rounded-xl bg-foreground/[0.06] border border-foreground/[0.08] px-3 py-2 text-xs md:text-sm font-semibold text-foreground transition-all hover:bg-foreground/[0.1] active:scale-95"
               >
-                <MapPin className="h-4 w-4" />
-                <span className="hidden sm:inline">Directions</span>
-                <span className="sm:hidden">Map</span>
+                <MapPin className="h-3.5 w-3.5 flex-shrink-0" />
+                Directions
               </a>
             )}
             {resource.mapUrl && (
@@ -199,11 +192,10 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
                 href={resource.mapUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 md:gap-2 rounded-xl md:rounded-2xl bg-[#1D4ED8] dark:bg-sky-500/15 px-3 md:px-4 py-2 md:py-2.5 text-sm font-semibold text-white dark:text-sky-400 transition-all hover:bg-[#1e40af] dark:hover:bg-sky-500/25 active:scale-95"
+                className="flex items-center gap-1.5 rounded-xl bg-[#1D4ED8] dark:bg-sky-500/15 px-3 py-2 text-xs md:text-sm font-semibold text-white dark:text-sky-400 transition-all hover:bg-[#1e40af] active:scale-95"
               >
-                <MapPin className="h-4 w-4" />
-                <span className="hidden sm:inline">Search on Maps</span>
-                <span className="sm:hidden">Maps</span>
+                <MapPin className="h-3.5 w-3.5 flex-shrink-0" />
+                Maps
               </a>
             )}
             {resource.website && (
@@ -211,9 +203,9 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
                 href={resource.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 md:gap-2 rounded-xl md:rounded-2xl bg-foreground/[0.06] border border-foreground/[0.08] px-3 md:px-4 py-2 md:py-2.5 text-sm font-semibold transition-all hover:bg-foreground/[0.1] hover:border-foreground/[0.15] active:scale-95"
+                className="flex items-center gap-1.5 rounded-xl bg-foreground/[0.06] border border-foreground/[0.08] px-3 py-2 text-xs md:text-sm font-semibold text-foreground transition-all hover:bg-foreground/[0.1] active:scale-95"
               >
-                <ExternalLink className="h-4 w-4" />
+                <ExternalLink className="h-3.5 w-3.5 flex-shrink-0" />
                 Website
               </a>
             )}
@@ -228,12 +220,12 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
     <motion.div
       whileHover={{ y: -4 }}
       transition={{ duration: 0.3 }}
-      className={`group relative overflow-hidden rounded-2xl md:rounded-3xl bg-card border border-border hover:border-foreground/20 p-5 md:p-6 lg:p-8 transition-all duration-400 shadow-xl ${isCompleted && showNotes ? "opacity-60" : ""}`}
+      className={`group relative overflow-hidden rounded-2xl md:rounded-3xl bg-card border border-border hover:border-foreground/20 p-4 md:p-6 lg:p-8 transition-all duration-400 shadow-xl w-full ${isCompleted && showNotes ? "opacity-60" : ""}`}
     >
-      {/* Hover glow effect */}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-sky-500/5 via-transparent to-transparent" />
+      {/* Hover glow */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-[#1D4ED8]/5 via-transparent to-transparent" />
       
-      <div className="relative z-10">
+      <div className="relative z-10 w-full min-w-0">
         {/* Header Row: Tags + Heart Icon */}
         <div className="flex items-start justify-between gap-3 mb-4">
           {/* Category Tags */}
@@ -275,13 +267,13 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
           </motion.button>
         </div>
 
-        {/* Title - Full Width */}
-        <h3 className="font-bold text-lg md:text-xl lg:text-2xl mb-3 leading-tight text-foreground">
+        {/* Title */}
+        <h3 className="font-bold text-base md:text-xl lg:text-2xl mb-2 md:mb-3 leading-tight text-foreground break-words">
           {resource.title[activeLanguage]}
         </h3>
         
-        {/* Description - Full Width */}
-        <p className="text-[var(--foreground-muted)] text-sm md:text-base leading-relaxed">
+        {/* Description */}
+        <p className="text-[var(--foreground-muted)] text-xs md:text-sm lg:text-base leading-relaxed break-words">
           {resource.description[activeLanguage]}
         </p>
 
@@ -303,23 +295,22 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
           </div>
         )}
 
-        {/* Contact Info */}
-        {(resource.phone || resource.address) && (
-          <div className="mt-4 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2 sm:gap-4 text-sm text-[var(--foreground-muted)]">
-            {resource.phone && (
-              <span className="flex items-center gap-2">
-                <Phone className="w-4 h-4 flex-shrink-0" />
-                <span>{resource.phone}</span>
-              </span>
-            )}
-            {resource.address && (
-              <span className="flex items-center gap-2 min-w-0">
-                <MapPin className="w-4 h-4 flex-shrink-0" />
-                <span className="truncate">{resource.address}</span>
-              </span>
-            )}
-          </div>
-        )}
+          {(resource.phone || resource.address) && (
+            <div className="mt-3 md:mt-4 flex flex-col gap-1.5 md:gap-2 text-xs md:text-sm text-[var(--foreground-muted)]">
+              {resource.phone && (
+                <span className="flex items-center gap-2">
+                  <Phone className="w-3.5 h-3.5 md:w-4 md:h-4 flex-shrink-0" />
+                  <span>{resource.phone}</span>
+                </span>
+              )}
+              {resource.address && (
+                <span className="flex items-start gap-2 min-w-0">
+                  <MapPin className="w-3.5 h-3.5 md:w-4 md:h-4 flex-shrink-0 mt-0.5" />
+                  <span className="break-words">{resource.address}</span>
+                </span>
+              )}
+            </div>
+          )}
 
         {/* Expandable Details Section */}
         {hasExtraDetails && (
@@ -416,13 +407,13 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
         )}
 
         {/* Action Buttons */}
-        <div className="mt-8 flex flex-wrap gap-4">
+        <div className="mt-5 md:mt-8 flex flex-wrap gap-1.5 md:gap-3">
           {resource.phone && (
             <a
               href={`tel:${resource.phone}`}
-              className="flex items-center gap-3 rounded-2xl bg-[#1D4ED8] dark:bg-sky-500/15 px-7 py-4 text-base font-bold text-white dark:text-sky-400 transition-all hover:bg-[#1e40af] dark:hover:bg-sky-500/25 active:scale-95"
+              className="flex items-center gap-1.5 md:gap-2 rounded-xl bg-[#1D4ED8] dark:bg-sky-500/15 px-3 md:px-5 py-2 md:py-3 text-xs md:text-sm font-bold text-white dark:text-sky-400 transition-all hover:bg-[#1e40af] active:scale-95"
             >
-              <Phone className="h-5 w-5" />
+              <Phone className="h-3.5 w-3.5 md:h-4 md:w-4 flex-shrink-0" />
               Call
             </a>
           )}
@@ -431,9 +422,9 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
               href={googleMapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 rounded-2xl bg-foreground/[0.06] border border-foreground/[0.08] px-7 py-4 text-base font-bold text-foreground transition-all hover:bg-foreground/[0.1] active:scale-95"
+              className="flex items-center gap-1.5 md:gap-2 rounded-xl bg-foreground/[0.06] border border-foreground/[0.08] px-3 md:px-5 py-2 md:py-3 text-xs md:text-sm font-bold text-foreground transition-all hover:bg-foreground/[0.1] active:scale-95"
             >
-              <MapPin className="h-5 w-5" />
+              <MapPin className="h-3.5 w-3.5 md:h-4 md:w-4 flex-shrink-0" />
               Directions
             </a>
           )}
@@ -442,10 +433,10 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
               href={resource.mapUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 rounded-2xl bg-[#1D4ED8] dark:bg-sky-500/15 px-7 py-4 text-base font-bold text-white dark:text-sky-400 transition-all hover:bg-[#1e40af] dark:hover:bg-sky-500/25 active:scale-95"
+              className="flex items-center gap-1.5 md:gap-2 rounded-xl bg-[#1D4ED8] dark:bg-sky-500/15 px-3 md:px-5 py-2 md:py-3 text-xs md:text-sm font-bold text-white dark:text-sky-400 transition-all hover:bg-[#1e40af] active:scale-95"
             >
-              <MapPin className="h-5 w-5" />
-              Search on Google Maps
+              <MapPin className="h-3.5 w-3.5 md:h-4 md:w-4 flex-shrink-0" />
+              Maps
             </a>
           )}
           {resource.website && (
