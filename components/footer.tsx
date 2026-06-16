@@ -553,9 +553,9 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
             <div className="max-w-[1200px] mx-auto">
               <div className="grid md:grid-cols-12 gap-8 md:gap-6 items-start">
                 {/* Brand Column — dark surface logo */}
-                <div className="md:col-span-3 flex flex-col items-center md:items-start">
+                <div className="md:col-span-3 flex flex-col items-start">
                   <CalgaryConnectLogo size="md" darkSurface />
-                  <p className="text-xs text-white/30 mt-3 text-center md:text-left">Everything Calgary. One Place.</p>
+                  <p className="text-xs text-white/30 mt-3 text-left">Everything Calgary. One Place.</p>
                 </div>
 
               {/* Link Columns Container */}

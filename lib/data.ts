@@ -70,12 +70,12 @@ export const translations: Record<string, Record<Language, string>> = {
     zh: "探索",
   },
   aiGuide: {
-    en: "iKonnect Guide",
-    fr: "iKonnect Guide",
-    tl: "iKonnect Guide",
-    es: "iKonnect Guide",
-    ar: "iKonnect Guide",
-    zh: "iKonnect Guide",
+    en: "Askonnect",
+    fr: "Askonnect",
+    tl: "Askonnect",
+    es: "Askonnect",
+    ar: "Askonnect",
+    zh: "Askonnect",
   },
   shortlist: {
     en: "Shortlist",

@@ -115,7 +115,7 @@ export default function HomeTab() {
             transition={{ delay: 0.15, duration: 0.6 }}
             className="text-base md:text-lg text-foreground/70 mt-4 md:mt-6 mb-8 md:mb-10 leading-relaxed"
           >
-            Search for housing, jobs, healthcare, or ask iKonnect anything about Calgary.
+            Search for housing, jobs, healthcare, or ask Askonnect anything about Calgary.
           </motion.p>
 
           {/* Search bar */}
@@ -325,7 +325,7 @@ export default function HomeTab() {
                 </motion.div>
                 
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs font-bold text-[#E1251B] uppercase tracking-[0.15em] mb-1.5">iKonnect Guide</p>
+                  <p className="text-xs font-bold text-[#E1251B] uppercase tracking-[0.15em] mb-1.5">Askonnect</p>
                   <h3 className="text-lg md:text-2xl font-bold text-white mb-1 leading-tight">
                     Get personalized guidance
                   </h3>

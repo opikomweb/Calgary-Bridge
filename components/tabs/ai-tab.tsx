@@ -184,7 +184,7 @@ export default function AITab() {
                   >
                     <Image
                       src="/ikonnect-guide-avatar.png"
-                      alt="iKonnect Guide"
+                      alt="Askonnect"
                       width={96}
                       height={96}
                       className="h-full w-full object-contain"
@@ -253,7 +253,7 @@ export default function AITab() {
                           ) : (
                             <Image
                               src="/ikonnect-guide-avatar.png"
-                              alt="iKonnect Guide"
+                              alt="Askonnect"
                               width={44}
                               height={44}
                               className="h-full w-full object-contain"
@@ -330,7 +330,7 @@ export default function AITab() {
                       <div className="flex h-10 w-10 md:h-11 md:w-11 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl md:rounded-2xl">
                         <Image
                           src="/ikonnect-guide-avatar.png"
-                          alt="iKonnect Guide"
+                          alt="Askonnect"
                           width={44}
                           height={44}
                           className="h-full w-full object-contain"
@@ -361,7 +361,7 @@ export default function AITab() {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSend(input)}
-                  placeholder="Ask iKonnect anything..."
+                  placeholder="Ask Askonnect anything..."
                   className="flex-1 bg-transparent px-3 md:px-4 py-2.5 md:py-3 text-foreground placeholder:text-foreground/50 focus:outline-none text-sm md:text-base min-w-0"
                 />
                 <motion.button

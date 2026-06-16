@@ -258,7 +258,7 @@ export default function LandingPage() {
                   height={28}
                   className="w-7 h-7 rounded-full ring-1 ring-white/25 flex-shrink-0"
                 />
-                iKonnect Guide
+                Askonnect
               </button>
 
               <button
@@ -353,7 +353,7 @@ export default function LandingPage() {
                     height={28}
                     className="w-7 h-7 rounded-full ring-1 ring-white/25 flex-shrink-0"
                   />
-                  iKonnect Guide
+                  Askonnect
                 </button>
 
                 <button
@@ -520,7 +520,7 @@ export default function LandingPage() {
                   height={28}
                   className="w-7 h-7 rounded-full ring-1 ring-white/30 flex-shrink-0"
                 />
-                iKonnect, Ask me.
+                Askonnect — Ask me.
             </motion.button>
           </motion.div>
         </motion.div>
@@ -664,7 +664,7 @@ export default function LandingPage() {
                   height={28}
                   className="w-7 h-7 rounded-full ring-1 ring-white/30 flex-shrink-0"
                 />
-                Try the iKonnect Guide
+                Try Askonnect
               </motion.button>
             </motion.div>
 
@@ -687,7 +687,7 @@ export default function LandingPage() {
               <div className="relative w-8 h-8 rounded-full overflow-hidden ring-1 ring-white/20 flex-shrink-0">
                 <Image
                   src="/ikonnect-guide-avatar.png"
-                  alt="iKonnect Guide"
+                  alt="Askonnect"
                   fill
                   className="object-cover"
                 />
