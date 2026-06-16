@@ -282,7 +282,7 @@ export default function MainApp() {
                     ? item.highlight
                       ? "text-[#E1251B]"
                       : "text-[#1D4ED8] dark:text-[#38BDF8]"
-                    : "text-foreground/55 hover:text-foreground/80 active:scale-90"
+                    : "text-[#1a2744] dark:text-white/60 hover:text-[#1D4ED8] dark:hover:text-white/90 active:scale-90"
                 }`}
               >
                 {active && item.highlight ? (
@@ -319,7 +319,7 @@ export default function MainApp() {
                     alt=""
                     width={22}
                     height={22}
-                    className="h-[22px] w-[22px] object-contain shrink-0 opacity-60"
+                    className="h-[22px] w-[22px] object-contain shrink-0 opacity-85"
                   />
                 )}
               </button>

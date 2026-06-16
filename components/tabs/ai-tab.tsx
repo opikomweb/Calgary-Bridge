@@ -198,7 +198,7 @@ export default function AITab() {
                     transition={{ delay: 0.2 }}
                     className="text-2xl md:text-3xl lg:text-4xl font-bold mb-8 md:mb-10 tracking-tight text-balance max-w-md mx-auto"
                   >
-                    How can we help you thrive in Calgary today?
+                    What do you need in Calgary?
                   </motion.h1>
 
                   {/* Simple example prompts (optional starting points) */}
