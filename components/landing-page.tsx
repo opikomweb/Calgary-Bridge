@@ -498,7 +498,7 @@ export default function LandingPage() {
       </section>
 
       {/* ========== IMMERSIVE PATHWAYS — Solutions First ========== */}
-      <section className="relative py-20 md:py-32 lg:py-40">
+      <section className="relative py-14 md:py-20 lg:py-24">
         <div className="max-w-[1400px] mx-auto px-5 md:px-8">
           {/* Section header */}
           <motion.div
@@ -566,7 +566,7 @@ export default function LandingPage() {
       </section>
 
       {/* ========== AI SECTION — Conversational Preview ========== */}
-      <section className="relative py-20 md:py-32 lg:py-40 overflow-hidden">
+      <section className="relative py-14 md:py-20 lg:py-24 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#38BDF8]/5 to-transparent" />
 
         <div className="max-w-[1200px] mx-auto px-5 md:px-8 relative z-10">
@@ -668,7 +668,7 @@ export default function LandingPage() {
       </section>
 
       {/* ========== FOOTER CTA ========== */}
-      <section className="relative py-20 md:py-32">
+      <section className="relative py-14 md:py-20">
         <div className="max-w-[900px] mx-auto px-5 md:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

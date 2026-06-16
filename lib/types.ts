@@ -45,6 +45,9 @@ export interface Resource {
   phone?: string;
   address?: string;
   website?: string;
+  /** Direct Google Maps search URL. Use for "search near your home" style
+   *  resources where there is no single fixed address. */
+  mapUrl?: string;
   hours?: string;
   featured?: boolean;
   hiddenGem?: boolean;

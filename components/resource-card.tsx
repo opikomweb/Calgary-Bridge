@@ -194,6 +194,18 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
                 <span className="sm:hidden">Map</span>
               </a>
             )}
+            {resource.mapUrl && (
+              <a
+                href={resource.mapUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 md:gap-2 rounded-xl md:rounded-2xl bg-sky-500/15 px-3 md:px-4 py-2 md:py-2.5 text-sm font-semibold text-sky-400 transition-all hover:bg-sky-500/25 active:scale-95"
+              >
+                <MapPin className="h-4 w-4" />
+                <span className="hidden sm:inline">Search on Maps</span>
+                <span className="sm:hidden">Maps</span>
+              </a>
+            )}
             {resource.website && (
               <a
                 href={resource.website}
@@ -423,6 +435,17 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
             >
               <MapPin className="h-5 w-5" />
               Directions
+            </a>
+          )}
+          {resource.mapUrl && (
+            <a
+              href={resource.mapUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 rounded-2xl bg-sky-500/15 px-7 py-4 text-base font-bold text-sky-400 transition-all hover:bg-sky-500/25 active:scale-95"
+            >
+              <MapPin className="h-5 w-5" />
+              Search on Google Maps
             </a>
           )}
           {resource.website && (

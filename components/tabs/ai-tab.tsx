@@ -228,7 +228,7 @@ export default function AITab() {
               </div>
             ) : (
               /* Chat Messages */
-              <div className="px-5 md:px-8 py-6 md:py-8">
+              <div className="mx-auto w-full max-w-3xl px-5 md:px-8 pt-8 md:pt-10 pb-6 md:pb-8">
                 <div className="flex flex-col gap-5 md:gap-6">
                   <AnimatePresence>
                     {chatMessages.map((message) => (
@@ -350,17 +350,17 @@ export default function AITab() {
         </div>
 
         {/* Right Side - Calgary Intelligence Panel (40%) - Desktop Only */}
-        <div className="hidden lg:flex w-[40%] border-l border-[var(--border)] bg-gradient-to-b from-[var(--background)] to-[var(--background-secondary)] flex-col">
-          <div className="flex-1 overflow-y-auto px-10 py-12">
+        <div className="hidden lg:flex w-[38%] xl:w-[40%] border-l border-[var(--border)] bg-gradient-to-b from-[var(--background)] to-[var(--background-secondary)] flex-col">
+          <div className="flex-1 overflow-y-auto px-6 xl:px-8 py-8 xl:py-10">
             {/* Calgary Insights Header - Clean Icon */}
-            <div className="mb-14">
-              <div className="flex items-center gap-5 mb-3">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#38BDF8]/20 to-[#0284c7]/10 flex items-center justify-center border border-[#38BDF8]/20">
-                  <TrendingUp className="w-7 h-7 text-[#38BDF8]" />
+            <div className="mb-8">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 xl:w-14 xl:h-14 flex-shrink-0 rounded-2xl bg-gradient-to-br from-[#38BDF8]/20 to-[#0284c7]/10 flex items-center justify-center border border-[#38BDF8]/20">
+                  <TrendingUp className="w-6 h-6 xl:w-7 xl:h-7 text-[#38BDF8]" />
                 </div>
-                <div>
-                  <h2 className="text-2xl font-bold tracking-tight leading-tight">Calgary Pulse</h2>
-                  <p className="text-base text-foreground/50 mt-2 leading-relaxed">Live insights from your city</p>
+                <div className="min-w-0">
+                  <h2 className="text-xl xl:text-2xl font-bold tracking-tight leading-tight">Calgary Pulse</h2>
+                  <p className="text-sm xl:text-base text-foreground/50 mt-0.5 leading-relaxed">Live insights from your city</p>
                 </div>
               </div>
             </div>
@@ -370,18 +370,18 @@ export default function AITab() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="glass-card rounded-2xl p-8 mb-10"
+              className="glass-card rounded-2xl p-5 xl:p-6 mb-6"
             >
-              <div className="flex items-center gap-5 mb-6">
-                <div className="w-14 h-14 rounded-2xl bg-blue-500/20 flex items-center justify-center">
-                  <CloudSnow className="w-7 h-7 text-blue-400" />
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 xl:w-14 xl:h-14 flex-shrink-0 rounded-2xl bg-blue-500/20 flex items-center justify-center">
+                  <CloudSnow className="w-6 h-6 xl:w-7 xl:h-7 text-blue-400" />
                 </div>
-                <div>
-                  <p className="font-bold text-xl leading-tight">Winter Weather</p>
-                  <p className="text-base text-foreground/50 mt-2 leading-relaxed">-8C, light snow expected</p>
+                <div className="min-w-0">
+                  <p className="font-bold text-lg xl:text-xl leading-tight">Winter Weather</p>
+                  <p className="text-sm xl:text-base text-foreground/50 mt-0.5 leading-relaxed">-8°C, light snow expected</p>
                 </div>
               </div>
-              <p className="text-base text-foreground/60 leading-[1.8]">
+              <p className="text-sm xl:text-base text-foreground/60 leading-relaxed">
                 Dress warmly! Free warming centers available at downtown shelters.
               </p>
             </motion.div>
@@ -391,14 +391,14 @@ export default function AITab() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="space-y-5 mb-14"
+              className="space-y-3 mb-8"
             >
               {calgaryInsights.map((insight, i) => (
-                <div key={i} className="flex items-center gap-4 p-5 rounded-2xl bg-foreground/[0.04] border border-foreground/[0.08]">
-                  <div className={`flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl ${insight.chip}`}>
+                <div key={i} className="flex items-center gap-3.5 p-4 rounded-2xl bg-foreground/[0.04] border border-foreground/[0.08]">
+                  <div className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl ${insight.chip}`}>
                     <insight.icon className="w-5 h-5" />
                   </div>
-                  <span className="text-base font-semibold leading-relaxed text-foreground/90">{insight.label}</span>
+                  <span className="text-sm xl:text-base font-semibold leading-snug text-foreground/90">{insight.label}</span>
                 </div>
               ))}
             </motion.div>
@@ -408,18 +408,17 @@ export default function AITab() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="mb-14"
             >
-              <h3 className="text-xl font-bold mb-8 flex items-center gap-4">
-                <TrendingUp className="w-6 h-6 text-[#0284c7]" />
+              <h3 className="text-lg xl:text-xl font-bold mb-5 flex items-center gap-3">
+                <TrendingUp className="w-5 h-5 xl:w-6 xl:h-6 text-[#0284c7]" />
                 Popular This Week
               </h3>
-              <div className="space-y-5">
+              <div className="space-y-3">
                 {popularQuestions.map((question, i) => (
                   <button
                     key={i}
                     onClick={() => handleSuggestionClick(question)}
-                    className="w-full text-left p-6 rounded-2xl bg-foreground/[0.03] border border-foreground/[0.06] hover:bg-foreground/[0.06] hover:border-foreground/[0.12] transition-all text-base text-foreground/60 hover:text-foreground leading-[1.7]"
+                    className="w-full text-left p-4 xl:p-5 rounded-2xl bg-foreground/[0.03] border border-foreground/[0.06] hover:bg-foreground/[0.06] hover:border-foreground/[0.12] transition-all text-sm xl:text-base text-foreground/60 hover:text-foreground leading-relaxed"
                   >
                     {question}
                   </button>
@@ -427,22 +426,6 @@ export default function AITab() {
               </div>
             </motion.div>
 
-            {/* Calgary Skyline Image Decoration */}
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="mt-auto pt-8"
-            >
-              <div className="relative w-full h-24 rounded-xl overflow-hidden opacity-30">
-                <Image
-                  src="/calgary-skyline-bg.png"
-                  alt=""
-                  fill
-                  className="object-cover object-bottom"
-                />
-              </div>
-            </motion.div>
           </div>
         </div>
       </div>
