@@ -1,25 +1,11 @@
 "use client";
 
-/**
- * CalgaryPulsePanel
- *
- * Live city data panel displayed in the iKonnect Guide (AI tab) sidebar.
- * Data is fetched from /api/calgary-pulse which aggregates:
- *   - Open-Meteo      : temperature, feels-like, wind, humidity, UV, WMO code
- *   - Environment Canada : weather watches / warnings (Calgary ATOM feed)
- *   - MSC GeoMet-OGC  : Air Quality Health Index (AQHI)
- *
- * Refreshes automatically every 10 minutes via a useEffect interval.
- * Shows an animated skeleton while loading and graceful per-section fallbacks.
- */
-
 import React, { useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Wind, Droplets, Sun, AlertTriangle, Activity,
-  ExternalLink, RefreshCw, Thermometer, Eye,
-  Cloud, CloudRain, CloudSnow, CloudSun, Loader2,
-  Newspaper, Radio,
+  ExternalLink, RefreshCw, Eye, Cloud, Loader2,
+  Radio, ChevronRight, ArrowUpRight,
 } from "lucide-react";
 
 // ---- Types ------------------------------------------------------------------
@@ -62,7 +48,7 @@ type PulseData = {
   fetchedAt: string;
 };
 
-// ---- Helpers ----------------------------------------------------------------
+// ---- Weather helpers --------------------------------------------------------
 
 function wmoToDesc(code: number): string {
   if (code === 0) return "Clear sky";
@@ -90,61 +76,300 @@ function getSeasonLabel(temp: number, wmo: number): string {
   return "Autumn Weather";
 }
 
-function weatherGradient(wmo: number, temp: number): string {
-  if (wmo >= 95) return "from-[#4A1010] via-[#6B1A1A] to-[#7C2020]";
-  if (wmo >= 71 && wmo <= 77) return "from-[#0A2540] via-[#0E2E52] to-[#15396b]";
-  if ((wmo >= 51 && wmo <= 67) || (wmo >= 80 && wmo <= 82)) return "from-[#1C3A4A] via-[#1e4060] to-[#1a3550]";
-  if (temp >= 28) return "from-[#7C1D10] via-[#9B2A1A] to-[#B43A25]";
-  if (temp >= 18) return "from-[#0A4A2A] via-[#0D5C34] to-[#0E6B3C]";
-  if (temp >= 5) return "from-[#1A3A5C] via-[#1e4878] to-[#163D6E]";
-  return "from-[#0A2540] via-[#0E2E52] to-[#15396b]";
+/** Determine which scene to show based on WMO code */
+type WeatherScene = "sunny" | "partly_cloudy" | "cloudy" | "rainy" | "snowy" | "stormy" | "night";
+function getScene(wmo: number, isDay: boolean): WeatherScene {
+  if (!isDay) return "night";
+  if (wmo >= 95) return "stormy";
+  if (wmo >= 71 && wmo <= 86) return "snowy";
+  if ((wmo >= 51 && wmo <= 67) || (wmo >= 80 && wmo <= 82)) return "rainy";
+  if (wmo >= 3) return "cloudy";
+  if (wmo >= 1) return "partly_cloudy";
+  return "sunny";
 }
 
-function WeatherIcon({ wmo, isDay, className }: { wmo: number; isDay: boolean; className?: string }) {
-  if (wmo >= 71 && wmo <= 86) return <CloudSnow className={className} />;
-  if ((wmo >= 51 && wmo <= 67) || (wmo >= 80 && wmo <= 82)) return <CloudRain className={className} />;
-  if (wmo >= 3) return <Cloud className={className} />;
-  if (wmo >= 1) return isDay ? <CloudSun className={className} /> : <Cloud className={className} />;
-  return isDay ? <Sun className={className} /> : <Cloud className={className} />;
+/** Sky gradient top colour per scene */
+function skyGradient(scene: WeatherScene): string {
+  switch (scene) {
+    case "sunny":        return "from-[#0ea5e9] via-[#38bdf8] to-[#7dd3fc]";
+    case "partly_cloudy":return "from-[#0284c7] via-[#38bdf8] to-[#bae6fd]";
+    case "cloudy":       return "from-[#334155] via-[#475569] to-[#64748b]";
+    case "rainy":        return "from-[#1e3a5f] via-[#1e4060] to-[#334155]";
+    case "snowy":        return "from-[#1e3a5c] via-[#334155] to-[#94a3b8]";
+    case "stormy":       return "from-[#0f172a] via-[#1e293b] to-[#334155]";
+    case "night":        return "from-[#0f172a] via-[#1e1b4b] to-[#312e81]";
+  }
 }
 
-function uvLabel(uv: number): { text: string; colour: string } {
-  if (uv <= 2) return { text: "Low", colour: "text-emerald-600 dark:text-emerald-400" };
-  if (uv <= 5) return { text: "Moderate", colour: "text-amber-500" };
-  if (uv <= 7) return { text: "High", colour: "text-orange-500" };
-  if (uv <= 10) return { text: "Very High", colour: "text-red-500" };
-  return { text: "Extreme", colour: "text-red-700 font-bold" };
+/** Ambient overlay tint for scene card */
+function ambientTint(scene: WeatherScene): string {
+  switch (scene) {
+    case "sunny":
+    case "partly_cloudy": return "bg-yellow-400/[0.04]";
+    case "rainy":         return "bg-blue-600/[0.06]";
+    case "snowy":         return "bg-blue-200/[0.06]";
+    case "stormy":        return "bg-slate-900/[0.10]";
+    case "night":         return "bg-indigo-900/[0.10]";
+    default:              return "";
+  }
 }
 
-function aqhiColour(risk: string): string {
-  if (risk === "Low") return "text-emerald-600 dark:text-emerald-400";
-  if (risk === "Moderate") return "text-amber-500";
-  if (risk === "High") return "text-orange-500";
-  return "text-red-600";
+// ---- Animated SVG scenes ----------------------------------------------------
+
+function SunElement() {
+  return (
+    <g>
+      {/* Glow halo */}
+      <circle cx="68" cy="44" r="22" fill="rgba(251,191,36,0.18)" />
+      {/* Sun disc */}
+      <motion.circle
+        cx="68" cy="44" r="14"
+        fill="#FDE68A"
+        animate={{ scale: [1, 1.06, 1], opacity: [0.95, 1, 0.95] }}
+        transition={{ repeat: Infinity, duration: 3.5, ease: "easeInOut" }}
+      />
+      {/* Rays */}
+      {Array.from({ length: 8 }, (_, i) => {
+        const angle = (i * 45 * Math.PI) / 180;
+        const x1 = 68 + 17 * Math.cos(angle);
+        const y1 = 44 + 17 * Math.sin(angle);
+        const x2 = 68 + 24 * Math.cos(angle);
+        const y2 = 44 + 24 * Math.sin(angle);
+        return (
+          <motion.line
+            key={i} x1={x1} y1={y1} x2={x2} y2={y2}
+            stroke="#FDE68A" strokeWidth="2.5" strokeLinecap="round"
+            animate={{ opacity: [0.7, 1, 0.7] }}
+            transition={{ repeat: Infinity, duration: 2, delay: i * 0.1, ease: "easeInOut" }}
+          />
+        );
+      })}
+    </g>
+  );
 }
 
-function alertSeverityStyle(title: string): string {
-  const t = title.toUpperCase();
-  if (t.includes("RED") || t.includes("EXTREME") || t.includes("EMERGENCY")) return "border-[#E1251B]/50 bg-[#E1251B]/8";
-  if (t.includes("ORANGE") || t.includes("WARNING")) return "border-orange-500/50 bg-orange-500/8";
-  if (t.includes("YELLOW") || t.includes("WATCH")) return "border-amber-400/50 bg-amber-400/8";
-  return "border-foreground/[0.1] bg-foreground/[0.04]";
+function CloudElement({ x = 0, y = 0, scale = 1, opacity = 1, delay = 0, drift = 8 }: {
+  x?: number; y?: number; scale?: number; opacity?: number; delay?: number; drift?: number;
+}) {
+  return (
+    <motion.g
+      transform={`translate(${x},${y}) scale(${scale})`}
+      animate={{ x: [0, drift, 0] }}
+      transition={{ repeat: Infinity, duration: 8 + delay, delay, ease: "easeInOut" }}
+      style={{ opacity }}
+    >
+      <ellipse cx="22" cy="18" rx="14" ry="8" fill="rgba(255,255,255,0.92)" />
+      <ellipse cx="36" cy="16" rx="10" ry="7" fill="rgba(255,255,255,0.92)" />
+      <ellipse cx="12" cy="19" rx="9"  ry="6" fill="rgba(255,255,255,0.88)" />
+      <rect x="4" y="19" width="44" height="6" rx="3" fill="rgba(255,255,255,0.88)" />
+    </motion.g>
+  );
 }
 
-function alertIconColour(title: string): string {
-  const t = title.toUpperCase();
-  if (t.includes("RED") || t.includes("EXTREME")) return "text-[#E1251B]";
-  if (t.includes("ORANGE") || t.includes("WARNING")) return "text-orange-500";
-  if (t.includes("YELLOW") || t.includes("WATCH")) return "text-amber-500";
-  return "text-foreground/50";
+function RainDrops() {
+  return (
+    <>
+      {Array.from({ length: 18 }, (_, i) => {
+        const cx = 10 + (i * 17) % 155;
+        const cy = 32 + (i * 11) % 36;
+        const delay = (i * 0.18) % 1.4;
+        return (
+          <motion.line
+            key={i}
+            x1={cx} y1={cy} x2={cx - 2} y2={cy + 9}
+            stroke="rgba(147,197,253,0.85)" strokeWidth="1.5" strokeLinecap="round"
+            animate={{ y: [0, 28, 0], opacity: [0, 0.9, 0] }}
+            transition={{ repeat: Infinity, duration: 1.1, delay, ease: "linear" }}
+          />
+        );
+      })}
+    </>
+  );
 }
 
-function sourceBadgeStyle(source: string): string {
-  if (source.includes("660") || source.includes("CityNews")) return "bg-[#1D4ED8]/15 text-[#1D4ED8] dark:text-[#60A5FA]";
-  if (source.includes("CBC")) return "bg-red-600/12 text-red-700 dark:text-red-400";
-  if (source.includes("Global")) return "bg-emerald-600/12 text-emerald-700 dark:text-emerald-400";
-  if (source.includes("Herald")) return "bg-amber-500/12 text-amber-700 dark:text-amber-400";
-  return "bg-foreground/[0.08] text-foreground/60";
+function SnowFlakes() {
+  return (
+    <>
+      {Array.from({ length: 14 }, (_, i) => {
+        const cx = 12 + (i * 13) % 152;
+        const cy = 28 + (i * 9) % 30;
+        const delay = (i * 0.22) % 1.8;
+        return (
+          <motion.circle
+            key={i} cx={cx} cy={cy} r="2"
+            fill="rgba(219,234,254,0.9)"
+            animate={{ y: [0, 30, 0], opacity: [0, 1, 0], x: [0, (i % 2 === 0 ? 4 : -4), 0] }}
+            transition={{ repeat: Infinity, duration: 1.8, delay, ease: "easeInOut" }}
+          />
+        );
+      })}
+    </>
+  );
+}
+
+function LightningBolt({ x, y }: { x: number; y: number }) {
+  return (
+    <motion.polygon
+      points={`${x},${y} ${x-5},${y+12} ${x+1},${y+12} ${x-4},${y+24} ${x+8},${y+9} ${x+2},${y+9}`}
+      fill="#FDE68A"
+      animate={{ opacity: [0, 1, 0, 1, 0] }}
+      transition={{ repeat: Infinity, duration: 3.2, delay: x * 0.01, ease: "easeOut" }}
+    />
+  );
+}
+
+function StarField() {
+  return (
+    <>
+      {Array.from({ length: 20 }, (_, i) => {
+        const cx = 8 + (i * 19) % 155;
+        const cy = 6 + (i * 7) % 32;
+        return (
+          <motion.circle
+            key={i} cx={cx} cy={cy} r={i % 3 === 0 ? 1.5 : 1}
+            fill="white"
+            animate={{ opacity: [0.3, 1, 0.3] }}
+            transition={{ repeat: Infinity, duration: 2 + (i % 3), delay: (i * 0.15) % 2, ease: "easeInOut" }}
+          />
+        );
+      })}
+    </>
+  );
+}
+
+/** Mountain silhouette (shared across all scenes) */
+function MountainCityscape() {
+  return (
+    <g>
+      {/* Background mountains */}
+      <polygon points="0,68 28,36 56,68" fill="rgba(15,23,42,0.55)" />
+      <polygon points="18,68 52,22 86,68" fill="rgba(15,23,42,0.65)" />
+      <polygon points="60,68 88,30 116,68" fill="rgba(15,23,42,0.55)" />
+      <polygon points="100,68 124,38 148,68" fill="rgba(15,23,42,0.50)" />
+      <polygon points="130,68 154,42 178,68" fill="rgba(15,23,42,0.45)" />
+      {/* City buildings foreground */}
+      <rect x="0"   y="52" width="12" height="16" fill="rgba(15,23,42,0.75)" rx="1" />
+      <rect x="14"  y="46" width="10" height="22" fill="rgba(15,23,42,0.80)" rx="1" />
+      <rect x="26"  y="50" width="8"  height="18" fill="rgba(15,23,42,0.70)" rx="1" />
+      <rect x="36"  y="44" width="14" height="24" fill="rgba(15,23,42,0.82)" rx="1" />
+      {/* Calgary Tower */}
+      <rect x="72"  y="48" width="6"  height="20" fill="rgba(15,23,42,0.88)" rx="0.5" />
+      <rect x="70"  y="45" width="10" height="5"  fill="rgba(15,23,42,0.88)" rx="1" />
+      <rect x="74"  y="36" width="2"  height="12" fill="rgba(15,23,42,0.88)" />
+      <circle cx="75" cy="34" r="3"  fill="rgba(15,23,42,0.88)" />
+      <rect x="74.5" y="30" width="1" height="6" fill="rgba(15,23,42,0.88)" />
+      {/* More buildings right */}
+      <rect x="86"  y="50" width="10" height="18" fill="rgba(15,23,42,0.78)" rx="1" />
+      <rect x="98"  y="54" width="8"  height="14" fill="rgba(15,23,42,0.72)" rx="1" />
+      <rect x="108" y="48" width="12" height="20" fill="rgba(15,23,42,0.80)" rx="1" />
+      <rect x="122" y="52" width="9"  height="16" fill="rgba(15,23,42,0.70)" rx="1" />
+      <rect x="133" y="46" width="11" height="22" fill="rgba(15,23,42,0.78)" rx="1" />
+      <rect x="146" y="55" width="8"  height="13" fill="rgba(15,23,42,0.65)" rx="1" />
+      <rect x="156" y="50" width="10" height="18" fill="rgba(15,23,42,0.72)" rx="1" />
+      {/* Ground strip */}
+      <rect x="0" y="65" width="180" height="4" fill="rgba(15,23,42,0.75)" />
+    </g>
+  );
+}
+
+/** Full animated weather SVG canvas */
+function WeatherScene({ scene }: { scene: WeatherScene }) {
+  return (
+    <svg
+      viewBox="0 0 180 70"
+      className="w-full h-full"
+      preserveAspectRatio="xMidYMax meet"
+      aria-hidden
+    >
+      {/* Sky */}
+      <defs>
+        <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={scene === "sunny" ? "#0ea5e9" : scene === "night" ? "#0f172a" : scene === "stormy" ? "#1e293b" : scene === "rainy" ? "#1e3a5f" : "#334155"} />
+          <stop offset="100%" stopColor={scene === "sunny" ? "#7dd3fc" : scene === "night" ? "#312e81" : scene === "stormy" ? "#334155" : scene === "rainy" ? "#334155" : "#94a3b8"} />
+        </linearGradient>
+      </defs>
+      <rect x="0" y="0" width="180" height="70" fill="url(#skyGrad)" />
+
+      {/* Scene-specific elements */}
+      {scene === "night" && <StarField />}
+      {(scene === "sunny") && <SunElement />}
+      {(scene === "partly_cloudy") && (
+        <>
+          <SunElement />
+          <CloudElement x={40} y={18} scale={0.8} opacity={0.92} delay={0} drift={10} />
+        </>
+      )}
+      {scene === "cloudy" && (
+        <>
+          <CloudElement x={10}  y={8}  scale={1.1}  opacity={0.90} delay={0}   drift={12} />
+          <CloudElement x={65}  y={4}  scale={0.85} opacity={0.80} delay={1.5} drift={8}  />
+          <CloudElement x={105} y={10} scale={0.95} opacity={0.85} delay={0.8} drift={10} />
+        </>
+      )}
+      {scene === "rainy" && (
+        <>
+          <CloudElement x={5}   y={6}  scale={1.05} opacity={0.85} delay={0}   drift={6} />
+          <CloudElement x={70}  y={3}  scale={0.90} opacity={0.80} delay={1}   drift={5} />
+          <CloudElement x={115} y={8}  scale={0.95} opacity={0.82} delay={0.6} drift={7} />
+          <RainDrops />
+        </>
+      )}
+      {scene === "snowy" && (
+        <>
+          <CloudElement x={8}   y={4}  scale={1.0}  opacity={0.80} delay={0}   drift={5} />
+          <CloudElement x={80}  y={2}  scale={0.88} opacity={0.75} delay={1.2} drift={4} />
+          <CloudElement x={118} y={6}  scale={0.92} opacity={0.78} delay={0.7} drift={6} />
+          <SnowFlakes />
+        </>
+      )}
+      {scene === "stormy" && (
+        <>
+          <CloudElement x={0}   y={2}  scale={1.2}  opacity={0.90} delay={0}   drift={4} />
+          <CloudElement x={75}  y={0}  scale={1.1}  opacity={0.85} delay={0.5} drift={3} />
+          <CloudElement x={110} y={4}  scale={1.0}  opacity={0.88} delay={1.0} drift={5} />
+          <RainDrops />
+          <LightningBolt x={55} y={28} />
+          <LightningBolt x={105} y={24} />
+        </>
+      )}
+      {scene === "night" && (
+        <>
+          {/* Moon */}
+          <motion.circle cx="140" cy="18" r="11" fill="#e2e8f0"
+            animate={{ opacity: [0.85, 1, 0.85] }}
+            transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+          />
+          <circle cx="145" cy="14" r="8" fill={scene === "night" ? "#1e1b4b" : "transparent"} />
+          <CloudElement x={90} y={20} scale={0.7} opacity={0.45} delay={2} drift={6} />
+        </>
+      )}
+
+      {/* City/mountain silhouette always on top */}
+      <MountainCityscape />
+    </svg>
+  );
+}
+
+// ---- News helpers -----------------------------------------------------------
+
+function sourceBadgeStyle(source: string): { pill: string; tag: string } {
+  if (source.includes("660") || source.includes("CityNews"))
+    return { pill: "bg-[#1D4ED8]/10 text-[#1D4ED8] ring-1 ring-[#1D4ED8]/20", tag: "bg-[#1D4ED8]/10 text-[#1D4ED8]" };
+  if (source.includes("CBC"))
+    return { pill: "bg-[#CB2B2B]/10 text-[#CB2B2B] ring-1 ring-[#CB2B2B]/20", tag: "bg-[#CB2B2B]/10 text-[#CB2B2B]" };
+  if (source.includes("Global"))
+    return { pill: "bg-emerald-600/10 text-emerald-700 dark:text-emerald-400 ring-1 ring-emerald-600/20", tag: "bg-emerald-600/10 text-emerald-700 dark:text-emerald-400" };
+  if (source.includes("Herald"))
+    return { pill: "bg-amber-500/10 text-amber-700 dark:text-amber-400 ring-1 ring-amber-500/20", tag: "bg-amber-500/10 text-amber-700 dark:text-amber-400" };
+  return { pill: "bg-foreground/[0.08] text-foreground/60", tag: "bg-foreground/[0.06] text-foreground/50" };
+}
+
+function shortSourceName(source: string): string {
+  if (source.includes("660") || source.includes("CityNews")) return "660";
+  if (source.includes("CBC")) return "CBC";
+  if (source.includes("Global")) return "Global";
+  if (source.includes("Herald")) return "Herald";
+  return source.slice(0, 6);
 }
 
 function formatPubDate(raw: string): string {
@@ -165,6 +390,28 @@ function formatPubDate(raw: string): string {
   }
 }
 
+function aqhiColour(risk: string): string {
+  if (risk === "Low") return "text-emerald-600 dark:text-emerald-400";
+  if (risk === "Moderate") return "text-amber-500";
+  if (risk === "High") return "text-orange-500";
+  return "text-red-600";
+}
+
+function alertSeverityStyle(title: string): string {
+  const t = title.toUpperCase();
+  if (t.includes("RED") || t.includes("EXTREME") || t.includes("EMERGENCY")) return "border-[#E1251B]/40 bg-[#E1251B]/6";
+  if (t.includes("ORANGE") || t.includes("WARNING")) return "border-orange-500/40 bg-orange-500/6";
+  if (t.includes("YELLOW") || t.includes("WATCH")) return "border-amber-400/40 bg-amber-400/6";
+  return "border-foreground/[0.08] bg-foreground/[0.03]";
+}
+
+function alertIconColour(title: string): string {
+  const t = title.toUpperCase();
+  if (t.includes("RED") || t.includes("EXTREME")) return "text-[#E1251B]";
+  if (t.includes("ORANGE") || t.includes("WARNING")) return "text-orange-500";
+  return "text-amber-500";
+}
+
 function timeAgo(iso: string): string {
   const diff = Date.now() - new Date(iso).getTime();
   const m = Math.floor(diff / 60000);
@@ -180,20 +427,96 @@ function timeAgo(iso: string): string {
 function PulseSkeleton() {
   return (
     <div className="space-y-4 animate-pulse">
-      <div className="h-36 rounded-2xl bg-foreground/[0.08]" />
-      <div className="h-28 rounded-2xl bg-foreground/[0.06]" />
-      <div className="space-y-3">
-        {[1, 2].map((i) => (
-          <div key={i} className="h-20 rounded-2xl bg-foreground/[0.05]" />
-        ))}
+      <div className="h-40 rounded-2xl bg-foreground/[0.08]" />
+      <div className="h-24 rounded-2xl bg-foreground/[0.06]" />
+      <div className="space-y-2">
+        {[1, 2].map((i) => <div key={i} className="h-16 rounded-xl bg-foreground/[0.05]" />)}
       </div>
-      <div className="h-6 rounded-lg bg-foreground/[0.06] w-32" />
-      <div className="space-y-2.5">
-        {[1, 2, 3, 4].map((i) => (
-          <div key={i} className="h-16 rounded-xl bg-foreground/[0.04]" />
-        ))}
+      <div className="h-5 rounded-lg bg-foreground/[0.06] w-28" />
+      <div className="space-y-2">
+        {[1, 2, 3, 4, 5].map((i) => <div key={i} className="h-11 rounded-xl bg-foreground/[0.04]" />)}
       </div>
     </div>
+  );
+}
+
+// ---- Accordion news item ----------------------------------------------------
+
+function NewsAccordionItem({ item, index }: { item: NewsItem; index: number }) {
+  const [open, setOpen] = useState(false);
+  const style = sourceBadgeStyle(item.source);
+  // Truncate title to ~55 chars for the collapsed hook
+  const hook = item.title.length > 58 ? item.title.slice(0, 55).trimEnd() + "…" : item.title;
+  const hasMore = item.title.length > 58;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.28 + index * 0.04 }}
+      className="rounded-xl border border-foreground/[0.08] bg-foreground/[0.02] hover:border-foreground/[0.14] transition-colors duration-200 overflow-hidden"
+    >
+      {/* Collapsed row — always visible */}
+      <button
+        onClick={() => setOpen((o) => !o)}
+        className="w-full flex items-center gap-2.5 px-3 py-2.5 text-left group"
+        aria-expanded={open}
+      >
+        {/* Source tag */}
+        <span className={`text-[9px] font-black px-1.5 py-0.5 rounded flex-shrink-0 leading-none uppercase tracking-wide ${style.tag}`}>
+          {shortSourceName(item.source)}
+        </span>
+
+        {/* Hook text */}
+        <span className="flex-1 min-w-0 text-xs font-semibold text-foreground/85 leading-snug line-clamp-1">
+          {hook}
+        </span>
+
+        {/* Timestamp */}
+        {item.pubDate && (
+          <span className="text-[9px] text-foreground/35 flex-shrink-0 pr-1">
+            {formatPubDate(item.pubDate)}
+          </span>
+        )}
+
+        {/* Expand chevron */}
+        <ChevronRight
+          className={`w-3.5 h-3.5 flex-shrink-0 text-foreground/30 transition-transform duration-200 ${open ? "rotate-90" : ""}`}
+        />
+      </button>
+
+      {/* Expanded panel */}
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
+            className="overflow-hidden"
+          >
+            <div className="px-3 pb-3 pt-0 border-t border-foreground/[0.06]">
+              {/* Full title */}
+              <p className="text-xs text-foreground/80 leading-relaxed mt-2.5">
+                {item.title}
+              </p>
+              {/* Red CTA link */}
+              <a
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 mt-2.5 text-xs font-bold text-[#E1251B] hover:text-[#b91c1c] transition-colors group"
+              >
+                Read full story
+                <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </a>
+              {/* Source attribution */}
+              <p className="text-[9px] text-foreground/35 mt-1">via {item.source}</p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 }
 
@@ -221,14 +544,12 @@ export function CalgaryPulsePanel() {
     }
   }, []);
 
-  // Initial load + auto-refresh every 10 minutes
   useEffect(() => {
     load();
     const id = setInterval(() => load(true), 10 * 60 * 1000);
     return () => clearInterval(id);
   }, [load]);
 
-  // Update the "X min ago" stamp every minute without re-fetching
   useEffect(() => {
     const id = setInterval(() => {
       if (data?.fetchedAt) setLastUpdated(timeAgo(data.fetchedAt));
@@ -239,12 +560,13 @@ export function CalgaryPulsePanel() {
   if (loading) return <PulseSkeleton />;
 
   const { weather, alerts, aqhi, news } = data ?? { weather: null, alerts: [], aqhi: null, news: [] };
+  const scene = weather ? getScene(weather.wmoCode, weather.isDay) : "sunny";
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-4">
 
-      {/* Header row: last updated + manual refresh */}
-      <div className="flex items-center justify-between text-xs text-foreground/45">
+      {/* Header: last updated + refresh */}
+      <div className="flex items-center justify-between text-xs text-foreground/40">
         <span>Updated {lastUpdated}</span>
         <button
           onClick={() => load(true)}
@@ -257,98 +579,101 @@ export function CalgaryPulsePanel() {
         </button>
       </div>
 
-      {/* ---- Weather Card ------------------------------------------------- */}
+      {/* ---- Animated Weather Card ---------------------------------------- */}
       {weather ? (
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          className={`relative overflow-hidden rounded-2xl p-5 xl:p-6 bg-gradient-to-br ${weatherGradient(weather.wmoCode, weather.temp)} border border-white/10 shadow-lg shadow-black/20`}
+          className="relative overflow-hidden rounded-2xl border border-white/10 shadow-xl shadow-black/20"
+          style={{ minHeight: "170px" }}
         >
-          <div className="pointer-events-none absolute -top-10 -right-8 h-32 w-32 rounded-full bg-white/10 blur-3xl" />
-
-          {/* Main row */}
-          <div className="relative flex items-center gap-4 mb-4">
-            <div className="w-12 h-12 xl:w-14 xl:h-14 flex-shrink-0 rounded-2xl bg-white/10 ring-1 ring-white/15 flex items-center justify-center">
-              <WeatherIcon wmo={weather.wmoCode} isDay={weather.isDay} className="w-6 h-6 xl:w-7 xl:h-7 text-white" />
-            </div>
-            <div className="min-w-0">
-              <p className="font-bold text-lg xl:text-xl leading-tight text-white">
-                {getSeasonLabel(weather.temp, weather.wmoCode)}
-              </p>
-              <p className="text-sm text-white/70 mt-0.5">
-                {weather.temp}°C · feels {weather.feelsLike}°C · {wmoToDesc(weather.wmoCode)}
-              </p>
-            </div>
+          {/* Animated sky + cityscape scene fills the entire card */}
+          <div className={`absolute inset-0 bg-gradient-to-b ${skyGradient(scene)}`} />
+          <div className="absolute inset-0">
+            <WeatherScene scene={scene} />
           </div>
 
-          {/* Stats grid */}
-          <div className="relative grid grid-cols-3 gap-2 mt-3">
-            {/* Wind */}
-            <div className="flex flex-col items-center gap-1 rounded-xl bg-white/10 py-2.5 px-1">
-              <Wind className="w-4 h-4 text-white/70" />
-              <span className="text-sm font-bold text-white">{weather.windKph}</span>
-              <span className="text-[10px] text-white/60 uppercase tracking-wide">km/h</span>
+          {/* Dark overlay so text always reads well */}
+          <div className="absolute inset-0 bg-black/20 dark:bg-black/30" />
+          {/* Ambient scene tint */}
+          <div className={`absolute inset-0 ${ambientTint(scene)}`} />
+
+          {/* Content layer */}
+          <div className="relative z-10 p-4 xl:p-5 flex flex-col h-full" style={{ minHeight: "170px" }}>
+            {/* Top info */}
+            <div className="flex-1">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-white/60 mb-1">Calgary</p>
+              <p className="text-xl xl:text-2xl font-black text-white leading-tight drop-shadow-sm">
+                {weather.temp}°C
+              </p>
+              <p className="text-xs font-semibold text-white/90 mt-0.5">
+                {getSeasonLabel(weather.temp, weather.wmoCode)}
+              </p>
+              <p className="text-[11px] text-white/65 mt-0.5">
+                Feels {weather.feelsLike}°C · {wmoToDesc(weather.wmoCode)}
+              </p>
             </div>
-            {/* Humidity */}
-            <div className="flex flex-col items-center gap-1 rounded-xl bg-white/10 py-2.5 px-1">
-              <Droplets className="w-4 h-4 text-white/70" />
-              <span className="text-sm font-bold text-white">{weather.humidity}%</span>
-              <span className="text-[10px] text-white/60 uppercase tracking-wide">Humidity</span>
-            </div>
-            {/* UV */}
-            <div className="flex flex-col items-center gap-1 rounded-xl bg-white/10 py-2.5 px-1">
-              <Sun className="w-4 h-4 text-white/70" />
-              <span className="text-sm font-bold text-white">{weather.uvIndex}</span>
-              <span className="text-[10px] text-white/60 uppercase tracking-wide">UV</span>
+
+            {/* Stat pills anchored to bottom */}
+            <div className="grid grid-cols-3 gap-1.5 mt-3">
+              <div className="flex flex-col items-center gap-0.5 rounded-xl bg-black/25 backdrop-blur-sm py-2">
+                <Wind className="w-3.5 h-3.5 text-white/70" />
+                <span className="text-sm font-bold text-white leading-none">{weather.windKph}</span>
+                <span className="text-[9px] text-white/55 uppercase tracking-wide">km/h</span>
+              </div>
+              <div className="flex flex-col items-center gap-0.5 rounded-xl bg-black/25 backdrop-blur-sm py-2">
+                <Droplets className="w-3.5 h-3.5 text-white/70" />
+                <span className="text-sm font-bold text-white leading-none">{weather.humidity}%</span>
+                <span className="text-[9px] text-white/55 uppercase tracking-wide">Humid</span>
+              </div>
+              <div className="flex flex-col items-center gap-0.5 rounded-xl bg-black/25 backdrop-blur-sm py-2">
+                <Sun className="w-3.5 h-3.5 text-white/70" />
+                <span className="text-sm font-bold text-white leading-none">{weather.uvIndex}</span>
+                <span className="text-[9px] text-white/55 uppercase tracking-wide">UV</span>
+              </div>
             </div>
           </div>
         </motion.div>
       ) : (
-        <div className="h-40 rounded-2xl bg-foreground/[0.06] flex items-center justify-center">
+        <div className="h-44 rounded-2xl bg-foreground/[0.06] flex items-center justify-center">
           <Loader2 className="w-5 h-5 animate-spin text-foreground/30" />
         </div>
       )}
 
-      {/* ---- Air Quality (AQHI) ------------------------------------------- */}
+      {/* ---- AQHI --------------------------------------------------------- */}
       <motion.div
-        initial={{ opacity: 0, y: 12 }}
+        initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="rounded-2xl border border-foreground/[0.08] bg-foreground/[0.03] p-4 xl:p-5"
+        className="flex items-center gap-3 rounded-xl border border-foreground/[0.08] bg-foreground/[0.03] px-4 py-3"
       >
-        <div className="flex items-center gap-3 mb-2.5">
-          <div className="w-9 h-9 flex-shrink-0 rounded-xl bg-[#1D4ED8]/15 ring-1 ring-[#1D4ED8]/25 flex items-center justify-center">
-            <Activity className="w-4 h-4 text-[#1D4ED8] dark:text-[#60A5FA]" />
-          </div>
-          <div className="min-w-0 flex-1">
-            <p className="text-sm font-bold text-foreground leading-tight">Air Quality (AQHI)</p>
-            <p className="text-xs text-foreground/50 mt-0.5">Environment Canada · Calgary</p>
-          </div>
-          {aqhi && (
-            <div className="text-right flex-shrink-0">
-              <span className={`text-2xl font-black ${aqhiColour(aqhi.risk)}`}>{aqhi.value}</span>
-              <p className={`text-xs font-bold mt-0.5 ${aqhiColour(aqhi.risk)}`}>{aqhi.risk}</p>
-            </div>
-          )}
-          {!aqhi && <span className="text-xs text-foreground/40">Unavailable</span>}
+        <div className="w-8 h-8 flex-shrink-0 rounded-lg bg-[#1D4ED8]/12 flex items-center justify-center">
+          <Activity className="w-4 h-4 text-[#1D4ED8] dark:text-[#60A5FA]" />
         </div>
-        {aqhi && (
-          <p className="text-xs text-foreground/60 leading-relaxed pl-12">{aqhi.label}</p>
+        <div className="min-w-0 flex-1">
+          <p className="text-xs font-bold text-foreground/80">Air Quality · AQHI</p>
+          {aqhi && <p className="text-[10px] text-foreground/50 mt-0.5 leading-snug">{aqhi.label}</p>}
+        </div>
+        {aqhi ? (
+          <div className="text-right flex-shrink-0">
+            <span className={`text-xl font-black leading-none ${aqhiColour(aqhi.risk)}`}>{aqhi.value}</span>
+            <p className={`text-[10px] font-bold mt-0.5 ${aqhiColour(aqhi.risk)}`}>{aqhi.risk}</p>
+          </div>
+        ) : (
+          <span className="text-xs text-foreground/35">—</span>
         )}
       </motion.div>
 
-      {/* ---- Weather Alerts (Environment Canada) -------------------------- */}
+      {/* ---- Weather Alerts ----------------------------------------------- */}
       <motion.div
-        initial={{ opacity: 0, y: 12 }}
+        initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
+        transition={{ delay: 0.15 }}
       >
-        <div className="flex items-center gap-2 mb-3">
-          <AlertTriangle className="w-4 h-4 text-foreground/50 flex-shrink-0" />
-          <h3 className="text-sm font-bold text-foreground/80 uppercase tracking-wider">
-            Active Alerts
-          </h3>
-          <span className="ml-auto text-[10px] text-foreground/40">Environment Canada</span>
+        <div className="flex items-center gap-2 mb-2">
+          <AlertTriangle className="w-3.5 h-3.5 text-foreground/45 flex-shrink-0" />
+          <p className="text-[10px] font-bold text-foreground/60 uppercase tracking-widest">Active Alerts</p>
+          <span className="ml-auto text-[9px] text-foreground/35">Environment Canada</span>
         </div>
 
         <AnimatePresence mode="popLayout">
@@ -357,14 +682,12 @@ export function CalgaryPulsePanel() {
               key="no-alerts"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="flex items-center gap-3 p-4 rounded-2xl border border-emerald-500/30 bg-emerald-500/8"
+              className="flex items-center gap-2.5 p-3 rounded-xl border border-emerald-500/25 bg-emerald-500/6"
             >
-              <div className="w-8 h-8 flex-shrink-0 rounded-xl bg-emerald-500/15 flex items-center justify-center">
-                <Eye className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-              </div>
+              <Eye className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
               <div>
-                <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-400">No active alerts</p>
-                <p className="text-xs text-foreground/50 mt-0.5">All clear for Calgary</p>
+                <p className="text-xs font-semibold text-emerald-700 dark:text-emerald-400">All clear</p>
+                <p className="text-[10px] text-foreground/45">No active alerts for Calgary</p>
               </div>
             </motion.div>
           ) : (
@@ -374,101 +697,72 @@ export function CalgaryPulsePanel() {
                 href={alert.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                initial={{ opacity: 0, y: 8 }}
+                initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.06 }}
-                className={`flex items-start gap-3 p-4 rounded-2xl border mb-2.5 last:mb-0 transition-all hover:opacity-80 ${alertSeverityStyle(alert.title)}`}
+                className={`flex items-start gap-2.5 px-3 py-2.5 rounded-xl border mb-1.5 last:mb-0 hover:opacity-80 transition-opacity ${alertSeverityStyle(alert.title)}`}
               >
-                <div className="w-8 h-8 flex-shrink-0 rounded-xl bg-foreground/[0.08] flex items-center justify-center mt-0.5">
-                  <AlertTriangle className={`w-4 h-4 ${alertIconColour(alert.title)}`} />
-                </div>
+                <AlertTriangle className={`w-3.5 h-3.5 mt-0.5 flex-shrink-0 ${alertIconColour(alert.title)}`} />
                 <div className="min-w-0 flex-1">
-                  <p className="text-sm font-bold text-foreground leading-snug line-clamp-2">{alert.title}</p>
-                  {alert.issued && (
-                    <p className="text-xs text-foreground/50 mt-1">{alert.issued}</p>
-                  )}
+                  <p className="text-xs font-bold text-foreground leading-snug line-clamp-2">{alert.title}</p>
+                  {alert.issued && <p className="text-[10px] text-foreground/45 mt-0.5">{alert.issued}</p>}
                 </div>
-                <ExternalLink className="w-3.5 h-3.5 text-foreground/30 flex-shrink-0 mt-0.5" />
+                <ExternalLink className="w-3 h-3 text-foreground/30 flex-shrink-0 mt-0.5" />
               </motion.a>
             ))
           )}
         </AnimatePresence>
       </motion.div>
 
-      {/* ---- Calgary News Headlines --------------------------------------- */}
+      {/* ---- Calgary Headlines -------------------------------------------- */}
       <motion.div
-        initial={{ opacity: 0, y: 12 }}
+        initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
+        transition={{ delay: 0.2 }}
       >
         {/* Section header */}
-        <div className="flex items-center gap-2 mb-3">
-          <div className="w-7 h-7 flex-shrink-0 rounded-lg bg-[#E1251B]/10 flex items-center justify-center">
-            <Radio className="w-3.5 h-3.5 text-[#E1251B]" />
+        <div className="flex items-center gap-2 mb-3 pb-2 border-b border-foreground/[0.06]">
+          <div className="w-6 h-6 flex-shrink-0 rounded-md bg-[#E1251B]/10 flex items-center justify-center">
+            <Radio className="w-3 h-3 text-[#E1251B]" />
           </div>
-          <h3 className="text-sm font-bold text-foreground/80 uppercase tracking-wider flex-1">
+          <p className="text-[10px] font-black text-foreground/70 uppercase tracking-widest flex-1">
             Calgary Headlines
-          </h3>
-          <span className="text-[10px] text-foreground/40 flex items-center gap-1">
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+          </p>
+          <span className="flex items-center gap-1 text-[9px] text-foreground/40">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse inline-block" />
             Live
           </span>
         </div>
 
-        {/* Source legend pills */}
-        <div className="flex flex-wrap gap-1.5 mb-3">
-          {["660 CityNews", "CBC Calgary", "Global News", "Calgary Herald"].map((src) => (
-            <span key={src} className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${sourceBadgeStyle(src)}`}>
-              {src}
-            </span>
-          ))}
+        {/* Source pills */}
+        <div className="flex flex-wrap gap-1 mb-3">
+          {(["660 CityNews", "CBC Calgary", "Global News", "Calgary Herald"] as const).map((src) => {
+            const s = sourceBadgeStyle(src);
+            return (
+              <span key={src} className={`text-[9px] font-bold px-2 py-0.5 rounded-full ${s.pill}`}>
+                {src}
+              </span>
+            );
+          })}
         </div>
 
-        {/* Headlines list */}
-        <div className="space-y-2">
+        {/* Accordion headline list */}
+        <div className="space-y-1.5">
           {news.length === 0 ? (
-            <div className="flex items-center gap-3 p-4 rounded-xl border border-foreground/[0.08] bg-foreground/[0.03]">
-              <Newspaper className="w-4 h-4 text-foreground/30 flex-shrink-0" />
-              <p className="text-sm text-foreground/50">Headlines unavailable — check back shortly.</p>
+            <div className="flex items-center gap-2.5 p-3 rounded-xl border border-foreground/[0.08] bg-foreground/[0.03]">
+              <p className="text-xs text-foreground/45">Headlines unavailable — check back shortly.</p>
             </div>
           ) : (
             news.map((item, i) => (
-              <motion.a
-                key={item.link + i}
-                href={item.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                initial={{ opacity: 0, x: -6 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.32 + i * 0.04 }}
-                className="group flex items-start gap-3 p-3 xl:p-3.5 rounded-xl border border-foreground/[0.07] bg-foreground/[0.02] hover:bg-foreground/[0.06] hover:border-foreground/[0.15] transition-all duration-200"
-              >
-                {/* Source badge */}
-                <span className={`mt-0.5 text-[9px] font-bold px-1.5 py-0.5 rounded flex-shrink-0 leading-none ${sourceBadgeStyle(item.source)}`}>
-                  {item.source.replace("Calgary", "").replace("CityNews", "City").trim()}
-                </span>
-
-                {/* Title + meta */}
-                <div className="min-w-0 flex-1">
-                  <p className="text-sm font-semibold text-foreground leading-snug line-clamp-2 group-hover:text-[#1D4ED8] dark:group-hover:text-[#60A5FA] transition-colors">
-                    {item.title}
-                  </p>
-                  {item.pubDate && (
-                    <p className="text-[10px] text-foreground/45 mt-1">
-                      {formatPubDate(item.pubDate)}
-                    </p>
-                  )}
-                </div>
-                <ExternalLink className="w-3 h-3 text-foreground/25 group-hover:text-foreground/60 flex-shrink-0 mt-1 transition-colors" />
-              </motion.a>
+              <NewsAccordionItem key={item.link + i} item={item} index={i} />
             ))
           )}
         </div>
       </motion.div>
 
-      {/* ---- Source attribution ------------------------------------------- */}
-      <p className="text-[10px] text-foreground/30 text-center leading-relaxed pt-1">
-        Data: Open-Meteo · Environment Canada · MSC GeoMet-OGC · 660 CityNews · CBC · Global News · Calgary Herald · Auto-refreshes every 10 min
+      {/* Attribution */}
+      <p className="text-[9px] text-foreground/25 text-center leading-relaxed pt-1">
+        Open-Meteo · Environment Canada · MSC GeoMet-OGC · 660 CityNews · CBC · Global News · Calgary Herald
       </p>
 
     </div>
