@@ -46,12 +46,12 @@ export const translations: Record<string, Record<Language, string>> = {
     zh: "开始使用",
   },
   askAI: {
-    en: "Ask Calgary Bridge AI",
-    fr: "Demandez à Calgary Bridge AI",
-    tl: "Magtanong sa Calgary Bridge AI",
-    es: "Preguntar a Calgary Bridge AI",
-    ar: "اسأل Calgary Bridge AI",
-    zh: "询问 Calgary Bridge AI",
+    en: "iKonnect, Ask me.",
+    fr: "iKonnect, demandez-moi.",
+    tl: "iKonnect, Magtanong sa akin.",
+    es: "iKonnect, pregúntame.",
+    ar: "iKonnect، اسألني.",
+    zh: "iKonnect，问我吧。",
   },
   home: {
     en: "Home",

@@ -406,7 +406,7 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.45, duration: 0.7 }}
-            className="text-base md:text-xl lg:text-2xl text-white/70 leading-relaxed max-w-3xl mx-auto mb-10 md:mb-14 text-pretty"
+            className="text-base md:text-xl lg:text-2xl font-medium text-white/90 leading-relaxed max-w-3xl mx-auto mb-10 md:mb-14 text-pretty drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]"
           >
             Housing, jobs, tenant support, local life, businesses, events, trusted services, and AI guidance—all intelligently connected.
           </motion.p>

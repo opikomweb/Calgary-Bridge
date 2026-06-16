@@ -83,9 +83,9 @@ export default function HomeTab() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15, duration: 0.6 }}
-            className="text-sm md:text-base text-foreground/40 mt-4 md:mt-6 mb-8 md:mb-10 leading-relaxed"
+            className="text-base md:text-lg text-foreground/70 mt-4 md:mt-6 mb-8 md:mb-10 leading-relaxed"
           >
-            Search for housing, jobs, healthcare, or ask the AI anything about Calgary.
+            Search for housing, jobs, healthcare, or ask iKonnect anything about Calgary.
           </motion.p>
 
           {/* Search bar */}
@@ -117,7 +117,7 @@ export default function HomeTab() {
                 <button
                   key={q}
                   onClick={() => setSearchQuery(q)}
-                  className="px-3 md:px-4 py-2 md:py-2.5 rounded-lg md:rounded-xl bg-foreground/[0.04] border border-foreground/[0.08] text-xs md:text-sm text-foreground/50 hover:bg-foreground/[0.08] hover:border-foreground/[0.15] hover:text-foreground/80 transition-all duration-300"
+                  className="px-3.5 md:px-4 py-2 md:py-2.5 rounded-lg md:rounded-xl bg-foreground/[0.06] border border-foreground/[0.12] text-sm font-medium text-foreground/75 hover:bg-[#38BDF8]/10 hover:border-[#38BDF8]/40 hover:text-foreground transition-all duration-300"
                 >
                   {q}
                 </button>

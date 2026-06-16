@@ -28,9 +28,9 @@ const popularQuestions = [
 ];
 
 const calgaryInsights = [
-  { icon: TrendingUp, label: "340+ jobs posted this week", color: "text-emerald-400" },
-  { icon: Home, label: "12 housing programs available", color: "text-blue-400" },
-  { icon: Calendar, label: "Free tax clinics open now", color: "text-amber-400" },
+  { icon: TrendingUp, label: "340+ jobs posted this week", chip: "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 ring-1 ring-emerald-500/30" },
+  { icon: Home, label: "12 housing programs available", chip: "bg-sky-500/15 text-sky-600 dark:text-sky-400 ring-1 ring-sky-500/30" },
+  { icon: Calendar, label: "Free tax clinics open now", chip: "bg-[#E12521]/12 text-[#E12521] ring-1 ring-[#E12521]/30" },
 ];
 
 export default function AITab() {
@@ -348,7 +348,7 @@ export default function AITab() {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSend(input)}
-                  placeholder="Ask about housing, jobs, healthcare..."
+                  placeholder="Ask iKonnect anything..."
                   className="flex-1 bg-transparent px-3 md:px-4 py-2.5 md:py-3 text-foreground placeholder:text-[var(--foreground-muted)] focus:outline-none text-sm md:text-base min-w-0"
                 />
                 <motion.button
@@ -356,7 +356,7 @@ export default function AITab() {
                   whileTap={{ scale: 0.95 }}
                   onClick={() => handleSend(input)}
                   disabled={!input.trim() || isTyping}
-                  className="flex h-11 w-11 md:h-12 md:w-12 items-center justify-center rounded-lg md:rounded-xl bg-[#3B82F6] text-foreground transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-[#3B82F6]/30 flex-shrink-0"
+                  className="flex h-11 w-11 md:h-12 md:w-12 items-center justify-center rounded-lg md:rounded-xl bg-[#0284c7] text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-[#0284c7]/30 flex-shrink-0"
                 >
                   <Send className="h-5 w-5" />
                 </motion.button>
@@ -410,9 +410,11 @@ export default function AITab() {
               className="space-y-5 mb-14"
             >
               {calgaryInsights.map((insight, i) => (
-                <div key={i} className="flex items-center gap-5 p-6 rounded-2xl bg-foreground/[0.03] border border-foreground/[0.06]">
-                  <insight.icon className={`w-6 h-6 ${insight.color}`} />
-                  <span className="text-base font-medium leading-relaxed">{insight.label}</span>
+                <div key={i} className="flex items-center gap-4 p-5 rounded-2xl bg-foreground/[0.04] border border-foreground/[0.08]">
+                  <div className={`flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl ${insight.chip}`}>
+                    <insight.icon className="w-5 h-5" />
+                  </div>
+                  <span className="text-base font-semibold leading-relaxed text-foreground/90">{insight.label}</span>
                 </div>
               ))}
             </motion.div>
