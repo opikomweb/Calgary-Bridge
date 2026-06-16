@@ -117,19 +117,12 @@ function CalgaryCTrain() {
         aria-hidden="true"
       >
         <defs>
-          <linearGradient id="railGrad" x1="0" y1="0" x2="1440" y2="0" gradientUnits="userSpaceOnUse">
-            <stop offset="0" stopColor="#38BDF8" stopOpacity="0" />
-            <stop offset="0.5" stopColor="#38BDF8" stopOpacity="0.35" />
-            <stop offset="1" stopColor="#38BDF8" stopOpacity="0" />
-          </linearGradient>
+          {/* Invisible motion path only — the rail line itself is intentionally
+              not rendered so it never cuts through the footer text. */}
           <path id="ctrain-rail" d={RAIL} />
         </defs>
 
-        {/* Visible rail line (soft glow + crisp line) */}
-        <use href="#ctrain-rail" stroke="url(#railGrad)" strokeWidth="6" strokeLinecap="round" opacity="0.4" />
-        <use href="#ctrain-rail" stroke="url(#railGrad)" strokeWidth="1.5" strokeLinecap="round" />
-
-        {/* The long train, gliding along the rail */}
+        {/* The long train, gliding along the (invisible) rail */}
         <g opacity="0.55" className="drop-shadow-[0_0_10px_rgba(56,189,248,0.25)]">
           <CTrainCars />
           <animateMotion dur="24s" repeatCount="indefinite" rotate="auto" calcMode="linear">
