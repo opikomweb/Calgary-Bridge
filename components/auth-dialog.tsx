@@ -146,7 +146,7 @@ export function AuthDialog() {
               <button
                 type="submit"
                 disabled={loading}
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#1D4ED8] to-[#0A2540] py-3.5 text-base font-semibold text-white shadow-lg shadow-blue-900/30 transition-all hover:shadow-xl hover:shadow-blue-900/40 active:scale-[0.98] disabled:opacity-60"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#E1251B] to-[#B91C1C] py-3.5 text-base font-semibold text-white shadow-lg shadow-red-900/30 transition-all hover:shadow-xl hover:shadow-red-900/40 active:scale-[0.98] disabled:opacity-60"
               >
                 {loading && <Loader2 className="h-5 w-5 animate-spin" />}
                 {isSignUp ? "Create account" : "Sign in"}

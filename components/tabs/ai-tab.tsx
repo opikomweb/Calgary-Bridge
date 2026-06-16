@@ -357,7 +357,7 @@ export default function AITab() {
                   whileTap={{ scale: 0.95 }}
                   onClick={() => handleSend(input)}
                   disabled={!input.trim() || isTyping}
-                  className="flex h-11 w-11 md:h-12 md:w-12 items-center justify-center rounded-lg md:rounded-xl bg-[#0284c7] text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-[#0284c7]/30 flex-shrink-0"
+                  className="flex h-11 w-11 md:h-12 md:w-12 items-center justify-center rounded-lg md:rounded-xl bg-[#E1251B] text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-[#E1251B]/30 flex-shrink-0"
                 >
                   <Send className="h-5 w-5" />
                 </motion.button>

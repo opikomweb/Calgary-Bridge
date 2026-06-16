@@ -5,11 +5,18 @@ export const auth = betterAuth({
   database: pool,
   baseURL:
     process.env.BETTER_AUTH_URL ??
-    (process.env.VERCEL_PROJECT_PRODUCTION_URL
-      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-      : process.env.VERCEL_URL
-        ? `https://${process.env.VERCEL_URL}`
-        : process.env.V0_RUNTIME_URL),
+    // In the v0 preview the app runs on the V0 runtime origin (inside an
+    // iframe). Prefer that origin so Better Auth never builds absolute URLs
+    // pointing at the production Vercel domain (which refuses to be framed
+    // and shows "vercel.com refused to connect"). Production builds still
+    // resolve to the real deployment URLs below.
+    (process.env.NODE_ENV === 'development' && process.env.V0_RUNTIME_URL
+      ? process.env.V0_RUNTIME_URL
+      : process.env.VERCEL_PROJECT_PRODUCTION_URL
+        ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+        : process.env.VERCEL_URL
+          ? `https://${process.env.VERCEL_URL}`
+          : process.env.V0_RUNTIME_URL),
   emailAndPassword: {
     enabled: true,
     autoSignIn: true,

@@ -272,7 +272,7 @@ export default function ProfileTab() {
                   </button>
                   <button
                     onClick={() => openAuth("sign-up")}
-                    className="flex items-center justify-center gap-2 px-5 py-4 rounded-xl md:rounded-2xl bg-gradient-to-r from-[#1D4ED8] to-[#0A2540] text-white font-semibold shadow-lg shadow-blue-900/25 hover:shadow-xl transition-all active:scale-[0.98]"
+                    className="flex items-center justify-center gap-2 px-5 py-4 rounded-xl md:rounded-2xl bg-gradient-to-r from-[#E1251B] to-[#B91C1C] text-white font-semibold shadow-lg shadow-red-900/25 hover:shadow-xl transition-all active:scale-[0.98]"
                   >
                     <UserPlus className="h-5 w-5" /> Sign Up
                   </button>
