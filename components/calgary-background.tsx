@@ -6,8 +6,12 @@ import Image from "next/image";
 export function CalgaryAnimatedBackground() {
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-      {/* Base sky: bright blue sky in day mode, deep navy at night */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#bfe0ff] via-[#dcefff] to-[#eaf3ff] dark:from-[#050B14] dark:via-[#071119] dark:to-[#0a1628]" />
+      {/* Base sky: a richer Calgary "big sky" — saturated prairie blue up top
+          easing into a soft horizon glow, deep navy at night. */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#7cb8f0] via-[#aed5f7] to-[#e4f1ff] dark:from-[#040912] dark:via-[#08131f] dark:to-[#0c1c30]" />
+
+      {/* Warm horizon wash near the bottom to add depth & a sunny prairie feel */}
+      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#fff4e0]/40 via-[#dcecff]/10 to-transparent dark:from-[#0a1c30]/40 dark:via-transparent dark:to-transparent" />
 
       {/* Real Calgary Skyline Image Background */}
       <div className="absolute inset-0">
@@ -15,26 +19,25 @@ export function CalgaryAnimatedBackground() {
           src="/calgary-skyline-bg.png"
           alt=""
           fill
-          className="object-cover object-bottom opacity-[0.32] dark:opacity-55"
+          className="object-cover object-bottom opacity-45 dark:opacity-60"
           priority
         />
         {/* Readability overlays: keep the MIDDLE (where text/cards sit) calm,
-            but let the skyline stay visible along the bottom. The vertical
-            overlay is strongest in the upper-middle and fades out near the
-            bottom so the Calgary Tower & skyline show through. */}
-        <div className="absolute inset-0 bg-gradient-to-t from-transparent via-[#eaf3ff]/55 to-[#eaf3ff]/35 dark:via-[#050B14]/55 dark:to-[#050B14]/35" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#eaf3ff]/55 via-transparent to-[#eaf3ff]/30 dark:from-[#050B14]/60 dark:to-[#050B14]/35" />
+            but let the skyline stay crisp along the bottom. Lighter, cleaner
+            washes (less flat gray) preserve the sky's blue and the skyline. */}
+        <div className="absolute inset-0 bg-gradient-to-t from-transparent via-[#dcebff]/25 to-[#cfe4ff]/45 dark:via-[#050B14]/45 dark:to-[#050B14]/40" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#dceaff]/40 via-transparent to-[#dceaff]/20 dark:from-[#050B14]/55 dark:to-[#050B14]/30" />
       </div>
 
       {/* Animated Aurora Glow at Top */}
       <motion.div
         animate={{
-          opacity: [0.12, 0.22, 0.12],
+          opacity: [0.2, 0.34, 0.2],
           scale: [1, 1.08, 1],
         }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
         className="absolute -top-20 left-1/4 w-[700px] h-[350px] rounded-full blur-[100px]"
-        style={{ background: "radial-gradient(ellipse, rgba(56,189,248,0.18) 0%, transparent 70%)" }}
+        style={{ background: "radial-gradient(ellipse, rgba(56,189,248,0.3) 0%, transparent 70%)" }}
       />
       
       <motion.div
@@ -53,12 +56,12 @@ export function CalgaryAnimatedBackground() {
       {/* Golden Accent Glow at Bottom Left */}
       <motion.div
         animate={{
-          opacity: [0.15, 0.28, 0.15],
+          opacity: [0.22, 0.38, 0.22],
           x: [0, 25, 0],
         }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
         className="absolute bottom-0 left-0 w-[450px] h-[180px] rounded-full blur-[70px]"
-        style={{ background: "radial-gradient(ellipse, rgba(251,191,36,0.22) 0%, transparent 70%)" }}
+        style={{ background: "radial-gradient(ellipse, rgba(251,191,36,0.32) 0%, transparent 70%)" }}
       />
 
       {/* Subtle Grid Pattern */}
