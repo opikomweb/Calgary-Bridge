@@ -118,7 +118,7 @@ export default function MainApp() {
       </aside>
 
       {/* Mobile / Tablet Header */}
-      <header className="lg:hidden sticky top-0 z-40 bg-background/90 backdrop-blur-2xl border-b border-foreground/[0.06] px-4 sm:px-6 py-3">
+      <header className="lg:hidden sticky top-0 z-40 bg-background/90 backdrop-blur-2xl border-b border-foreground/[0.06] px-4 sm:px-6 py-2.5">
         {/* Calgary brand accent strip (blue → red) under the header */}
         <div className="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-[#38BDF8] via-[#0284c7] to-[#E1251B]" />
         <div className="flex items-center justify-between gap-3">
@@ -127,8 +127,8 @@ export default function MainApp() {
             aria-label="Go to Calgary Connect home page"
             className="flex items-center"
           >
-            {/* Transparent brand lockup (already includes the wordmark) */}
-            <div className="relative h-16 w-44 sm:h-[72px] sm:w-52 flex-shrink-0 transition-transform duration-300 active:scale-95">
+            {/* Square brand lockup (Calgary Tower + bridge + wordmark) */}
+            <div className="relative h-[64px] w-[64px] sm:h-[72px] sm:w-[72px] flex-shrink-0 transition-transform duration-300 active:scale-95">
               <RotatingLogo imgPadding="p-0" priority />
             </div>
           </button>

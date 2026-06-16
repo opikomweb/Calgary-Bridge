@@ -441,43 +441,44 @@ function AIResourceCard({ resource }: { resource: Resource }) {
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="glass-card rounded-2xl p-7"
+      className="glass-card rounded-2xl p-4 sm:p-6 md:p-7"
     >
-      <div className="flex items-start justify-between gap-5">
-        <div className="flex-1 min-w-0">
-          <div className="flex gap-3 mb-4">
-            {resource.category.slice(0, 2).map((cat) => (
-              <span
-                key={cat}
-                className="px-4 py-2 rounded-full text-sm font-medium bg-[#3B82F6]/15 text-[#3B82F6]"
-              >
-                {categoryLabels[cat]?.[activeLanguage] || cat}
-              </span>
-            ))}
-          </div>
-          <h4 className="font-bold text-foreground text-xl mb-3 leading-snug">
-            {resource.title[activeLanguage]}
-          </h4>
-          <p className="text-base text-foreground/60 leading-relaxed line-clamp-2">
-            {resource.summary?.[activeLanguage] || resource.description[activeLanguage]}
-          </p>
+      {/* Top row: category chips (wrap) + Save action — no overlap */}
+      <div className="flex items-start justify-between gap-3 mb-3">
+        <div className="flex flex-wrap gap-2 min-w-0">
+          {resource.category.slice(0, 2).map((cat) => (
+            <span
+              key={cat}
+              className="px-3 py-1 rounded-full text-xs sm:text-sm font-medium bg-[#3B82F6]/15 text-[#3B82F6]"
+            >
+              {categoryLabels[cat]?.[activeLanguage] || cat}
+            </span>
+          ))}
         </div>
         <button
           onClick={() => toggleBookmark(resource.id)}
-          className="text-base text-[#3B82F6] font-semibold flex items-center gap-2 whitespace-nowrap hover:text-[#60A5FA] transition-colors"
+          aria-label={isBookmarked ? "Saved" : "Save resource"}
+          className="flex-shrink-0 text-sm text-[#3B82F6] font-semibold flex items-center gap-1.5 whitespace-nowrap hover:text-[#60A5FA] transition-colors"
         >
           {isBookmarked ? "Saved" : "Save"}
-          <ArrowRight className="w-5 h-5" />
+          <ArrowRight className="w-4 h-4" />
         </button>
       </div>
-      
-      <div className="mt-6 flex flex-wrap gap-5">
+
+      <h4 className="font-bold text-foreground text-base sm:text-lg md:text-xl mb-2 leading-snug text-pretty">
+        {resource.title[activeLanguage]}
+      </h4>
+      <p className="text-sm md:text-base text-foreground/60 leading-relaxed line-clamp-3">
+        {resource.summary?.[activeLanguage] || resource.description[activeLanguage]}
+      </p>
+
+      <div className="mt-4 md:mt-6 flex flex-wrap gap-x-5 gap-y-3">
         {resource.phone && (
           <a
             href={`tel:${resource.phone}`}
-            className="flex items-center gap-3 text-base font-semibold text-[#3B82F6] hover:text-[#60A5FA] transition-colors"
+            className="flex items-center gap-2 text-sm md:text-base font-semibold text-[#3B82F6] hover:text-[#60A5FA] transition-colors"
           >
-            <Phone className="w-5 h-5" />
+            <Phone className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
             {resource.phone}
           </a>
         )}
@@ -486,9 +487,9 @@ function AIResourceCard({ resource }: { resource: Resource }) {
             href={resource.website}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-3 text-base font-bold text-[#3B82F6] hover:text-[#60A5FA] transition-colors underline underline-offset-4"
+            className="flex items-center gap-2 text-sm md:text-base font-bold text-[#3B82F6] hover:text-[#60A5FA] transition-colors underline underline-offset-4"
           >
-            <ExternalLink className="w-5 h-5" />
+            <ExternalLink className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
             Visit Website
           </a>
         )}
