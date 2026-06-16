@@ -88,29 +88,16 @@ function getScene(wmo: number, isDay: boolean): WeatherScene {
   return "sunny";
 }
 
-/** Sky gradient top colour per scene */
-function skyGradient(scene: WeatherScene): string {
+/** Sky gradient colours per scene — used in SVG defs */
+function skyColors(scene: WeatherScene): { top: string; mid: string; bot: string } {
   switch (scene) {
-    case "sunny":        return "from-[#0ea5e9] via-[#38bdf8] to-[#7dd3fc]";
-    case "partly_cloudy":return "from-[#0284c7] via-[#38bdf8] to-[#bae6fd]";
-    case "cloudy":       return "from-[#334155] via-[#475569] to-[#64748b]";
-    case "rainy":        return "from-[#1e3a5f] via-[#1e4060] to-[#334155]";
-    case "snowy":        return "from-[#1e3a5c] via-[#334155] to-[#94a3b8]";
-    case "stormy":       return "from-[#0f172a] via-[#1e293b] to-[#334155]";
-    case "night":        return "from-[#0f172a] via-[#1e1b4b] to-[#312e81]";
-  }
-}
-
-/** Ambient overlay tint for scene card */
-function ambientTint(scene: WeatherScene): string {
-  switch (scene) {
-    case "sunny":
-    case "partly_cloudy": return "bg-yellow-400/[0.04]";
-    case "rainy":         return "bg-blue-600/[0.06]";
-    case "snowy":         return "bg-blue-200/[0.06]";
-    case "stormy":        return "bg-slate-900/[0.10]";
-    case "night":         return "bg-indigo-900/[0.10]";
-    default:              return "";
+    case "sunny":         return { top: "#1a6eb5", mid: "#3ba8e0", bot: "#87d4f5" };
+    case "partly_cloudy": return { top: "#1460a0", mid: "#2e90c8", bot: "#a8d8ef" };
+    case "cloudy":        return { top: "#4a5568", mid: "#718096", bot: "#a0aec0" };
+    case "rainy":         return { top: "#1a2e45", mid: "#2d4a6a", bot: "#4a6a8a" };
+    case "snowy":         return { top: "#2d3d55", mid: "#5a6f88", bot: "#c8d8e8" };
+    case "stormy":        return { top: "#0d1b2a", mid: "#1e2d3d", bot: "#2d3d4d" };
+    case "night":         return { top: "#080d1a", mid: "#0f1b35", bot: "#1a2a4a" };
   }
 }
 
@@ -119,28 +106,30 @@ function ambientTint(scene: WeatherScene): string {
 function SunElement() {
   return (
     <g>
-      {/* Glow halo */}
-      <circle cx="68" cy="44" r="22" fill="rgba(251,191,36,0.18)" />
+      {/* Outer glow */}
+      <motion.circle cx="72" cy="42" r="26"
+        fill="rgba(253,224,71,0.12)"
+        animate={{ r: [26, 30, 26], opacity: [0.12, 0.18, 0.12] }}
+        transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+      />
+      {/* Mid glow */}
+      <circle cx="72" cy="42" r="18" fill="rgba(253,224,71,0.20)" />
       {/* Sun disc */}
-      <motion.circle
-        cx="68" cy="44" r="14"
-        fill="#FDE68A"
-        animate={{ scale: [1, 1.06, 1], opacity: [0.95, 1, 0.95] }}
+      <motion.circle cx="72" cy="42" r="12"
+        fill="#FDE047"
+        animate={{ scale: [1, 1.04, 1], opacity: [0.92, 1, 0.92] }}
         transition={{ repeat: Infinity, duration: 3.5, ease: "easeInOut" }}
       />
       {/* Rays */}
-      {Array.from({ length: 8 }, (_, i) => {
-        const angle = (i * 45 * Math.PI) / 180;
-        const x1 = 68 + 17 * Math.cos(angle);
-        const y1 = 44 + 17 * Math.sin(angle);
-        const x2 = 68 + 24 * Math.cos(angle);
-        const y2 = 44 + 24 * Math.sin(angle);
+      {Array.from({ length: 10 }, (_, i) => {
+        const a = (i * 36 * Math.PI) / 180;
         return (
-          <motion.line
-            key={i} x1={x1} y1={y1} x2={x2} y2={y2}
-            stroke="#FDE68A" strokeWidth="2.5" strokeLinecap="round"
-            animate={{ opacity: [0.7, 1, 0.7] }}
-            transition={{ repeat: Infinity, duration: 2, delay: i * 0.1, ease: "easeInOut" }}
+          <motion.line key={i}
+            x1={72 + 15 * Math.cos(a)} y1={42 + 15 * Math.sin(a)}
+            x2={72 + 23 * Math.cos(a)} y2={42 + 23 * Math.sin(a)}
+            stroke="#FDE047" strokeWidth="2" strokeLinecap="round"
+            animate={{ opacity: [0.5, 1, 0.5] }}
+            transition={{ repeat: Infinity, duration: 2.5, delay: i * 0.15, ease: "easeInOut" }}
           />
         );
       })}
@@ -148,20 +137,23 @@ function SunElement() {
   );
 }
 
-function CloudElement({ x = 0, y = 0, scale = 1, opacity = 1, delay = 0, drift = 8 }: {
-  x?: number; y?: number; scale?: number; opacity?: number; delay?: number; drift?: number;
+function CloudElement({ x = 0, y = 0, scaleX = 1, scaleY = 1, opacity = 1, delay = 0, drift = 8, dark = false }: {
+  x?: number; y?: number; scaleX?: number; scaleY?: number; opacity?: number; delay?: number; drift?: number; dark?: boolean;
 }) {
+  const fill = dark ? "rgba(60,72,88,0.88)" : "rgba(255,255,255,0.94)";
+  const fill2 = dark ? "rgba(50,62,78,0.82)" : "rgba(255,255,255,0.88)";
   return (
     <motion.g
-      transform={`translate(${x},${y}) scale(${scale})`}
       animate={{ x: [0, drift, 0] }}
-      transition={{ repeat: Infinity, duration: 8 + delay, delay, ease: "easeInOut" }}
+      transition={{ repeat: Infinity, duration: 10 + delay * 2, delay, ease: "easeInOut" }}
       style={{ opacity }}
     >
-      <ellipse cx="22" cy="18" rx="14" ry="8" fill="rgba(255,255,255,0.92)" />
-      <ellipse cx="36" cy="16" rx="10" ry="7" fill="rgba(255,255,255,0.92)" />
-      <ellipse cx="12" cy="19" rx="9"  ry="6" fill="rgba(255,255,255,0.88)" />
-      <rect x="4" y="19" width="44" height="6" rx="3" fill="rgba(255,255,255,0.88)" />
+      <g transform={`translate(${x},${y}) scale(${scaleX},${scaleY})`}>
+        <ellipse cx="28" cy="14" rx="18" ry="10" fill={fill} />
+        <ellipse cx="46" cy="12" rx="13" ry="9"  fill={fill} />
+        <ellipse cx="14" cy="15" rx="11" ry="8"  fill={fill2} />
+        <rect x="6" y="15" width="52" height="8" rx="4" fill={fill2} />
+      </g>
     </motion.g>
   );
 }
@@ -169,16 +161,15 @@ function CloudElement({ x = 0, y = 0, scale = 1, opacity = 1, delay = 0, drift =
 function RainDrops() {
   return (
     <>
-      {Array.from({ length: 18 }, (_, i) => {
-        const cx = 10 + (i * 17) % 155;
-        const cy = 32 + (i * 11) % 36;
-        const delay = (i * 0.18) % 1.4;
+      {Array.from({ length: 22 }, (_, i) => {
+        const cx = 5 + (i * 14) % 280;
+        const cy = 20 + (i * 9) % 50;
+        const delay = (i * 0.14) % 1.2;
         return (
-          <motion.line
-            key={i}
-            x1={cx} y1={cy} x2={cx - 2} y2={cy + 9}
-            stroke="rgba(147,197,253,0.85)" strokeWidth="1.5" strokeLinecap="round"
-            animate={{ y: [0, 28, 0], opacity: [0, 0.9, 0] }}
+          <motion.line key={i}
+            x1={cx} y1={cy} x2={cx - 2} y2={cy + 11}
+            stroke="rgba(147,197,253,0.7)" strokeWidth="1.5" strokeLinecap="round"
+            animate={{ y: [0, 40, 0], opacity: [0, 0.85, 0] }}
             transition={{ repeat: Infinity, duration: 1.1, delay, ease: "linear" }}
           />
         );
@@ -190,16 +181,15 @@ function RainDrops() {
 function SnowFlakes() {
   return (
     <>
-      {Array.from({ length: 14 }, (_, i) => {
-        const cx = 12 + (i * 13) % 152;
-        const cy = 28 + (i * 9) % 30;
-        const delay = (i * 0.22) % 1.8;
+      {Array.from({ length: 18 }, (_, i) => {
+        const cx = 8 + (i * 16) % 274;
+        const cy = 18 + (i * 8) % 48;
+        const delay = (i * 0.2) % 2.0;
         return (
-          <motion.circle
-            key={i} cx={cx} cy={cy} r="2"
-            fill="rgba(219,234,254,0.9)"
-            animate={{ y: [0, 30, 0], opacity: [0, 1, 0], x: [0, (i % 2 === 0 ? 4 : -4), 0] }}
-            transition={{ repeat: Infinity, duration: 1.8, delay, ease: "easeInOut" }}
+          <motion.circle key={i} cx={cx} cy={cy} r={i % 4 === 0 ? 2.5 : 1.8}
+            fill="rgba(226,232,240,0.9)"
+            animate={{ y: [0, 35, 0], opacity: [0, 1, 0], x: [0, i % 2 === 0 ? 5 : -5, 0] }}
+            transition={{ repeat: Infinity, duration: 2.2, delay, ease: "easeInOut" }}
           />
         );
       })}
@@ -210,10 +200,10 @@ function SnowFlakes() {
 function LightningBolt({ x, y }: { x: number; y: number }) {
   return (
     <motion.polygon
-      points={`${x},${y} ${x-5},${y+12} ${x+1},${y+12} ${x-4},${y+24} ${x+8},${y+9} ${x+2},${y+9}`}
+      points={`${x},${y} ${x-6},${y+14} ${x+1},${y+14} ${x-5},${y+30} ${x+10},${y+11} ${x+3},${y+11}`}
       fill="#FDE68A"
-      animate={{ opacity: [0, 1, 0, 1, 0] }}
-      transition={{ repeat: Infinity, duration: 3.2, delay: x * 0.01, ease: "easeOut" }}
+      animate={{ opacity: [0, 1, 0.2, 1, 0] }}
+      transition={{ repeat: Infinity, duration: 3.8, delay: x * 0.008, ease: "easeOut" }}
     />
   );
 }
@@ -221,15 +211,15 @@ function LightningBolt({ x, y }: { x: number; y: number }) {
 function StarField() {
   return (
     <>
-      {Array.from({ length: 20 }, (_, i) => {
-        const cx = 8 + (i * 19) % 155;
-        const cy = 6 + (i * 7) % 32;
+      {Array.from({ length: 28 }, (_, i) => {
+        const cx = 5 + (i * 23) % 280;
+        const cy = 4 + (i * 7) % 55;
+        const r = i % 4 === 0 ? 1.8 : i % 3 === 0 ? 1.3 : 0.9;
         return (
-          <motion.circle
-            key={i} cx={cx} cy={cy} r={i % 3 === 0 ? 1.5 : 1}
+          <motion.circle key={i} cx={cx} cy={cy} r={r}
             fill="white"
-            animate={{ opacity: [0.3, 1, 0.3] }}
-            transition={{ repeat: Infinity, duration: 2 + (i % 3), delay: (i * 0.15) % 2, ease: "easeInOut" }}
+            animate={{ opacity: [0.2, 1, 0.2] }}
+            transition={{ repeat: Infinity, duration: 1.8 + (i % 4), delay: (i * 0.18) % 2.5, ease: "easeInOut" }}
           />
         );
       })}
@@ -237,115 +227,229 @@ function StarField() {
   );
 }
 
-/** Mountain silhouette (shared across all scenes) */
-function MountainCityscape() {
+/**
+ * Panoramic mountain + Calgary skyline silhouette.
+ * viewBox: 0 0 300 100 — wide 3:1 panorama.
+ * Five mountain layers for depth (far→near), then city buildings, Calgary Tower.
+ */
+function PanoramicLandscape({ scene }: { scene: WeatherScene }) {
+  // Mountain tint adapts to weather mood
+  const isLight = scene === "sunny" || scene === "partly_cloudy";
+  const snow = scene === "snowy";
+
+  const mtn = (alpha: number) =>
+    snow ? `rgba(210,220,235,${alpha})` : isLight ? `rgba(15,30,60,${alpha})` : `rgba(10,20,40,${alpha})`;
+  const mtnSnow = (alpha: number) => `rgba(235,242,252,${alpha})`;
+  const bld = (alpha: number) =>
+    isLight ? `rgba(10,20,50,${alpha})` : `rgba(5,12,30,${alpha})`;
+
   return (
     <g>
-      {/* Background mountains */}
-      <polygon points="0,68 28,36 56,68" fill="rgba(15,23,42,0.55)" />
-      <polygon points="18,68 52,22 86,68" fill="rgba(15,23,42,0.65)" />
-      <polygon points="60,68 88,30 116,68" fill="rgba(15,23,42,0.55)" />
-      <polygon points="100,68 124,38 148,68" fill="rgba(15,23,42,0.50)" />
-      <polygon points="130,68 154,42 178,68" fill="rgba(15,23,42,0.45)" />
-      {/* City buildings foreground */}
-      <rect x="0"   y="52" width="12" height="16" fill="rgba(15,23,42,0.75)" rx="1" />
-      <rect x="14"  y="46" width="10" height="22" fill="rgba(15,23,42,0.80)" rx="1" />
-      <rect x="26"  y="50" width="8"  height="18" fill="rgba(15,23,42,0.70)" rx="1" />
-      <rect x="36"  y="44" width="14" height="24" fill="rgba(15,23,42,0.82)" rx="1" />
-      {/* Calgary Tower */}
-      <rect x="72"  y="48" width="6"  height="20" fill="rgba(15,23,42,0.88)" rx="0.5" />
-      <rect x="70"  y="45" width="10" height="5"  fill="rgba(15,23,42,0.88)" rx="1" />
-      <rect x="74"  y="36" width="2"  height="12" fill="rgba(15,23,42,0.88)" />
-      <circle cx="75" cy="34" r="3"  fill="rgba(15,23,42,0.88)" />
-      <rect x="74.5" y="30" width="1" height="6" fill="rgba(15,23,42,0.88)" />
-      {/* More buildings right */}
-      <rect x="86"  y="50" width="10" height="18" fill="rgba(15,23,42,0.78)" rx="1" />
-      <rect x="98"  y="54" width="8"  height="14" fill="rgba(15,23,42,0.72)" rx="1" />
-      <rect x="108" y="48" width="12" height="20" fill="rgba(15,23,42,0.80)" rx="1" />
-      <rect x="122" y="52" width="9"  height="16" fill="rgba(15,23,42,0.70)" rx="1" />
-      <rect x="133" y="46" width="11" height="22" fill="rgba(15,23,42,0.78)" rx="1" />
-      <rect x="146" y="55" width="8"  height="13" fill="rgba(15,23,42,0.65)" rx="1" />
-      <rect x="156" y="50" width="10" height="18" fill="rgba(15,23,42,0.72)" rx="1" />
-      {/* Ground strip */}
-      <rect x="0" y="65" width="180" height="4" fill="rgba(15,23,42,0.75)" />
+      {/* Layer 1 — farthest mountains, lightest */}
+      <polygon points="0,78 22,52 44,78"   fill={mtn(0.28)} />
+      <polygon points="16,78 44,38 72,78"  fill={mtn(0.30)} />
+      <polygon points="55,78 78,44 101,78" fill={mtn(0.28)} />
+      <polygon points="88,78 108,50 128,78" fill={mtn(0.26)} />
+      <polygon points="115,78 134,55 153,78" fill={mtn(0.24)} />
+      <polygon points="140,78 160,48 180,78" fill={mtn(0.22)} />
+      <polygon points="170,78 192,54 214,78" fill={mtn(0.20)} />
+      <polygon points="200,78 220,50 240,78" fill={mtn(0.22)} />
+      <polygon points="230,78 256,42 282,78" fill={mtn(0.24)} />
+      <polygon points="262,78 285,52 300,78" fill={mtn(0.22)} />
+
+      {/* Snow caps on far mountains (snowy scene) */}
+      {snow && <>
+        <polygon points="44,38 38,48 50,48"  fill={mtnSnow(0.7)} />
+        <polygon points="108,50 103,58 113,58" fill={mtnSnow(0.65)} />
+        <polygon points="256,42 251,52 261,52" fill={mtnSnow(0.68)} />
+      </>}
+
+      {/* Layer 2 — mid mountains, medium */}
+      <polygon points="0,82 30,48 60,82"    fill={mtn(0.45)} />
+      <polygon points="40,82 74,30 108,82"  fill={mtn(0.50)} />
+      <polygon points="90,82 120,36 150,82" fill={mtn(0.48)} />
+      <polygon points="138,82 165,44 192,82" fill={mtn(0.46)} />
+      <polygon points="180,82 210,32 240,82" fill={mtn(0.52)} />
+      <polygon points="225,82 255,40 285,82" fill={mtn(0.48)} />
+      <polygon points="265,82 290,50 300,82" fill={mtn(0.44)} />
+
+      {/* Snow caps on mid mountains */}
+      {snow && <>
+        <polygon points="74,30 67,44 81,44"   fill={mtnSnow(0.80)} />
+        <polygon points="120,36 114,48 126,48" fill={mtnSnow(0.75)} />
+        <polygon points="210,32 203,46 217,46" fill={mtnSnow(0.80)} />
+      </>}
+
+      {/* Layer 3 — near mountains, darkest */}
+      <polygon points="0,88 40,56 80,88"     fill={mtn(0.68)} />
+      <polygon points="60,88 100,42 140,88"  fill={mtn(0.72)} />
+      <polygon points="120,88 158,52 196,88" fill={mtn(0.70)} />
+      <polygon points="178,88 220,44 262,88" fill={mtn(0.72)} />
+      <polygon points="248,88 278,58 300,88" fill={mtn(0.66)} />
+
+      {/* City buildings — sits in front of mountains */}
+      {/* Far-right cluster */}
+      <rect x="240" y="76" width="10" height="14" rx="1" fill={bld(0.70)} />
+      <rect x="253" y="71" width="8"  height="19" rx="1" fill={bld(0.75)} />
+      <rect x="264" y="74" width="11" height="16" rx="1" fill={bld(0.70)} />
+      <rect x="278" y="68" width="9"  height="22" rx="1" fill={bld(0.78)} />
+      <rect x="290" y="72" width="10" height="18" rx="1" fill={bld(0.72)} />
+
+      {/* Right cluster */}
+      <rect x="196" y="74" width="9"  height="16" rx="1" fill={bld(0.74)} />
+      <rect x="207" y="68" width="11" height="22" rx="1" fill={bld(0.78)} />
+      <rect x="221" y="71" width="8"  height="19" rx="1" fill={bld(0.72)} />
+      <rect x="232" y="75" width="6"  height="15" rx="1" fill={bld(0.68)} />
+
+      {/* Centre-right cluster */}
+      <rect x="148" y="72" width="10" height="18" rx="1" fill={bld(0.76)} />
+      <rect x="161" y="65" width="12" height="25" rx="1" fill={bld(0.80)} />
+      <rect x="176" y="68" width="8"  height="22" rx="1" fill={bld(0.78)} />
+
+      {/* Calgary Tower — centrepiece around x=128 */}
+      {/* Tower shaft */}
+      <rect x="124" y="68" width="7" height="22" rx="0.5" fill={bld(0.92)} />
+      {/* Elevator shaft (thinner top) */}
+      <rect x="126" y="55" width="3" height="16" fill={bld(0.92)} />
+      {/* Observation deck — the distinctive round collar */}
+      <ellipse cx="127.5" cy="54" rx="8" ry="4" fill={bld(0.94)} />
+      <rect x="119.5" y="52" width="16" height="4" rx="2" fill={bld(0.94)} />
+      {/* Glass ring on deck */}
+      <ellipse cx="127.5" cy="52" rx="7" ry="2.5"
+        fill="none" stroke={isLight ? "rgba(150,210,255,0.5)" : "rgba(100,160,220,0.35)"} strokeWidth="0.8" />
+      {/* Antenna */}
+      <rect x="127" y="42" width="1.2" height="12" fill={bld(0.96)} />
+      {/* Antenna tip glow (night or stormy) */}
+      {(scene === "night" || scene === "stormy") && (
+        <motion.circle cx="127.6" cy="42" r="1.5"
+          fill="#ff4444"
+          animate={{ opacity: [1, 0.2, 1] }}
+          transition={{ repeat: Infinity, duration: 1.4, ease: "easeInOut" }}
+        />
+      )}
+
+      {/* Left cluster */}
+      <rect x="62"  y="74" width="9"  height="16" rx="1" fill={bld(0.76)} />
+      <rect x="73"  y="68" width="11" height="22" rx="1" fill={bld(0.80)} />
+      <rect x="87"  y="71" width="8"  height="19" rx="1" fill={bld(0.75)} />
+      <rect x="98"  y="66" width="12" height="24" rx="1" fill={bld(0.82)} />
+      <rect x="113" y="70" width="8"  height="20" rx="1" fill={bld(0.78)} />
+
+      {/* Far-left cluster */}
+      <rect x="0"   y="76" width="10" height="14" rx="1" fill={bld(0.70)} />
+      <rect x="12"  y="70" width="9"  height="20" rx="1" fill={bld(0.75)} />
+      <rect x="24"  y="73" width="11" height="17" rx="1" fill={bld(0.72)} />
+      <rect x="38"  y="67" width="8"  height="23" rx="1" fill={bld(0.78)} />
+      <rect x="49"  y="71" width="10" height="19" rx="1" fill={bld(0.74)} />
+
+      {/* Foreground ground strip — gradient from dark to transparent top */}
+      <defs>
+        <linearGradient id="groundGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="rgba(8,15,30,0)" />
+          <stop offset="100%" stopColor="rgba(8,15,30,0.92)" />
+        </linearGradient>
+      </defs>
+      <rect x="0" y="82" width="300" height="18" fill="url(#groundGrad)" />
     </g>
   );
 }
 
-/** Full animated weather SVG canvas */
+/** Full animated weather SVG canvas — wide 3:1 panoramic */
 function WeatherScene({ scene }: { scene: WeatherScene }) {
+  const sky = skyColors(scene);
   return (
     <svg
-      viewBox="0 0 180 70"
+      viewBox="0 0 300 100"
       className="w-full h-full"
-      preserveAspectRatio="xMidYMax meet"
+      preserveAspectRatio="xMidYMid slice"
       aria-hidden
     >
-      {/* Sky */}
       <defs>
         <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor={scene === "sunny" ? "#0ea5e9" : scene === "night" ? "#0f172a" : scene === "stormy" ? "#1e293b" : scene === "rainy" ? "#1e3a5f" : "#334155"} />
-          <stop offset="100%" stopColor={scene === "sunny" ? "#7dd3fc" : scene === "night" ? "#312e81" : scene === "stormy" ? "#334155" : scene === "rainy" ? "#334155" : "#94a3b8"} />
+          <stop offset="0%"   stopColor={sky.top} />
+          <stop offset="55%"  stopColor={sky.mid} />
+          <stop offset="100%" stopColor={sky.bot} />
         </linearGradient>
+        {/* Horizon glow for sunny/partly cloudy */}
+        {(scene === "sunny" || scene === "partly_cloudy") && (
+          <radialGradient id="horizonGlow" cx="50%" cy="78%" r="55%">
+            <stop offset="0%"   stopColor="rgba(255,200,80,0.28)" />
+            <stop offset="100%" stopColor="rgba(255,200,80,0)" />
+          </radialGradient>
+        )}
       </defs>
-      <rect x="0" y="0" width="180" height="70" fill="url(#skyGrad)" />
 
-      {/* Scene-specific elements */}
+      {/* Sky fill */}
+      <rect x="0" y="0" width="300" height="100" fill="url(#skyGrad)" />
+
+      {/* Horizon glow */}
+      {(scene === "sunny" || scene === "partly_cloudy") && (
+        <rect x="0" y="0" width="300" height="100" fill="url(#horizonGlow)" />
+      )}
+
+      {/* Night stars */}
       {scene === "night" && <StarField />}
-      {(scene === "sunny") && <SunElement />}
-      {(scene === "partly_cloudy") && (
+
+      {/* Moon (night) */}
+      {scene === "night" && (
         <>
-          <SunElement />
-          <CloudElement x={40} y={18} scale={0.8} opacity={0.92} delay={0} drift={10} />
+          <motion.circle cx="248" cy="22" r="14"
+            fill="#e8eef5"
+            animate={{ opacity: [0.8, 1, 0.8] }}
+            transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
+          />
+          {/* Shadow slice to make crescent */}
+          <circle cx="253" cy="18" r="12" fill={sky.top} />
+        </>
+      )}
+
+      {/* Sun */}
+      {(scene === "sunny" || scene === "partly_cloudy") && <SunElement />}
+
+      {/* Clouds */}
+      {scene === "partly_cloudy" && (
+        <>
+          <CloudElement x={100} y={20} scaleX={1.2} scaleY={0.9} opacity={0.88} delay={0}   drift={14} />
+          <CloudElement x={210} y={30} scaleX={0.9} scaleY={0.8} opacity={0.72} delay={2}   drift={10} />
         </>
       )}
       {scene === "cloudy" && (
         <>
-          <CloudElement x={10}  y={8}  scale={1.1}  opacity={0.90} delay={0}   drift={12} />
-          <CloudElement x={65}  y={4}  scale={0.85} opacity={0.80} delay={1.5} drift={8}  />
-          <CloudElement x={105} y={10} scale={0.95} opacity={0.85} delay={0.8} drift={10} />
+          <CloudElement x={0}   y={8}  scaleX={1.3} scaleY={1.0} opacity={0.90} delay={0}   drift={16} dark />
+          <CloudElement x={90}  y={5}  scaleX={1.1} scaleY={0.95} opacity={0.82} delay={1.5} drift={12} dark />
+          <CloudElement x={175} y={10} scaleX={1.2} scaleY={1.0} opacity={0.86} delay={0.8} drift={14} dark />
+          <CloudElement x={240} y={4}  scaleX={0.9} scaleY={0.88} opacity={0.78} delay={2.5} drift={10} dark />
         </>
       )}
       {scene === "rainy" && (
         <>
-          <CloudElement x={5}   y={6}  scale={1.05} opacity={0.85} delay={0}   drift={6} />
-          <CloudElement x={70}  y={3}  scale={0.90} opacity={0.80} delay={1}   drift={5} />
-          <CloudElement x={115} y={8}  scale={0.95} opacity={0.82} delay={0.6} drift={7} />
+          <CloudElement x={0}   y={4}  scaleX={1.4} scaleY={1.1} opacity={0.88} delay={0}   drift={8}  dark />
+          <CloudElement x={90}  y={2}  scaleX={1.2} scaleY={1.0} opacity={0.82} delay={1}   drift={6}  dark />
+          <CloudElement x={190} y={5}  scaleX={1.3} scaleY={1.05} opacity={0.85} delay={0.6} drift={7}  dark />
           <RainDrops />
         </>
       )}
       {scene === "snowy" && (
         <>
-          <CloudElement x={8}   y={4}  scale={1.0}  opacity={0.80} delay={0}   drift={5} />
-          <CloudElement x={80}  y={2}  scale={0.88} opacity={0.75} delay={1.2} drift={4} />
-          <CloudElement x={118} y={6}  scale={0.92} opacity={0.78} delay={0.7} drift={6} />
+          <CloudElement x={0}   y={3}  scaleX={1.3} scaleY={1.0} opacity={0.80} delay={0}   drift={5}  dark />
+          <CloudElement x={100} y={1}  scaleX={1.1} scaleY={0.9} opacity={0.75} delay={1.5} drift={4}  dark />
+          <CloudElement x={195} y={4}  scaleX={1.2} scaleY={0.95} opacity={0.78} delay={0.8} drift={6}  dark />
           <SnowFlakes />
         </>
       )}
       {scene === "stormy" && (
         <>
-          <CloudElement x={0}   y={2}  scale={1.2}  opacity={0.90} delay={0}   drift={4} />
-          <CloudElement x={75}  y={0}  scale={1.1}  opacity={0.85} delay={0.5} drift={3} />
-          <CloudElement x={110} y={4}  scale={1.0}  opacity={0.88} delay={1.0} drift={5} />
+          <CloudElement x={0}   y={0}  scaleX={1.5} scaleY={1.2} opacity={0.92} delay={0}   drift={4}  dark />
+          <CloudElement x={110} y={-2} scaleX={1.4} scaleY={1.15} opacity={0.88} delay={0.5} drift={3}  dark />
+          <CloudElement x={210} y={2}  scaleX={1.3} scaleY={1.1} opacity={0.90} delay={1.0} drift={5}  dark />
           <RainDrops />
-          <LightningBolt x={55} y={28} />
-          <LightningBolt x={105} y={24} />
-        </>
-      )}
-      {scene === "night" && (
-        <>
-          {/* Moon */}
-          <motion.circle cx="140" cy="18" r="11" fill="#e2e8f0"
-            animate={{ opacity: [0.85, 1, 0.85] }}
-            transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-          />
-          <circle cx="145" cy="14" r="8" fill={scene === "night" ? "#1e1b4b" : "transparent"} />
-          <CloudElement x={90} y={20} scale={0.7} opacity={0.45} delay={2} drift={6} />
+          <LightningBolt x={88}  y={38} />
+          <LightningBolt x={188} y={34} />
         </>
       )}
 
-      {/* City/mountain silhouette always on top */}
-      <MountainCityscape />
+      {/* Panoramic landscape (mountains + city + Calgary Tower) always on top */}
+      <PanoramicLandscape scene={scene} />
     </svg>
   );
 }
@@ -584,58 +688,57 @@ export function CalgaryPulsePanel() {
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          className="relative overflow-hidden rounded-2xl border border-white/10 shadow-xl shadow-black/20"
-          style={{ minHeight: "170px" }}
+          className="relative overflow-hidden rounded-2xl shadow-2xl shadow-black/30 border border-white/10"
+          style={{ aspectRatio: "16/7" }}
         >
-          {/* Animated sky + cityscape scene fills the entire card */}
-          <div className={`absolute inset-0 bg-gradient-to-b ${skyGradient(scene)}`} />
+          {/* Full-bleed animated panorama — fills the entire card */}
           <div className="absolute inset-0">
             <WeatherScene scene={scene} />
           </div>
 
-          {/* Dark overlay so text always reads well */}
-          <div className="absolute inset-0 bg-black/20 dark:bg-black/30" />
-          {/* Ambient scene tint */}
-          <div className={`absolute inset-0 ${ambientTint(scene)}`} />
-
-          {/* Content layer */}
-          <div className="relative z-10 p-4 xl:p-5 flex flex-col h-full" style={{ minHeight: "170px" }}>
-            {/* Top info */}
-            <div className="flex-1">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-white/60 mb-1">Calgary</p>
-              <p className="text-xl xl:text-2xl font-black text-white leading-tight drop-shadow-sm">
-                {weather.temp}°C
-              </p>
-              <p className="text-xs font-semibold text-white/90 mt-0.5">
-                {getSeasonLabel(weather.temp, weather.wmoCode)}
-              </p>
-              <p className="text-[11px] text-white/65 mt-0.5">
-                Feels {weather.feelsLike}°C · {wmoToDesc(weather.wmoCode)}
+          {/* Top-left: frosted glass info strip */}
+          <div className="absolute top-3 left-3 right-3 z-10">
+            <div className="inline-flex flex-col gap-0.5 backdrop-blur-md bg-black/28 rounded-xl px-3 py-2 border border-white/10">
+              <p className="text-[9px] font-black uppercase tracking-[0.18em] text-white/55">Calgary, AB</p>
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl font-black text-white leading-none drop-shadow">{weather.temp}°C</span>
+                <span className="text-xs font-semibold text-white/80">{getSeasonLabel(weather.temp, weather.wmoCode)}</span>
+              </div>
+              <p className="text-[10px] text-white/60">
+                Feels {weather.feelsLike}°C &middot; {wmoToDesc(weather.wmoCode)}
               </p>
             </div>
+          </div>
 
-            {/* Stat pills anchored to bottom */}
-            <div className="grid grid-cols-3 gap-1.5 mt-3">
-              <div className="flex flex-col items-center gap-0.5 rounded-xl bg-black/25 backdrop-blur-sm py-2">
-                <Wind className="w-3.5 h-3.5 text-white/70" />
-                <span className="text-sm font-bold text-white leading-none">{weather.windKph}</span>
-                <span className="text-[9px] text-white/55 uppercase tracking-wide">km/h</span>
+          {/* Bottom: stat bar — glass strip sitting over the cityscape */}
+          <div className="absolute bottom-0 inset-x-0 z-10">
+            <div className="backdrop-blur-md bg-black/30 border-t border-white/10 grid grid-cols-3 divide-x divide-white/10">
+              <div className="flex items-center justify-center gap-1.5 py-2">
+                <Wind className="w-3 h-3 text-white/55 flex-shrink-0" />
+                <div className="text-center">
+                  <span className="text-sm font-black text-white leading-none">{weather.windKph}</span>
+                  <span className="text-[8px] text-white/45 block uppercase tracking-wide">km/h</span>
+                </div>
               </div>
-              <div className="flex flex-col items-center gap-0.5 rounded-xl bg-black/25 backdrop-blur-sm py-2">
-                <Droplets className="w-3.5 h-3.5 text-white/70" />
-                <span className="text-sm font-bold text-white leading-none">{weather.humidity}%</span>
-                <span className="text-[9px] text-white/55 uppercase tracking-wide">Humid</span>
+              <div className="flex items-center justify-center gap-1.5 py-2">
+                <Droplets className="w-3 h-3 text-white/55 flex-shrink-0" />
+                <div className="text-center">
+                  <span className="text-sm font-black text-white leading-none">{weather.humidity}%</span>
+                  <span className="text-[8px] text-white/45 block uppercase tracking-wide">Humid</span>
+                </div>
               </div>
-              <div className="flex flex-col items-center gap-0.5 rounded-xl bg-black/25 backdrop-blur-sm py-2">
-                <Sun className="w-3.5 h-3.5 text-white/70" />
-                <span className="text-sm font-bold text-white leading-none">{weather.uvIndex}</span>
-                <span className="text-[9px] text-white/55 uppercase tracking-wide">UV</span>
+              <div className="flex items-center justify-center gap-1.5 py-2">
+                <Sun className="w-3 h-3 text-white/55 flex-shrink-0" />
+                <div className="text-center">
+                  <span className="text-sm font-black text-white leading-none">{weather.uvIndex}</span>
+                  <span className="text-[8px] text-white/45 block uppercase tracking-wide">UV</span>
+                </div>
               </div>
             </div>
           </div>
         </motion.div>
       ) : (
-        <div className="h-44 rounded-2xl bg-foreground/[0.06] flex items-center justify-center">
+        <div className="rounded-2xl bg-foreground/[0.06] flex items-center justify-center" style={{ aspectRatio: "16/7" }}>
           <Loader2 className="w-5 h-5 animate-spin text-foreground/30" />
         </div>
       )}
