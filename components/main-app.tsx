@@ -129,7 +129,7 @@ export default function MainApp() {
       </aside>
 
       {/* Mobile / Tablet Header */}
-      <header className="lg:hidden sticky top-0 z-40 bg-background/95 backdrop-blur-2xl border-b border-foreground/[0.08] px-4 sm:px-5 py-2">
+      <header className="lg:hidden sticky top-0 z-40 bg-background border-b border-foreground/[0.08] px-4 sm:px-5 py-2">
         {/* Calgary brand accent strip — red+blue in day, lighter blue+red in dark */}
         <div className="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-[#1D4ED8] dark:from-[#38BDF8] via-[#1D4ED8]/60 dark:via-[#38BDF8]/40 to-[#E1251B]" />
         <div className="flex items-center justify-between gap-3">
@@ -171,7 +171,7 @@ export default function MainApp() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25 }}
-              className="absolute right-0 top-0 bottom-0 w-[85%] max-w-[360px] bg-background/98 backdrop-blur-2xl backdrop-saturate-150 border-l border-foreground/[0.1] shadow-2xl shadow-black/30 ring-1 ring-inset ring-foreground/[0.06] p-8"
+              className="absolute right-0 top-0 bottom-0 w-[85%] max-w-[360px] bg-background border-l border-foreground/[0.1] shadow-2xl shadow-black/30 ring-1 ring-inset ring-foreground/[0.06] p-8"
               onClick={(e) => e.stopPropagation()}
             >
               <nav className="mt-8 space-y-1">
