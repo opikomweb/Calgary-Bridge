@@ -38,6 +38,7 @@ export default function AITab() {
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -46,6 +47,12 @@ export default function AITab() {
   useEffect(() => {
     scrollToBottom();
   }, [chatMessages]);
+
+  // Auto-focus the query bar so the user can start typing immediately —
+  // keeps the focus on what they want to ask.
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   const findRelevantResources = (query: string): Resource[] => {
     const lowerQuery = query.toLowerCase();
@@ -176,42 +183,31 @@ export default function AITab() {
                   animate={{ opacity: 1, y: 0 }}
                   className="text-center w-full max-w-xl"
                 >
-                  {/* Avatar */}
+                  {/* Avatar — character only, no colored backdrop */}
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.1 }}
-                    className="mx-auto mb-6 flex h-16 w-16 md:h-20 md:w-20 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-[#0284c7] to-[#075985] shadow-xl shadow-sky-500/20 ring-1 ring-[#38BDF8]/30"
+                    className="mx-auto mb-6 flex h-20 w-20 md:h-24 md:w-24 items-center justify-center"
                   >
                     <Image
                       src="/ikonnect-guide-avatar.png"
                       alt="iKonnect Guide"
-                      width={80}
-                      height={80}
-                      className="h-full w-full object-cover"
+                      width={96}
+                      height={96}
+                      className="h-full w-full object-contain"
                     />
                   </motion.div>
 
-                  {/* Headline */}
+                  {/* Headline — clean, actionable prompt */}
                   <motion.h1
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
-                    className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4 tracking-tight"
+                    className="text-2xl md:text-3xl lg:text-4xl font-bold mb-8 md:mb-10 tracking-tight text-balance max-w-md mx-auto"
                   >
-                    Hi, I&apos;m iKonnect
+                    How can we help you thrive in Calgary today?
                   </motion.h1>
-
-                  <motion.p
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 }}
-                    className="text-base md:text-lg text-[var(--foreground-muted)] mb-8 md:mb-10 leading-relaxed max-w-md mx-auto"
-                  >
-                    Your guide to everything in Calgary — housing, jobs, healthcare,
-                    newcomer support, things to do, and more. Tell me what you need
-                    and I&apos;ll point you to the right place.
-                  </motion.p>
 
                   {/* Simple example prompts (optional starting points) */}
                   <motion.div
@@ -257,9 +253,7 @@ export default function AITab() {
                       >
                         <div
                           className={`flex h-10 w-10 md:h-11 md:w-11 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl md:rounded-2xl ${
-                            message.role === "user"
-                              ? "bg-[#3B82F6]"
-                              : "bg-gradient-to-br from-[#3B82F6] to-[#1d4ed8]"
+                            message.role === "user" ? "bg-[#3B82F6]" : ""
                           }`}
                         >
                           {message.role === "user" ? (
@@ -270,7 +264,7 @@ export default function AITab() {
                               alt="iKonnect Guide"
                               width={44}
                               height={44}
-                              className="h-full w-full object-cover"
+                              className="h-full w-full object-contain"
                             />
                           )}
                         </div>
@@ -315,13 +309,13 @@ export default function AITab() {
                       animate={{ opacity: 1, y: 0 }}
                       className="flex gap-3 md:gap-4"
                     >
-                      <div className="flex h-10 w-10 md:h-11 md:w-11 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl md:rounded-2xl bg-gradient-to-br from-[#3B82F6] to-[#1d4ed8]">
+                      <div className="flex h-10 w-10 md:h-11 md:w-11 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl md:rounded-2xl">
                         <Image
                           src="/ikonnect-guide-avatar.png"
                           alt="iKonnect Guide"
                           width={44}
                           height={44}
-                          className="h-full w-full object-cover"
+                          className="h-full w-full object-contain"
                         />
                       </div>
                       <div className="glass-card rounded-xl md:rounded-2xl px-4 md:px-5 py-3 md:py-4">
@@ -344,6 +338,7 @@ export default function AITab() {
             <div className="px-5 md:px-8 py-4 md:py-5">
               <div className="glass-card flex items-center gap-2 md:gap-3 rounded-xl md:rounded-2xl p-2 md:p-2.5">
                 <input
+                  ref={inputRef}
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}

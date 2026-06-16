@@ -312,6 +312,46 @@ export const categoryLabels: Record<ResourceCategory, Record<Language, string>> 
     ar: "السياح والزوار",
     zh: "游客与访客",
   },
+  workspace: {
+    en: "Workspaces",
+    fr: "Espaces de Travail",
+    tl: "Mga Workspace",
+    es: "Espacios de Trabajo",
+    ar: "مساحات العمل",
+    zh: "办公空间",
+  },
+  storage: {
+    en: "Storage Facilities",
+    fr: "Entreposage",
+    tl: "Mga Storage",
+    es: "Almacenamiento",
+    ar: "مرافق التخزين",
+    zh: "仓储设施",
+  },
+  "ethnic-market": {
+    en: "Cultural & Ethnic Stores",
+    fr: "Magasins Culturels et Ethniques",
+    tl: "Cultural at Ethnic na Tindahan",
+    es: "Tiendas Culturales y Étnicas",
+    ar: "المتاجر الثقافية والعرقية",
+    zh: "文化与民族商店",
+  },
+  "farmers-market": {
+    en: "Farmers Markets",
+    fr: "Marchés Fermiers",
+    tl: "Farmers Market",
+    es: "Mercados de Agricultores",
+    ar: "أسواق المزارعين",
+    zh: "农夫市场",
+  },
+  essentials: {
+    en: "Local Essentials",
+    fr: "Services Essentiels Locaux",
+    tl: "Mga Lokal na Serbisyo",
+    es: "Servicios Esenciales Locales",
+    ar: "الخدمات المحلية الأساسية",
+    zh: "本地必需服务",
+  },
 };
 
 export const languageNames: Record<Language, string> = {

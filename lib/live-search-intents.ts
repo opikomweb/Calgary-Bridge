@@ -232,6 +232,41 @@ export const LIVE_SEARCH_INTENTS: Record<ResourceCategory, LiveSearchIntent> = {
     ],
     exclude: [],
   },
+  workspace: {
+    label: "Coworking & workspaces",
+    query: "coworking space and shared office workspace",
+    allowTypes: ["point_of_interest", "establishment", "library"],
+    mustMatch: ["cowork", "coworking", "workspace", "shared office", "office space", "desk", "library", "meeting room", "studio"],
+    exclude: ["furniture", "real estate"],
+  },
+  storage: {
+    label: "Self-storage facilities",
+    query: "affordable self storage units and facilities",
+    allowTypes: ["storage", "point_of_interest", "establishment", "moving_company"],
+    mustMatch: ["storage", "self storage", "self-storage", "lockers", "units", "warehouse"],
+    exclude: ["data", "cloud", "cold storage food"],
+  },
+  "ethnic-market": {
+    label: "Cultural & ethnic grocers",
+    query: "ethnic grocery store and international food market",
+    allowTypes: ["grocery_store", "supermarket", "store", "point_of_interest", "establishment"],
+    mustMatch: ["grocer", "grocery", "market", "supermarket", "halal", "asian", "african", "latin", "indian", "korean", "international", "ethnic", "spices", "foods"],
+    exclude: ["restaurant", "fast food", "cafe"],
+  },
+  "farmers-market": {
+    label: "Farmers markets & local produce",
+    query: "farmers market and local farm produce",
+    allowTypes: ["market", "grocery_store", "store", "point_of_interest", "establishment"],
+    mustMatch: ["farmers", "farmer", "farm", "market", "produce", "ranch", "orchard", "butcher", "meat", "poultry", "organic", "local"],
+    exclude: ["stock market", "flea"],
+  },
+  essentials: {
+    label: "Tailors, handymen & local services",
+    query: "tailor alterations and handyman home repair services",
+    allowTypes: ["point_of_interest", "establishment", "store", "general_contractor", "plumber", "electrician"],
+    mustMatch: ["tailor", "alteration", "seamstress", "sewing", "handyman", "repair", "maintenance", "fix", "contractor", "plumb", "electric", "drywall"],
+    exclude: ["auto", "car", "vehicle"],
+  },
 };
 
 /**

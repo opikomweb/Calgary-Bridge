@@ -24,7 +24,12 @@ export type ResourceCategory =
   | "youth"
   | "arts"
   | "logistics"
-  | "tourism";
+  | "tourism"
+  | "workspace"
+  | "storage"
+  | "ethnic-market"
+  | "farmers-market"
+  | "essentials";
 
 export type Priority = ResourceCategory;
 

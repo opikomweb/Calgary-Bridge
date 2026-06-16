@@ -7,7 +7,8 @@ import { resources } from "@/lib/data";
 import { 
   Search, ChevronDown, X, Home, Briefcase, Heart, Users, 
   AlertTriangle, Building2, Baby, GraduationCap, Bus,
-  Scale, HandHeart, Accessibility, Utensils, Brain, Check, Truck, MapPin
+  Scale, HandHeart, Accessibility, Utensils, Brain, Check, Truck, MapPin,
+  Laptop, Package, Store, Sprout, Wrench
 } from "lucide-react";
 import ResourceCard from "../resource-card";
 import LiveResults from "../live-results";
@@ -30,6 +31,11 @@ const allCategories: { id: ResourceCategory | "all"; label: string; icon: React.
   { id: "education", label: "Education", icon: GraduationCap },
   { id: "legal", label: "Legal Help", icon: Scale },
   { id: "business", label: "Business & Licensing", icon: Building2 },
+  { id: "workspace", label: "Workspaces", icon: Laptop },
+  { id: "storage", label: "Storage Facilities", icon: Package },
+  { id: "ethnic-market", label: "Cultural & Ethnic Stores", icon: Store },
+  { id: "farmers-market", label: "Farmers Markets", icon: Sprout },
+  { id: "essentials", label: "Local Essentials", icon: Wrench },
   { id: "tourism", label: "Tourists & Visitors", icon: MapPin },
   { id: "logistics", label: "Shipping & Logistics", icon: Truck },
   { id: "volunteering", label: "Volunteering", icon: HandHeart },
@@ -90,6 +96,10 @@ export default function ExploreTab() {
   const filteredResources = filterResources(resources, activeCategory, searchQuery, activeLanguage);
 
   const currentCategoryInfo = allCategories.find(c => c.id === activeCategory) || allCategories[0];
+
+  // Quick-launch hero cards only on the default view (no category, no search).
+  // Extracted to a boolean so it doesn't narrow `activeCategory` to "all".
+  const showHeroCards = activeCategory === "all" && !searchQuery.trim();
 
   return (
     <div className="min-h-screen relative">
@@ -189,7 +199,12 @@ export default function ExploreTab() {
         </div>
       </section>
 
-      {/* ========== HERO CATEGORY CARDS - GLASSY PREMIUM ========== */}
+      {/* ========== HERO CATEGORY CARDS - GLASSY PREMIUM ==========
+          Quick-launch shortcuts only on the default Explore view. Once a
+          category is selected (e.g. via the dropdown / side menu) or a search
+          is active, these are hidden so results show immediately — the same
+          categories already live in the dropdown above. */}
+      {showHeroCards && (
       <section className="relative pb-8 md:pb-12">
         <div className="max-w-[1200px] mx-auto px-5 md:px-8">
           <motion.div
@@ -207,16 +222,7 @@ export default function ExploreTab() {
                 whileHover={{ scale: 1.02, y: -4 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setActiveCategory(category.id)}
-                className={`relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-br ${category.bgGradient} backdrop-blur-xl border border-foreground/[0.06] p-4 md:p-6 lg:p-8 transition-all group ${
-                  activeCategory === category.id 
-                    ? "ring-2 ring-white/20 shadow-xl border-foreground/[0.12]" 
-                    : "hover:border-foreground/[0.1] hover:shadow-lg"
-                }`}
-                style={{
-                  boxShadow: activeCategory === category.id 
-                    ? `0 0 40px -10px ${category.accentColor}30`
-                    : undefined
-                }}
+                className={`relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-br ${category.bgGradient} backdrop-blur-xl border border-foreground/[0.06] p-4 md:p-6 lg:p-8 transition-all group hover:border-foreground/[0.1] hover:shadow-lg`}
               >
                 {/* Accent Glow */}
                 <div 
@@ -256,6 +262,7 @@ export default function ExploreTab() {
           </motion.div>
         </div>
       </section>
+      )}
 
       {/* ========== ACTIVE FILTER & RESULTS COUNT ========== */}
       <section className="relative pb-4 md:pb-6">
