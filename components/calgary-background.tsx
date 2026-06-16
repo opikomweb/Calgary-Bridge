@@ -6,9 +6,9 @@ import Image from "next/image";
 export function CalgaryAnimatedBackground() {
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-      {/* Base sky: a richer Calgary "big sky" — saturated prairie blue up top
-          easing into a soft horizon glow, deep navy at night. */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#7cb8f0] via-[#aed5f7] to-[#e4f1ff] dark:from-[#040912] dark:via-[#08131f] dark:to-[#0c1c30]" />
+      {/* Base sky: a light, friendly "crayon Calgary blue" — soft enough that
+          dark text always stays readable, deep navy at night. */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#aed4f5] via-[#cfe6fa] to-[#f0f7ff] dark:from-[#040912] dark:via-[#08131f] dark:to-[#0c1c30]" />
 
       {/* Warm horizon wash near the bottom to add depth & a sunny prairie feel */}
       <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#fff4e0]/40 via-[#dcecff]/10 to-transparent dark:from-[#0a1c30]/40 dark:via-transparent dark:to-transparent" />
