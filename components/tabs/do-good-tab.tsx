@@ -9,7 +9,6 @@ import {
   GraduationCap,
   ArrowUpRight,
   Clock,
-  Sparkles,
 } from "lucide-react";
 import { doGoodCategories, doGoodImpactStats, type DoGoodCategory } from "@/lib/do-good";
 
@@ -34,7 +33,7 @@ export default function DoGoodTab() {
             className="flex flex-col items-start gap-5"
           >
             <span className="inline-flex items-center gap-2 rounded-full bg-[#E1251B]/10 border border-[#E1251B]/25 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.15em] text-[#E1251B]">
-              <Sparkles className="w-3.5 h-3.5" />
+              <HandHeart className="w-3.5 h-3.5" />
               Give back to Calgary
             </span>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-[-0.02em] text-foreground text-balance leading-[1.05]">

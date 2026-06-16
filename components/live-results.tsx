@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MapPin, Star, Phone, ExternalLink, Globe, Loader2, Sparkles, BadgeCheck } from "lucide-react";
+import { MapPin, Star, Phone, ExternalLink, Globe, Loader2, Search, BadgeCheck } from "lucide-react";
 import type { LivePlace } from "@/app/api/live-search/route";
 import type { ResourceCategory } from "@/lib/types";
 
@@ -77,7 +77,7 @@ export default function LiveResults({ category, query, categoryLabel }: LiveResu
               </>
             ) : (
               <>
-                <Sparkles className="h-4 w-4" />
+                <Search className="h-4 w-4" />
                 {status === "done" ? "Search again" : "Search live"}
               </>
             )}
@@ -98,7 +98,7 @@ export default function LiveResults({ category, query, categoryLabel }: LiveResu
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="mt-4 text-sm text-rose-300/80"
+            className="mt-4 text-sm text-[#E1251B]"
           >
             {error}
           </motion.p>
@@ -120,7 +120,7 @@ export default function LiveResults({ category, query, categoryLabel }: LiveResu
             ) : (
               <>
                 <div className="flex items-center gap-2 mb-4">
-                  <BadgeCheck className="h-4 w-4 text-[#34D399]" />
+                  <BadgeCheck className="h-4 w-4 text-[#38BDF8]" />
                   <p className="text-sm font-medium text-foreground/70">
                     Live from Google Maps
                     <span className="text-foreground/40"> &middot; {results.length} verified result{results.length !== 1 ? "s" : ""}</span>
@@ -157,8 +157,8 @@ function LivePlaceCard({ place, index }: { place: LivePlace; index: number }) {
       <div className="flex items-start justify-between gap-3">
         <h4 className="font-semibold text-foreground leading-snug text-balance">{place.name}</h4>
         {typeof place.rating === "number" && (
-          <span className="flex-shrink-0 inline-flex items-center gap-1 px-2 py-1 rounded-full bg-amber-400/15 text-amber-300 text-xs font-semibold">
-            <Star className="h-3 w-3 fill-amber-300" />
+          <span className="flex-shrink-0 inline-flex items-center gap-1 px-2 py-1 rounded-full bg-foreground/[0.08] text-foreground/80 text-xs font-semibold">
+            <Star className="h-3 w-3 fill-current text-[#38BDF8]" />
             {place.rating.toFixed(1)}
           </span>
         )}
@@ -170,7 +170,7 @@ function LivePlaceCard({ place, index }: { place: LivePlace; index: number }) {
           {place.openNow !== undefined && (
             <>
               {place.reviews ? <span className="text-foreground/20">&middot;</span> : null}
-              <span className={place.openNow ? "text-emerald-300" : "text-foreground/45"}>
+              <span className={place.openNow ? "text-[#38BDF8] font-medium" : "text-foreground/45"}>
                 {place.openNow ? "Open now" : "Closed now"}
               </span>
             </>

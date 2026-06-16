@@ -34,7 +34,7 @@ const pageContent: Record<string, { title: string; content: React.ReactNode }> =
           Calgary Konnect exists for one reason: nobody should have to suffer simply because they couldn&apos;t find the right door to knock on.
         </p>
 
-        <div className="p-6 rounded-2xl bg-gradient-to-br from-sky-500/10 to-cyan-500/5 border border-sky-500/20">
+        <div className="p-6 rounded-2xl bg-gradient-to-br from-sky-500/10 to-sky-500/5 border border-sky-500/20">
           <div className="flex items-center gap-3 mb-4">
             <Globe className="w-6 h-6 text-sky-400" />
             <h3 className="text-xl font-bold text-white">Why Calgary Needs Calgary Konnect</h3>
@@ -57,7 +57,7 @@ const pageContent: Record<string, { title: string; content: React.ReactNode }> =
           Calgary Konnect brings every essential service into one place, in plain language, in the languages our communities actually speak. Instead of searching ten websites, you ask one question and get a clear answer: where to go, who to call, what you qualify for, and what to bring. We turn hours of confusion into a few calm minutes &mdash; so help arrives while it still matters.
         </p>
 
-        <div className="p-6 rounded-2xl bg-gradient-to-br from-amber-500/10 to-amber-500/5 border border-amber-500/20">
+        <div className="p-6 rounded-2xl bg-gradient-to-br from-[#E1251B]/10 to-[#E1251B]/5 border border-[#E1251B]/20">
           <p className="text-white/70 leading-relaxed italic">
             &ldquo;I spent three weeks calling numbers that led nowhere. With Calgary Konnect I found a settlement worker, a food bank near my building, and free English classes &mdash; all in one afternoon. For the first time since arriving, I could breathe.&rdquo;
           </p>
@@ -116,9 +116,9 @@ const pageContent: Record<string, { title: string; content: React.ReactNode }> =
             <p className="text-white/60">All listings are reviewed monthly to catch closures, changes, or updates.</p>
           </div>
         </div>
-        <div className="p-5 rounded-xl bg-amber-500/10 border border-amber-500/20 mt-6">
+        <div className="p-5 rounded-xl bg-[#E1251B]/10 border border-[#E1251B]/20 mt-6">
           <p className="text-white/70">
-            <strong className="text-amber-400">Note:</strong> Despite our best efforts, information can change quickly. Always verify details directly with service providers before visiting.
+            <strong className="text-[#E1251B]">Note:</strong> Despite our best efforts, information can change quickly. Always verify details directly with service providers before visiting.
           </p>
         </div>
       </div>
@@ -247,9 +247,9 @@ const pageContent: Record<string, { title: string; content: React.ReactNode }> =
     title: "Data Disclaimer",
     content: (
       <div className="space-y-6">
-        <div className="p-5 rounded-xl bg-amber-500/10 border border-amber-500/20">
+        <div className="p-5 rounded-xl bg-[#E1251B]/10 border border-[#E1251B]/20">
           <p className="text-white/70 leading-relaxed">
-            <strong className="text-amber-400">Important:</strong> Calgary Konnect is an independent platform and is NOT affiliated with, endorsed by, or connected to the City of Calgary, the Government of Alberta, or any official government body.
+            <strong className="text-[#E1251B]">Important:</strong> Calgary Konnect is an independent platform and is NOT affiliated with, endorsed by, or connected to the City of Calgary, the Government of Alberta, or any official government body.
           </p>
         </div>
         <h3 className="text-xl font-bold text-white">Information Accuracy</h3>
@@ -352,7 +352,7 @@ const pageContent: Record<string, { title: string; content: React.ReactNode }> =
             <span>Tech companies interested in civic innovation</span>
           </li>
         </ul>
-        <div className="p-6 rounded-2xl bg-gradient-to-br from-sky-500/10 to-cyan-500/5 border border-sky-500/20 mt-6">
+        <div className="p-6 rounded-2xl bg-gradient-to-br from-sky-500/10 to-sky-500/5 border border-sky-500/20 mt-6">
           <h3 className="text-xl font-bold text-white mb-3">Partner With Calgary Konnect</h3>
           <p className="text-white/60 mb-4">
             For partnership inquiries and business opportunities, reach out to our team.
@@ -375,7 +375,7 @@ const pageContent: Record<string, { title: string; content: React.ReactNode }> =
         <p className="text-white/70 leading-relaxed">
           Have questions, feedback, or suggestions? We would love to hear from you.
         </p>
-        <div className="p-6 rounded-2xl bg-gradient-to-br from-sky-500/10 to-cyan-500/5 border border-sky-500/20">
+        <div className="p-6 rounded-2xl bg-gradient-to-br from-sky-500/10 to-sky-500/5 border border-sky-500/20">
           <div className="flex items-center gap-3 mb-4">
             <Building2 className="w-6 h-6 text-sky-400" />
             <h3 className="text-xl font-bold text-white">Calgary Konnect</h3>
@@ -512,12 +512,12 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
           }} />
 
           {/* Trust Banner */}
-          <div className="relative border-b border-white/[0.04] py-5 md:py-6 px-5 md:px-8 bg-gradient-to-r from-sky-500/[0.03] via-transparent to-cyan-500/[0.03]">
+          <div className="relative border-b border-white/[0.04] py-5 md:py-6 px-5 md:px-8 bg-gradient-to-r from-sky-500/[0.03] via-transparent to-sky-500/[0.03]">
             <div className="max-w-[1200px] mx-auto">
               <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center">
-                    <Shield className="w-4 h-4 text-emerald-400" />
+                  <div className="w-8 h-8 rounded-lg bg-sky-500/10 flex items-center justify-center">
+                    <Shield className="w-4 h-4 text-sky-400" />
                   </div>
                   <span className="text-xs font-medium text-white/60">Verified</span>
                 </div>
@@ -528,14 +528,14 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
                   <span className="text-xs font-medium text-white/60">Updated monthly</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center">
-                    <Users className="w-4 h-4 text-amber-400" />
+                  <div className="w-8 h-8 rounded-lg bg-[#E1251B]/10 flex items-center justify-center">
+                    <Users className="w-4 h-4 text-[#E1251B]" />
                   </div>
                   <span className="text-xs font-medium text-white/60">Community-driven</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-pink-500/10 flex items-center justify-center">
-                    <Heart className="w-4 h-4 text-pink-400" />
+                  <div className="w-8 h-8 rounded-lg bg-[#E1251B]/10 flex items-center justify-center">
+                    <Heart className="w-4 h-4 text-[#E1251B]" />
                   </div>
                   <span className="text-xs font-medium text-white/60">Free to use</span>
                 </div>
@@ -633,12 +633,12 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
         {/* Disclaimer Section */}
         <div className="relative border-t border-white/[0.04] py-8 md:py-10 px-5 md:px-8">
           <div className="max-w-[1200px] mx-auto">
-            <div className="flex items-start gap-3 md:gap-4 p-5 md:p-6 rounded-xl md:rounded-2xl bg-gradient-to-r from-amber-500/[0.08] via-amber-500/[0.04] to-transparent border border-amber-500/15">
-              <div className="w-10 h-10 rounded-lg bg-amber-500/15 flex items-center justify-center flex-shrink-0">
-                <AlertCircle className="w-5 h-5 text-amber-400" />
+            <div className="flex items-start gap-3 md:gap-4 p-5 md:p-6 rounded-xl md:rounded-2xl bg-gradient-to-r from-[#E1251B]/[0.08] via-[#E1251B]/[0.04] to-transparent border border-[#E1251B]/15">
+              <div className="w-10 h-10 rounded-lg bg-[#E1251B]/15 flex items-center justify-center flex-shrink-0">
+                <AlertCircle className="w-5 h-5 text-[#E1251B]" />
               </div>
               <div className="text-sm text-white/60 leading-relaxed min-w-0">
-                <strong className="text-amber-400 block mb-1">Important Disclaimer</strong>
+                <strong className="text-[#E1251B] block mb-1">Important Disclaimer</strong>
                 Calgary Konnect is an independent platform and is not affiliated with, endorsed by, or connected to the City of Calgary, 
                 the Government of Alberta, or any official government body. Information provided is for general reference only. 
                 Always verify details directly with service providers. For emergencies, call 911.
