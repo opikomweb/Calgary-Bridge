@@ -76,7 +76,7 @@ export default function MainApp() {
                     className={`group flex w-full items-center gap-x-5 rounded-2xl px-6 py-5 text-lg font-medium transition-all duration-300 ${
                       activeTab === item.id
                         ? item.highlight
-                          ? "bg-gradient-to-r from-[#38BDF8] to-[#0284c7] text-foreground shadow-2xl shadow-sky-500/40"
+                          ? "bg-gradient-to-r from-[#38BDF8] to-[#0284c7] text-white shadow-2xl shadow-sky-500/40"
                           : "bg-foreground/[0.08] text-foreground border border-foreground/[0.12] shadow-xl shadow-black/20"
                         : "text-foreground/50 hover:bg-foreground/[0.04] hover:text-foreground/80"
                     }`}
@@ -103,7 +103,7 @@ export default function MainApp() {
               </button>
               <button
                 onClick={() => setShowEmergency(true)}
-                className="flex w-full items-center gap-5 rounded-2xl bg-gradient-to-r from-[#E1251B] to-[#b91c1c] px-6 py-5 text-base font-semibold text-foreground transition-all duration-300 hover:shadow-2xl hover:shadow-red-500/40 hover:scale-[1.02]"
+                className="flex w-full items-center gap-5 rounded-2xl bg-gradient-to-r from-[#E1251B] to-[#b91c1c] px-6 py-5 text-base font-semibold text-white transition-all duration-300 hover:shadow-2xl hover:shadow-red-500/40 hover:scale-[1.02]"
               >
                 <AlertTriangle className="h-6 w-6" />
                 Emergency Hub
@@ -139,7 +139,7 @@ export default function MainApp() {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setShowEmergency(true)}
-              className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-[#E1251B] to-[#b91c1c] text-foreground shadow-lg shadow-red-500/30"
+              className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-[#E1251B] to-[#b91c1c] text-white shadow-lg shadow-red-500/30"
             >
               <AlertTriangle className="h-4 w-4" />
             </button>
@@ -211,7 +211,7 @@ export default function MainApp() {
                     setShowEmergency(true);
                     setMobileMenuOpen(false);
                   }}
-                  className="flex w-full items-center gap-5 rounded-2xl bg-gradient-to-r from-[#E1251B] to-[#b91c1c] px-6 py-5 text-base font-semibold text-foreground"
+                  className="flex w-full items-center gap-5 rounded-2xl bg-gradient-to-r from-[#E1251B] to-[#b91c1c] px-6 py-5 text-base font-semibold text-white"
                 >
                   <AlertTriangle className="h-6 w-6" />
                   Emergency Hub
@@ -266,7 +266,7 @@ export default function MainApp() {
               className={`flex flex-col items-center gap-1 rounded-xl px-3 py-2 transition-all min-w-0 ${
                 activeTab === item.id
                   ? item.highlight
-                    ? "bg-gradient-to-br from-[#38BDF8] to-[#0284c7] text-foreground shadow-lg shadow-sky-500/30"
+                    ? "bg-gradient-to-br from-[#38BDF8] to-[#0284c7] text-white shadow-lg shadow-sky-500/30"
                     : "text-[#38BDF8]"
                   : "text-foreground/40"
               }`}

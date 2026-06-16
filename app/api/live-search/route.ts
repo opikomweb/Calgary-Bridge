@@ -11,6 +11,50 @@ const RADIUS_M = 45000; // ~45km covers Calgary + immediate area
 const MIN_RATING = 4.0;
 const MIN_REVIEWS = 5;
 
+// --- In-memory result cache (per warm server instance) -------------------
+// Keyed by the resolved intent query so identical category/search lookups
+// reuse a recent response instead of hitting the paid Places API again.
+const CACHE_TTL_MS = 1000 * 60 * 30; // 30 minutes
+const resultCache = new Map<string, { expires: number; payload: unknown }>();
+
+function getCached(key: string): unknown | undefined {
+  const hit = resultCache.get(key);
+  if (!hit) return undefined;
+  if (Date.now() > hit.expires) {
+    resultCache.delete(key);
+    return undefined;
+  }
+  return hit.payload;
+}
+
+function setCached(key: string, payload: unknown) {
+  resultCache.set(key, { expires: Date.now() + CACHE_TTL_MS, payload });
+  // Keep the cache from growing unbounded on long-lived instances.
+  if (resultCache.size > 200) {
+    const oldest = resultCache.keys().next().value;
+    if (oldest) resultCache.delete(oldest);
+  }
+}
+
+// --- Per-IP rate limiting (sliding window) -------------------------------
+const RATE_LIMIT = 20; // requests
+const RATE_WINDOW_MS = 1000 * 60; // per minute
+const rateBuckets = new Map<string, number[]>();
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const hits = (rateBuckets.get(ip) ?? []).filter((t) => now - t < RATE_WINDOW_MS);
+  hits.push(now);
+  rateBuckets.set(ip, hits);
+  return hits.length > RATE_LIMIT;
+}
+
+function clientIp(req: Request): string {
+  const fwd = req.headers.get("x-forwarded-for");
+  if (fwd) return fwd.split(",")[0]!.trim();
+  return req.headers.get("x-real-ip") ?? "unknown";
+}
+
 export interface LivePlace {
   id: string;
   name: string;
@@ -131,6 +175,13 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Live search is not configured." }, { status: 503 });
   }
 
+  if (isRateLimited(clientIp(req))) {
+    return NextResponse.json(
+      { error: "Too many searches. Please wait a moment and try again." },
+      { status: 429, headers: { "Retry-After": "60" } },
+    );
+  }
+
   let payload: { category?: string; query?: string };
   try {
     payload = await req.json();
@@ -151,9 +202,17 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Provide a category or search query." }, { status: 400 });
   }
 
+  const cacheKey = intent.query.toLowerCase().trim();
+  const cached = getCached(cacheKey);
+  if (cached) {
+    return NextResponse.json(cached, { headers: { "X-Cache": "HIT" } });
+  }
+
   try {
     const results = await searchPlaces(intent, apiKey);
-    return NextResponse.json({ label: intent.label, results });
+    const response = { label: intent.label, results };
+    setCached(cacheKey, response);
+    return NextResponse.json(response, { headers: { "X-Cache": "MISS" } });
   } catch (err) {
     console.error("[v0] live-search error:", err);
     return NextResponse.json({ error: "Live search failed. Please try again." }, { status: 502 });

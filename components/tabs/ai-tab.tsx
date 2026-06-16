@@ -178,8 +178,8 @@ export default function AITab() {
         
         {/* Calgary Tower silhouette - right side */}
         <svg className="absolute right-16 top-1/4 w-24 h-64 opacity-[0.04]" viewBox="0 0 60 200">
-          <path d="M25 200 L25 80 L20 80 L30 0 L40 80 L35 80 L35 200 Z" fill="currentColor" className="text-white" />
-          <ellipse cx="30" cy="60" rx="12" ry="6" fill="currentColor" className="text-white" />
+          <path d="M25 200 L25 80 L20 80 L30 0 L40 80 L35 80 L35 200 Z" fill="currentColor" className="text-foreground" />
+          <ellipse cx="30" cy="60" rx="12" ry="6" fill="currentColor" className="text-foreground" />
         </svg>
         
         {/* Bow River wave - bottom */}
@@ -189,7 +189,7 @@ export default function AITab() {
         
         {/* Mountain silhouette - top right */}
         <svg className="absolute top-0 right-0 w-full h-48 opacity-[0.02]" viewBox="0 0 1440 200" preserveAspectRatio="none">
-          <path d="M1440,200 L1440,100 L1300,50 L1200,80 L1100,30 L1000,70 L900,20 L800,60 L700,40 L600,80 L500,50 L400,90 L300,60 L200,100 L100,70 L0,120 L0,200 Z" fill="currentColor" className="text-white" />
+          <path d="M1440,200 L1440,100 L1300,50 L1200,80 L1100,30 L1000,70 L900,20 L800,60 L700,40 L600,80 L500,50 L400,90 L300,60 L200,100 L100,70 L0,120 L0,200 Z" fill="currentColor" className="text-foreground" />
         </svg>
       </div>
 
@@ -241,14 +241,14 @@ export default function AITab() {
                         whileHover={{ scale: 1.02, y: -2 }}
                         whileTap={{ scale: 0.98 }}
                         onClick={() => handleSuggestionClick(starter.query)}
-                        className={`group relative overflow-hidden rounded-xl md:rounded-2xl bg-gradient-to-br ${starter.color} border border-white/10 p-4 md:p-5 text-left transition-all hover:border-white/20 hover:shadow-lg`}
+                        className={`group relative overflow-hidden rounded-xl md:rounded-2xl bg-gradient-to-br ${starter.color} border border-foreground/10 p-4 md:p-5 text-left transition-all hover:border-foreground/20 hover:shadow-lg`}
                       >
-                        <div className={`mb-2 md:mb-3 flex h-10 w-10 md:h-11 md:w-11 items-center justify-center rounded-lg md:rounded-xl bg-white/10 ${starter.iconColor}`}>
+                        <div className={`mb-2 md:mb-3 flex h-10 w-10 md:h-11 md:w-11 items-center justify-center rounded-lg md:rounded-xl bg-foreground/10 ${starter.iconColor}`}>
                           <starter.icon className="h-5 w-5" />
                         </div>
-                        <h3 className="font-semibold text-white text-sm md:text-base mb-1">{starter.label}</h3>
-                        <p className="text-xs md:text-sm text-white/60 line-clamp-2">{starter.query}</p>
-                        <ArrowRight className="absolute bottom-4 right-4 w-4 h-4 text-white/30 group-hover:text-white/60 transition-colors" />
+                        <h3 className="font-semibold text-foreground text-sm md:text-base mb-1">{starter.label}</h3>
+                        <p className="text-xs md:text-sm text-foreground/60 line-clamp-2">{starter.query}</p>
+                        <ArrowRight className="absolute bottom-4 right-4 w-4 h-4 text-foreground/30 group-hover:text-foreground/60 transition-colors" />
                       </motion.button>
                     ))}
                   </motion.div>
@@ -362,14 +362,14 @@ export default function AITab() {
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSend(input)}
                   placeholder="Ask about housing, jobs, healthcare..."
-                  className="flex-1 bg-transparent px-3 md:px-4 py-2.5 md:py-3 text-white placeholder:text-[var(--foreground-muted)] focus:outline-none text-sm md:text-base min-w-0"
+                  className="flex-1 bg-transparent px-3 md:px-4 py-2.5 md:py-3 text-foreground placeholder:text-[var(--foreground-muted)] focus:outline-none text-sm md:text-base min-w-0"
                 />
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => handleSend(input)}
                   disabled={!input.trim() || isTyping}
-                  className="flex h-11 w-11 md:h-12 md:w-12 items-center justify-center rounded-lg md:rounded-xl bg-[#3B82F6] text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-[#3B82F6]/30 flex-shrink-0"
+                  className="flex h-11 w-11 md:h-12 md:w-12 items-center justify-center rounded-lg md:rounded-xl bg-[#3B82F6] text-foreground transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-[#3B82F6]/30 flex-shrink-0"
                 >
                   <Send className="h-5 w-5" />
                 </motion.button>
@@ -389,7 +389,7 @@ export default function AITab() {
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold tracking-tight leading-tight">Calgary Pulse</h2>
-                  <p className="text-base text-white/50 mt-2 leading-relaxed">Live insights from your city</p>
+                  <p className="text-base text-foreground/50 mt-2 leading-relaxed">Live insights from your city</p>
                 </div>
               </div>
             </div>
@@ -407,10 +407,10 @@ export default function AITab() {
                 </div>
                 <div>
                   <p className="font-bold text-xl leading-tight">Winter Weather</p>
-                  <p className="text-base text-white/50 mt-2 leading-relaxed">-8C, light snow expected</p>
+                  <p className="text-base text-foreground/50 mt-2 leading-relaxed">-8C, light snow expected</p>
                 </div>
               </div>
-              <p className="text-base text-white/60 leading-[1.8]">
+              <p className="text-base text-foreground/60 leading-[1.8]">
                 Dress warmly! Free warming centers available at downtown shelters.
               </p>
             </motion.div>
@@ -423,7 +423,7 @@ export default function AITab() {
               className="space-y-5 mb-14"
             >
               {calgaryInsights.map((insight, i) => (
-                <div key={i} className="flex items-center gap-5 p-6 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
+                <div key={i} className="flex items-center gap-5 p-6 rounded-2xl bg-foreground/[0.03] border border-foreground/[0.06]">
                   <insight.icon className={`w-6 h-6 ${insight.color}`} />
                   <span className="text-base font-medium leading-relaxed">{insight.label}</span>
                 </div>
@@ -446,7 +446,7 @@ export default function AITab() {
                   <button
                     key={i}
                     onClick={() => handleSuggestionClick(question)}
-                    className="w-full text-left p-6 rounded-2xl bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.06] hover:border-white/[0.12] transition-all text-base text-white/60 hover:text-white leading-[1.7]"
+                    className="w-full text-left p-6 rounded-2xl bg-foreground/[0.03] border border-foreground/[0.06] hover:bg-foreground/[0.06] hover:border-foreground/[0.12] transition-all text-base text-foreground/60 hover:text-foreground leading-[1.7]"
                   >
                     {question}
                   </button>
@@ -499,10 +499,10 @@ function AIResourceCard({ resource }: { resource: Resource }) {
               </span>
             ))}
           </div>
-          <h4 className="font-bold text-white text-xl mb-3 leading-snug">
+          <h4 className="font-bold text-foreground text-xl mb-3 leading-snug">
             {resource.title[activeLanguage]}
           </h4>
-          <p className="text-base text-white/60 leading-relaxed line-clamp-2">
+          <p className="text-base text-foreground/60 leading-relaxed line-clamp-2">
             {resource.summary?.[activeLanguage] || resource.description[activeLanguage]}
           </p>
         </div>

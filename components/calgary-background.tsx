@@ -6,8 +6,8 @@ import Image from "next/image";
 export function CalgaryAnimatedBackground() {
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-      {/* Deep Navy Base */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#050B14] via-[#071119] to-[#0a1628]" />
+      {/* Base sky: bright blue sky in day mode, deep navy at night */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#bfe0ff] via-[#dcefff] to-[#eaf3ff] dark:from-[#050B14] dark:via-[#071119] dark:to-[#0a1628]" />
 
       {/* Real Calgary Skyline Image Background */}
       <div className="absolute inset-0">
@@ -15,12 +15,12 @@ export function CalgaryAnimatedBackground() {
           src="/calgary-skyline-bg.png"
           alt=""
           fill
-          className="object-cover object-bottom opacity-50"
+          className="object-cover object-bottom opacity-[0.18] dark:opacity-50"
           priority
         />
-        {/* Gradient overlays for content readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#050B14] via-[#050B14]/60 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#050B14]/80 via-transparent to-[#050B14]/40" />
+        {/* Gradient overlays for content readability (light vs dark) */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#eaf3ff] via-[#eaf3ff]/60 to-transparent dark:from-[#050B14] dark:via-[#050B14]/60" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#eaf3ff]/80 via-transparent to-[#eaf3ff]/40 dark:from-[#050B14]/80 dark:to-[#050B14]/40" />
       </div>
 
       {/* Animated Aurora Glow at Top */}
@@ -176,19 +176,24 @@ function CTrainCar({ cx, lead = false }: { cx: number; lead?: boolean }) {
   );
 }
 
-// Three coupled cars centered at origin (so animateMotion glides it cleanly).
+// Four coupled cars forming a standard long CTrain. The whole drawing is
+// shifted up by 22px so the WHEELS (not the body center) sit exactly on the
+// motion path — keeping the train riding on the rail line, never above it.
 function CTrainCars() {
+  // Evenly spaced car centers, centered on origin. Lead car faces right.
+  const positions = [-177, -59, 59, 177];
   return (
-    <g>
-      {/* Soft shadow under the whole train */}
-      <ellipse cx={0} cy={21} rx={185} ry={3} fill="#000000" opacity="0.3" />
-      {/* Pantograph */}
-      <path d="M-60 -15 l8 -6 M-52 -21 l8 6" stroke="#6B7280" strokeWidth="1.5" />
-      <path d="M60 -15 l8 -6 M68 -21 l8 6" stroke="#6B7280" strokeWidth="1.5" />
-      {/* Cars: rear, middle, lead(front) */}
-      <CTrainCar cx={-118} />
-      <CTrainCar cx={0} />
-      <CTrainCar cx={118} lead />
+    <g transform="translate(0,-22)">
+      {/* Soft shadow under the whole train, sitting on the rail */}
+      <ellipse cx={0} cy={23} rx={245} ry={3} fill="#000000" opacity="0.3" />
+      {/* Pantographs on alternating roofs */}
+      <path d="M-118 -15 l8 -6 M-110 -21 l8 6" stroke="#6B7280" strokeWidth="1.5" />
+      <path d="M0 -15 l8 -6 M8 -21 l8 6" stroke="#6B7280" strokeWidth="1.5" />
+      <path d="M118 -15 l8 -6 M126 -21 l8 6" stroke="#6B7280" strokeWidth="1.5" />
+      {/* Cars: three trailers + lead cab on the right */}
+      {positions.map((cx, i) => (
+        <CTrainCar key={cx} cx={cx} lead={i === positions.length - 1} />
+      ))}
     </g>
   );
 }

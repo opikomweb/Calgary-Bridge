@@ -67,10 +67,7 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
       <motion.div
         whileHover={{ y: -4 }}
         transition={{ duration: 0.3 }}
-        className={`group relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-br from-slate-900/90 via-slate-900/70 to-slate-800/60 border border-white/[0.08] hover:border-white/[0.15] p-5 md:p-6 lg:p-8 transition-all duration-400 ${isCompleted && showNotes ? "opacity-60" : ""}`}
-        style={{
-          boxShadow: "0 4px 24px -8px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.03)",
-        }}
+        className={`group relative overflow-hidden rounded-2xl md:rounded-3xl bg-card border border-border hover:border-foreground/20 p-5 md:p-6 lg:p-8 transition-all duration-400 shadow-lg ${isCompleted && showNotes ? "opacity-60" : ""}`}
       >
         {/* Hover glow effect */}
         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-sky-500/5 via-transparent to-transparent" />
@@ -105,7 +102,7 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
                 className={`rounded-lg md:rounded-xl p-2 md:p-2.5 transition-all ${
                   isBookmarked
                     ? "bg-pink-500/20 text-pink-400"
-                    : "bg-white/[0.06] text-[var(--foreground-muted)] hover:text-white hover:bg-white/[0.1]"
+                    : "bg-foreground/[0.06] text-[var(--foreground-muted)] hover:text-foreground hover:bg-foreground/[0.1]"
                 }`}
               >
                 <Heart className={`h-4 w-4 md:h-5 md:w-5 ${isBookmarked ? "fill-current" : ""}`} />
@@ -116,7 +113,7 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   onClick={() => setShowMenu(!showMenu)}
-                  className="rounded-lg md:rounded-xl p-2 md:p-2.5 bg-white/[0.06] text-[var(--foreground-muted)] hover:text-white hover:bg-white/[0.1] transition-all"
+                  className="rounded-lg md:rounded-xl p-2 md:p-2.5 bg-foreground/[0.06] text-[var(--foreground-muted)] hover:text-foreground hover:bg-foreground/[0.1] transition-all"
                 >
                   <MoreHorizontal className="h-4 w-4 md:h-5 md:w-5" />
                 </motion.button>
@@ -127,14 +124,14 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
                       initial={{ opacity: 0, scale: 0.95, y: -8 }}
                       animate={{ opacity: 1, scale: 1, y: 0 }}
                       exit={{ opacity: 0, scale: 0.95, y: -8 }}
-                      className="absolute right-0 top-full mt-2 w-48 md:w-56 rounded-xl md:rounded-2xl bg-[#0a1628] border border-white/[0.1] shadow-2xl overflow-hidden z-20"
+                      className="absolute right-0 top-full mt-2 w-48 md:w-56 rounded-xl md:rounded-2xl bg-popover border border-border shadow-2xl overflow-hidden z-20"
                     >
                       <button
                         onClick={() => {
                           onClaimBusiness?.(resource.id);
                           setShowMenu(false);
                         }}
-                        className="w-full flex items-center gap-2.5 px-4 py-3 text-left text-sm text-white/70 hover:bg-white/[0.06] hover:text-white transition-colors"
+                        className="w-full flex items-center gap-2.5 px-4 py-3 text-left text-sm text-foreground/70 hover:bg-foreground/[0.06] hover:text-foreground transition-colors"
                       >
                         <Building2 className="w-4 h-4" />
                         Claim this business
@@ -144,7 +141,7 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
                           onReport?.(resource.id);
                           setShowMenu(false);
                         }}
-                        className="w-full flex items-center gap-2.5 px-4 py-3 text-left text-sm text-white/70 hover:bg-white/[0.06] hover:text-white transition-colors border-t border-white/[0.06]"
+                        className="w-full flex items-center gap-2.5 px-4 py-3 text-left text-sm text-foreground/70 hover:bg-foreground/[0.06] hover:text-foreground transition-colors border-t border-foreground/[0.06]"
                       >
                         <Flag className="w-4 h-4" />
                         Report an issue
@@ -157,12 +154,12 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
           </div>
 
           {/* Title - Full Width */}
-          <h3 className="font-bold text-lg md:text-xl lg:text-2xl mb-2 md:mb-3 leading-tight text-white">
+          <h3 className="font-bold text-lg md:text-xl lg:text-2xl mb-2 md:mb-3 leading-tight text-foreground">
             {resource.title[activeLanguage]}
           </h3>
           
           {/* Description - Full Width with Better Line Height */}
-          <p className="text-white/60 text-sm md:text-base leading-relaxed mb-4 line-clamp-2 md:line-clamp-3">
+          <p className="text-foreground/60 text-sm md:text-base leading-relaxed mb-4 line-clamp-2 md:line-clamp-3">
             {resource.summary?.[activeLanguage] || resource.description[activeLanguage]}
           </p>
 
@@ -202,7 +199,7 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
                 href={resource.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 md:gap-2 rounded-xl md:rounded-2xl bg-white/[0.06] border border-white/[0.08] px-3 md:px-4 py-2 md:py-2.5 text-sm font-semibold transition-all hover:bg-white/[0.1] hover:border-white/[0.15] active:scale-95"
+                className="flex items-center gap-1.5 md:gap-2 rounded-xl md:rounded-2xl bg-foreground/[0.06] border border-foreground/[0.08] px-3 md:px-4 py-2 md:py-2.5 text-sm font-semibold transition-all hover:bg-foreground/[0.1] hover:border-foreground/[0.15] active:scale-95"
               >
                 <ExternalLink className="h-4 w-4" />
                 Website
@@ -219,10 +216,7 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
     <motion.div
       whileHover={{ y: -4 }}
       transition={{ duration: 0.3 }}
-      className={`group relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-br from-slate-900/95 via-slate-900/80 to-slate-800/70 border border-white/[0.08] hover:border-white/[0.15] p-5 md:p-6 lg:p-8 transition-all duration-400 ${isCompleted && showNotes ? "opacity-60" : ""}`}
-      style={{
-        boxShadow: "0 8px 32px -12px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.03)",
-      }}
+      className={`group relative overflow-hidden rounded-2xl md:rounded-3xl bg-card border border-border hover:border-foreground/20 p-5 md:p-6 lg:p-8 transition-all duration-400 shadow-xl ${isCompleted && showNotes ? "opacity-60" : ""}`}
     >
       {/* Hover glow effect */}
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-sky-500/5 via-transparent to-transparent" />
@@ -262,7 +256,7 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
             className={`flex-shrink-0 rounded-lg md:rounded-xl p-2 md:p-2.5 transition-all ${
               isBookmarked
                 ? "bg-pink-500/20 text-pink-400"
-                : "bg-white/[0.06] text-[var(--foreground-muted)] hover:text-white hover:bg-white/[0.1]"
+                : "bg-foreground/[0.06] text-[var(--foreground-muted)] hover:text-foreground hover:bg-foreground/[0.1]"
             }`}
           >
             <Heart className={`h-5 w-5 ${isBookmarked ? "fill-current" : ""}`} />
@@ -270,7 +264,7 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
         </div>
 
         {/* Title - Full Width */}
-        <h3 className="font-bold text-lg md:text-xl lg:text-2xl mb-3 leading-tight text-white">
+        <h3 className="font-bold text-lg md:text-xl lg:text-2xl mb-3 leading-tight text-foreground">
           {resource.title[activeLanguage]}
         </h3>
         
@@ -289,7 +283,7 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
               </span>
             )}
             {resource.hours && (
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 md:px-3 md:py-1.5 rounded-full text-xs font-medium bg-white/[0.06] text-[var(--foreground-muted)]">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 md:px-3 md:py-1.5 rounded-full text-xs font-medium bg-foreground/[0.06] text-[var(--foreground-muted)]">
                 <Clock className="w-3.5 h-3.5" />
                 <span className="truncate max-w-[150px]">{resource.hours}</span>
               </span>
@@ -344,7 +338,7 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
                   transition={{ duration: 0.2 }}
                   className="overflow-hidden"
                 >
-                  <div className="mt-6 pt-6 border-t border-white/[0.08] space-y-6">
+                  <div className="mt-6 pt-6 border-t border-foreground/[0.08] space-y-6">
                     {/* Services Offered */}
                     {resource.servicesOffered && resource.servicesOffered.length > 0 && (
                       <div>
@@ -356,7 +350,7 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
                           {resource.servicesOffered.map((service, idx) => (
                             <span
                               key={idx}
-                              className="px-4 py-2 rounded-xl text-sm bg-white/[0.06] text-[var(--foreground-muted)] border border-white/[0.06]"
+                              className="px-4 py-2 rounded-xl text-sm bg-foreground/[0.06] text-[var(--foreground-muted)] border border-foreground/[0.06]"
                             >
                               {service}
                             </span>
@@ -372,7 +366,7 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
                           <Users className="w-5 h-5 text-sky-400" />
                           Eligibility
                         </h4>
-                        <p className="text-base text-[var(--foreground-muted)] bg-white/[0.04] rounded-2xl p-5 border border-white/[0.06]">
+                        <p className="text-base text-[var(--foreground-muted)] bg-foreground/[0.04] rounded-2xl p-5 border border-foreground/[0.06]">
                           {resource.eligibility[activeLanguage]}
                         </p>
                       </div>
@@ -436,7 +430,7 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
               href={resource.website}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 rounded-2xl bg-white/[0.06] border border-white/[0.08] px-7 py-4 text-base font-bold transition-all hover:bg-white/[0.1] hover:border-white/[0.15] active:scale-95"
+              className="flex items-center gap-3 rounded-2xl bg-foreground/[0.06] border border-foreground/[0.08] px-7 py-4 text-base font-bold transition-all hover:bg-foreground/[0.1] hover:border-foreground/[0.15] active:scale-95"
             >
               <ExternalLink className="h-5 w-5" />
               Website
@@ -446,14 +440,14 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
 
         {/* Notes Section (only shown in Shortlist) */}
         {showNotes && (
-          <div className="mt-8 pt-8 border-t border-white/[0.08]">
+          <div className="mt-8 pt-8 border-t border-foreground/[0.08]">
             <div className="flex items-center gap-4 mb-5">
               <button
                 onClick={() => toggleResourceComplete(resource.id)}
                 className={`flex items-center gap-3 rounded-2xl px-6 py-4 text-base font-bold transition-all active:scale-95 ${
                   isCompleted
                     ? "bg-emerald-500/20 text-emerald-400"
-                    : "bg-white/[0.06] border border-white/[0.08] text-[var(--foreground-muted)] hover:text-white"
+                    : "bg-foreground/[0.06] border border-foreground/[0.08] text-[var(--foreground-muted)] hover:text-foreground"
                 }`}
               >
                 <div
@@ -463,7 +457,7 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
                       : "border-[var(--foreground-muted)]"
                   }`}
                 >
-                  {isCompleted && <Check className="w-4 h-4 text-white" />}
+                  {isCompleted && <Check className="w-4 h-4 text-foreground" />}
                 </div>
                 Mark as done
               </button>
@@ -472,7 +466,7 @@ export default function ResourceCard({ resource, showNotes = false, variant = "d
               value={note?.note ?? ""}
               onChange={(e) => setResourceNote(resource.id, e.target.value)}
               placeholder="Add personal notes..."
-              className="w-full rounded-2xl bg-white/[0.04] border border-white/[0.08] p-5 text-base placeholder:text-[var(--foreground-muted)] focus:outline-none focus:border-sky-500/50 focus:ring-2 focus:ring-sky-500/20 transition-all resize-none"
+              className="w-full rounded-2xl bg-foreground/[0.04] border border-foreground/[0.08] p-5 text-base placeholder:text-[var(--foreground-muted)] focus:outline-none focus:border-sky-500/50 focus:ring-2 focus:ring-sky-500/20 transition-all resize-none"
               rows={3}
             />
           </div>

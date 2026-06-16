@@ -218,7 +218,7 @@ function MenuItem({
 }) {
   return (
     <button
-      className={`w-full flex items-center justify-between px-4 md:px-5 py-3.5 md:py-4 transition-colors hover:bg-white/5 ${
+      className={`w-full flex items-center justify-between px-4 md:px-5 py-3.5 md:py-4 transition-colors hover:bg-foreground/5 ${
         !isLast ? "border-b border-[var(--border)]" : ""
       }`}
     >

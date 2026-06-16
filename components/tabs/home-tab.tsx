@@ -23,7 +23,7 @@ export default function HomeTab() {
       icon: Home,
       solution: "Find Housing & Rent Support",
       description: "Affordable rentals, subsidized programs, rent supplements, and tenant assistance",
-      bgGradient: "from-[#0c2d4d]/70 to-[#071a2e]/85",
+      bgGradient: "from-[#0c2d4d] to-[#071a2e]",
       accent: "#38BDF8",
       stats: "12 programs",
     },
@@ -32,7 +32,7 @@ export default function HomeTab() {
       icon: Briefcase,
       solution: "Looking for Work?",
       description: "Resume building, job fairs, skills training, career counseling, and hiring companies",
-      bgGradient: "from-[#2d2408]/70 to-[#1a1505]/85",
+      bgGradient: "from-[#2d2408] to-[#1a1505]",
       accent: "#FBBF24",
       stats: "340+ openings",
     },
@@ -41,7 +41,7 @@ export default function HomeTab() {
       icon: Heart,
       solution: "Get Healthcare Access",
       description: "Walk-in clinics, family doctors, mental health support, and Alberta Health registration",
-      bgGradient: "from-[#0d2d24]/70 to-[#071a16]/85",
+      bgGradient: "from-[#0d2d24] to-[#071a16]",
       accent: "#34D399",
       stats: "24/7 available",
     },
@@ -50,7 +50,7 @@ export default function HomeTab() {
       icon: Users,
       solution: "New to Calgary?",
       description: "Settlement services, language classes, community connections, and integration support",
-      bgGradient: "from-[#082d36]/70 to-[#051a20]/85",
+      bgGradient: "from-[#082d36] to-[#051a20]",
       accent: "#22D3EE",
       stats: "10 orgs",
     },
@@ -83,7 +83,7 @@ export default function HomeTab() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15, duration: 0.6 }}
-            className="text-sm md:text-base text-white/40 mt-4 md:mt-6 mb-8 md:mb-10 leading-relaxed"
+            className="text-sm md:text-base text-foreground/40 mt-4 md:mt-6 mb-8 md:mb-10 leading-relaxed"
           >
             Search for housing, jobs, healthcare, or ask the AI anything about Calgary.
           </motion.p>
@@ -95,13 +95,13 @@ export default function HomeTab() {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="relative max-w-xl"
           >
-            <Search className="absolute left-4 md:left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
+            <Search className="absolute left-4 md:left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-foreground/40" />
             <input
               type="text"
               placeholder="My landlord won't fix the heat..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full h-14 md:h-16 bg-white/[0.05] hover:bg-white/[0.07] border border-white/[0.1] hover:border-white/[0.15] focus:border-[#38BDF8]/50 focus:bg-white/[0.07] rounded-xl md:rounded-2xl text-base text-white placeholder:text-white/30 pl-12 md:pl-14 pr-4 md:pr-6 outline-none transition-all duration-300 focus:shadow-[0_0_0_3px_rgba(56,189,248,0.1)]"
+              className="w-full h-14 md:h-16 bg-foreground/[0.05] hover:bg-foreground/[0.07] border border-foreground/[0.1] hover:border-foreground/[0.15] focus:border-[#38BDF8]/50 focus:bg-foreground/[0.07] rounded-xl md:rounded-2xl text-base text-foreground placeholder:text-foreground/30 pl-12 md:pl-14 pr-4 md:pr-6 outline-none transition-all duration-300 focus:shadow-[0_0_0_3px_rgba(56,189,248,0.1)]"
             />
           </motion.div>
 
@@ -117,7 +117,7 @@ export default function HomeTab() {
                 <button
                   key={q}
                   onClick={() => setSearchQuery(q)}
-                  className="px-3 md:px-4 py-2 md:py-2.5 rounded-lg md:rounded-xl bg-white/[0.04] border border-white/[0.08] text-xs md:text-sm text-white/50 hover:bg-white/[0.08] hover:border-white/[0.15] hover:text-white/80 transition-all duration-300"
+                  className="px-3 md:px-4 py-2 md:py-2.5 rounded-lg md:rounded-xl bg-foreground/[0.04] border border-foreground/[0.08] text-xs md:text-sm text-foreground/50 hover:bg-foreground/[0.08] hover:border-foreground/[0.15] hover:text-foreground/80 transition-all duration-300"
                 >
                   {q}
                 </button>
@@ -134,14 +134,14 @@ export default function HomeTab() {
           <div className="glass-card rounded-2xl md:rounded-3xl p-5 md:p-6 mb-6 md:mb-8">
             <div className="flex flex-col sm:flex-row sm:items-center gap-4">
               <div className="flex-1 min-w-0">
-                <p className="text-xs text-white/50 mb-1 uppercase tracking-wider font-medium">Search Results</p>
+                <p className="text-xs text-foreground/50 mb-1 uppercase tracking-wider font-medium">Search Results</p>
                 <h2 className="text-xl md:text-2xl font-bold leading-tight truncate">
                   &quot;{searchQuery}&quot;
                 </h2>
               </div>
               <button
                 onClick={() => setSearchQuery("")}
-                className="px-4 py-2.5 rounded-xl bg-white/[0.06] border border-white/[0.08] text-sm font-semibold text-white/70 hover:bg-white/[0.1] hover:text-white transition-all flex-shrink-0"
+                className="px-4 py-2.5 rounded-xl bg-foreground/[0.06] border border-foreground/[0.08] text-sm font-semibold text-foreground/70 hover:bg-foreground/[0.1] hover:text-foreground transition-all flex-shrink-0"
               >
                 Clear Search
               </button>
@@ -150,7 +150,7 @@ export default function HomeTab() {
           
           {filteredResources.length > 0 ? (
             <>
-              <p className="text-base text-white/50 mb-5 md:mb-6">{filteredResources.length} resource{filteredResources.length !== 1 ? 's' : ''} found</p>
+              <p className="text-base text-foreground/50 mb-5 md:mb-6">{filteredResources.length} resource{filteredResources.length !== 1 ? 's' : ''} found</p>
               <div className="grid md:grid-cols-2 gap-5 md:gap-6">
                 {filteredResources.slice(0, 8).map((resource, i) => (
                   <motion.div
@@ -166,11 +166,11 @@ export default function HomeTab() {
             </>
           ) : (
             <div className="glass-card rounded-2xl md:rounded-3xl p-10 md:p-12 text-center">
-              <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white/[0.06] flex items-center justify-center mx-auto mb-6">
-                <Search className="w-8 h-8 md:w-10 md:h-10 text-white/30" />
+              <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-foreground/[0.06] flex items-center justify-center mx-auto mb-6">
+                <Search className="w-8 h-8 md:w-10 md:h-10 text-foreground/30" />
               </div>
               <h3 className="text-xl md:text-2xl font-bold mb-3">No results found</h3>
-              <p className="text-base text-white/50 mb-8 max-w-md mx-auto leading-relaxed">
+              <p className="text-base text-foreground/50 mb-8 max-w-md mx-auto leading-relaxed">
                 We couldn&apos;t find any resources matching your search. Try different keywords or ask our AI assistant.
               </p>
               <button
@@ -214,7 +214,7 @@ export default function HomeTab() {
                     whileHover={{ scale: 1.02, y: -4 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => setActiveTab("explore")}
-                    className={`group relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-br ${pathway.bgGradient} backdrop-blur-xl border border-white/[0.06] hover:border-white/[0.12] transition-all duration-500`}
+                    className={`group relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-br ${pathway.bgGradient} backdrop-blur-xl border border-foreground/[0.06] hover:border-foreground/[0.12] transition-all duration-500`}
                     style={{ 
                       boxShadow: `0 0 60px -20px ${pathway.accent}15`
                     }}
@@ -228,7 +228,7 @@ export default function HomeTab() {
                     <div className="relative z-10 p-5 md:p-8 lg:p-10 flex flex-col items-center text-center">
                       {/* Icon */}
                       <div 
-                        className="w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-xl md:rounded-2xl flex items-center justify-center mb-4 md:mb-6 border border-white/[0.08] backdrop-blur-sm transition-transform group-hover:scale-110"
+                        className="w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-xl md:rounded-2xl flex items-center justify-center mb-4 md:mb-6 border border-foreground/[0.08] backdrop-blur-sm transition-transform group-hover:scale-110"
                         style={{ backgroundColor: `${pathway.accent}15` }}
                       >
                         <Icon className="w-6 h-6 md:w-7 md:h-7" style={{ color: pathway.accent }} />
@@ -236,7 +236,7 @@ export default function HomeTab() {
                       
                       <div className="flex-1 flex flex-col items-center">
                         <h3 className="text-base md:text-xl lg:text-2xl font-bold text-white mb-2 md:mb-3 leading-tight tracking-[-0.01em]">{pathway.solution}</h3>
-                        <p className="text-xs md:text-sm text-white/50 leading-relaxed line-clamp-2 md:line-clamp-none">{pathway.description}</p>
+                        <p className="text-xs md:text-sm text-white/60 leading-relaxed line-clamp-2 md:line-clamp-none">{pathway.description}</p>
                       </div>
                       
                       <div className="flex flex-col items-center gap-3 mt-4 md:mt-6">
@@ -250,7 +250,7 @@ export default function HomeTab() {
                         >
                           {pathway.stats}
                         </span>
-                        <div className="hidden md:flex items-center gap-2 text-white/50 group-hover:text-white transition-colors">
+                        <div className="hidden md:flex items-center gap-2 text-white/60 group-hover:text-white transition-colors">
                           <span className="text-sm font-medium">Explore</span>
                           <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </div>
@@ -327,9 +327,9 @@ export default function HomeTab() {
                   transition={{ delay: 0.65 + index * 0.05 }}
                   whileHover={{ y: -4, scale: 1.02 }}
                   onClick={() => setActiveTab("explore")}
-                  className="group p-4 md:p-6 rounded-xl md:rounded-2xl bg-white/[0.04] border border-white/[0.06] hover:bg-white/[0.08] hover:border-white/[0.15] transition-all duration-300 flex flex-col items-center text-center"
+                  className="group p-4 md:p-6 rounded-xl md:rounded-2xl bg-foreground/[0.04] border border-foreground/[0.06] hover:bg-foreground/[0.08] hover:border-foreground/[0.15] transition-all duration-300 flex flex-col items-center text-center"
                 >
-                  <h3 className="text-sm md:text-base font-bold text-white mb-1 md:mb-2">{item.label}</h3>
+                  <h3 className="text-sm md:text-base font-bold text-foreground mb-1 md:mb-2">{item.label}</h3>
                   <p className="text-xs md:text-sm text-[var(--foreground-muted)] mb-3 leading-relaxed line-clamp-2">{item.description}</p>
                   <div className="flex items-center gap-1.5 text-[#38BDF8] text-xs md:text-sm font-semibold mt-auto">
                     <span>View</span>
@@ -422,10 +422,10 @@ export default function HomeTab() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.8 + index * 0.05 }}
                   whileHover={{ y: -2 }}
-                  className="p-5 md:p-6 rounded-xl md:rounded-2xl bg-white/[0.04] border border-white/[0.06] hover:bg-white/[0.07] hover:border-white/[0.12] transition-all duration-300"
+                  className="p-5 md:p-6 rounded-xl md:rounded-2xl bg-foreground/[0.04] border border-foreground/[0.06] hover:bg-foreground/[0.07] hover:border-foreground/[0.12] transition-all duration-300"
                 >
                   <div className="flex items-start justify-between gap-3 mb-3">
-                    <h3 className="text-base md:text-lg font-bold text-white leading-tight">{place.name}</h3>
+                    <h3 className="text-base md:text-lg font-bold text-foreground leading-tight">{place.name}</h3>
                     <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-400/15 text-emerald-400 flex-shrink-0">
                       {place.tag}
                     </span>
