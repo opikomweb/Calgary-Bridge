@@ -165,7 +165,7 @@ export default function AITab() {
           Mobile reserves space for the sticky header (~88px) AND the fixed
           bottom nav (~72px) so the docked input + last message never hide
           behind the nav bar. */}
-      <div className="flex h-[calc(100dvh-160px)] lg:h-[calc(100vh-100px)]">
+      <div className="flex h-[calc(100dvh-192px)] sm:h-[calc(100dvh-204px)] lg:h-[calc(100vh-100px)]">
         {/* Left Side - AI Conversation. Expands to full width when the
             Calgary Pulse panel is collapsed. */}
         <div className={`relative flex-1 flex flex-col min-w-0 ${pulseOpen ? "lg:max-w-[65%]" : "lg:max-w-full"}`}>
@@ -180,7 +180,7 @@ export default function AITab() {
               Calgary Pulse
             </button>
           )}
-          <div className="flex-1 overflow-y-auto">
+          <div className="flex-1 overflow-y-auto scroll-pt-6 overscroll-contain">
             {chatMessages.length === 0 ? (
               /* Empty State */
               <div className="flex flex-col items-center justify-center min-h-full px-5 md:px-8 py-10 md:py-16">
@@ -245,7 +245,7 @@ export default function AITab() {
               </div>
             ) : (
               /* Chat Messages */
-              <div className="mx-auto w-full max-w-3xl px-5 md:px-8 pt-8 md:pt-10 pb-6 md:pb-8">
+              <div className="mx-auto w-full max-w-3xl px-5 md:px-8 pt-6 md:pt-10 pb-10 md:pb-8">
                 <div className="flex flex-col gap-5 md:gap-6">
                   <AnimatePresence>
                     {chatMessages.map((message) => (
