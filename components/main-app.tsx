@@ -58,7 +58,7 @@ export default function MainApp() {
 
       {/* Desktop Sidebar */}
       <aside className="hidden lg:flex lg:w-[340px] lg:flex-col lg:fixed lg:inset-y-0 lg:z-50">
-        <div className="flex grow flex-col overflow-y-auto border-r border-foreground/[0.06] bg-background/70 backdrop-blur-3xl">
+        <div className="flex grow flex-col overflow-y-auto border-r border-foreground/[0.08] bg-background/95 backdrop-blur-3xl shadow-sm">
           {/* Logo Section - Compact transparent brand lockup (no badge, no extra text) */}
           <div className="px-6 pt-6 pb-4 flex justify-center">
             <button
@@ -81,11 +81,11 @@ export default function MainApp() {
                       activeTab === item.id
                         ? item.highlight
                           ? "bg-gradient-to-r from-[#1D4ED8] to-[#0A2540] text-white shadow-2xl shadow-blue-900/40"
-                          : "bg-[#1D4ED8]/[0.12] text-foreground border border-[#1D4ED8]/40 shadow-lg shadow-blue-900/10"
+                          : "bg-[#1D4ED8] text-white shadow-lg shadow-blue-800/30"
                         : "text-foreground/75 hover:bg-foreground/[0.06] hover:text-foreground"
                     }`}
                   >
-                    <item.icon className={`h-6 w-6 shrink-0 ${activeTab === item.id ? (item.highlight ? "" : "text-[#1D4ED8]") : "opacity-70"}`} />
+                    <item.icon className={`h-6 w-6 shrink-0 ${activeTab === item.id ? "" : "opacity-70"}`} />
                     {item.label}
                   </button>
                 </li>
@@ -163,7 +163,7 @@ export default function MainApp() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25 }}
-              className="absolute right-0 top-0 bottom-0 w-[85%] max-w-[360px] bg-background/70 backdrop-blur-2xl backdrop-saturate-150 border-l border-white/15 shadow-2xl shadow-black/30 ring-1 ring-inset ring-white/10 p-8"
+              className="absolute right-0 top-0 bottom-0 w-[85%] max-w-[360px] bg-background/98 backdrop-blur-2xl backdrop-saturate-150 border-l border-foreground/[0.1] shadow-2xl shadow-black/30 ring-1 ring-inset ring-foreground/[0.06] p-8"
               onClick={(e) => e.stopPropagation()}
             >
               <nav className="mt-12 space-y-3">
@@ -178,11 +178,11 @@ export default function MainApp() {
                       activeTab === item.id
                         ? item.highlight
                           ? "bg-gradient-to-r from-[#1D4ED8] to-[#0A2540] text-white shadow-lg shadow-blue-900/30"
-                          : "bg-[#1D4ED8]/[0.12] text-foreground border border-[#1D4ED8]/40"
+                          : "bg-[#1D4ED8] text-white shadow-md shadow-blue-800/25"
                         : "text-foreground/75 hover:bg-foreground/[0.06] hover:text-foreground"
                     }`}
                   >
-                    <item.icon className={`h-6 w-6 ${activeTab === item.id && !item.highlight ? "text-[#1D4ED8]" : ""}`} />
+                    <item.icon className={`h-6 w-6 ${activeTab === item.id ? "" : ""}`} />
                     {item.label}
                   </button>
                 ))}

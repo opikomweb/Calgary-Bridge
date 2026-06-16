@@ -101,13 +101,13 @@ export default function HomeTab() {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="relative max-w-xl"
           >
-            <Search className="absolute left-4 md:left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-foreground/40" />
+            <Search className="absolute left-4 md:left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-[#1D4ED8] dark:text-[#38BDF8]" />
             <input
               type="text"
               placeholder="My landlord won't fix the heat..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full h-14 md:h-16 bg-foreground/[0.05] hover:bg-foreground/[0.07] border border-foreground/[0.1] hover:border-foreground/[0.15] focus:border-[#38BDF8]/50 focus:bg-foreground/[0.07] rounded-xl md:rounded-2xl text-base text-foreground placeholder:text-foreground/30 pl-12 md:pl-14 pr-4 md:pr-6 outline-none transition-all duration-300 focus:shadow-[0_0_0_3px_rgba(56,189,248,0.1)]"
+              className="w-full h-14 md:h-16 bg-white dark:bg-[rgba(15,23,42,0.9)] hover:bg-white dark:hover:bg-[rgba(15,23,42,0.95)] border-2 border-foreground/[0.15] hover:border-foreground/[0.25] focus:border-[#1D4ED8] dark:focus:border-[#38BDF8] rounded-xl md:rounded-2xl text-base text-foreground placeholder:text-foreground/40 pl-12 md:pl-14 pr-4 md:pr-6 outline-none transition-all duration-300 focus:shadow-[0_0_0_4px_rgba(29,78,216,0.1)] dark:focus:shadow-[0_0_0_4px_rgba(56,189,248,0.1)] shadow-sm"
             />
           </motion.div>
 
@@ -123,7 +123,7 @@ export default function HomeTab() {
                 <button
                   key={q}
                   onClick={() => setSearchQuery(q)}
-                  className="px-3.5 md:px-4 py-2 md:py-2.5 rounded-lg md:rounded-xl bg-foreground/[0.06] border border-foreground/[0.12] text-sm font-medium text-foreground/75 hover:bg-[#38BDF8]/10 hover:border-[#38BDF8]/40 hover:text-foreground transition-all duration-300"
+                  className="px-3.5 md:px-4 py-2 md:py-2.5 rounded-lg md:rounded-xl bg-white dark:bg-foreground/[0.06] border border-foreground/[0.15] dark:border-foreground/[0.12] text-sm font-medium text-foreground hover:bg-[#1D4ED8] hover:border-[#1D4ED8] hover:text-white dark:hover:bg-[#38BDF8]/10 dark:hover:border-[#38BDF8]/40 dark:hover:text-foreground transition-all duration-300 shadow-sm"
                 >
                   {q}
                 </button>
@@ -205,7 +205,7 @@ export default function HomeTab() {
                 transition={{ delay: 0.3 }}
                 className="text-center"
               >
-                <p className="text-xs font-semibold text-[#38BDF8] uppercase tracking-[0.15em] mb-3">Start Here</p>
+                <p className="text-xs font-semibold text-[#1D4ED8] dark:text-[#38BDF8] uppercase tracking-[0.15em] mb-3">Start Here</p>
                 <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight">What most <span className="text-calgary-red">Calgarians</span> need.</h2>
               </motion.div>
             </div>
@@ -340,7 +340,7 @@ export default function HomeTab() {
                 >
                   <h3 className="text-sm md:text-base font-bold text-foreground mb-1 md:mb-2">{item.label}</h3>
                   <p className="text-xs md:text-sm text-[var(--foreground-muted)] mb-3 leading-relaxed line-clamp-2">{item.description}</p>
-                  <div className="flex items-center gap-1.5 text-[#38BDF8] text-xs md:text-sm font-semibold mt-auto">
+                  <div className="flex items-center gap-1.5 text-[#1D4ED8] dark:text-[#38BDF8] text-xs md:text-sm font-semibold mt-auto">
                     <span>View</span>
                     <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                   </div>
@@ -353,7 +353,7 @@ export default function HomeTab() {
           <section className="px-6 md:px-8 lg:px-12 pt-4 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
             <div className="pb-8 md:pb-10">
               <div className="text-center">
-                <p className="text-xs font-bold text-[#0284c7] uppercase tracking-[0.15em] mb-3">Recommended</p>
+                <p className="text-xs font-bold text-[#1D4ED8] dark:text-[#0284c7] uppercase tracking-[0.15em] mb-3">Recommended</p>
                 <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">Top resources this month.</h2>
                 <button
                   onClick={() => setActiveTab("explore")}
@@ -383,11 +383,11 @@ export default function HomeTab() {
             <section className="px-6 md:px-8 lg:px-12 pt-4 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
               <div className="pb-8 md:pb-10">
                 <div className="text-center">
-                  <p className="text-xs font-bold text-[#0284c7] uppercase tracking-[0.15em] mb-3">Hidden Gems</p>
+                  <p className="text-xs font-bold text-[#1D4ED8] dark:text-[#0284c7] uppercase tracking-[0.15em] mb-3">Hidden Gems</p>
                   <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">Programs most people miss.</h2>
                   <button
                     onClick={() => setActiveTab("explore")}
-                    className="text-[#38BDF8] text-sm font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all mt-3"
+                  className="text-[#1D4ED8] dark:text-[#38BDF8] text-sm font-semibold inline-flex items-center gap-1.5 hover:gap-2 transition-all mt-3"
                   >
                     View all <ArrowRight className="w-4 h-4" />
                   </button>
@@ -413,8 +413,8 @@ export default function HomeTab() {
           <section className="px-6 md:px-8 lg:px-12 pb-24 md:pb-32 max-w-[1200px] mx-auto relative z-10">
             <div className="pb-16 md:pb-20 lg:pb-24">
               <div className="flex items-center gap-2 mb-3">
-                <MapPin className="w-4 h-4 text-[#0284c7]" />
-                <p className="text-xs font-bold text-[#0284c7] uppercase tracking-[0.15em]">Near You</p>
+                <MapPin className="w-4 h-4 text-[#1D4ED8] dark:text-[#0284c7]" />
+                <p className="text-xs font-bold text-[#1D4ED8] dark:text-[#0284c7] uppercase tracking-[0.15em]">Near You</p>
               </div>
               <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">Services in your area.</h2>
             </div>
@@ -435,7 +435,7 @@ export default function HomeTab() {
                 >
                   <div className="flex items-start justify-between gap-3 mb-3">
                     <h3 className="text-base md:text-lg font-bold text-foreground leading-tight">{place.name}</h3>
-                    <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-[#0284c7]/15 text-[#0284c7] flex-shrink-0">
+                    <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-[#1D4ED8]/15 text-[#1D4ED8] dark:bg-[#0284c7]/15 dark:text-[#38BDF8] flex-shrink-0">
                       {place.tag}
                     </span>
                   </div>

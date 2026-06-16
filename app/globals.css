@@ -380,18 +380,31 @@ p {
 }
 
 .btn-secondary {
-  background: var(--surface);
-  border: 1px solid var(--border-hover);
-  color: var(--foreground);
+  background: #ffffff;
+  border: 2px solid rgba(11, 34, 57, 0.20);
+  color: #0b2239;
   font-weight: 600;
   font-size: 17px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.dark .btn-secondary {
+  background: rgba(15, 23, 42, 0.85);
+  border-color: rgba(255, 255, 255, 0.20);
+  color: #f8fafc;
+}
+
 .btn-secondary:hover {
-  background: var(--surface-hover);
-  border-color: var(--border-hover);
+  background: #f4f9ff;
+  border-color: #1D4ED8;
+  color: #1D4ED8;
   transform: translateY(-1px);
+}
+
+.dark .btn-secondary:hover {
+  background: rgba(29, 78, 216, 0.15);
+  border-color: #38BDF8;
+  color: #38BDF8;
 }
 
 .btn-secondary:active {
@@ -537,8 +550,8 @@ p {
 
 /* Premium input styles */
 .input-premium {
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: #ffffff;
+  border: 2px solid rgba(11, 34, 57, 0.18);
   border-radius: 20px;
   padding: 20px 28px;
   font-size: 18px;
@@ -547,11 +560,20 @@ p {
   width: 100%;
 }
 
+.dark .input-premium {
+  background: rgba(15, 23, 42, 0.9);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
 .input-premium:focus {
   outline: none;
   border-color: var(--primary);
-  background: var(--surface-hover);
-  box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.15);
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(29, 78, 216, 0.12);
+}
+
+.dark .input-premium:focus {
+  background: rgba(15, 23, 42, 0.95);
 }
 
 .input-premium::placeholder {
@@ -560,8 +582,8 @@ p {
 
 /* Large conversational search box */
 .search-hero {
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: #ffffff;
+  border: 2px solid rgba(11, 34, 57, 0.18);
   border-radius: 24px;
   padding: 24px 32px;
   font-size: 20px;
@@ -570,13 +592,23 @@ p {
   width: 100%;
 }
 
+.dark .search-hero {
+  background: rgba(15, 23, 42, 0.9);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
 .search-hero:focus {
   outline: none;
-  border-color: rgba(56, 189, 248, 0.5);
-  background: var(--surface-hover);
+  border-color: #1D4ED8;
+  background: #ffffff;
   box-shadow: 
-    0 0 0 4px rgba(56, 189, 248, 0.12),
+    0 0 0 4px rgba(29, 78, 216, 0.12),
     0 25px 50px -12px rgba(2, 32, 71, 0.25);
+}
+
+.dark .search-hero:focus {
+  background: rgba(15, 23, 42, 0.95);
+  border-color: #38BDF8;
 }
 
 /* Calgary skyline animation */
