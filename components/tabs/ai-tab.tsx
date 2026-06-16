@@ -419,23 +419,28 @@ export default function AITab() {
               </div>
             </div>
 
-            {/* Weather/Alert Card */}
+            {/* Weather/Alert Card — deep dark-blue Calgary winter-sky treatment
+                with matching light text for strong contrast and readability. */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="glass-card rounded-2xl p-5 xl:p-6 mb-6"
+              className="relative overflow-hidden rounded-2xl p-5 xl:p-6 mb-6 bg-gradient-to-br from-[#0A2540] via-[#0E2E52] to-[#15396b] border border-white/10 shadow-lg shadow-[#0A2540]/30"
             >
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 xl:w-14 xl:h-14 flex-shrink-0 rounded-2xl bg-blue-500/20 flex items-center justify-center">
-                  <CloudSnow className="w-6 h-6 xl:w-7 xl:h-7 text-blue-400" />
+              {/* Soft cloud / snow glow accents */}
+              <div className="pointer-events-none absolute -top-10 -right-8 h-32 w-32 rounded-full bg-[#3B82F6]/20 blur-3xl" />
+              <div className="pointer-events-none absolute -bottom-12 -left-6 h-28 w-28 rounded-full bg-[#60A5FA]/15 blur-3xl" />
+
+              <div className="relative flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 xl:w-14 xl:h-14 flex-shrink-0 rounded-2xl bg-white/10 ring-1 ring-white/15 flex items-center justify-center">
+                  <CloudSnow className="w-6 h-6 xl:w-7 xl:h-7 text-[#BFDBFE]" />
                 </div>
                 <div className="min-w-0">
-                  <p className="font-bold text-lg xl:text-xl leading-tight">Winter Weather</p>
-                  <p className="text-sm xl:text-base text-foreground/50 mt-0.5 leading-relaxed">-8°C, light snow expected</p>
+                  <p className="font-bold text-lg xl:text-xl leading-tight text-white">Winter Weather</p>
+                  <p className="text-sm xl:text-base text-blue-100/70 mt-0.5 leading-relaxed">-8°C, light snow expected</p>
                 </div>
               </div>
-              <p className="text-sm xl:text-base text-foreground/60 leading-relaxed">
+              <p className="relative text-sm xl:text-base text-blue-50/85 leading-relaxed">
                 Dress warmly! Free warming centers available at downtown shelters.
               </p>
             </motion.div>
