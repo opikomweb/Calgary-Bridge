@@ -117,26 +117,29 @@ export default function MainApp() {
         </div>
       </aside>
 
-      {/* Mobile Header */}
-      <header className="lg:hidden sticky top-0 z-40 bg-background/90 backdrop-blur-2xl border-b border-foreground/[0.06] px-4 py-3">
-        <div className="flex items-center justify-between">
+      {/* Mobile / Tablet Header */}
+      <header className="lg:hidden sticky top-0 z-40 bg-background/90 backdrop-blur-2xl border-b border-foreground/[0.06] px-4 sm:px-6 py-3">
+        {/* Calgary brand accent strip (blue → red) under the header */}
+        <div className="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-[#38BDF8] via-[#0284c7] to-[#E1251B]" />
+        <div className="flex items-center justify-between gap-3">
           <button
             onClick={goToLanding}
             aria-label="Go to Calgary Connect home page"
             className="flex items-center"
           >
             {/* Transparent brand lockup (already includes the wordmark) */}
-            <div className="relative h-14 w-16 flex-shrink-0 transition-transform duration-300 active:scale-95">
+            <div className="relative h-16 w-44 sm:h-[72px] sm:w-52 flex-shrink-0 transition-transform duration-300 active:scale-95">
               <RotatingLogo imgPadding="p-0" priority />
             </div>
           </button>
-          
+
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-            className="flex items-center justify-center w-10 h-10 rounded-lg bg-foreground/[0.06] border border-foreground/[0.08] text-foreground"
+            aria-expanded={mobileMenuOpen}
+            className="flex items-center justify-center w-12 h-12 sm:w-[52px] sm:h-[52px] rounded-2xl bg-gradient-to-br from-[#38BDF8] to-[#0284c7] text-white shadow-lg shadow-sky-500/30 transition-all duration-300 active:scale-90 hover:shadow-xl hover:shadow-sky-500/40"
           >
-            {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+            {mobileMenuOpen ? <X className="h-6 w-6" strokeWidth={2.5} /> : <Menu className="h-6 w-6" strokeWidth={2.5} />}
           </button>
         </div>
       </header>

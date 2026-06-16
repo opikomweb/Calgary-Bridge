@@ -146,27 +146,16 @@ export default function AITab() {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <div className="min-h-screen relative overflow-hidden bg-gradient-to-b from-[var(--background)] via-[var(--background)] to-[var(--background-secondary)]">
       {/* Calgary Ambient Background */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Radial gradients */}
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-radial from-[#38BDF8]/8 via-transparent to-transparent" />
         <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-radial from-[#0284c7]/6 via-transparent to-transparent" />
         
-        {/* Calgary Tower silhouette - right side */}
-        <svg className="absolute right-16 top-1/4 w-24 h-64 opacity-[0.04]" viewBox="0 0 60 200">
-          <path d="M25 200 L25 80 L20 80 L30 0 L40 80 L35 80 L35 200 Z" fill="currentColor" className="text-foreground" />
-          <ellipse cx="30" cy="60" rx="12" ry="6" fill="currentColor" className="text-foreground" />
-        </svg>
-        
-        {/* Bow River wave - bottom */}
+        {/* Bow River wave - bottom (subtle, brand-blue) */}
         <svg className="absolute bottom-0 left-0 right-0 h-32 opacity-[0.03]" viewBox="0 0 1440 128" preserveAspectRatio="none">
           <path d="M0,64 Q360,128 720,64 T1440,64 L1440,128 L0,128 Z" fill="currentColor" className="text-[#38BDF8]" />
-        </svg>
-        
-        {/* Mountain silhouette - top right */}
-        <svg className="absolute top-0 right-0 w-full h-48 opacity-[0.02]" viewBox="0 0 1440 200" preserveAspectRatio="none">
-          <path d="M1440,200 L1440,100 L1300,50 L1200,80 L1100,30 L1000,70 L900,20 L800,60 L700,40 L600,80 L500,50 L400,90 L300,60 L200,100 L100,70 L0,120 L0,200 Z" fill="currentColor" className="text-foreground" />
         </svg>
       </div>
 
