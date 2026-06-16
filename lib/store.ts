@@ -24,6 +24,10 @@ interface AppState {
   setPriorities: (priorities: Priority[]) => void;
   togglePriority: (priority: Priority) => void;
 
+  // Settings
+  notificationsEnabled: boolean;
+  setNotificationsEnabled: (value: boolean) => void;
+
   // Bookmarks
   bookmarkedResources: string[];
   toggleBookmark: (resourceId: string) => void;
@@ -87,6 +91,10 @@ export const useAppStore = create<AppState>()(
             ? state.priorities.filter((p) => p !== priority)
             : [...state.priorities, priority],
         })),
+
+      // Settings
+      notificationsEnabled: true,
+      setNotificationsEnabled: (value) => set({ notificationsEnabled: value }),
 
       // Bookmarks
       bookmarkedResources: [],
@@ -170,6 +178,7 @@ export const useAppStore = create<AppState>()(
         selectedRole: state.selectedRole,
         userName: state.userName,
         priorities: state.priorities,
+        notificationsEnabled: state.notificationsEnabled,
         bookmarkedResources: state.bookmarkedResources,
         resourceNotes: state.resourceNotes,
         rentShieldHistory: state.rentShieldHistory,

@@ -175,7 +175,7 @@ export default function HomeTab() {
               </p>
               <button
                 onClick={() => setActiveTab("ai")}
-                className="px-8 py-4 rounded-xl md:rounded-2xl bg-[#38BDF8] text-[#07111F] text-base font-bold hover:bg-[#7dd3fc] transition-colors"
+                className="px-8 py-4 rounded-xl md:rounded-2xl bg-[#E1251B] text-white text-base font-bold hover:bg-[#B91C1C] transition-colors"
               >
                 Ask the AI instead
               </button>

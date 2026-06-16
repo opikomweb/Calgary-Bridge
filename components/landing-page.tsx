@@ -44,16 +44,26 @@ export default function LandingPage() {
     setActiveTab(tab);
   };
 
-  // Open Explore pre-filtered to a specific category
+  // Open Explore pre-filtered to a specific category.
+  // "Volunteering" is a curated experience that lives in the Do Good tab —
+  // routing it through the Explore category filter would only surface the
+  // single tagged resource, so send it straight to Do Good instead.
   const openCategory = (category: ResourceCategory) => {
     setHasOnboarded(true);
     setCurrentPage("main");
-    setActiveCategory(category);
-    setSearchQuery("");
-    setActiveTab("explore");
     setOpenMenu(null);
     setMobileMenuOpen(false);
     setMobileGroup(null);
+
+    if (category === "volunteering") {
+      setSearchQuery("");
+      setActiveTab("do-good");
+      return;
+    }
+
+    setActiveCategory(category);
+    setSearchQuery("");
+    setActiveTab("explore");
   };
 
   const handleExplore = () => enterApp("explore");

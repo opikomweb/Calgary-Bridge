@@ -68,7 +68,7 @@ export default function LiveResults({ category, query, categoryLabel }: LiveResu
           <button
             onClick={runSearch}
             disabled={!canSearch || status === "loading"}
-            className="flex-shrink-0 inline-flex items-center justify-center gap-2 h-12 px-6 rounded-xl font-semibold text-sm bg-[#38BDF8] text-[#071726] hover:bg-[#7dd3fc] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            className="flex-shrink-0 inline-flex items-center justify-center gap-2 h-12 px-6 rounded-xl font-semibold text-sm bg-[#E1251B] text-white hover:bg-[#B91C1C] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
           >
             {status === "loading" ? (
               <>

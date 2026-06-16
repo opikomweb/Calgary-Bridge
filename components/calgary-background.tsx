@@ -15,12 +15,15 @@ export function CalgaryAnimatedBackground() {
           src="/calgary-skyline-bg.png"
           alt=""
           fill
-          className="object-cover object-bottom opacity-[0.18] dark:opacity-50"
+          className="object-cover object-bottom opacity-[0.32] dark:opacity-55"
           priority
         />
-        {/* Gradient overlays for content readability (light vs dark) */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#eaf3ff] via-[#eaf3ff]/60 to-transparent dark:from-[#050B14] dark:via-[#050B14]/60" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#eaf3ff]/80 via-transparent to-[#eaf3ff]/40 dark:from-[#050B14]/80 dark:to-[#050B14]/40" />
+        {/* Readability overlays: keep the MIDDLE (where text/cards sit) calm,
+            but let the skyline stay visible along the bottom. The vertical
+            overlay is strongest in the upper-middle and fades out near the
+            bottom so the Calgary Tower & skyline show through. */}
+        <div className="absolute inset-0 bg-gradient-to-t from-transparent via-[#eaf3ff]/55 to-[#eaf3ff]/35 dark:via-[#050B14]/55 dark:to-[#050B14]/35" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#eaf3ff]/55 via-transparent to-[#eaf3ff]/30 dark:from-[#050B14]/60 dark:to-[#050B14]/35" />
       </div>
 
       {/* Animated Aurora Glow at Top */}

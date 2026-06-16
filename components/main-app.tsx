@@ -80,12 +80,12 @@ export default function MainApp() {
                     className={`group flex w-full items-center gap-x-5 rounded-2xl px-6 py-4 text-lg font-bold tracking-tight transition-all duration-300 ${
                       activeTab === item.id
                         ? item.highlight
-                          ? "bg-gradient-to-r from-[#38BDF8] to-[#0284c7] text-white shadow-2xl shadow-sky-500/40"
-                          : "bg-[#38BDF8]/[0.12] text-foreground border border-[#38BDF8]/40 shadow-lg shadow-sky-500/10"
+                          ? "bg-gradient-to-r from-[#1D4ED8] to-[#0A2540] text-white shadow-2xl shadow-blue-900/40"
+                          : "bg-[#1D4ED8]/[0.12] text-foreground border border-[#1D4ED8]/40 shadow-lg shadow-blue-900/10"
                         : "text-foreground/75 hover:bg-foreground/[0.06] hover:text-foreground"
                     }`}
                   >
-                    <item.icon className={`h-6 w-6 shrink-0 ${activeTab === item.id ? (item.highlight ? "" : "text-[#38BDF8]") : "opacity-70"}`} />
+                    <item.icon className={`h-6 w-6 shrink-0 ${activeTab === item.id ? (item.highlight ? "" : "text-[#1D4ED8]") : "opacity-70"}`} />
                     {item.label}
                   </button>
                 </li>
@@ -102,7 +102,7 @@ export default function MainApp() {
                 onClick={() => setShowRentShield(true)}
                 className="flex w-full items-center gap-5 rounded-2xl bg-foreground/[0.03] border border-foreground/[0.06] px-6 py-5 text-base font-medium text-foreground/70 transition-all duration-300 hover:bg-foreground/[0.06] hover:text-foreground hover:border-foreground/[0.12]"
               >
-                <Shield className="h-6 w-6 text-[#38BDF8]" />
+                <Shield className="h-6 w-6 text-[#1D4ED8]" />
                 RentShield
               </button>
               <button
@@ -120,7 +120,7 @@ export default function MainApp() {
       {/* Mobile / Tablet Header */}
       <header className="lg:hidden sticky top-0 z-40 bg-background/90 backdrop-blur-2xl border-b border-foreground/[0.06] px-4 sm:px-6 py-2.5">
         {/* Calgary brand accent strip (blue → red) under the header */}
-        <div className="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-[#38BDF8] via-[#0284c7] to-[#E1251B]" />
+        <div className="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-[#1D4ED8] via-[#3B82F6] to-[#E1251B]" />
         <div className="flex items-center justify-between gap-3">
           <button
             onClick={goToLanding}
@@ -128,7 +128,7 @@ export default function MainApp() {
             className="flex items-center"
           >
             {/* Square brand lockup (Calgary Tower + bridge + wordmark) */}
-            <div className="relative h-[64px] w-[64px] sm:h-[72px] sm:w-[72px] flex-shrink-0 transition-transform duration-300 active:scale-95">
+            <div className="relative h-[78px] w-[78px] sm:h-[92px] sm:w-[92px] flex-shrink-0 transition-transform duration-300 active:scale-95">
               <RotatingLogo imgPadding="p-0" priority />
             </div>
           </button>
@@ -163,7 +163,7 @@ export default function MainApp() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25 }}
-              className="absolute right-0 top-0 bottom-0 w-[85%] max-w-[360px] bg-background/98 backdrop-blur-2xl border-l border-foreground/[0.06] p-8"
+              className="absolute right-0 top-0 bottom-0 w-[85%] max-w-[360px] bg-background/70 backdrop-blur-2xl backdrop-saturate-150 border-l border-white/15 shadow-2xl shadow-black/30 ring-1 ring-inset ring-white/10 p-8"
               onClick={(e) => e.stopPropagation()}
             >
               <nav className="mt-12 space-y-3">
@@ -177,12 +177,12 @@ export default function MainApp() {
                     className={`flex w-full items-center gap-5 rounded-2xl px-6 py-4 text-lg font-bold tracking-tight transition-all ${
                       activeTab === item.id
                         ? item.highlight
-                          ? "bg-gradient-to-r from-[#38BDF8] to-[#0284c7] text-white shadow-lg shadow-sky-500/30"
-                          : "bg-[#38BDF8]/[0.12] text-foreground border border-[#38BDF8]/40"
+                          ? "bg-gradient-to-r from-[#1D4ED8] to-[#0A2540] text-white shadow-lg shadow-blue-900/30"
+                          : "bg-[#1D4ED8]/[0.12] text-foreground border border-[#1D4ED8]/40"
                         : "text-foreground/75 hover:bg-foreground/[0.06] hover:text-foreground"
                     }`}
                   >
-                    <item.icon className={`h-6 w-6 ${activeTab === item.id && !item.highlight ? "text-[#38BDF8]" : ""}`} />
+                    <item.icon className={`h-6 w-6 ${activeTab === item.id && !item.highlight ? "text-[#1D4ED8]" : ""}`} />
                     {item.label}
                   </button>
                 ))}
@@ -200,7 +200,7 @@ export default function MainApp() {
                   }}
                   className="flex w-full items-center gap-5 rounded-2xl bg-foreground/[0.03] border border-foreground/[0.06] px-6 py-5 text-base font-medium text-foreground/70"
                 >
-                  <Shield className="h-6 w-6 text-[#38BDF8]" />
+                  <Shield className="h-6 w-6 text-[#1D4ED8]" />
                   RentShield
                 </button>
                 <button
@@ -268,8 +268,8 @@ export default function MainApp() {
                 className={`flex items-center justify-center gap-2 rounded-full transition-all duration-200 ${
                   active
                     ? item.highlight
-                      ? "border-t border-white/40 bg-gradient-to-b from-[#F4493C] via-[#E1251B] to-[#B91C1C] text-white ring-1 ring-inset ring-white/15 shadow-[0_4px_0_-1px_#8f1410,0_8px_16px_-5px_rgba(225,37,27,0.55)] px-4 py-2.5"
-                      : "bg-[#38BDF8]/[0.16] text-[#0284c7] px-4 py-2.5"
+                      ? "border-t border-white/40 bg-gradient-to-b from-[#3B82F6] via-[#1D4ED8] to-[#0A2540] text-white ring-1 ring-inset ring-white/15 shadow-[0_4px_0_-1px_#071a33,0_8px_16px_-5px_rgba(29,78,216,0.5)] px-4 py-2.5"
+                      : "bg-[#1D4ED8]/[0.16] text-[#1D4ED8] px-4 py-2.5"
                     : "text-foreground/55 px-3 py-2.5 active:scale-90"
                 }`}
               >
