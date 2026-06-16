@@ -290,36 +290,36 @@ export default function MainApp() {
                     <Image
                       src="/ikonnect-guide-avatar.png"
                       alt=""
-                      width={20}
-                      height={20}
-                      className="h-5 w-5 object-contain shrink-0"
+                      width={22}
+                      height={22}
+                      className="h-[22px] w-[22px] object-contain shrink-0"
                     />
                     <span className="text-[12px] font-bold tracking-tight">{item.shortLabel}</span>
                   </div>
                 ) : active ? (
                   <>
                     {item.icon ? (
-                      <item.icon className="h-5 w-5 shrink-0" strokeWidth={2.3} />
+                      <item.icon className="h-6 w-6 shrink-0" strokeWidth={2.3} />
                     ) : (
                       <Image
                         src="/ikonnect-guide-avatar.png"
                         alt=""
-                        width={20}
-                        height={20}
-                        className="h-5 w-5 object-contain shrink-0"
+                        width={22}
+                        height={22}
+                        className="h-[22px] w-[22px] object-contain shrink-0"
                       />
                     )}
                     <span className="text-[10px] font-bold tracking-tight">{item.shortLabel}</span>
                   </>
                 ) : item.icon ? (
-                  <item.icon className="h-5 w-5 shrink-0" strokeWidth={1.8} />
+                  <item.icon className="h-6 w-6 shrink-0" strokeWidth={1.8} />
                 ) : (
                   <Image
                     src="/ikonnect-guide-avatar.png"
                     alt=""
-                    width={20}
-                    height={20}
-                    className="h-5 w-5 object-contain shrink-0 opacity-55"
+                    width={22}
+                    height={22}
+                    className="h-[22px] w-[22px] object-contain shrink-0 opacity-60"
                   />
                 )}
               </button>
