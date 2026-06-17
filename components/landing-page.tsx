@@ -494,7 +494,7 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4"
+            className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 px-2 md:px-0"
           >
             <motion.button
               whileHover={{ scale: 1.03, y: -2 }}
