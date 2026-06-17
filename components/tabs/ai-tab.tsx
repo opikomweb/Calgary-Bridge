@@ -175,31 +175,30 @@ export default function AITab() {
                   animate={{ opacity: 1, y: 0 }}
                   className="text-center w-full max-w-xl"
                 >
-                  {/* Avatar — character only, no colored backdrop */}
+                  {/* Compact inline header: small avatar left + headline right */}
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
-                    className="mx-auto mb-6 flex h-20 w-20 md:h-24 md:w-24 items-center justify-center"
+                    className="flex items-center gap-3 mb-7 md:mb-8"
                   >
                     <Image
                       src="/askonnect-avatar.png"
                       alt="Askonnect"
-                      width={96}
-                      height={96}
-                      className="h-full w-full object-contain"
+                      width={48}
+                      height={48}
+                      className="w-11 h-11 md:w-12 md:h-12 object-contain flex-shrink-0"
                     />
+                    <motion.h1
+                      initial={{ opacity: 0, x: -8 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.18 }}
+                      className="text-lg md:text-xl lg:text-2xl font-bold tracking-tight text-balance text-left leading-snug"
+                    >
+                      I connect Calgary.{" "}
+                      <span className="text-foreground/60 font-medium">How can I help you today?</span>
+                    </motion.h1>
                   </motion.div>
-
-                  {/* Headline — clean, actionable prompt */}
-                  <motion.h1
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                    className="text-2xl md:text-3xl lg:text-4xl font-bold mb-8 md:mb-10 tracking-tight text-balance max-w-md mx-auto"
-                  >
-                    What do you need in Calgary?
-                  </motion.h1>
 
                   {/* Simple example prompts (optional starting points) */}
                   <motion.div

@@ -500,20 +500,20 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
   return (
     <>
       <footer className="relative mt-12 md:mt-16">
-        {/* Calgary Iconic Skyline — full-width strip above the footer badge row.
-            Black-bg source image + mix-blend-screen = black becomes transparent,
-            only white line-art shows. Sits on the page background so it reads
-            naturally in both day and night mode. */}
-        <div className="relative w-full overflow-hidden" style={{ height: "clamp(90px, 14vw, 160px)" }}>
-          {/* Fade page background into footer colour at the very bottom */}
-          <div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-b from-transparent to-[#0b1d33] z-10 pointer-events-none" />
+        {/* Calgary Iconic Skyline — full-width responsive strip.
+            object-cover ensures full width coverage at every breakpoint.
+            mix-blend-screen = black bg transparent, white line-art visible.
+            The overlay gradient above the image protects any scrolled text
+            and fades cleanly into the dark footer below. */}
+        <div className="relative w-full overflow-hidden" style={{ height: "clamp(80px, 13vw, 150px)" }}>
           <img
             src="/calgary-iconic.png"
             alt=""
             aria-hidden="true"
-            className="absolute inset-0 w-full h-full object-cover object-bottom mix-blend-screen opacity-40 dark:opacity-25 pointer-events-none select-none"
-            style={{ filter: "drop-shadow(0 0 8px rgba(147,210,255,0.15))" }}
+            className="absolute inset-0 w-full h-full object-cover object-bottom mix-blend-screen opacity-35 dark:opacity-20 pointer-events-none select-none"
           />
+          {/* Fade into footer dark colour */}
+          <div className="absolute inset-x-0 bottom-0 h-14 bg-gradient-to-b from-transparent to-[#0b1d33] z-10 pointer-events-none" />
         </div>
 
         {/* Footer Background - solid dark base in both modes */}
