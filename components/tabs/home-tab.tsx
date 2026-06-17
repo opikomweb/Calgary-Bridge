@@ -436,7 +436,7 @@ export default function HomeTab() {
           )}
 
           {/* ========== NEAR YOU ========== */}
-          <section className="px-6 md:px-8 lg:px-12 pb-10 md:pb-16 max-w-[1200px] mx-auto relative z-10">
+          <section className="px-6 md:px-8 lg:px-12 pb-4 max-w-[1200px] mx-auto relative z-10">
             <div className="flex items-center gap-2 mb-4">
               <MapPin className="w-4 h-4 text-[#1D4ED8] dark:text-[#38BDF8]" />
               <h2 className="text-sm font-bold text-[#1D4ED8] dark:text-[#38BDF8] uppercase tracking-[0.15em]">Services in your area</h2>

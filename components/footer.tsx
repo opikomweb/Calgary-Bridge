@@ -499,12 +499,9 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
 
   return (
     <>
-      <footer className="relative mt-12 md:mt-16">
-        {/* Calgary Iconic Skyline — full-width responsive strip.
-            object-cover ensures full width coverage at every breakpoint.
-            mix-blend-screen = black bg transparent, white line-art visible.
-            The overlay gradient above the image protects any scrolled text
-            and fades cleanly into the dark footer below. */}
+      <footer className="relative">
+        {/* Calgary Iconic Skyline — full-width responsive strip, no margin,
+            flows directly into the dark footer with no shadow gap. */}
         <div className="relative w-full overflow-hidden" style={{ height: "clamp(140px, 22vw, 240px)" }}>
           <img
             src="/calgary-iconic.png"
@@ -512,46 +509,47 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
             aria-hidden="true"
             className="absolute inset-x-0 bottom-0 w-full h-full object-contain object-bottom mix-blend-screen opacity-35 dark:opacity-20 pointer-events-none select-none"
           />
-          {/* Fade into footer dark colour */}
-          <div className="absolute inset-x-0 bottom-0 h-14 bg-gradient-to-b from-transparent to-[#0b1d33] z-10 pointer-events-none" />
         </div>
 
-        {/* Footer Background - solid dark base in both modes */}
+        {/* Footer Background - solid dark base */}
         <div className="bg-[#0b1d33] relative overflow-hidden">
-          {/* Subtle Grid Pattern — hidden in dark mode */}
+          {/* Subtle Grid Pattern */}
           <div className="absolute inset-0 opacity-[0.02] dark:opacity-0" style={{
             backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
             backgroundSize: '40px 40px'
           }} />
 
-          <div className="relative border-b border-white/[0.04] py-4 md:py-5 px-4 md:px-8 bg-[#0b1d33]">
+          {/* Badge row — single flex row at all sizes */}
+          <div className="relative border-b border-white/[0.04] py-4 px-4 md:px-8 bg-[#0b1d33]">
             <div className="max-w-[1200px] mx-auto">
-              {/* Mobile: 2x2 grid | Desktop: single row flex */}
-              <div className="grid grid-cols-2 md:flex md:items-center md:justify-center gap-4 md:gap-8">
+              <div className="flex items-center justify-around gap-2">
                 <div className="flex flex-col items-center text-center gap-1.5">
-                  <div className="w-7 h-7 md:w-7 md:h-7 rounded-lg bg-[#1D4ED8]/15 flex items-center justify-center">
-                    <Shield className="w-3.5 h-3.5 md:w-3.5 md:h-3.5 text-[#1D4ED8]" />
+                  <div className="w-7 h-7 rounded-lg bg-[#1D4ED8]/15 flex items-center justify-center">
+                    <Shield className="w-3.5 h-3.5 text-[#1D4ED8]" />
                   </div>
-                  <span className="text-xs md:text-xs font-semibold text-white/70">Verified</span>
+                  <span className="text-[11px] font-semibold text-white/70 whitespace-nowrap">Verified</span>
                 </div>
                 <div className="flex flex-col items-center text-center gap-1.5">
-                  <div className="w-7 h-7 md:w-7 md:h-7 rounded-lg bg-[#1D4ED8]/15 flex items-center justify-center">
-                    <FileText className="w-3.5 h-3.5 md:w-3.5 md:h-3.5 text-[#1D4ED8]" />
+                  <div className="w-7 h-7 rounded-lg bg-[#1D4ED8]/15 flex items-center justify-center">
+                    <FileText className="w-3.5 h-3.5 text-[#1D4ED8]" />
                   </div>
-                  <span className="text-xs md:text-xs font-semibold text-white/70">Updated monthly</span>
+                  <span className="text-[11px] font-semibold text-white/70 whitespace-nowrap">Updated monthly</span>
                 </div>
                 <div className="flex flex-col items-center text-center gap-1.5">
-                  <div className="w-7 h-7 md:w-7 md:h-7 rounded-lg bg-[#E1251B]/15 flex items-center justify-center">
-                    <Users className="w-3.5 h-3.5 md:w-3.5 md:h-3.5 text-[#E1251B]" />
+                  <div className="w-7 h-7 rounded-lg bg-[#E1251B]/15 flex items-center justify-center">
+                    <Users className="w-3.5 h-3.5 text-[#E1251B]" />
                   </div>
-                  <span className="text-xs md:text-xs font-semibold text-white/70">Community-driven</span>
+                  <span className="text-[11px] font-semibold text-white/70 whitespace-nowrap">Community-driven</span>
                 </div>
                 <div className="flex flex-col items-center text-center gap-1.5">
-                  <div className="w-7 h-7 md:w-7 md:h-7 rounded-lg bg-[#E1251B]/15 flex items-center justify-center">
-                    <Heart className="w-3.5 h-3.5 md:w-3.5 md:h-3.5 text-[#E1251B]" />
+                  <div className="w-7 h-7 rounded-lg bg-[#E1251B]/15 flex items-center justify-center">
+                    <Heart className="w-3.5 h-3.5 text-[#E1251B]" />
                   </div>
-                  <span className="text-xs md:text-xs font-semibold text-white/70">Free to use</span>
+                  <span className="text-[11px] font-semibold text-white/70 whitespace-nowrap">Free to use</span>
                 </div>
+              </div>
+            </div>
+          </div>
               </div>
             </div>
           </div>
