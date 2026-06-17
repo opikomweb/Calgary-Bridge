@@ -92,13 +92,16 @@ export default function ExploreTab() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const filteredResources = filterResources(resources, activeCategory, searchQuery, activeLanguage);
+  // Only filter & show resources when the user has actually queried something
+  const hasQuery = activeCategory !== "all" || searchQuery.trim().length > 0;
+  const filteredResources = hasQuery
+    ? filterResources(resources, activeCategory, searchQuery, activeLanguage)
+    : [];
 
   const currentCategoryInfo = allCategories.find(c => c.id === activeCategory) || allCategories[0];
 
-  // Quick-launch hero cards only on the default view (no category, no search).
-  // Extracted to a boolean so it doesn't narrow `activeCategory` to "all".
-  const showHeroCards = activeCategory === "all" && !searchQuery.trim();
+  // Show hero cards only on default (no category, no search)
+  const showHeroCards = !hasQuery;
 
   return (
     <div className="min-h-screen relative">
@@ -263,7 +266,8 @@ export default function ExploreTab() {
       </section>
       )}
 
-      {/* ========== ACTIVE FILTER & RESULTS COUNT ========== */}
+      {/* ========== ACTIVE FILTER & RESULTS COUNT — only when a query exists ========== */}
+      {hasQuery && (
       <section className="relative pb-4 md:pb-6">
         <div className="max-w-[1200px] mx-auto px-5 md:px-8">
           <div className="flex flex-wrap items-center justify-between gap-3">
@@ -271,7 +275,7 @@ export default function ExploreTab() {
               <span className="font-bold text-foreground text-lg md:text-xl">{filteredResources.length}</span>
               {" "}resource{filteredResources.length !== 1 ? "s" : ""} found
             </p>
-            
+
             {activeCategory !== "all" && (
               <button
                 onClick={() => setActiveCategory("all")}
@@ -284,20 +288,22 @@ export default function ExploreTab() {
           </div>
         </div>
       </section>
+      )}
 
-      {/* ========== RESOURCES GRID ========== */}
+      {/* ========== RESOURCES GRID — only rendered after a query ========== */}
+      {hasQuery && (
       <section className="relative pb-24 md:pb-32">
         <div className="max-w-[1200px] mx-auto px-5 md:px-8">
           {filteredResources.length > 0 ? (
-            <div className="grid md:grid-cols-2 gap-2 md:gap-3">
+            <div className="grid grid-cols-2 lg:grid-cols-2 gap-2 md:gap-3">
               {filteredResources.map((resource, index) => (
                 <motion.div
                   key={resource.id}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.02 }}
+                  transition={{ delay: Math.min(index * 0.02, 0.3) }}
                 >
-                  <ResourceCard resource={resource} />
+                  <ResourceCard resource={resource} variant="compact" />
                 </motion.div>
               ))}
             </div>
@@ -310,12 +316,12 @@ export default function ExploreTab() {
               <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-foreground/[0.03] border border-foreground/[0.06] flex items-center justify-center mx-auto mb-8">
                 <Search className="w-10 h-10 md:w-14 md:h-14 text-foreground/25" />
               </div>
-            <p className="text-xl md:text-2xl font-semibold text-foreground/75 mb-3">No resources found</p>
-            <p className="text-base text-foreground/60 leading-relaxed">Try adjusting your search or filters</p>
+              <p className="text-xl md:text-2xl font-semibold text-foreground/75 mb-3">No resources found</p>
+              <p className="text-base text-foreground/60 leading-relaxed">Try adjusting your search or category filter</p>
             </motion.div>
           )}
 
-          {/* ===== LIVE GOOGLE MAPS RESULTS (curated first, live below) ===== */}
+          {/* Live Google Maps results */}
           {(activeCategory !== "all" || searchQuery.trim().length >= 2) && (
             <LiveResults
               category={activeCategory}
@@ -325,6 +331,31 @@ export default function ExploreTab() {
           )}
         </div>
       </section>
+      )}
+
+      {/* ========== DEFAULT EMPTY STATE — prompt to search ========== */}
+      {!hasQuery && (
+        <section className="relative pb-32">
+          <div className="max-w-[1200px] mx-auto px-5 md:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.25 }}
+              className="flex flex-col items-center text-center pt-6 pb-12"
+            >
+              <div className="w-16 h-16 rounded-2xl bg-[#1D4ED8]/08 border border-[#1D4ED8]/15 flex items-center justify-center mb-4">
+                <Search className="w-7 h-7 text-[#1D4ED8]/60" />
+              </div>
+              <p className="text-base font-semibold text-foreground/60 mb-1">
+                Search or select a category above
+              </p>
+              <p className="text-sm text-foreground/40 max-w-xs leading-relaxed">
+                Type a keyword or tap one of the four categories to browse Calgary resources.
+              </p>
+            </motion.div>
+          </div>
+        </section>
+      )}
     </div>
   );
 }

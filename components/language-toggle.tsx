@@ -4,12 +4,11 @@ import { useState, useRef, useEffect } from "react";
 import { useAppStore } from "@/lib/store";
 import { LANGUAGES } from "@/lib/languages";
 import type { Language } from "@/lib/types";
-import { Check, ChevronDown } from "lucide-react";
+import { Globe, Check, ChevronDown } from "lucide-react";
 
 /**
- * Mobile-header language picker.
- * Shows only the active language flag in the header bar.
- * On click, opens a polished dropdown grid of all 12 flag options.
+ * Language picker with a globe icon trigger.
+ * Dropdown: single clean column — flag + 2-letter code + native name.
  */
 export function LanguageToggle() {
   const { activeLanguage, setActiveLanguage } = useAppStore();
@@ -18,26 +17,20 @@ export function LanguageToggle() {
 
   const current = LANGUAGES.find((l) => l.code === activeLanguage) ?? LANGUAGES[0];
 
-  // Close on outside click
   useEffect(() => {
     if (!open) return;
-    function handle(e: MouseEvent) {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
-        setOpen(false);
-      }
+    function onClickOutside(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
     }
-    document.addEventListener("mousedown", handle);
-    return () => document.removeEventListener("mousedown", handle);
-  }, [open]);
-
-  // Close on Escape
-  useEffect(() => {
-    if (!open) return;
-    function handle(e: KeyboardEvent) {
+    function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") setOpen(false);
     }
-    document.addEventListener("keydown", handle);
-    return () => document.removeEventListener("keydown", handle);
+    document.addEventListener("mousedown", onClickOutside);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onClickOutside);
+      document.removeEventListener("keydown", onKey);
+    };
   }, [open]);
 
   function select(code: Language) {
@@ -47,75 +40,79 @@ export function LanguageToggle() {
 
   return (
     <div ref={ref} className="relative flex-shrink-0">
-      {/* Trigger — flag only + tiny chevron */}
+      {/* ── Trigger ── */}
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-label={`Language: ${current.nativeName}. Tap to change.`}
         aria-expanded={open}
-        className="flex items-center gap-1 px-2 py-1.5 rounded-lg border border-foreground/[0.10] bg-foreground/[0.04] hover:bg-foreground/[0.08] active:scale-95 transition-all duration-150 select-none"
+        className="flex items-center gap-1.5 h-9 px-2.5 rounded-lg border border-foreground/[0.12] bg-foreground/[0.04] hover:bg-foreground/[0.08] active:scale-95 transition-all duration-150 select-none"
       >
-        <span className="text-xl leading-none">{current.flag}</span>
+        {/* Globe icon */}
+        <Globe className="w-4 h-4 text-foreground/60 flex-shrink-0" strokeWidth={1.75} />
+        {/* Active flag */}
+        <span className="text-base leading-none">{current.flag}</span>
+        {/* 2-letter code */}
+        <span className="text-[11px] font-semibold text-foreground/60 leading-none tracking-wide">
+          {current.label}
+        </span>
         <ChevronDown
-          className={`w-3 h-3 text-foreground/40 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+          className={`w-3 h-3 text-foreground/35 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
         />
       </button>
 
-      {/* Dropdown panel */}
+      {/* ── Dropdown ── */}
       {open && (
         <div
-          className="absolute right-0 top-full mt-2 z-50 w-[280px] rounded-2xl border border-foreground/[0.08] bg-background shadow-xl shadow-black/10 dark:shadow-black/40 p-3 animate-in fade-in slide-in-from-top-2 duration-150"
           role="listbox"
           aria-label="Select language"
+          className="absolute right-0 top-full mt-1.5 z-50 w-44 rounded-xl border border-foreground/[0.09] bg-background shadow-lg shadow-black/10 dark:shadow-black/40 py-1 overflow-hidden"
         >
-          <p className="text-[10px] font-bold uppercase tracking-widest text-foreground/40 mb-2.5 px-1">
-            Choose your language
-          </p>
-
-          {/* 3-column grid of language options */}
-          <div className="grid grid-cols-3 gap-1.5">
-            {LANGUAGES.map((lang) => {
-              const isActive = lang.code === activeLanguage;
-              return (
-                <button
-                  key={lang.code}
-                  type="button"
-                  role="option"
-                  aria-selected={isActive}
-                  onClick={() => select(lang.code)}
-                  className={`relative flex flex-col items-center gap-1 rounded-xl px-1 py-2.5 text-center transition-all duration-150 active:scale-95 ${
-                    isActive
-                      ? "bg-[#1D4ED8]/10 dark:bg-sky-500/15 border border-[#1D4ED8]/30 dark:border-sky-500/30"
-                      : "border border-transparent hover:bg-foreground/[0.05] hover:border-foreground/[0.08]"
+          {LANGUAGES.map((lang) => {
+            const isActive = lang.code === activeLanguage;
+            return (
+              <button
+                key={lang.code}
+                type="button"
+                role="option"
+                aria-selected={isActive}
+                onClick={() => select(lang.code)}
+                className={`w-full flex items-center gap-2.5 px-3 py-2 text-left transition-colors duration-100 active:scale-[0.98] ${
+                  isActive
+                    ? "bg-[#1D4ED8]/08 dark:bg-sky-500/10"
+                    : "hover:bg-foreground/[0.05]"
+                }`}
+              >
+                {/* Flag */}
+                <span className="text-base leading-none flex-shrink-0">{lang.flag}</span>
+                {/* 2-letter abbreviation */}
+                <span
+                  className={`text-[11px] font-bold w-5 flex-shrink-0 tracking-wide ${
+                    isActive ? "text-[#1D4ED8] dark:text-sky-400" : "text-foreground/40"
                   }`}
                 >
-                  {/* Active check */}
-                  {isActive && (
-                    <span className="absolute top-1.5 right-1.5">
-                      <Check className="w-2.5 h-2.5 text-[#1D4ED8] dark:text-sky-400" strokeWidth={3} />
-                    </span>
-                  )}
-                  {/* Flag */}
-                  <span className="text-2xl leading-none">{lang.flag}</span>
-                  {/* Native name */}
-                  <span
-                    className={`text-[10px] font-semibold leading-tight line-clamp-1 max-w-full ${
-                      isActive
-                        ? "text-[#1D4ED8] dark:text-sky-400"
-                        : "text-foreground/70"
-                    }`}
-                  >
-                    {lang.nativeName}
-                  </span>
-                </button>
-              );
-            })}
+                  {lang.label}
+                </span>
+                {/* Native name */}
+                <span
+                  className={`text-[12px] font-medium flex-1 min-w-0 truncate ${
+                    isActive ? "text-[#1D4ED8] dark:text-sky-400" : "text-foreground/75"
+                  }`}
+                >
+                  {lang.nativeName}
+                </span>
+                {/* Active check */}
+                {isActive && (
+                  <Check className="w-3 h-3 text-[#1D4ED8] dark:text-sky-400 flex-shrink-0" strokeWidth={2.5} />
+                )}
+              </button>
+            );
+          })}
+          <div className="border-t border-foreground/[0.06] mt-1 pt-1 pb-0.5 px-3">
+            <p className="text-[9px] text-foreground/25 text-center">
+              Powered by Google Translate
+            </p>
           </div>
-
-          {/* Translator credit */}
-          <p className="mt-3 text-[9px] text-foreground/25 text-center">
-            Translations powered by Google Translate
-          </p>
         </div>
       )}
     </div>
