@@ -505,12 +505,12 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
             mix-blend-screen = black bg transparent, white line-art visible.
             The overlay gradient above the image protects any scrolled text
             and fades cleanly into the dark footer below. */}
-        <div className="relative w-full overflow-hidden" style={{ height: "clamp(80px, 13vw, 150px)" }}>
+        <div className="relative w-full overflow-hidden" style={{ height: "clamp(140px, 22vw, 240px)" }}>
           <img
             src="/calgary-iconic.png"
             alt=""
             aria-hidden="true"
-            className="absolute inset-0 w-full h-full object-cover object-bottom mix-blend-screen opacity-35 dark:opacity-20 pointer-events-none select-none"
+            className="absolute inset-x-0 bottom-0 w-full h-full object-contain object-bottom mix-blend-screen opacity-35 dark:opacity-20 pointer-events-none select-none"
           />
           {/* Fade into footer dark colour */}
           <div className="absolute inset-x-0 bottom-0 h-14 bg-gradient-to-b from-transparent to-[#0b1d33] z-10 pointer-events-none" />

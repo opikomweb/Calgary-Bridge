@@ -19,17 +19,17 @@ export function CalgaryAnimatedBackground() {
       />
 
       {/* Calgary iconic line-art — FULL WIDTH, anchored bottom.
-          object-cover + bottom anchor fills the entire width at every breakpoint
-          with no gap or cut-off at either side.
+          object-contain preserves aspect ratio so building tops are never clipped.
+          object-bottom keeps the skyline ground flush with the viewport bottom.
           mix-blend-screen = pure black becomes transparent, white outlines show. */}
-      <div className="absolute inset-x-0 bottom-0 h-[38vh] min-h-[200px] max-h-[320px]">
+      <div className="absolute inset-x-0 bottom-0 h-[45vh] min-h-[240px] max-h-[380px]">
         <Image
           src="/calgary-iconic.png"
           alt=""
           fill
           priority
           sizes="100vw"
-          className="object-cover object-bottom mix-blend-screen"
+          className="object-contain object-bottom mix-blend-screen"
           style={{ opacity: "var(--skyline-opacity, 0.13)" }}
         />
         {/* Day-mode opacity token */}
@@ -39,10 +39,8 @@ export function CalgaryAnimatedBackground() {
         `}</style>
       </div>
 
-      {/* Content-protection overlay — fades the skyline out toward the top of
-          its container so any text scrolled over it remains readable.
-          Day: light wash. Dark: deeper navy wash. */}
-      <div className="absolute inset-x-0 bottom-0 h-[38vh] min-h-[200px] max-h-[320px]
+      {/* Content-protection overlay — same height as image container */}
+      <div className="absolute inset-x-0 bottom-0 h-[45vh] min-h-[240px] max-h-[380px]
                       bg-gradient-to-b
                       from-[#eef3fd]/90 via-[#eef3fd]/40 to-transparent
                       dark:from-[#0a1322]/90 dark:via-[#0a1322]/40 dark:to-transparent
