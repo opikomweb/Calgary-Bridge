@@ -7,6 +7,7 @@ import Image from "next/image";
 import { AlertTriangle, Shield, Menu, X } from "lucide-react";
 import { ThemeToggle } from "./theme-toggle";
 import { CalgaryConnectLogo } from "./calgary-connect-logo";
+import { LanguageToggle } from "./language-toggle";
 import { NAV_ITEMS } from "./nav-items";
 import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
@@ -128,9 +129,9 @@ export default function MainApp() {
 
       {/* Mobile / Tablet Header */}
       <header className="lg:hidden sticky top-0 z-40 bg-background border-b border-foreground/[0.08] px-4 sm:px-5 py-2">
-        {/* Calgary brand accent strip — red+blue in day, lighter blue+red in dark */}
+        {/* Calgary brand accent strip */}
         <div className="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-[#1D4ED8] dark:from-[#38BDF8] via-[#1D4ED8]/60 dark:via-[#38BDF8]/40 to-[#E1251B]" />
-        <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center justify-between gap-2">
           <button
             onClick={goToLanding}
             aria-label="Go to Calgary Connect home page"
@@ -139,18 +140,24 @@ export default function MainApp() {
             <CalgaryConnectLogo size="sm" />
           </button>
 
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-            aria-expanded={mobileMenuOpen}
-            className="flex items-center justify-center w-10 h-10 rounded-xl bg-[#E1251B] text-white shadow-md shadow-red-700/30 transition-all duration-150 hover:bg-[#B91C1C] active:scale-95"
-          >
-            {mobileMenuOpen ? (
-              <X className="h-5 w-5" strokeWidth={2.5} />
-            ) : (
-              <Menu className="h-5 w-5" strokeWidth={2.5} />
-            )}
-          </button>
+          {/* Right side: language toggle + hamburger */}
+          <div className="flex items-center gap-2">
+            {/* Language cycle button — always visible in header */}
+            <LanguageToggle />
+
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileMenuOpen}
+              className="flex items-center justify-center w-10 h-10 rounded-xl bg-[#E1251B] text-white shadow-md shadow-red-700/30 transition-all duration-150 hover:bg-[#B91C1C] active:scale-95"
+            >
+              {mobileMenuOpen ? (
+                <X className="h-5 w-5" strokeWidth={2.5} />
+              ) : (
+                <Menu className="h-5 w-5" strokeWidth={2.5} />
+              )}
+            </button>
+          </div>
         </div>
       </header>
 
