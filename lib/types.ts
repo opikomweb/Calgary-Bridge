@@ -50,14 +50,21 @@ export type ResourceCategory =
 
 export type Priority = ResourceCategory;
 
+/**
+ * A localized string: English is required as the source-of-truth.
+ * All other languages are optional — they are filled in at runtime
+ * by the Google Translate hook (lib/translate.ts).
+ */
+export type LocalizedString = { en: string } & Partial<Record<Language, string>>;
+
 export interface Resource {
   id: string;
   category: ResourceCategory[];
   userTypes: UserRole[];
-  title: Record<Language, string>;
-  description: Record<Language, string>;
-  summary?: Record<Language, string>;
-  eligibility?: Record<Language, string>;
+  title: LocalizedString;
+  description: LocalizedString;
+  summary?: LocalizedString;
+  eligibility?: LocalizedString;
   servicesOffered?: string[];
   phone?: string;
   address?: string;
@@ -138,9 +145,9 @@ export interface Business {
 
 export interface CategoryGuide {
   id: ResourceCategory;
-  overview: Record<Language, string>;
-  firstSteps: Record<Language, string[]>;
-  eligibilityHints: Record<Language, string[]>;
+  overview: LocalizedString;
+  firstSteps: { en: string[] } & Partial<Record<Language, string[]>>;
+  eligibilityHints: { en: string[] } & Partial<Record<Language, string[]>>;
   aiPrompts: string[];
   hiddenGems: string[];
 }

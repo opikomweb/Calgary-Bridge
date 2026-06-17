@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAppStore } from "@/lib/store";
 import { categoryLabels } from "@/lib/data";
 import { translateBatch } from "@/lib/translate";
-import type { Resource, Language } from "@/lib/types";
+import type { Resource, Language, LocalizedString } from "@/lib/types";
 import {
   Heart,
   Phone,
@@ -35,14 +35,10 @@ interface ResourceCardProps {
 }
 
 /**
- * Resolves a multilingual record field:
- * 1. If the record already has a translation for the target language, use it.
- * 2. Otherwise fall back to English (Google Translate will fill it in async).
+ * Resolves a LocalizedString for the active language.
+ * Falls back to English when a translation isn't available yet.
  */
-function resolveField(
-  record: Partial<Record<Language, string>> & { en: string },
-  lang: Language
-): string {
+function resolveField(record: LocalizedString, lang: Language): string {
   return record[lang] ?? record.en;
 }
 
@@ -84,8 +80,10 @@ export default function ResourceCard({
   // Translate API fills it in asynchronously.
   const [title, setTitle] = useState(() => resolveField(resource.title, activeLanguage));
   const [description, setDescription] = useState(() => resolveField(resource.description, activeLanguage));
-  const [eligibility, setEligibility] = useState(() =>
-    resource.eligibility ? resolveField(resource.eligibility, activeLanguage) : ""
+  // Eligibility uses a ref+state pair so it's always accessible regardless of
+  // TS control-flow narrowing around the compact variant early return.
+  const [eligibilityText, setEligibilityText] = useState(
+    () => resource.eligibility ? resolveField(resource.eligibility, activeLanguage) : ""
   );
 
   useEffect(() => {
@@ -98,7 +96,7 @@ export default function ResourceCard({
     const staticTitle = resolveField(resource.title, activeLanguage);
     const staticDesc  = resolveField(resource.description, activeLanguage);
     const staticElig  = resource.eligibility
-      ? resolveField(resource.eligibility as Record<Language, string> & { en: string }, activeLanguage)
+      ? resolveField(resource.eligibility, activeLanguage)
       : "";
 
     const needsTitle = staticTitle === sourceTitle && activeLanguage !== "en";
@@ -108,7 +106,7 @@ export default function ResourceCard({
     // Set static values immediately
     setTitle(staticTitle);
     setDescription(staticDesc);
-    if (resource.eligibility) setEligibility(staticElig);
+    if (resource.eligibility) setEligibilityText(staticElig);
 
     // Batch-translate anything that still needs it
     const toTranslate: string[] = [];
@@ -123,7 +121,7 @@ export default function ResourceCard({
         results.forEach((r, i) => {
           if (indices[i] === "title") setTitle(r);
           if (indices[i] === "desc")  setDescription(r);
-          if (indices[i] === "elig")  setEligibility(r);
+          if (indices[i] === "elig")  setEligibilityText(r);
         });
       });
     }
@@ -367,7 +365,7 @@ export default function ResourceCard({
                     className="flex items-center gap-1.5 text-xs text-[#1D4ED8] dark:text-sky-400 font-semibold hover:underline"
                     // handled by a nested inner state — see ExtraDetails below
                   />
-                  <ExtraDetails resource={resource} activeLanguage={activeLanguage} />
+                  <ExtraDetails resource={resource} activeLanguage={activeLanguage} eligibilityText={eligibilityText} />
                 </>
               )}
 
@@ -458,7 +456,11 @@ export default function ResourceCard({
 }
 
 // Extra expandable details nested inside an already-expanded card
-function ExtraDetails({ resource, activeLanguage }: { resource: Resource; activeLanguage: string }) {
+function ExtraDetails({ resource, activeLanguage, eligibilityText }: { 
+  resource: Resource; 
+  activeLanguage: Language;
+  eligibilityText: string;
+}) {
   const [open, setOpen] = useState(false);
   const has = resource.servicesOffered?.length || resource.eligibility || resource.languages?.length || resource.lastUpdated || resource.source;
   if (!has) return null;
@@ -499,7 +501,7 @@ function ExtraDetails({ resource, activeLanguage }: { resource: Resource; active
                     <Users className="w-3.5 h-3.5 text-[#1D4ED8]" /> Eligibility
                   </p>
                   <p className="text-xs text-[var(--foreground-muted)] bg-foreground/[0.04] rounded-lg p-2 border border-foreground/[0.06]">
-                    {eligibility}
+                    {eligibilityText || resolveField(resource.eligibility, activeLanguage)}
                   </p>
                 </div>
               )}

@@ -108,9 +108,9 @@ export default function ProfileTab() {
                 aria-label="Select language"
                 className="flex flex-col items-center justify-center gap-0.5 px-2 py-1.5 rounded-lg border border-[var(--border)] bg-[var(--card)] min-w-[44px] hover:border-[#1D4ED8]/50 transition-colors"
               >
-                <span className="text-base leading-none">{languageFlags[activeLanguage]}</span>
+                <span className="text-base leading-none">{LANGUAGES.find(l => l.code === activeLanguage)?.flag}</span>
                 <span className="text-[9px] text-[var(--foreground-muted)] leading-none">
-                  {activeLanguage.toUpperCase()}
+                  {activeLanguage.toUpperCase().replace("-CN", "")}
                 </span>
               </button>
 
@@ -121,21 +121,21 @@ export default function ProfileTab() {
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95, y: -6 }}
                     transition={{ duration: 0.15 }}
-                    className="absolute right-0 top-full mt-1.5 w-40 rounded-xl bg-[var(--card)] border border-[var(--border)] shadow-xl overflow-hidden z-50"
+                    className="absolute right-0 top-full mt-1.5 w-48 rounded-xl bg-[var(--card)] border border-[var(--border)] shadow-xl overflow-hidden z-50"
                   >
-                    {languages.map((lang) => (
+                    {LANGUAGES.map(({ code, flag, name }) => (
                       <button
-                        key={lang}
-                        onClick={() => { setActiveLanguage(lang); setLangOpen(false); }}
+                        key={code}
+                        onClick={() => { setActiveLanguage(code); setLangOpen(false); }}
                         className={`w-full flex items-center gap-2.5 px-3 py-2.5 text-sm transition-colors hover:bg-foreground/[0.06] ${
-                          activeLanguage === lang
+                          activeLanguage === code
                             ? "text-[#1D4ED8] font-semibold"
                             : "text-[var(--foreground)]"
                         }`}
                       >
-                        <span className="text-base">{languageFlags[lang]}</span>
-                        <span className="flex-1 text-left">{languageNames[lang]}</span>
-                        {activeLanguage === lang && <Check className="w-3.5 h-3.5 flex-shrink-0" />}
+                        <span className="text-base">{flag}</span>
+                        <span className="flex-1 text-left">{name}</span>
+                        {activeLanguage === code && <Check className="w-3.5 h-3.5 flex-shrink-0" />}
                       </button>
                     ))}
                   </motion.div>
