@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAppStore } from "@/lib/store";
 import { categoryLabels } from "@/lib/data";
-import type { Resource } from "@/lib/types";
+import { translateBatch } from "@/lib/translate";
+import type { Resource, Language } from "@/lib/types";
 import {
   Heart,
   Phone,
@@ -32,6 +33,19 @@ interface ResourceCardProps {
   onReport?: (resourceId: string) => void;
   onClaimBusiness?: (resourceId: string) => void;
 }
+
+/**
+ * Resolves a multilingual record field:
+ * 1. If the record already has a translation for the target language, use it.
+ * 2. Otherwise fall back to English (Google Translate will fill it in async).
+ */
+function resolveField(
+  record: Partial<Record<Language, string>> & { en: string },
+  lang: Language
+): string {
+  return record[lang] ?? record.en;
+}
+
 
 const costLabels: Record<string, { label: string; color: string }> = {
   free:           { label: "Free",          color: "text-white bg-emerald-600 dark:bg-emerald-500" },
@@ -64,6 +78,59 @@ export default function ResourceCard({
   const note = resourceNotes[resource.id];
   const isCompleted = note?.completed ?? false;
 
+  // ── Runtime translation ────────────────────────────────────────────────
+  // Title and description start with the best available static translation.
+  // When the user selects a language that has no static entry, the Google
+  // Translate API fills it in asynchronously.
+  const [title, setTitle] = useState(() => resolveField(resource.title, activeLanguage));
+  const [description, setDescription] = useState(() => resolveField(resource.description, activeLanguage));
+  const [eligibility, setEligibility] = useState(() =>
+    resource.eligibility ? resolveField(resource.eligibility, activeLanguage) : ""
+  );
+
+  useEffect(() => {
+    let cancelled = false;
+    const sourceTitle = resource.title.en;
+    const sourceDesc  = resource.description.en;
+    const sourceElig  = resource.eligibility?.en ?? "";
+
+    // Use static translation if available for this language
+    const staticTitle = resolveField(resource.title, activeLanguage);
+    const staticDesc  = resolveField(resource.description, activeLanguage);
+    const staticElig  = resource.eligibility
+      ? resolveField(resource.eligibility as Record<Language, string> & { en: string }, activeLanguage)
+      : "";
+
+    const needsTitle = staticTitle === sourceTitle && activeLanguage !== "en";
+    const needsDesc  = staticDesc  === sourceDesc  && activeLanguage !== "en";
+    const needsElig  = sourceElig && staticElig === sourceElig && activeLanguage !== "en";
+
+    // Set static values immediately
+    setTitle(staticTitle);
+    setDescription(staticDesc);
+    if (resource.eligibility) setEligibility(staticElig);
+
+    // Batch-translate anything that still needs it
+    const toTranslate: string[] = [];
+    const indices: ("title" | "desc" | "elig")[] = [];
+    if (needsTitle) { toTranslate.push(sourceTitle); indices.push("title"); }
+    if (needsDesc)  { toTranslate.push(sourceDesc);  indices.push("desc");  }
+    if (needsElig && sourceElig)  { toTranslate.push(sourceElig);  indices.push("elig");  }
+
+    if (toTranslate.length > 0) {
+      translateBatch(toTranslate, activeLanguage).then((results) => {
+        if (cancelled) return;
+        results.forEach((r, i) => {
+          if (indices[i] === "title") setTitle(r);
+          if (indices[i] === "desc")  setDescription(r);
+          if (indices[i] === "elig")  setEligibility(r);
+        });
+      });
+    }
+
+    return () => { cancelled = true; };
+  }, [activeLanguage, resource.id]);
+
   const googleMapsUrl = resource.address
     ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(resource.address)}`
     : null;
@@ -88,7 +155,7 @@ export default function ResourceCard({
         <div className="flex items-center gap-2 px-3 py-3 min-w-0">
           <div className="flex-1 min-w-0">
             <p className="text-sm font-semibold text-foreground leading-snug mb-1">
-              {resource.title[activeLanguage]}
+              {title}
             </p>
             <div className="flex flex-wrap gap-1">
               {resource.category.slice(0, 2).map((cat) => (
@@ -139,7 +206,7 @@ export default function ResourceCard({
             >
               <div className="px-4 pb-4 border-t border-foreground/[0.06] pt-3 space-y-3">
                 <p className="text-xs text-foreground/60 leading-relaxed">
-                  {resource.summary?.[activeLanguage] || resource.description[activeLanguage]}
+                  {resource.summary?.[activeLanguage] || description}
                 </p>
                 {resource.cost && (
                   <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${costLabels[resource.cost]?.color || ""}`}>
@@ -193,7 +260,7 @@ export default function ResourceCard({
           <div className="flex-1 min-w-0">
             {/* Title — full width, wraps naturally */}
             <h3 className="font-semibold text-sm leading-snug text-foreground mb-1">
-              {resource.title[activeLanguage]}
+              {title}
             </h3>
             {/* Tags row — sit below title, flush left, no indent */}
             <div className="flex flex-wrap gap-1">
@@ -253,7 +320,7 @@ export default function ResourceCard({
             <div className="px-4 pb-4 border-t border-foreground/[0.06] pt-3 space-y-3">
               {/* Description */}
               <p className="text-xs md:text-sm text-[var(--foreground-muted)] leading-relaxed">
-                {resource.description[activeLanguage]}
+                {description}
               </p>
 
               {/* Cost + Hours */}
@@ -432,7 +499,7 @@ function ExtraDetails({ resource, activeLanguage }: { resource: Resource; active
                     <Users className="w-3.5 h-3.5 text-[#1D4ED8]" /> Eligibility
                   </p>
                   <p className="text-xs text-[var(--foreground-muted)] bg-foreground/[0.04] rounded-lg p-2 border border-foreground/[0.06]">
-                    {resource.eligibility[activeLanguage as keyof typeof resource.eligibility]}
+                    {eligibility}
                   </p>
                 </div>
               )}

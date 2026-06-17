@@ -4,10 +4,11 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAppStore } from "@/lib/store";
 import { languageNames, categoryLabels } from "@/lib/data";
+import { LANGUAGE_MAP } from "@/lib/languages";
 import type { Language, ResourceCategory } from "@/lib/types";
 import { Globe, Compass, ChevronRight, ChevronLeft, ArrowLeft, Home, Scale, Briefcase, GraduationCap, Heart, Brain, Users, Clock, AlertTriangle, Handshake, Store, Palette } from "lucide-react";
 
-const languages: Language[] = ["en", "fr", "tl", "es", "ar", "zh"];
+const languages: Language[] = ["en", "pa", "tl", "zh", "zh-CN", "es", "uk", "ru", "am", "ar", "so", "sw"];
 
 // Quick help categories - allow up to 3 taps
 const helpCategories: { id: ResourceCategory; icon: typeof Home; label: string; description: string }[] = [
@@ -25,62 +26,104 @@ const helpCategories: { id: ResourceCategory; icon: typeof Home; label: string; 
   { id: "arts", icon: Palette, label: "Arts & Creative", description: "Cultural programs" },
 ];
 
-const uiText: Record<string, Record<Language, string>> = {
+const uiText: Record<string, Partial<Record<Language, string>> & { en: string }> = {
   selectLanguage: {
     en: "Select your language",
-    fr: "Choisissez votre langue",
+    pa: "ਆਪਣੀ ਭਾਸ਼ਾ ਚੁਣੋ",
     tl: "Piliin ang iyong wika",
+    zh: "選擇您的語言",
+    "zh-CN": "选择您的语言",
     es: "Selecciona tu idioma",
+    uk: "Оберіть мову",
+    ru: "Выберите язык",
+    am: "ቋንቋዎን ይምረጡ",
     ar: "اختر لغتك",
-    zh: "选择语言",
+    so: "Dooro luqadaada",
+    sw: "Chagua lugha yako",
   },
   whatBringsYou: {
     en: "What brings you here today?",
-    fr: "Qu'est-ce qui vous amène ici?",
+    pa: "ਅੱਜ ਤੁਸੀਂ ਇੱਥੇ ਕਿਉਂ ਆਏ?",
     tl: "Ano ang dahilan ng pagpunta mo dito?",
+    zh: "今天是什麼帶你來這裡？",
+    "zh-CN": "今天是什么带你来这里？",
     es: "¿Qué te trae aquí hoy?",
+    uk: "Що привело вас сюди сьогодні?",
+    ru: "Что привело вас сюда сегодня?",
+    am: "ዛሬ ምን አመጣዎ?",
     ar: "ما الذي يجلبك إلى هنا اليوم؟",
-    zh: "今天是什么带你来这里？",
+    so: "Maxaa kuu keenay maanta?",
+    sw: "Nini kinakuleta hapa leo?",
   },
   selectUpTo3: {
     en: "Select up to 3 priorities",
-    fr: "Sélectionnez jusqu'à 3 priorités",
+    pa: "3 ਤੱਕ ਤਰਜੀਹਾਂ ਚੁਣੋ",
     tl: "Pumili ng hanggang 3 prioridad",
+    zh: "最多選擇3個優先事項",
+    "zh-CN": "最多选择3个优先事项",
     es: "Selecciona hasta 3 prioridades",
+    uk: "Виберіть до 3 пріоритетів",
+    ru: "Выберите до 3 приоритетов",
+    am: "እስከ 3 ቅድሚያ የሚሰጧቸውን ይምረጡ",
     ar: "حدد ما يصل إلى 3 أولويات",
-    zh: "最多选择3个优先事项",
+    so: "Dooro ilaa 3 mudnaanood",
+    sw: "Chagua hadi vipaumbele 3",
   },
   continue: {
     en: "Continue",
-    fr: "Continuer",
+    pa: "ਜਾਰੀ ਰੱਖੋ",
     tl: "Magpatuloy",
+    zh: "繼續",
+    "zh-CN": "继续",
     es: "Continuar",
+    uk: "Продовжити",
+    ru: "Продолжить",
+    am: "ቀጥል",
     ar: "متابعة",
-    zh: "继续",
+    so: "Sii wad",
+    sw: "Endelea",
   },
   back: {
     en: "Back",
-    fr: "Retour",
+    pa: "ਵਾਪਸ",
     tl: "Bumalik",
-    es: "Atrás",
-    ar: "رجوع",
     zh: "返回",
+    "zh-CN": "返回",
+    es: "Atrás",
+    uk: "Назад",
+    ru: "Назад",
+    am: "ተመለስ",
+    ar: "رجوع",
+    so: "Dib u noqo",
+    sw: "Rudi",
   },
   letsGo: {
     en: "Let's Go",
-    fr: "Allons-y",
+    pa: "ਚੱਲੀਏ",
     tl: "Tara Na",
+    zh: "出發吧",
+    "zh-CN": "开始吧",
     es: "Vamos",
+    uk: "Вперед",
+    ru: "Вперёд",
+    am: "እንሂድ",
     ar: "هيا بنا",
-    zh: "开始吧",
+    so: "Aan tagno",
+    sw: "Twende",
   },
   skip: {
     en: "Skip for now",
-    fr: "Passer pour l'instant",
+    pa: "ਹੁਣ ਛੱਡੋ",
     tl: "Laktawan muna",
+    zh: "暫時跳過",
+    "zh-CN": "暂时跳过",
     es: "Saltar por ahora",
+    uk: "Пропустити",
+    ru: "Пропустить",
+    am: "አሁን ዝለል",
     ar: "تخطي الآن",
-    zh: "暂时跳过",
+    so: "Hadda bood",
+    sw: "Ruka kwa sasa",
   },
 };
 
@@ -95,7 +138,7 @@ export default function Onboarding() {
     setCurrentPage,
   } = useAppStore();
 
-  const t = (key: string) => uiText[key]?.[activeLanguage] || uiText[key]?.en || key;
+  const t = (key: string) => uiText[key]?.[activeLanguage] ?? uiText[key]?.en ?? key;
 
   const handleNext = () => {
     if (step < 1) {
@@ -247,22 +290,26 @@ function StepLanguage({
       <h1 className="mb-4 text-display">
         {t("selectLanguage")}
       </h1>
-      <div className="grid w-full grid-cols-2 md:grid-cols-3 gap-4 mt-8">
-        {languages.map((lang) => (
+      <div className="grid w-full grid-cols-3 gap-3 mt-8">
+        {languages.map((lang) => {
+          const meta = LANGUAGE_MAP.get(lang);
+          return (
           <motion.button
             key={lang}
             whileHover={{ scale: 1.02, y: -2 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => setActiveLanguage(lang)}
-            className={`rounded-2xl p-5 text-center transition-all ${
+            className={`rounded-2xl p-4 text-center transition-all flex flex-col items-center gap-1.5 ${
               activeLanguage === lang
                 ? "bg-[#38BDF8] text-[#07111F] shadow-lg shadow-sky-500/30"
                 : "bg-[var(--surface)] border border-[var(--border)] hover:border-[var(--border-hover)]"
             }`}
           >
-            <span className="text-title">{languageNames[lang]}</span>
+            <span className="text-2xl leading-none">{meta?.flag}</span>
+            <span className="text-xs font-semibold leading-tight">{languageNames[lang]}</span>
           </motion.button>
-        ))}
+          );
+        })}
       </div>
     </motion.div>
   );

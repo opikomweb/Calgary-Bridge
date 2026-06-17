@@ -1,4 +1,21 @@
-export type Language = "en" | "fr" | "tl" | "es" | "ar" | "zh";
+/**
+ * 12 key languages spoken in Calgary's diverse communities.
+ * "en" is always the source-of-truth; all others are fetched from
+ * Google Translate at runtime and cached in-session.
+ */
+export type Language =
+  | "en"   // English
+  | "pa"   // Punjabi
+  | "tl"   // Tagalog / Filipino
+  | "zh"   // Cantonese / Chinese (Traditional)
+  | "zh-CN"// Mandarin / Chinese (Simplified)
+  | "es"   // Spanish
+  | "uk"   // Ukrainian
+  | "ru"   // Russian
+  | "am"   // Amharic
+  | "ar"   // Arabic
+  | "so"   // Somali
+  | "sw";  // Kiswahili
 
 export type UserRole = "newcomer" | "senior" | "business" | "ngo" | "creator" | "family" | "student";
 

@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useAppStore } from "@/lib/store";
 import { languageNames, roleLabels } from "@/lib/data";
+import { LANGUAGES } from "@/lib/languages";
 import { useAuth } from "@/components/auth-provider";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -26,16 +27,6 @@ import type { Language, UserRole } from "@/lib/types";
 
 type Panel = "notifications" | "privacy" | "help" | "rate";
 
-// Flag emoji map — uses Unicode regional indicator pairs
-const languageFlags: Record<Language, string> = {
-  en: "🇨🇦",
-  fr: "🇫🇷",
-  tl: "🇵🇭",
-  es: "🇪🇸",
-  ar: "🇸🇦",
-  zh: "🇨🇳",
-};
-
 export default function ProfileTab() {
   const {
     activeLanguage,
@@ -56,7 +47,6 @@ export default function ProfileTab() {
   const [langOpen, setLangOpen] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
 
-  const languages: Language[] = ["en", "fr", "tl", "es", "ar", "zh"];
   const roles: UserRole[] = ["newcomer", "senior", "business", "ngo", "creator", "family", "student"];
 
   const displayName = user?.name || userName;
