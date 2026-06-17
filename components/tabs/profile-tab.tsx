@@ -59,8 +59,8 @@ export default function ProfileTab() {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <div className="flex flex-col md:flex-row md:items-center gap-5 md:gap-8">
               {/* Profile Avatar */}
-              <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl md:rounded-3xl bg-gradient-to-br from-[#1D4ED8] to-[#0A2540] flex items-center justify-center shadow-xl shadow-blue-900/25 flex-shrink-0">
-                <User className="h-10 w-10 md:h-12 md:w-12 text-white" />
+              <div className="w-16 h-16 md:w-20 md:h-20 rounded-xl md:rounded-2xl bg-gradient-to-br from-[#1D4ED8] to-[#0A2540] flex items-center justify-center shadow-lg shadow-blue-900/25 flex-shrink-0">
+                <User className="h-8 w-8 md:h-9 md:w-9 text-white" />
               </div>
 
               {/* Profile Info */}
@@ -295,8 +295,8 @@ export default function ProfileTab() {
 
 function Stat({ value, label, color }: { value: React.ReactNode; label: string; color: string }) {
   return (
-    <div className="text-center px-4 py-3 md:px-5 md:py-4 rounded-xl md:rounded-2xl bg-[var(--card)] backdrop-blur-md border border-[var(--border)] flex-1 md:flex-initial">
-      <p className="text-xl md:text-2xl font-bold" style={{ color }}>
+    <div className="text-center px-3 py-2.5 md:px-4 md:py-3 rounded-lg md:rounded-xl bg-[var(--card)] backdrop-blur-md border border-[var(--border)] flex-1 md:flex-initial">
+      <p className="text-lg md:text-xl font-bold" style={{ color }}>
         {value}
       </p>
       <p className="text-xs text-[var(--foreground-muted)] mt-0.5">{label}</p>

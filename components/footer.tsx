@@ -764,32 +764,32 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
         </div>
 
         {/* Bottom Bar */}
-        <div className="relative border-t border-white/[0.04] py-4 md:py-5 px-5 md:px-8 bg-black/30">
-          <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
-            <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2">
+        <div className="relative border-t border-white/[0.04] py-4 md:py-5 px-5 md:px-8 bg-white/2 dark:bg-black/30">
+          <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex flex-wrap items-center justify-center gap-2 md:gap-0">
               {legalLinks.map((link, index) => (
-                <span key={link.label} className="flex items-center gap-3">
+                <span key={link.label} className="flex items-center gap-2 md:gap-1">
                   <button
                     onClick={() => openModal(link.key)}
-                    className="text-xs text-white/40 hover:text-white transition-colors"
+                    className="text-xs text-white/50 dark:text-white/40 hover:text-[#E1251B] transition-colors whitespace-nowrap"
                   >
                     {link.label}
                   </button>
                   {index < legalLinks.length - 1 && (
-                    <span className="text-white/10 hidden md:inline">|</span>
+                    <span className="text-white/20 dark:text-white/10 mx-1 md:mx-1.5">|</span>
                   )}
                 </span>
               ))}
             </div>
 
-            <div className="flex items-center gap-4">
-              <p className="text-xs text-white/40 font-medium">
-                &copy; {currentYear} <span className="text-white/60">Calgary Konnect.</span> All rights reserved.
+            <div className="flex items-center gap-3 md:gap-4">
+              <p className="text-xs text-white/50 dark:text-white/40 font-medium whitespace-nowrap">
+                &copy; {currentYear} <span className="text-white/70 dark:text-white/60">Calgary Konnect</span>
               </p>
               <button
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                 aria-label="Scroll to top"
-                className="flex items-center justify-center w-8 h-8 rounded-lg bg-white/[0.06] hover:bg-[#E1251B] text-white/50 hover:text-white transition-colors flex-shrink-0"
+                className="flex items-center justify-center w-8 h-8 rounded-lg bg-white/[0.08] dark:bg-white/[0.06] hover:bg-[#E1251B] text-white/50 hover:text-white transition-colors flex-shrink-0"
               >
                 <ChevronUp className="w-4 h-4" strokeWidth={2.5} />
               </button>

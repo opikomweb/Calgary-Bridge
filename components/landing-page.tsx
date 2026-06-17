@@ -389,8 +389,10 @@ export default function LandingPage() {
           />
 
           {/* Readability scrims — keep the photo bright while text stays legible */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#061020]/35 via-[#061020]/30 to-[#061020]/75" />
-          <div className="absolute inset-0 bg-[#061020]/25" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#061020]/50 via-[#061020]/45 to-[#061020]/80" />
+          <div className="absolute inset-0 bg-[#061020]/35" />
+          {/* Deep blue shadowy overlay for enhanced text contrast */}
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-950/40 via-transparent to-blue-950/30" />
           {/* Fade base into the dark page below */}
           <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-[#061020]" />
         </div>
