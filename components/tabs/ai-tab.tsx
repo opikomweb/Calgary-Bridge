@@ -9,8 +9,15 @@ import {
   Send, User, ArrowRight, Phone, ExternalLink,
   TrendingUp, PanelRightClose, PanelRightOpen, Search, MapPin,
 } from "lucide-react";
-import type { Resource } from "@/lib/types";
-import { CalgaryPulsePanel } from "@/components/calgary-pulse-panel";
+import type { Resource, Language } from "@/lib/types";
+import { translateBatch } from "@/lib/translate";
+import dynamic from "next/dynamic";
+
+// Lazy-load the 921-line pulse panel — only fetched when visible
+const CalgaryPulsePanel = dynamic(
+  () => import("@/components/calgary-pulse-panel").then(m => ({ default: m.CalgaryPulsePanel })),
+  { ssr: false }
+);
 
 // Popular chat questions shown below the pulse panel
 const popularQuestions = [
@@ -175,31 +182,30 @@ export default function AITab() {
                   animate={{ opacity: 1, y: 0 }}
                   className="text-center w-full max-w-xl"
                 >
-                  {/* Avatar — character only, no colored backdrop */}
+                  {/* Compact inline header: small avatar left + headline right */}
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.1 }}
-                    className="mx-auto mb-6 flex h-20 w-20 md:h-24 md:w-24 items-center justify-center"
-                  >
-                    <Image
-                      src="/askonnect-avatar.png"
-                      alt="Askonnect"
-                      width={96}
-                      height={96}
-                      className="h-full w-full object-contain"
-                    />
-                  </motion.div>
-
-                  {/* Headline — clean, actionable prompt */}
-                  <motion.h1
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                    className="text-2xl md:text-3xl lg:text-4xl font-bold mb-8 md:mb-10 tracking-tight text-balance max-w-md mx-auto"
+                    transition={{ delay: 0.1 }}
+                    className="flex items-center gap-3 mb-7 md:mb-8"
                   >
-                    What do you need in Calgary?
-                  </motion.h1>
+                    <Image
+                      src="/askonnect-avatar.webp"
+                      alt="Askonnect"
+                      width={48}
+                      height={48}
+                      className="w-11 h-11 md:w-12 md:h-12 object-contain flex-shrink-0"
+                    />
+                    <motion.h1
+                      initial={{ opacity: 0, x: -8 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.18 }}
+                      className="text-lg md:text-xl lg:text-2xl font-bold tracking-tight text-balance text-left leading-snug"
+                    >
+                      I connect Calgary.{" "}
+                      <span className="text-foreground/60 font-medium">How can I help you today?</span>
+                    </motion.h1>
+                  </motion.div>
 
                   {/* Simple example prompts (optional starting points) */}
                   <motion.div
@@ -252,7 +258,7 @@ export default function AITab() {
                             <User className="h-5 w-5 text-white" />
                           ) : (
                             <Image
-                              src="/askonnect-avatar.png"
+                              src="/askonnect-avatar.webp"
                               alt="Askonnect"
                               width={44}
                               height={44}
@@ -329,7 +335,7 @@ export default function AITab() {
                     >
                       <div className="flex h-10 w-10 md:h-11 md:w-11 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl md:rounded-2xl">
                         <Image
-                          src="/askonnect-avatar.png"
+                          src="/askonnect-avatar.webp"
                           alt="Askonnect"
                           width={44}
                           height={44}
@@ -442,6 +448,43 @@ function AIResourceCard({ resource }: { resource: Resource }) {
   const { activeLanguage, toggleBookmark, bookmarkedResources } = useAppStore();
   const isBookmarked = bookmarkedResources.includes(resource.id);
 
+  // Runtime translation — falls back to English while Google Translate responds
+  const [cardTitle, setCardTitle] = useState(() => resource.title[activeLanguage] ?? resource.title.en);
+  const [cardDesc, setCardDesc] = useState(
+    () => (resource.summary?.[activeLanguage] ?? resource.summary?.en) || (resource.description[activeLanguage] ?? resource.description.en)
+  );
+
+  useEffect(() => {
+    let cancelled = false;
+    const sourceTitle = resource.title.en;
+    const sourceDesc  = resource.summary?.en ?? resource.description.en;
+
+    // Use existing static translation if available
+    const staticTitle = resource.title[activeLanguage] ?? sourceTitle;
+    const staticDesc  = (resource.summary?.[activeLanguage] ?? resource.summary?.en) || (resource.description[activeLanguage] ?? sourceDesc);
+
+    setCardTitle(staticTitle);
+    setCardDesc(staticDesc);
+
+    if (activeLanguage === "en") return;
+
+    const toTranslate: string[] = [];
+    const slots: ("title" | "desc")[] = [];
+    if (staticTitle === sourceTitle) { toTranslate.push(sourceTitle); slots.push("title"); }
+    if (staticDesc  === sourceDesc)  { toTranslate.push(sourceDesc);  slots.push("desc");  }
+
+    if (toTranslate.length > 0) {
+      translateBatch(toTranslate, activeLanguage).then((results) => {
+        if (cancelled) return;
+        results.forEach((r, i) => {
+          if (slots[i] === "title") setCardTitle(r);
+          if (slots[i] === "desc")  setCardDesc(r);
+        });
+      });
+    }
+    return () => { cancelled = true; };
+  }, [activeLanguage, resource.id]);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -456,7 +499,7 @@ function AIResourceCard({ resource }: { resource: Resource }) {
               key={cat}
               className="px-3 py-1 rounded-full text-xs sm:text-sm font-medium bg-[#1D4ED8]/15 text-[#1D4ED8] dark:bg-[#3B82F6]/15 dark:text-[#3B82F6]"
             >
-              {categoryLabels[cat]?.[activeLanguage] || cat}
+              {categoryLabels[cat]?.[activeLanguage] ?? categoryLabels[cat]?.en ?? cat}
             </span>
           ))}
         </div>
@@ -471,10 +514,10 @@ function AIResourceCard({ resource }: { resource: Resource }) {
       </div>
 
       <h4 className="font-bold text-foreground text-base sm:text-lg md:text-xl mb-2 leading-snug text-pretty">
-        {resource.title[activeLanguage]}
+        {cardTitle}
       </h4>
       <p className="text-sm md:text-base text-foreground/60 leading-relaxed line-clamp-3">
-        {resource.summary?.[activeLanguage] || resource.description[activeLanguage]}
+        {cardDesc}
       </p>
 
       <div className="mt-4 md:mt-6 flex flex-wrap gap-x-5 gap-y-3">

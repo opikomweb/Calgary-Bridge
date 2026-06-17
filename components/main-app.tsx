@@ -7,19 +7,24 @@ import Image from "next/image";
 import { AlertTriangle, Shield, Menu, X } from "lucide-react";
 import { ThemeToggle } from "./theme-toggle";
 import { CalgaryConnectLogo } from "./calgary-connect-logo";
+import { LanguageToggle } from "./language-toggle";
 import { NAV_ITEMS } from "./nav-items";
 import { motion, AnimatePresence } from "framer-motion";
-import HomeTab from "./tabs/home-tab";
-import ExploreTab from "./tabs/explore-tab";
-import AITab from "./tabs/ai-tab";
-import DoGoodTab from "./tabs/do-good-tab";
-import ShortlistTab from "./tabs/shortlist-tab";
-import ProfileTab from "./tabs/profile-tab";
-import EmergencyHub from "./emergency-hub";
-import RentShield from "./rentshield";
-import Footer from "./footer";
-import BusinessSubmission from "./business-submission";
+import dynamic from "next/dynamic";
 import { CalgaryAnimatedBackground } from "./calgary-background";
+
+// Lazy-load every tab — only the active tab's JS is fetched, keeping the
+// initial bundle small and first-paint fast.
+const HomeTab        = dynamic(() => import("./tabs/home-tab"),     { ssr: false });
+const ExploreTab     = dynamic(() => import("./tabs/explore-tab"),  { ssr: false });
+const AITab          = dynamic(() => import("./tabs/ai-tab"),       { ssr: false });
+const DoGoodTab      = dynamic(() => import("./tabs/do-good-tab"),  { ssr: false });
+const ShortlistTab   = dynamic(() => import("./tabs/shortlist-tab"),{ ssr: false });
+const ProfileTab     = dynamic(() => import("./tabs/profile-tab"),  { ssr: false });
+const EmergencyHub   = dynamic(() => import("./emergency-hub"),     { ssr: false });
+const RentShield     = dynamic(() => import("./rentshield"),        { ssr: false });
+const Footer         = dynamic(() => import("./footer"),            { ssr: false });
+const BusinessSubmission = dynamic(() => import("./business-submission"), { ssr: false });
 
 export default function MainApp() {
   const { activeTab, setActiveTab, activeLanguage, showEmergency, setShowEmergency, setCurrentPage, setHasOnboarded } = useAppStore();
@@ -84,7 +89,7 @@ export default function MainApp() {
                       <item.icon className="h-5 w-5 shrink-0" strokeWidth={activeTab === item.id ? 2.3 : 2} />
                     ) : (
                       <Image
-                        src="/askonnect-avatar.png"
+                        src="/askonnect-avatar.webp"
                         alt=""
                         width={20}
                         height={20}
@@ -124,9 +129,9 @@ export default function MainApp() {
 
       {/* Mobile / Tablet Header */}
       <header className="lg:hidden sticky top-0 z-40 bg-background border-b border-foreground/[0.08] px-4 sm:px-5 py-2">
-        {/* Calgary brand accent strip — red+blue in day, lighter blue+red in dark */}
+        {/* Calgary brand accent strip */}
         <div className="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-[#1D4ED8] dark:from-[#38BDF8] via-[#1D4ED8]/60 dark:via-[#38BDF8]/40 to-[#E1251B]" />
-        <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center justify-between gap-2">
           <button
             onClick={goToLanding}
             aria-label="Go to Calgary Connect home page"
@@ -135,18 +140,24 @@ export default function MainApp() {
             <CalgaryConnectLogo size="sm" />
           </button>
 
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-            aria-expanded={mobileMenuOpen}
-            className="flex items-center justify-center w-10 h-10 rounded-xl bg-[#E1251B] text-white shadow-md shadow-red-700/30 transition-all duration-150 hover:bg-[#B91C1C] active:scale-95"
-          >
-            {mobileMenuOpen ? (
-              <X className="h-5 w-5" strokeWidth={2.5} />
-            ) : (
-              <Menu className="h-5 w-5" strokeWidth={2.5} />
-            )}
-          </button>
+          {/* Right side: language toggle + hamburger */}
+          <div className="flex items-center gap-2">
+            {/* Language cycle button — always visible in header */}
+            <LanguageToggle />
+
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileMenuOpen}
+              className="flex items-center justify-center w-10 h-10 rounded-xl bg-[#E1251B] text-white shadow-md shadow-red-700/30 transition-all duration-150 hover:bg-[#B91C1C] active:scale-95"
+            >
+              {mobileMenuOpen ? (
+                <X className="h-5 w-5" strokeWidth={2.5} />
+              ) : (
+                <Menu className="h-5 w-5" strokeWidth={2.5} />
+              )}
+            </button>
+          </div>
         </div>
       </header>
 
@@ -188,7 +199,7 @@ export default function MainApp() {
                       <item.icon className="h-5 w-5 shrink-0" strokeWidth={activeTab === item.id ? 2.3 : 2} />
                     ) : (
                       <Image
-                        src="/askonnect-avatar.png"
+                        src="/askonnect-avatar.webp"
                         alt=""
                         width={20}
                         height={20}
@@ -288,7 +299,7 @@ export default function MainApp() {
                 {active && item.highlight ? (
                   <div className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-[#E1251B] text-white shadow-md shadow-red-700/30">
                     <Image
-                      src="/askonnect-avatar.png"
+                      src="/askonnect-avatar.webp"
                       alt=""
                       width={22}
                       height={22}
@@ -302,7 +313,7 @@ export default function MainApp() {
                       <item.icon className="h-6 w-6 shrink-0" strokeWidth={2.3} />
                     ) : (
                       <Image
-                        src="/askonnect-avatar.png"
+                        src="/askonnect-avatar.webp"
                         alt=""
                         width={22}
                         height={22}
@@ -315,7 +326,7 @@ export default function MainApp() {
                   <item.icon className="h-6 w-6 shrink-0" strokeWidth={1.8} />
                 ) : (
                   <Image
-                    src="/askonnect-avatar.png"
+                    src="/askonnect-avatar.webp"
                     alt=""
                     width={22}
                     height={22}

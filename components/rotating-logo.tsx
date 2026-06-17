@@ -25,8 +25,8 @@ interface RotatingLogoProps {
 export function RotatingLogo({ imgPadding = "p-0", priority = false, variant = "light" }: RotatingLogoProps) {
   const src =
     variant === "dark"
-      ? "/calgary-connect-logo-light.png"
-      : "/calgary-connect-logo-transparent.png";
+      ? "/calgary-connect-logo-light.webp"
+      : "/calgary-connect-logo-transparent.webp";
 
   return (
     <Image

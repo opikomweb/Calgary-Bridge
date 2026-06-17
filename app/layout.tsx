@@ -31,6 +31,7 @@ export const metadata: Metadata = {
     "things to do in Calgary",
   ],
   icons: {
+    // Keep .png for icons — browsers need PNG/ICO for favicons
     icon: "/calgary-connect-logo.png",
     apple: "/calgary-connect-logo.png",
   },

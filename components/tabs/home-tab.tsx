@@ -436,37 +436,34 @@ export default function HomeTab() {
           )}
 
           {/* ========== NEAR YOU ========== */}
-          <section className="px-6 md:px-8 lg:px-12 pb-52 md:pb-64 max-w-[1200px] mx-auto relative z-10">
-            <div className="pb-8 md:pb-10">
-              <div className="flex items-center gap-2 mb-3">
-                <MapPin className="w-4 h-4 text-[#1D4ED8] dark:text-[#38BDF8]" />
-                <p className="text-xs font-bold text-[#1D4ED8] dark:text-[#38BDF8] uppercase tracking-[0.15em]">Near You</p>
-              </div>
-              <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">Services in your area.</h2>
+          <section className="px-6 md:px-8 lg:px-12 pb-4 max-w-[1200px] mx-auto relative z-10">
+            <div className="flex items-center gap-2 mb-4">
+              <MapPin className="w-4 h-4 text-[#1D4ED8] dark:text-[#38BDF8]" />
+              <h2 className="text-sm font-bold text-[#1D4ED8] dark:text-[#38BDF8] uppercase tracking-[0.15em]">Services in your area</h2>
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+            {/* One-line compact bullet rows */}
+            <div className="rounded-xl border border-foreground/[0.07] bg-foreground/[0.03] divide-y divide-foreground/[0.05] overflow-hidden">
               {[
-                { name: "Calgary Food Bank", distance: "0.8 km", tag: "Free", hours: "Mon-Fri 9-5" },
-                { name: "Centre for Newcomers", distance: "1.2 km", tag: "Free", hours: "Mon-Sat 9-6" },
+                { name: "Calgary Food Bank", distance: "0.8 km", tag: "Free", hours: "Mon–Fri 9–5" },
+                { name: "Calgary Drop-In Centre", distance: "1.1 km", tag: "Free", hours: "24/7" },
                 { name: "Alpha House Calgary", distance: "1.6 km", tag: "24/7", hours: "Always Open" },
+                { name: "Calgary Immigrant Women's Assoc.", distance: "2.0 km", tag: "Free", hours: "Mon–Fri 9–5" },
+                { name: "Alex Community Health Centre", distance: "2.3 km", tag: "Health", hours: "Mon–Sat 8–6" },
               ].map((place, index) => (
                 <motion.div
                   key={place.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.8 + index * 0.05 }}
-                  whileHover={{ y: -2 }}
-                  className="p-5 md:p-6 rounded-xl md:rounded-2xl bg-foreground/[0.04] border border-foreground/[0.06] hover:bg-foreground/[0.07] hover:border-foreground/[0.12] transition-all duration-300"
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.8 + index * 0.04 }}
+                  className="flex items-center gap-3 px-4 py-3 hover:bg-foreground/[0.04] transition-colors"
                 >
-                  <div className="flex items-start justify-between gap-3 mb-3">
-                    <h3 className="text-base md:text-lg font-bold text-foreground leading-tight">{place.name}</h3>
-                    <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-[#1D4ED8]/15 text-[#1D4ED8] dark:bg-[#0284c7]/15 dark:text-[#38BDF8] flex-shrink-0">
-                      {place.tag}
-                    </span>
-                  </div>
-                  <p className="text-sm text-[var(--foreground-muted)] mb-1">{place.distance} away</p>
-                  <p className="text-sm text-[var(--foreground-muted)]">{place.hours}</p>
+                  <span className="text-sm font-semibold text-foreground flex-1 min-w-0 truncate">{place.name}</span>
+                  <span className="text-xs text-foreground/50 flex-shrink-0 hidden sm:block">{place.hours}</span>
+                  <span className="text-xs text-foreground/40 flex-shrink-0">{place.distance}</span>
+                  <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-[#1D4ED8]/10 text-[#1D4ED8] dark:bg-[#0284c7]/15 dark:text-[#38BDF8] flex-shrink-0">
+                    {place.tag}
+                  </span>
                 </motion.div>
               ))}
             </div>

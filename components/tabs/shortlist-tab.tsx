@@ -19,7 +19,7 @@ export default function ShortlistTab() {
         <div className="flex items-center gap-3">
           <Heart className="h-5 w-5 md:h-6 md:w-6 text-[#E1251B]" />
           <h2 className="text-xl md:text-2xl font-bold">
-            {translations.shortlist?.[activeLanguage] || "Shortlist"}
+            {translations.shortlist?.[activeLanguage] ?? translations.shortlist?.en ?? "Shortlist"}
           </h2>
           <span className="rounded-full bg-[#E1251B]/15 px-2.5 py-1 text-sm font-semibold text-[#E1251B]">
             {bookmarkedItems.length}
@@ -33,10 +33,10 @@ export default function ShortlistTab() {
             <Heart className="h-8 w-8 md:h-10 md:w-10 text-[var(--foreground-muted)]" />
           </div>
           <p className="text-lg md:text-2xl font-semibold text-foreground/70">
-            {uiText.emptyShortlist?.[activeLanguage] || "Your shortlist is empty"}
+            {uiText.emptyShortlist?.[activeLanguage] ?? uiText.emptyShortlist?.en}
           </p>
           <p className="mt-2 text-sm md:text-base text-[var(--foreground-muted)] max-w-sm leading-relaxed">
-            {uiText.emptyShortlistHint?.[activeLanguage] || "Tap the heart icon on any resource to save it here"}
+            {uiText.emptyShortlistHint?.[activeLanguage] ?? uiText.emptyShortlistHint?.en}
           </p>
         </div>
       ) : (

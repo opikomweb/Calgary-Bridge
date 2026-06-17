@@ -1,4 +1,21 @@
-export type Language = "en" | "fr" | "tl" | "es" | "ar" | "zh";
+/**
+ * 12 key languages spoken in Calgary's diverse communities.
+ * "en" is always the source-of-truth; all others are fetched from
+ * Google Translate at runtime and cached in-session.
+ */
+export type Language =
+  | "en"   // English
+  | "pa"   // Punjabi
+  | "tl"   // Tagalog / Filipino
+  | "zh"   // Cantonese / Chinese (Traditional)
+  | "zh-CN"// Mandarin / Chinese (Simplified)
+  | "es"   // Spanish
+  | "uk"   // Ukrainian
+  | "ru"   // Russian
+  | "am"   // Amharic
+  | "ar"   // Arabic
+  | "so"   // Somali
+  | "sw";  // Kiswahili
 
 export type UserRole = "newcomer" | "senior" | "business" | "ngo" | "creator" | "family" | "student";
 
@@ -33,14 +50,21 @@ export type ResourceCategory =
 
 export type Priority = ResourceCategory;
 
+/**
+ * A localized string: English is required as the source-of-truth.
+ * All other languages are optional — they are filled in at runtime
+ * by the Google Translate hook (lib/translate.ts).
+ */
+export type LocalizedString = { en: string } & Partial<Record<Language, string>>;
+
 export interface Resource {
   id: string;
   category: ResourceCategory[];
   userTypes: UserRole[];
-  title: Record<Language, string>;
-  description: Record<Language, string>;
-  summary?: Record<Language, string>;
-  eligibility?: Record<Language, string>;
+  title: LocalizedString;
+  description: LocalizedString;
+  summary?: LocalizedString;
+  eligibility?: LocalizedString;
   servicesOffered?: string[];
   phone?: string;
   address?: string;
@@ -121,9 +145,9 @@ export interface Business {
 
 export interface CategoryGuide {
   id: ResourceCategory;
-  overview: Record<Language, string>;
-  firstSteps: Record<Language, string[]>;
-  eligibilityHints: Record<Language, string[]>;
+  overview: LocalizedString;
+  firstSteps: { en: string[] } & Partial<Record<Language, string[]>>;
+  eligibilityHints: { en: string[] } & Partial<Record<Language, string[]>>;
   aiPrompts: string[];
   hiddenGems: string[];
 }

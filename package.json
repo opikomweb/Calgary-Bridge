@@ -28,7 +28,9 @@
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "autoprefixer": "latest",
+    "babel-plugin-react-compiler": "^1.0.0",
     "postcss": "latest",
+    "sharp": "^0.35.1",
     "tailwindcss": "latest",
     "typescript": "latest"
   }
