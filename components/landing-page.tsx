@@ -418,9 +418,9 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="text-[clamp(40px,9vw,80px)] font-bold tracking-[-0.03em] leading-[1.02] mb-6 md:mb-8 text-balance"
+            className="text-[clamp(32px,7vw,80px)] font-bold tracking-[-0.03em] leading-[1.02] mb-6 md:mb-8 text-balance"
           >
-            Everything Calgary.
+            Everything <span className="text-[#E1251B]">Calgary</span>.
             <br />
             <span className="text-gradient-blue">One Place.</span>
           </motion.h1>
