@@ -295,7 +295,7 @@ export default function ExploreTab() {
       <section className="relative pb-6 md:pb-8">
         <div className="max-w-[1200px] mx-auto px-5 md:px-8">
           {filteredResources.length > 0 ? (
-            <div className="grid grid-cols-2 lg:grid-cols-2 gap-2 md:gap-3">
+            <div className="grid grid-cols-2 lg:grid-cols-2 gap-2 md:gap-3 items-start">
               {filteredResources.map((resource, index) => (
                 <motion.div
                   key={resource.id}

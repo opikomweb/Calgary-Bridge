@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { CalgaryConnectLogo } from "./calgary-connect-logo";
+import { LanguageToggle } from "./language-toggle";
 import { 
   MapPin, 
   Mail, 
@@ -788,6 +789,7 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
               <p className="text-xs text-white/50 dark:text-white/40 font-medium whitespace-nowrap">
                 &copy; {currentYear} <span className="text-white/70 dark:text-white/60">Calgary Konnect</span>
               </p>
+              <LanguageToggle />
               <button
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                 aria-label="Scroll to top"

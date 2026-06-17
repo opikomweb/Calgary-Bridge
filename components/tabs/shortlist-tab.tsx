@@ -35,13 +35,14 @@ export default function ShortlistTab() {
       </div>
 
       {/*
-        Desktop: 2 cols — Calgary Pulse LEFT (col-1), saved items RIGHT (col-2)
-        Mobile:  single col DOM order — saved items FIRST, Calgary Pulse LAST
+        Desktop: flex row — Calgary Pulse LEFT, saved items RIGHT
+        Mobile:  flex col — saved items FIRST (top), Calgary Pulse LAST (bottom)
+        The `order` utilities achieve this without fighting CSS grid auto-placement.
       */}
-      <div className="px-5 md:px-8 grid lg:grid-cols-[360px_1fr] xl:grid-cols-[400px_1fr] gap-6 lg:gap-8 items-start">
+      <div className="px-5 md:px-8 flex flex-col lg:flex-row gap-6 lg:gap-8 items-start">
 
-        {/* Saved items — first in DOM (top on mobile, right col on desktop) */}
-        <div className="lg:col-start-2 lg:row-start-1">
+        {/* Saved items — order-1 on mobile (top), order-2 on desktop (right) */}
+        <div className="w-full lg:flex-1 order-1 lg:order-2">
           {bookmarkedItems.length === 0 ? (
             <div className="flex flex-col items-center justify-center text-center py-10">
               <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-foreground/[0.06] border border-foreground/[0.08]">
@@ -63,12 +64,12 @@ export default function ShortlistTab() {
           )}
         </div>
 
-        {/* Calgary Pulse — second in DOM (bottom on mobile, left col on desktop) */}
+        {/* Calgary Pulse — order-2 on mobile (bottom), order-1 on desktop (left) */}
         <motion.aside
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
-          className="lg:col-start-1 lg:row-start-1 lg:sticky lg:top-4"
+          className="w-full lg:w-[360px] xl:w-[400px] flex-shrink-0 order-2 lg:order-1 lg:sticky lg:top-4"
         >
           <div className="flex items-center gap-2 mb-3">
             <TrendingUp className="h-4 w-4 text-[#1D4ED8]" />

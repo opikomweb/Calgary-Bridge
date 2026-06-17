@@ -183,7 +183,7 @@ export default function ResourceCard({
     <motion.div
       whileHover={{ y: -1, boxShadow: "0 4px 16px rgba(0,0,0,0.10)" }}
       transition={{ duration: 0.15 }}
-      className={`group relative overflow-hidden w-full h-full border transition-all duration-200
+      className={`group relative overflow-hidden w-full border transition-all duration-200
         bg-white/60 dark:bg-white/[0.05]
         backdrop-blur-sm
         border-white/80 dark:border-white/[0.10]
@@ -193,17 +193,17 @@ export default function ResourceCard({
       style={{ borderRadius: 6 }}
     >
       <button
-        className="w-full text-left h-full"
+        className="w-full text-left"
         onClick={() => setIsExpanded((v) => !v)}
       >
-        <div className="flex flex-col px-2.5 py-2 min-w-0 h-full gap-1.5">
+        <div className="flex flex-col px-2.5 py-2 min-w-0 gap-1.5">
           {/* Title */}
           <p className="text-[11.5px] font-semibold text-foreground leading-snug line-clamp-2">
             {title}
           </p>
 
           {/* Bottom row: category icon badge + bookmark + chevron */}
-          <div className="flex items-center justify-between gap-1 mt-auto">
+          <div className="flex items-center justify-between gap-1">
             {/* Category icon pill */}
             <div className="flex items-center gap-0.5">
               <span
