@@ -9,7 +9,8 @@ import {
   Send, User, ArrowRight, Phone, ExternalLink,
   TrendingUp, PanelRightClose, PanelRightOpen, Search, MapPin,
 } from "lucide-react";
-import type { Resource } from "@/lib/types";
+import type { Resource, Language } from "@/lib/types";
+import { translateBatch } from "@/lib/translate";
 import dynamic from "next/dynamic";
 
 // Lazy-load the 921-line pulse panel — only fetched when visible
@@ -447,6 +448,43 @@ function AIResourceCard({ resource }: { resource: Resource }) {
   const { activeLanguage, toggleBookmark, bookmarkedResources } = useAppStore();
   const isBookmarked = bookmarkedResources.includes(resource.id);
 
+  // Runtime translation — falls back to English while Google Translate responds
+  const [cardTitle, setCardTitle] = useState(() => resource.title[activeLanguage] ?? resource.title.en);
+  const [cardDesc, setCardDesc] = useState(
+    () => (resource.summary?.[activeLanguage] ?? resource.summary?.en) || (resource.description[activeLanguage] ?? resource.description.en)
+  );
+
+  useEffect(() => {
+    let cancelled = false;
+    const sourceTitle = resource.title.en;
+    const sourceDesc  = resource.summary?.en ?? resource.description.en;
+
+    // Use existing static translation if available
+    const staticTitle = resource.title[activeLanguage] ?? sourceTitle;
+    const staticDesc  = (resource.summary?.[activeLanguage] ?? resource.summary?.en) || (resource.description[activeLanguage] ?? sourceDesc);
+
+    setCardTitle(staticTitle);
+    setCardDesc(staticDesc);
+
+    if (activeLanguage === "en") return;
+
+    const toTranslate: string[] = [];
+    const slots: ("title" | "desc")[] = [];
+    if (staticTitle === sourceTitle) { toTranslate.push(sourceTitle); slots.push("title"); }
+    if (staticDesc  === sourceDesc)  { toTranslate.push(sourceDesc);  slots.push("desc");  }
+
+    if (toTranslate.length > 0) {
+      translateBatch(toTranslate, activeLanguage).then((results) => {
+        if (cancelled) return;
+        results.forEach((r, i) => {
+          if (slots[i] === "title") setCardTitle(r);
+          if (slots[i] === "desc")  setCardDesc(r);
+        });
+      });
+    }
+    return () => { cancelled = true; };
+  }, [activeLanguage, resource.id]);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -461,7 +499,7 @@ function AIResourceCard({ resource }: { resource: Resource }) {
               key={cat}
               className="px-3 py-1 rounded-full text-xs sm:text-sm font-medium bg-[#1D4ED8]/15 text-[#1D4ED8] dark:bg-[#3B82F6]/15 dark:text-[#3B82F6]"
             >
-              {categoryLabels[cat]?.[activeLanguage] || cat}
+              {categoryLabels[cat]?.[activeLanguage] ?? categoryLabels[cat]?.en ?? cat}
             </span>
           ))}
         </div>
@@ -476,10 +514,10 @@ function AIResourceCard({ resource }: { resource: Resource }) {
       </div>
 
       <h4 className="font-bold text-foreground text-base sm:text-lg md:text-xl mb-2 leading-snug text-pretty">
-        {resource.title[activeLanguage]}
+        {cardTitle}
       </h4>
       <p className="text-sm md:text-base text-foreground/60 leading-relaxed line-clamp-3">
-        {resource.summary?.[activeLanguage] || resource.description[activeLanguage]}
+        {cardDesc}
       </p>
 
       <div className="mt-4 md:mt-6 flex flex-wrap gap-x-5 gap-y-3">
