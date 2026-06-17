@@ -74,59 +74,58 @@ export default function ResourceCard({
   // ── Compact variant (used in shortlist summary, etc.) ──────────────────
   if (variant === "compact") {
     return (
-      <motion.div
-        whileHover={{ y: -2 }}
-        transition={{ duration: 0.2 }}
-        className={`group relative overflow-hidden rounded-xl bg-card border border-border hover:border-foreground/20 transition-all duration-300 shadow-sm w-full ${
-          isCompleted && showNotes ? "opacity-60" : ""
-        }`}
+    <motion.div
+      whileHover={{ y: -1 }}
+      transition={{ duration: 0.15 }}
+      className={`group relative overflow-hidden rounded-xl bg-card border border-border/60 hover:border-foreground/20 hover:shadow-sm transition-all duration-200 w-full ${
+        isCompleted && showNotes ? "opacity-60" : ""
+      }`}
+    >
+      <button
+        className="w-full text-left"
+        onClick={() => setIsExpanded((v) => !v)}
       >
-        {/* Collapsed row */}
-        <button
-          className="w-full text-left"
-          onClick={() => setIsExpanded((v) => !v)}
-        >
-          <div className="flex items-center gap-3 px-4 py-3">
-            {/* Category tags */}
-            <div className="flex flex-wrap gap-1 flex-1 min-w-0">
+        <div className="flex items-center gap-2 px-3 py-2.5">
+          <div className="flex-1 min-w-0 flex flex-col gap-1">
+            <div className="flex flex-wrap gap-1">
               {resource.category.slice(0, 2).map((cat) => (
                 <span
                   key={cat}
-                  className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#1D4ED8]/12 dark:bg-sky-500/15 text-[#1D4ED8] dark:text-sky-400 truncate max-w-[100px]"
+                  className="px-1.5 py-px rounded text-[10px] font-semibold bg-[#1D4ED8]/10 dark:bg-sky-500/15 text-[#1D4ED8] dark:text-sky-400 leading-tight"
                 >
                   {categoryLabels[cat]?.[activeLanguage] || cat}
                 </span>
               ))}
               {resource.hiddenGem && (
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#E1251B]/12 text-[#E1251B] flex items-center gap-1">
+                <span className="px-1.5 py-px rounded text-[10px] font-semibold bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center gap-0.5 leading-tight">
                   <Gem className="w-2.5 h-2.5" />
-                  <span className="hidden sm:inline">Hidden Gem</span>
                 </span>
               )}
             </div>
-            {/* Heart */}
+            <p className="text-sm font-semibold text-foreground leading-snug truncate">
+              {resource.title[activeLanguage]}
+            </p>
+          </div>
+          <div className="flex items-center gap-1 flex-shrink-0">
             <motion.button
               whileTap={{ scale: 0.85 }}
               onClick={(e) => { e.stopPropagation(); toggleBookmark(resource.id); }}
-              className={`flex-shrink-0 rounded-lg p-1.5 transition-all ${
+              className={`rounded-lg p-1.5 transition-all ${
                 isBookmarked
-                  ? "bg-[#E1251B]/15 text-[#E1251B]"
-                  : "bg-foreground/[0.06] text-[var(--foreground-muted)] hover:text-foreground"
+                  ? "bg-[#E1251B]/12 text-[#E1251B]"
+                  : "text-foreground/35 hover:text-foreground/70"
               }`}
             >
-              <Heart className={`h-4 w-4 ${isBookmarked ? "fill-current" : ""}`} />
+              <Heart className={`h-3.5 w-3.5 ${isBookmarked ? "fill-current" : ""}`} />
             </motion.button>
             <ChevronDown
-              className={`flex-shrink-0 h-4 w-4 text-[var(--foreground-muted)] transition-transform ${
+              className={`h-4 w-4 text-foreground/30 transition-transform duration-200 ${
                 isExpanded ? "rotate-180" : ""
               }`}
             />
           </div>
-          {/* Title always visible */}
-          <p className="px-4 pb-3 text-sm font-semibold text-foreground leading-snug">
-            {resource.title[activeLanguage]}
-          </p>
-        </button>
+        </div>
+      </button>
 
         {/* Expanded detail */}
         <AnimatePresence initial={false}>
@@ -174,70 +173,70 @@ export default function ResourceCard({
   }
 
   // ── Default / full variant ─────────────────────────────────────────────
-  // Collapsed: category tags + title + heart — one compact row
-  // Expanded:  full description, cost, phone, address, show-more, action btns
+  // Collapsed: single tight row — [tags] [title] [heart] [chevron]
+  // Expanded:  description, cost, phone, address, actions, extra details
   return (
     <motion.div
-      transition={{ duration: 0.2 }}
-      className={`group relative overflow-hidden rounded-xl bg-card border border-border hover:border-foreground/20 transition-all duration-300 shadow-sm w-full ${
+      transition={{ duration: 0.15 }}
+      className={`group relative overflow-hidden rounded-xl bg-card border border-border/60 hover:border-foreground/20 hover:shadow-sm transition-all duration-200 w-full ${
         isCompleted && showNotes ? "opacity-60" : ""
       }`}
     >
-      {/* ── Always-visible collapsed header ── */}
+      {/* ── Collapsed header — everything in one compact row ── */}
       <button
         className="w-full text-left"
         onClick={() => setIsExpanded((v) => !v)}
         aria-expanded={isExpanded}
       >
-        <div className="flex items-start gap-3 px-4 pt-3.5 pb-2">
-          {/* Tags */}
-          <div className="flex flex-wrap gap-1 flex-1 min-w-0">
-            {resource.category.slice(0, 3).map((cat) => (
-              <span
-                key={cat}
-                className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#1D4ED8]/12 dark:bg-sky-500/15 text-[#1D4ED8] dark:text-sky-400 truncate"
-              >
-                {categoryLabels[cat]?.[activeLanguage] || cat}
-              </span>
-            ))}
-            {resource.featured && (
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#E1251B]/12 text-[#E1251B] flex items-center gap-1">
-                <Star className="w-2.5 h-2.5 fill-current" />
-                <span className="hidden sm:inline">Featured</span>
-              </span>
-            )}
-            {resource.hiddenGem && (
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#E1251B]/12 text-[#E1251B] flex items-center gap-1">
-                <Gem className="w-2.5 h-2.5" />
-                <span className="hidden sm:inline">Hidden Gem</span>
-              </span>
-            )}
+        <div className="flex items-center gap-2 px-3 py-2.5">
+          {/* Left: stacked tags + title */}
+          <div className="flex-1 min-w-0 flex flex-col gap-1">
+            {/* Tags row */}
+            <div className="flex flex-wrap gap-1">
+              {resource.category.slice(0, 3).map((cat) => (
+                <span
+                  key={cat}
+                  className="px-1.5 py-px rounded text-[10px] font-semibold bg-[#1D4ED8]/10 dark:bg-sky-500/15 text-[#1D4ED8] dark:text-sky-400 leading-tight"
+                >
+                  {categoryLabels[cat]?.[activeLanguage] || cat}
+                </span>
+              ))}
+              {resource.featured && (
+                <span className="px-1.5 py-px rounded text-[10px] font-semibold bg-[#E1251B]/10 text-[#E1251B] flex items-center gap-0.5 leading-tight">
+                  <Star className="w-2.5 h-2.5 fill-current" />
+                </span>
+              )}
+              {resource.hiddenGem && (
+                <span className="px-1.5 py-px rounded text-[10px] font-semibold bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center gap-0.5 leading-tight">
+                  <Gem className="w-2.5 h-2.5" />
+                </span>
+              )}
+            </div>
+            {/* Title */}
+            <h3 className="font-semibold text-sm leading-snug text-foreground truncate pr-1">
+              {resource.title[activeLanguage]}
+            </h3>
           </div>
 
-          {/* Heart — stop propagation so it doesn't toggle expand */}
-          <motion.button
-            whileTap={{ scale: 0.85 }}
-            onClick={(e) => { e.stopPropagation(); toggleBookmark(resource.id); }}
-            className={`flex-shrink-0 rounded-lg p-1.5 transition-all ${
-              isBookmarked
-                ? "bg-[#E1251B]/15 text-[#E1251B]"
-                : "bg-foreground/[0.06] text-[var(--foreground-muted)] hover:text-foreground"
-            }`}
-          >
-            <Heart className={`h-4 w-4 ${isBookmarked ? "fill-current" : ""}`} />
-          </motion.button>
-        </div>
-
-        {/* Title row with expand chevron */}
-        <div className="flex items-center justify-between gap-2 px-4 pb-3.5">
-          <h3 className="font-semibold text-sm md:text-base leading-snug text-foreground flex-1 min-w-0 pr-1">
-            {resource.title[activeLanguage]}
-          </h3>
-          <ChevronDown
-            className={`flex-shrink-0 h-4 w-4 text-[var(--foreground-muted)] transition-transform ${
-              isExpanded ? "rotate-180" : ""
-            }`}
-          />
+          {/* Right: heart + chevron */}
+          <div className="flex items-center gap-1 flex-shrink-0">
+            <motion.button
+              whileTap={{ scale: 0.85 }}
+              onClick={(e) => { e.stopPropagation(); toggleBookmark(resource.id); }}
+              className={`rounded-lg p-1.5 transition-all ${
+                isBookmarked
+                  ? "bg-[#E1251B]/12 text-[#E1251B]"
+                  : "text-foreground/35 hover:text-foreground/70"
+              }`}
+            >
+              <Heart className={`h-3.5 w-3.5 ${isBookmarked ? "fill-current" : ""}`} />
+            </motion.button>
+            <ChevronDown
+              className={`h-4 w-4 text-foreground/30 transition-transform duration-200 ${
+                isExpanded ? "rotate-180" : ""
+              }`}
+            />
+          </div>
         </div>
       </button>
 
