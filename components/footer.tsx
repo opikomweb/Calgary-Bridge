@@ -509,40 +509,41 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
           <div className="absolute inset-x-0 -top-16 h-32 bg-gradient-to-b from-transparent via-[#0b1d33]/50 to-[#0b1d33] pointer-events-none" />
         </div>
 
-        {/* Footer Background - Distinctly Different (always a deep navy in both themes) */}
+        {/* Footer Background - solid dark base in both modes */}
         <div className="bg-[#0b1d33] relative overflow-hidden">
-          {/* Subtle Grid Pattern */}
-          <div className="absolute inset-0 opacity-[0.02]" style={{
+          {/* Subtle Grid Pattern — hidden in dark mode */}
+          <div className="absolute inset-0 opacity-[0.02] dark:opacity-0" style={{
             backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
             backgroundSize: '40px 40px'
           }} />
 
-          <div className="relative border-b border-white/[0.04] py-4 md:py-5 px-5 md:px-8">
+          <div className="relative border-b border-white/[0.04] py-4 md:py-5 px-4 md:px-8 bg-[#0b1d33]">
             <div className="max-w-[1200px] mx-auto">
-              <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8">
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-[#1D4ED8]/15 flex items-center justify-center">
-                    <Shield className="w-3.5 h-3.5 text-[#1D4ED8]" />
+              {/* Mobile: 2x2 grid | Desktop: single row flex */}
+              <div className="grid grid-cols-2 md:flex md:items-center md:justify-center gap-4 md:gap-8">
+                <div className="flex flex-col items-center text-center gap-1.5">
+                  <div className="w-7 h-7 md:w-7 md:h-7 rounded-lg bg-[#1D4ED8]/15 flex items-center justify-center">
+                    <Shield className="w-3.5 h-3.5 md:w-3.5 md:h-3.5 text-[#1D4ED8]" />
                   </div>
-                  <span className="text-xs font-semibold text-white/70">Verified</span>
+                  <span className="text-xs md:text-xs font-semibold text-white/70">Verified</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-[#1D4ED8]/15 flex items-center justify-center">
-                    <FileText className="w-3.5 h-3.5 text-[#1D4ED8]" />
+                <div className="flex flex-col items-center text-center gap-1.5">
+                  <div className="w-7 h-7 md:w-7 md:h-7 rounded-lg bg-[#1D4ED8]/15 flex items-center justify-center">
+                    <FileText className="w-3.5 h-3.5 md:w-3.5 md:h-3.5 text-[#1D4ED8]" />
                   </div>
-                  <span className="text-xs font-semibold text-white/70">Updated monthly</span>
+                  <span className="text-xs md:text-xs font-semibold text-white/70">Updated monthly</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-[#E1251B]/15 flex items-center justify-center">
-                    <Users className="w-3.5 h-3.5 text-[#E1251B]" />
+                <div className="flex flex-col items-center text-center gap-1.5">
+                  <div className="w-7 h-7 md:w-7 md:h-7 rounded-lg bg-[#E1251B]/15 flex items-center justify-center">
+                    <Users className="w-3.5 h-3.5 md:w-3.5 md:h-3.5 text-[#E1251B]" />
                   </div>
-                  <span className="text-xs font-semibold text-white/70">Community-driven</span>
+                  <span className="text-xs md:text-xs font-semibold text-white/70">Community-driven</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-[#E1251B]/15 flex items-center justify-center">
-                    <Heart className="w-3.5 h-3.5 text-[#E1251B]" />
+                <div className="flex flex-col items-center text-center gap-1.5">
+                  <div className="w-7 h-7 md:w-7 md:h-7 rounded-lg bg-[#E1251B]/15 flex items-center justify-center">
+                    <Heart className="w-3.5 h-3.5 md:w-3.5 md:h-3.5 text-[#E1251B]" />
                   </div>
-                  <span className="text-xs font-semibold text-white/70">Free to use</span>
+                  <span className="text-xs md:text-xs font-semibold text-white/70">Free to use</span>
                 </div>
               </div>
             </div>
@@ -763,32 +764,32 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
         </div>
 
         {/* Bottom Bar */}
-        <div className="relative border-t border-white/[0.04] py-4 md:py-5 px-5 md:px-8 bg-black/30">
-          <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
-            <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2">
+        <div className="relative border-t border-white/[0.04] py-4 md:py-5 px-5 md:px-8 bg-white/2 dark:bg-black/30">
+          <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex flex-wrap items-center justify-center gap-2 md:gap-0">
               {legalLinks.map((link, index) => (
-                <span key={link.label} className="flex items-center gap-3">
+                <span key={link.label} className="flex items-center gap-2 md:gap-1">
                   <button
                     onClick={() => openModal(link.key)}
-                    className="text-xs text-white/40 hover:text-white transition-colors"
+                    className="text-xs text-white/50 dark:text-white/40 hover:text-[#E1251B] transition-colors whitespace-nowrap"
                   >
                     {link.label}
                   </button>
                   {index < legalLinks.length - 1 && (
-                    <span className="text-white/10 hidden md:inline">|</span>
+                    <span className="text-white/20 dark:text-white/10 mx-1 md:mx-1.5">|</span>
                   )}
                 </span>
               ))}
             </div>
 
-            <div className="flex items-center gap-4">
-              <p className="text-xs text-white/40 font-medium">
-                &copy; {currentYear} <span className="text-white/60">Calgary Konnect.</span> All rights reserved.
+            <div className="flex items-center gap-3 md:gap-4">
+              <p className="text-xs text-white/50 dark:text-white/40 font-medium whitespace-nowrap">
+                &copy; {currentYear} <span className="text-white/70 dark:text-white/60">Calgary Konnect</span>
               </p>
               <button
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                 aria-label="Scroll to top"
-                className="flex items-center justify-center w-8 h-8 rounded-lg bg-white/[0.06] hover:bg-[#E1251B] text-white/50 hover:text-white transition-colors flex-shrink-0"
+                className="flex items-center justify-center w-8 h-8 rounded-lg bg-white/[0.08] dark:bg-white/[0.06] hover:bg-[#E1251B] text-white/50 hover:text-white transition-colors flex-shrink-0"
               >
                 <ChevronUp className="w-4 h-4" strokeWidth={2.5} />
               </button>
