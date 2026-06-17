@@ -1,11 +1,17 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, Suspense, lazy } from "react";
 import { useAppStore } from "@/lib/store";
 import { languageNames, roleLabels } from "@/lib/data";
 import { LANGUAGES } from "@/lib/languages";
 import { useAuth } from "@/components/auth-provider";
 import { motion, AnimatePresence } from "framer-motion";
+import dynamic from "next/dynamic";
+
+const CalgaryPulsePanel = dynamic(
+  () => import("@/components/calgary-pulse-panel").then(m => ({ default: m.CalgaryPulsePanel })),
+  { ssr: false }
+);
 import {
   User,
   ChevronDown,
@@ -22,6 +28,7 @@ import {
   Phone,
   Trash2,
   Globe,
+  TrendingUp,
 } from "lucide-react";
 import type { Language, UserRole } from "@/lib/types";
 
@@ -65,7 +72,7 @@ export default function ProfileTab() {
   }, []);
 
   return (
-    <div className="min-h-screen pb-24 lg:pb-10">
+    <div className="pb-6 lg:pb-8">
       {/* ── Compact Profile Header ── */}
       <div className="border-b border-[var(--border)] bg-[var(--background)] px-4 md:px-8 py-4 md:py-6 max-w-5xl">
         <motion.div
@@ -147,34 +154,60 @@ export default function ProfileTab() {
       </div>
 
       {/* ── Content ── */}
+      {/*
+        Mobile  (single col): order — "I am a..." (1) → Settings+Account (2) → Pulse (3, last)
+        Desktop (flex row):   LEFT col = "I am a..." stacked above Pulse | RIGHT col = Settings+Account
+        Achieved with: outer flex-col lg:flex-row, left col wraps "I am a..." + Pulse,
+        right col wraps Settings+Account. On mobile the left col becomes flex-col too,
+        but we use `order-3` on Pulse so it drops below Settings+Account.
+      */}
       <div className="px-4 md:px-8 py-5 md:py-8 max-w-5xl">
-        <div className="grid lg:grid-cols-2 gap-5 md:gap-8">
-          {/* Left Column */}
-          <div className="space-y-5 md:space-y-8">
+        {/* Outer: single col on mobile, two-col on desktop */}
+        <div className="flex flex-col lg:flex-row gap-5 md:gap-8 items-start">
 
-            {/* I am a... — single dropdown */}
-            <Section icon={<User className="h-4 w-4 text-[#1D4ED8]" />} title="I am a..." delay={0.05}>
-              <div className="relative">
-                <select
-                  value={selectedRole || ""}
-                  onChange={(e) => setSelectedRole(e.target.value as UserRole)}
-                  aria-label="Select your role"
-                  className="w-full appearance-none rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-3 pr-10 text-sm font-medium text-[var(--foreground)] outline-none transition-colors focus:border-[#1D4ED8] focus:ring-2 focus:ring-[#1D4ED8]/20"
-                >
-                  <option value="" disabled>Select who you are...</option>
-                  {roles.map((role) => (
-                    <option key={role} value={role}>
-                      {roleLabels[role]?.[activeLanguage] || roleLabels[role]?.en}
-                    </option>
-                  ))}
-                </select>
-                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--foreground-muted)]" />
+          {/* ── LEFT column (desktop) — "I am a..." + Calgary Pulse stacked ── */}
+          {/* On mobile this wrapper is full-width flex-col; Pulse has order-3 to go last */}
+          <div className="w-full lg:w-[calc(50%-1rem)] xl:w-[calc(50%-1.25rem)] flex flex-col gap-5 md:gap-6">
+
+            {/* "I am a..." — order-1 on mobile (appears first) */}
+            <div className="order-1">
+              <Section icon={<User className="h-4 w-4 text-[#1D4ED8]" />} title="I am a..." delay={0.05}>
+                <div className="relative">
+                  <select
+                    value={selectedRole || ""}
+                    onChange={(e) => setSelectedRole(e.target.value as UserRole)}
+                    aria-label="Select your role"
+                    className="w-full appearance-none rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-3 pr-10 text-sm font-medium text-[var(--foreground)] outline-none transition-colors focus:border-[#1D4ED8] focus:ring-2 focus:ring-[#1D4ED8]/20"
+                  >
+                    <option value="" disabled>Select who you are...</option>
+                    {roles.map((role) => (
+                      <option key={role} value={role}>
+                        {roleLabels[role]?.[activeLanguage] || roleLabels[role]?.en}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--foreground-muted)]" />
+                </div>
+              </Section>
+            </div>
+
+            {/* Calgary Pulse — order-3 on mobile (after Settings+Account), order-2 inside left col on desktop */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="order-3 lg:order-2"
+            >
+              <div className="flex items-center gap-2 mb-3">
+                <TrendingUp className="h-4 w-4 text-[#1D4ED8]" />
+                <h2 className="text-sm font-bold text-[var(--foreground)]">Calgary Pulse</h2>
               </div>
-            </Section>
+              <CalgaryPulsePanel />
+            </motion.div>
           </div>
 
-          {/* Right Column */}
-          <div className="space-y-5 md:space-y-8">
+          {/* ── RIGHT column — Settings + Account — order-2 on mobile, order-1 inside right col on desktop ── */}
+          <div className="w-full lg:w-[calc(50%-1rem)] xl:w-[calc(50%-1.25rem)] order-2 space-y-5 md:space-y-8">
             {/* Settings */}
             <Section icon={<Settings className="h-4 w-4 text-[#1D4ED8]" />} title="Settings" delay={0.1}>
               <div className="bg-[var(--card)] border border-[var(--border)] rounded-xl overflow-hidden divide-y divide-[var(--border)]">
@@ -311,6 +344,7 @@ export default function ProfileTab() {
               </p>
             </div>
           </div>
+
         </div>
       </div>
     </div>

@@ -139,7 +139,7 @@ export default function AITab() {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gradient-to-b from-[var(--background)] via-[var(--background)] to-[var(--background-secondary)]">
+    <div className="relative overflow-hidden bg-gradient-to-b from-[var(--background)] via-[var(--background)] to-[var(--background-secondary)]">
       {/* Calgary Ambient Background */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Radial gradients */}

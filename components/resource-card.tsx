@@ -24,7 +24,47 @@ import {
   Flag,
   Building2,
   MoreHorizontal,
+  Home,
+  Briefcase,
+  Stethoscope,
+  Utensils,
+  AlertTriangle,
+  Globe,
+  Baby,
+  Brain,
+  Accessibility,
+  GraduationCap,
+  Scale,
+  Bus,
+  Landmark,
+  Leaf,
+  BookOpen,
+  Wrench,
+  HandHeart,
 } from "lucide-react";
+
+/** Maps each resource category key to a compact icon */
+const CATEGORY_ICONS: Record<string, React.ElementType> = {
+  housing:        Home,
+  jobs:           Briefcase,
+  healthcare:     Stethoscope,
+  food:           Utensils,
+  emergency:      AlertTriangle,
+  newcomer:       Globe,
+  family:         Baby,
+  "mental-health": Brain,
+  disability:     Accessibility,
+  education:      GraduationCap,
+  legal:          Scale,
+  transit:        Bus,
+  senior:         Users,
+  tourism:        Landmark,
+  environment:    Leaf,
+  finance:        Building2,
+  community:      HandHeart,
+  culture:        BookOpen,
+  services:       Wrench,
+};
 
 interface ResourceCardProps {
   resource: Resource;
@@ -136,50 +176,62 @@ export default function ResourceCard({
   const hasExtraDetails =
     resource.servicesOffered?.length || resource.eligibility || resource.hours || resource.languages?.length;
 
-  // ── Compact variant (used in explore grid, shortlist, etc.) ──────────────────
+  // ── Compact variant (2-column grid, explore page) ─────────────────────────
   if (variant === "compact") {
+    const CatIcon = CATEGORY_ICONS[resource.category[0]] ?? Building2;
     return (
     <motion.div
-      whileHover={{ y: -1 }}
+      whileHover={{ y: -1, boxShadow: "0 4px 16px rgba(0,0,0,0.10)" }}
       transition={{ duration: 0.15 }}
-      className={`group relative overflow-hidden rounded-xl bg-card border border-border/60 hover:border-foreground/20 hover:shadow-sm transition-all duration-200 w-full h-full ${
-        isCompleted && showNotes ? "opacity-60" : ""
-      }`}
+      className={`group relative overflow-hidden w-full border transition-all duration-200
+        bg-white/60 dark:bg-white/[0.05]
+        backdrop-blur-sm
+        border-white/80 dark:border-white/[0.10]
+        hover:border-[#1D4ED8]/30 dark:hover:border-sky-500/30
+        ${isCompleted && showNotes ? "opacity-60" : ""}
+      `}
+      style={{ borderRadius: 6 }}
     >
       <button
-        className="w-full text-left h-full"
+        className="w-full text-left"
         onClick={() => setIsExpanded((v) => !v)}
       >
-        <div className="flex flex-col gap-1.5 px-2.5 py-2.5 min-w-0 h-full">
+        <div className="flex flex-col px-2.5 py-2 min-w-0 gap-1.5">
           {/* Title */}
-          <p className="text-[12px] font-semibold text-foreground leading-snug line-clamp-2">
+          <p className="text-[11.5px] font-semibold text-foreground leading-snug line-clamp-2">
             {title}
           </p>
-          {/* Category tags + actions row */}
-          <div className="flex items-center justify-between gap-1 mt-auto">
-            <div className="flex flex-wrap gap-1 min-w-0">
-              {resource.category.slice(0, 1).map((cat) => (
-                <span
-                  key={cat}
-                  className="px-1.5 py-px rounded text-[9px] font-medium bg-[#1D4ED8]/10 dark:bg-sky-500/15 text-[#1D4ED8] dark:text-sky-400 leading-tight truncate max-w-[80px]"
-                >
-                  {categoryLabels[cat]?.[activeLanguage] || cat}
-                </span>
-              ))}
+
+          {/* Bottom row: category icon badge + bookmark + chevron */}
+          <div className="flex items-center justify-between gap-1">
+            {/* Category icon pill */}
+            <div className="flex items-center gap-0.5">
+              <span
+                title={categoryLabels[resource.category[0]]?.[activeLanguage] || resource.category[0]}
+                className="flex items-center justify-center w-5 h-5 bg-[#1D4ED8]/10 dark:bg-sky-500/15 text-[#1D4ED8] dark:text-sky-400"
+                style={{ borderRadius: 3 }}
+              >
+                <CatIcon className="w-3 h-3" />
+              </span>
               {resource.hiddenGem && (
-                <span className="px-1 py-px rounded text-[9px] font-semibold bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center leading-tight">
-                  <Gem className="w-2.5 h-2.5" />
+                <span
+                  title="Hidden gem"
+                  className="flex items-center justify-center w-5 h-5 bg-amber-500/10 text-amber-600 dark:text-amber-400"
+                  style={{ borderRadius: 3 }}
+                >
+                  <Gem className="w-3 h-3" />
                 </span>
               )}
             </div>
-            <div className="flex items-center gap-0 flex-shrink-0">
+
+            {/* Bookmark + expand */}
+            <div className="flex items-center gap-0">
               <motion.button
-                whileTap={{ scale: 0.85 }}
+                whileTap={{ scale: 0.82 }}
                 onClick={(e) => { e.stopPropagation(); toggleBookmark(resource.id); }}
-                className={`rounded-lg p-1 transition-all ${
-                  isBookmarked
-                    ? "text-[#E1251B]"
-                    : "text-foreground/30 hover:text-foreground/60"
+                aria-label={isBookmarked ? "Remove from saved" : "Save resource"}
+                className={`p-1 transition-colors ${
+                  isBookmarked ? "text-[#E1251B]" : "text-foreground/25 hover:text-foreground/60"
                 }`}
               >
                 <Heart className={`h-3 w-3 ${isBookmarked ? "fill-current" : ""}`} />

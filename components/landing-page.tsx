@@ -9,6 +9,7 @@ import {
 import Image from "next/image";
 import { CalgaryConnectLogo } from "@/components/calgary-connect-logo";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { LanguageToggle } from "@/components/language-toggle";
 import { useAppStore } from "@/lib/store";
 import { useRef, useState, useEffect } from "react";
 import Footer from "@/components/footer";
@@ -267,8 +268,9 @@ export default function LandingPage() {
                 </div>
               </nav>
 
-            {/* CTA + mobile toggle */}
+            {/* CTA + translate + mobile toggle */}
             <div className="flex items-center gap-2">
+              <LanguageToggle />
               <button
                 onClick={() => enterApp("home")}
                 className="hidden sm:flex items-center gap-2 btn-primary px-5 py-2.5 rounded-xl text-sm font-semibold"

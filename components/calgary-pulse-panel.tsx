@@ -870,7 +870,7 @@ export function CalgaryPulsePanel() {
         transition={{ delay: 0.2 }}
       >
         {/* Coloured section header band */}
-        <div className="flex items-center justify-between px-3 py-2.5 rounded-xl bg-[#1D4ED8] dark:bg-[#1a3fa8] mb-3">
+        <div className="flex items-center justify-between px-3 py-2.5 rounded-xl bg-[#E1251B] dark:bg-[#b91c1c] mb-3">
           <div className="flex items-center gap-2">
             <Radio className="w-3.5 h-3.5 text-white/80 flex-shrink-0" />
             <p className="text-[11px] font-black text-white uppercase tracking-[0.14em]">

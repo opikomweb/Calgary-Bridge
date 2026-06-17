@@ -60,14 +60,15 @@ export default function MainApp() {
       <aside className="hidden lg:flex lg:w-[340px] lg:flex-col lg:fixed lg:inset-y-0 lg:z-50">
         <div className="flex grow flex-col overflow-y-auto border-r border-foreground/[0.08] bg-background shadow-sm">
           {/* Logo Section */}
-          <div className="px-5 pt-5 pb-4 border-b border-foreground/[0.06]">
+          <div className="px-4 pt-4 pb-3 border-b border-foreground/[0.06] flex items-center justify-between gap-3">
             <button
               onClick={goToLanding}
               aria-label="Go to Calgary Connect home page"
-              className="group w-full transition-opacity hover:opacity-80 active:opacity-60 cursor-pointer"
+              className="group flex-1 min-w-0 transition-opacity hover:opacity-80 active:opacity-60 cursor-pointer"
             >
               <CalgaryConnectLogo size="md" />
             </button>
+            <LanguageToggle />
           </div>
 
           {/* Desktop Navigation */}

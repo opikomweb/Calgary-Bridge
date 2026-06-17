@@ -104,10 +104,10 @@ export default function ExploreTab() {
   const showHeroCards = !hasQuery;
 
   return (
-    <div className="min-h-screen relative">
+    <div className="relative">
 
       {/* ========== PAGE HEADER ========== */}
-      <section className="relative pt-6 pb-6 md:pt-20 md:pb-12 lg:pt-24 lg:pb-16">
+      <section className="relative pt-5 pb-4 md:pt-12 md:pb-8 lg:pt-16 lg:pb-10">
         <div className="max-w-[1200px] mx-auto px-5 md:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -292,10 +292,10 @@ export default function ExploreTab() {
 
       {/* ========== RESOURCES GRID — only rendered after a query ========== */}
       {hasQuery && (
-      <section className="relative pb-24 md:pb-32">
+      <section className="relative pb-6 md:pb-8">
         <div className="max-w-[1200px] mx-auto px-5 md:px-8">
           {filteredResources.length > 0 ? (
-            <div className="grid grid-cols-2 lg:grid-cols-2 gap-2 md:gap-3">
+            <div className="grid grid-cols-2 lg:grid-cols-2 gap-2 md:gap-3 items-start">
               {filteredResources.map((resource, index) => (
                 <motion.div
                   key={resource.id}
@@ -335,13 +335,13 @@ export default function ExploreTab() {
 
       {/* ========== DEFAULT EMPTY STATE — prompt to search ========== */}
       {!hasQuery && (
-        <section className="relative pb-32">
+        <section className="relative pb-4">
           <div className="max-w-[1200px] mx-auto px-5 md:px-8">
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.25 }}
-              className="flex flex-col items-center text-center pt-6 pb-12"
+              className="flex flex-col items-center text-center pt-4 pb-6"
             >
               <div className="w-16 h-16 rounded-2xl bg-[#1D4ED8]/08 border border-[#1D4ED8]/15 flex items-center justify-center mb-4">
                 <Search className="w-7 h-7 text-[#1D4ED8]/60" />

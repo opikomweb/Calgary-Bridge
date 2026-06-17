@@ -4,11 +4,13 @@ import { useState, useRef, useEffect } from "react";
 import { useAppStore } from "@/lib/store";
 import { LANGUAGES } from "@/lib/languages";
 import type { Language } from "@/lib/types";
-import { Globe, Check, ChevronDown } from "lucide-react";
+import { Check } from "lucide-react";
 
 /**
- * Language picker with a globe icon trigger.
- * Dropdown: single clean column — flag + 2-letter code + native name.
+ * Language picker — compact dropdown anchored directly below the trigger.
+ * Trigger: translate icon (文/A SVG) + active flag + 2-letter code.
+ * Dropdown: each row = flag + 2-letter code only, no long native names.
+ * Sharp rectangle, scrollable if needed.
  */
 export function LanguageToggle() {
   const { activeLanguage, setActiveLanguage } = useAppStore();
@@ -46,27 +48,42 @@ export function LanguageToggle() {
         onClick={() => setOpen((v) => !v)}
         aria-label={`Language: ${current.nativeName}. Tap to change.`}
         aria-expanded={open}
-        className="flex items-center gap-1.5 h-9 px-2.5 rounded-lg border border-foreground/[0.12] bg-foreground/[0.04] hover:bg-foreground/[0.08] active:scale-95 transition-all duration-150 select-none"
+        className="flex items-center gap-1 h-8 px-2 bg-foreground/[0.05] hover:bg-foreground/[0.10] border border-foreground/[0.12] transition-colors select-none"
+        style={{ borderRadius: 4 }}
       >
-        {/* Globe icon */}
-        <Globe className="w-4 h-4 text-foreground/60 flex-shrink-0" strokeWidth={1.75} />
-        {/* Active flag */}
-        <span className="text-base leading-none">{current.flag}</span>
-        {/* 2-letter code */}
-        <span className="text-[11px] font-semibold text-foreground/60 leading-none tracking-wide">
-          {current.label}
-        </span>
-        <ChevronDown
-          className={`w-3 h-3 text-foreground/35 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
-        />
+        {/* Translate icon SVG */}
+        <svg viewBox="0 0 22 22" className="w-5 h-5 flex-shrink-0" aria-hidden="true" fill="none">
+          <rect x="1" y="2" width="12" height="10" rx="1.5" fill="#1D4ED8" opacity="0.9" />
+          <text x="7" y="10" textAnchor="middle" fontSize="6.5" fill="white" fontWeight="bold" fontFamily="system-ui">文</text>
+          <rect x="9" y="10" width="12" height="10" rx="1.5" fill="#E1251B" opacity="0.9" />
+          <text x="15" y="18" textAnchor="middle" fontSize="6.5" fill="white" fontWeight="bold" fontFamily="system-ui">A</text>
+        </svg>
+
+        {/* Active flag + 2-letter code */}
+        <span className="text-base leading-none" aria-hidden="true">{current.flag}</span>
+        <span className="text-[11px] font-bold text-foreground/70 tracking-wider leading-none">{current.label}</span>
+
+        {/* Chevron */}
+        <svg
+          viewBox="0 0 10 6"
+          className={`w-2.5 h-2.5 text-foreground/40 transition-transform duration-150 ${open ? "rotate-180" : ""}`}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M1 1l4 4 4-4" />
+        </svg>
       </button>
 
-      {/* ── Dropdown ── */}
+      {/* ── Dropdown — anchored below trigger, compact width, scrollable ── */}
       {open && (
         <div
           role="listbox"
           aria-label="Select language"
-          className="absolute right-0 top-full mt-1.5 z-50 w-44 rounded-xl border border-foreground/[0.09] bg-background shadow-lg shadow-black/10 dark:shadow-black/40 py-1 overflow-hidden"
+          className="absolute right-0 top-full mt-0.5 z-[300] bg-background border border-foreground/[0.14] shadow-xl shadow-black/15 dark:shadow-black/50 overflow-y-auto"
+          style={{ borderRadius: 0, minWidth: 108, maxHeight: "calc(100svh - 80px)" }}
         >
           {LANGUAGES.map((lang) => {
             const isActive = lang.code === activeLanguage;
@@ -77,39 +94,34 @@ export function LanguageToggle() {
                 role="option"
                 aria-selected={isActive}
                 onClick={() => select(lang.code)}
-                className={`w-full flex items-center gap-2.5 px-3 py-2 text-left transition-colors duration-100 active:scale-[0.98] ${
+                className={`w-full flex items-center gap-2 px-2.5 py-1.5 border-b border-foreground/[0.06] last:border-b-0 transition-colors duration-100 ${
                   isActive
-                    ? "bg-[#1D4ED8]/08 dark:bg-sky-500/10"
+                    ? "bg-[#1D4ED8]/[0.08] dark:bg-[#1D4ED8]/[0.15]"
                     : "hover:bg-foreground/[0.05]"
                 }`}
               >
                 {/* Flag */}
-                <span className="text-base leading-none flex-shrink-0">{lang.flag}</span>
-                {/* 2-letter abbreviation */}
+                <span className="text-[15px] leading-none w-5 flex-shrink-0">{lang.flag}</span>
+
+                {/* 2-letter language code (or characters for CJK/Cyrillic) */}
                 <span
-                  className={`text-[11px] font-bold w-5 flex-shrink-0 tracking-wide ${
-                    isActive ? "text-[#1D4ED8] dark:text-sky-400" : "text-foreground/40"
+                  className={`text-[12px] font-bold tracking-wide leading-none flex-1 text-left ${
+                    isActive ? "text-[#1D4ED8] dark:text-sky-400" : "text-foreground/70"
                   }`}
                 >
                   {lang.label}
                 </span>
-                {/* Native name */}
-                <span
-                  className={`text-[12px] font-medium flex-1 min-w-0 truncate ${
-                    isActive ? "text-[#1D4ED8] dark:text-sky-400" : "text-foreground/75"
-                  }`}
-                >
-                  {lang.nativeName}
-                </span>
-                {/* Active check */}
+
+                {/* Active tick */}
                 {isActive && (
                   <Check className="w-3 h-3 text-[#1D4ED8] dark:text-sky-400 flex-shrink-0" strokeWidth={2.5} />
                 )}
               </button>
             );
           })}
-          <div className="border-t border-foreground/[0.06] mt-1 pt-1 pb-0.5 px-3">
-            <p className="text-[9px] text-foreground/25 text-center">
+          {/* Credit line */}
+          <div className="px-2.5 py-1.5 bg-foreground/[0.025] border-t border-foreground/[0.08]">
+            <p className="text-[9px] text-foreground/30 text-center whitespace-nowrap">
               Powered by Google Translate
             </p>
           </div>
