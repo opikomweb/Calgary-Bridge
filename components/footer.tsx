@@ -500,13 +500,20 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
   return (
     <>
       <footer className="relative mt-12 md:mt-16">
-        {/* Footer Separator - Visual Break from Main Content */}
-        <div className="relative">
-          {/* Gradient Divider Line */}
-          <div className="h-px bg-gradient-to-r from-transparent via-sky-500/50 to-transparent" />
-          
-          {/* Decorative Top Pattern */}
-          <div className="absolute inset-x-0 -top-16 h-32 bg-gradient-to-b from-transparent via-[#0b1d33]/50 to-[#0b1d33] pointer-events-none" />
+        {/* Calgary Iconic Skyline — full-width strip above the footer badge row.
+            Black-bg source image + mix-blend-screen = black becomes transparent,
+            only white line-art shows. Sits on the page background so it reads
+            naturally in both day and night mode. */}
+        <div className="relative w-full overflow-hidden" style={{ height: "clamp(90px, 14vw, 160px)" }}>
+          {/* Fade page background into footer colour at the very bottom */}
+          <div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-b from-transparent to-[#0b1d33] z-10 pointer-events-none" />
+          <img
+            src="/calgary-iconic.png"
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full object-cover object-bottom mix-blend-screen opacity-40 dark:opacity-25 pointer-events-none select-none"
+            style={{ filter: "drop-shadow(0 0 8px rgba(147,210,255,0.15))" }}
+          />
         </div>
 
         {/* Footer Background - solid dark base in both modes */}
