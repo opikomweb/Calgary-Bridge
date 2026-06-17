@@ -9,17 +9,21 @@ import { ThemeToggle } from "./theme-toggle";
 import { CalgaryConnectLogo } from "./calgary-connect-logo";
 import { NAV_ITEMS } from "./nav-items";
 import { motion, AnimatePresence } from "framer-motion";
-import HomeTab from "./tabs/home-tab";
-import ExploreTab from "./tabs/explore-tab";
-import AITab from "./tabs/ai-tab";
-import DoGoodTab from "./tabs/do-good-tab";
-import ShortlistTab from "./tabs/shortlist-tab";
-import ProfileTab from "./tabs/profile-tab";
-import EmergencyHub from "./emergency-hub";
-import RentShield from "./rentshield";
-import Footer from "./footer";
-import BusinessSubmission from "./business-submission";
+import dynamic from "next/dynamic";
 import { CalgaryAnimatedBackground } from "./calgary-background";
+
+// Lazy-load every tab — only the active tab's JS is fetched, keeping the
+// initial bundle small and first-paint fast.
+const HomeTab        = dynamic(() => import("./tabs/home-tab"),     { ssr: false });
+const ExploreTab     = dynamic(() => import("./tabs/explore-tab"),  { ssr: false });
+const AITab          = dynamic(() => import("./tabs/ai-tab"),       { ssr: false });
+const DoGoodTab      = dynamic(() => import("./tabs/do-good-tab"),  { ssr: false });
+const ShortlistTab   = dynamic(() => import("./tabs/shortlist-tab"),{ ssr: false });
+const ProfileTab     = dynamic(() => import("./tabs/profile-tab"),  { ssr: false });
+const EmergencyHub   = dynamic(() => import("./emergency-hub"),     { ssr: false });
+const RentShield     = dynamic(() => import("./rentshield"),        { ssr: false });
+const Footer         = dynamic(() => import("./footer"),            { ssr: false });
+const BusinessSubmission = dynamic(() => import("./business-submission"), { ssr: false });
 
 export default function MainApp() {
   const { activeTab, setActiveTab, activeLanguage, showEmergency, setShowEmergency, setCurrentPage, setHasOnboarded } = useAppStore();
@@ -84,7 +88,7 @@ export default function MainApp() {
                       <item.icon className="h-5 w-5 shrink-0" strokeWidth={activeTab === item.id ? 2.3 : 2} />
                     ) : (
                       <Image
-                        src="/askonnect-avatar.png"
+                        src="/askonnect-avatar.webp"
                         alt=""
                         width={20}
                         height={20}
@@ -188,7 +192,7 @@ export default function MainApp() {
                       <item.icon className="h-5 w-5 shrink-0" strokeWidth={activeTab === item.id ? 2.3 : 2} />
                     ) : (
                       <Image
-                        src="/askonnect-avatar.png"
+                        src="/askonnect-avatar.webp"
                         alt=""
                         width={20}
                         height={20}
@@ -288,7 +292,7 @@ export default function MainApp() {
                 {active && item.highlight ? (
                   <div className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-[#E1251B] text-white shadow-md shadow-red-700/30">
                     <Image
-                      src="/askonnect-avatar.png"
+                      src="/askonnect-avatar.webp"
                       alt=""
                       width={22}
                       height={22}
@@ -302,7 +306,7 @@ export default function MainApp() {
                       <item.icon className="h-6 w-6 shrink-0" strokeWidth={2.3} />
                     ) : (
                       <Image
-                        src="/askonnect-avatar.png"
+                        src="/askonnect-avatar.webp"
                         alt=""
                         width={22}
                         height={22}
@@ -315,7 +319,7 @@ export default function MainApp() {
                   <item.icon className="h-6 w-6 shrink-0" strokeWidth={1.8} />
                 ) : (
                   <Image
-                    src="/askonnect-avatar.png"
+                    src="/askonnect-avatar.webp"
                     alt=""
                     width={22}
                     height={22}

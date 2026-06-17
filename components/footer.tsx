@@ -504,7 +504,7 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
             flows directly into the dark footer with no shadow gap. */}
         <div className="relative w-full overflow-hidden" style={{ height: "clamp(140px, 22vw, 240px)" }}>
           <img
-            src="/calgary-iconic.png"
+            src="/calgary-iconic.webp"
             alt=""
             aria-hidden="true"
             className="absolute inset-x-0 bottom-0 w-full h-full object-contain object-bottom mix-blend-screen opacity-35 dark:opacity-20 pointer-events-none select-none"
@@ -547,9 +547,6 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
                   </div>
                   <span className="text-[11px] font-semibold text-white/70 whitespace-nowrap">Free to use</span>
                 </div>
-              </div>
-            </div>
-          </div>
               </div>
             </div>
           </div>

@@ -433,7 +433,7 @@ function ExtraDetails({ resource, activeLanguage }: { resource: Resource; active
                     <Users className="w-3.5 h-3.5 text-[#1D4ED8]" /> Eligibility
                   </p>
                   <p className="text-xs text-[var(--foreground-muted)] bg-foreground/[0.04] rounded-lg p-2 border border-foreground/[0.06]">
-                    {resource.eligibility[activeLanguage]}
+                    {resource.eligibility[activeLanguage as keyof typeof resource.eligibility]}
                   </p>
                 </div>
               )}

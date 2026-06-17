@@ -10,7 +10,13 @@ import {
   TrendingUp, PanelRightClose, PanelRightOpen, Search, MapPin,
 } from "lucide-react";
 import type { Resource } from "@/lib/types";
-import { CalgaryPulsePanel } from "@/components/calgary-pulse-panel";
+import dynamic from "next/dynamic";
+
+// Lazy-load the 921-line pulse panel — only fetched when visible
+const CalgaryPulsePanel = dynamic(
+  () => import("@/components/calgary-pulse-panel").then(m => ({ default: m.CalgaryPulsePanel })),
+  { ssr: false }
+);
 
 // Popular chat questions shown below the pulse panel
 const popularQuestions = [
@@ -183,7 +189,7 @@ export default function AITab() {
                     className="flex items-center gap-3 mb-7 md:mb-8"
                   >
                     <Image
-                      src="/askonnect-avatar.png"
+                      src="/askonnect-avatar.webp"
                       alt="Askonnect"
                       width={48}
                       height={48}
@@ -251,7 +257,7 @@ export default function AITab() {
                             <User className="h-5 w-5 text-white" />
                           ) : (
                             <Image
-                              src="/askonnect-avatar.png"
+                              src="/askonnect-avatar.webp"
                               alt="Askonnect"
                               width={44}
                               height={44}
@@ -328,7 +334,7 @@ export default function AITab() {
                     >
                       <div className="flex h-10 w-10 md:h-11 md:w-11 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl md:rounded-2xl">
                         <Image
-                          src="/askonnect-avatar.png"
+                          src="/askonnect-avatar.webp"
                           alt="Askonnect"
                           width={44}
                           height={44}

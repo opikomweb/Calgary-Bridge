@@ -24,7 +24,7 @@ export function CalgaryAnimatedBackground() {
           mix-blend-screen = pure black becomes transparent, white outlines show. */}
       <div className="absolute inset-x-0 bottom-0 h-[45vh] min-h-[240px] max-h-[380px]">
         <Image
-          src="/calgary-iconic.png"
+          src="/calgary-iconic.webp"
           alt=""
           fill
           priority
