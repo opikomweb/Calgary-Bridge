@@ -509,15 +509,15 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
           <div className="absolute inset-x-0 -top-16 h-32 bg-gradient-to-b from-transparent via-[#0b1d33]/50 to-[#0b1d33] pointer-events-none" />
         </div>
 
-        {/* Footer Background - Light gradient in day mode, transparent in dark mode */}
-        <div className="bg-gradient-to-b from-white/5 to-transparent dark:from-transparent dark:to-transparent relative overflow-hidden">
+        {/* Footer Background - solid dark base in both modes */}
+        <div className="bg-[#0b1d33] relative overflow-hidden">
           {/* Subtle Grid Pattern — hidden in dark mode */}
           <div className="absolute inset-0 opacity-[0.02] dark:opacity-0" style={{
             backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
             backgroundSize: '40px 40px'
           }} />
 
-          <div className="relative border-b border-white/[0.04] py-4 md:py-5 px-4 md:px-8">
+          <div className="relative border-b border-white/[0.04] py-4 md:py-5 px-4 md:px-8 bg-[#0b1d33]">
             <div className="max-w-[1200px] mx-auto">
               {/* Mobile: 2x2 grid | Desktop: single row flex */}
               <div className="grid grid-cols-2 md:flex md:items-center md:justify-center gap-4 md:gap-8">
