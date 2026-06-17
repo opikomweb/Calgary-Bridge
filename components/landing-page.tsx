@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { CalgaryConnectLogo } from "@/components/calgary-connect-logo";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { useAppStore } from "@/lib/store";
 import { useRef, useState, useEffect } from "react";
 import Footer from "@/components/footer";
@@ -178,7 +179,7 @@ export default function LandingPage() {
         className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
           scrolled
             ? "bg-[#0d2044]/80 backdrop-blur-2xl border-b border-white/[0.08] shadow-lg shadow-black/20"
-            : "bg-transparent border-b border-transparent"
+            : "bg-white/5 md:bg-transparent backdrop-blur-md md:backdrop-blur-none border-b border-white/10 md:border-transparent md:shadow-none shadow-sm shadow-black/10"
         }`}
       >
         <div className="max-w-[1400px] mx-auto px-5 md:px-8">
@@ -258,17 +259,13 @@ export default function LandingPage() {
                   height={28}
                   className="w-7 h-7 rounded-full ring-1 ring-white/25 flex-shrink-0"
                 />
-                Askonnect
-              </button>
+                  Askonnect
+                </button>
 
-              <button
-                onClick={() => enterApp("do-good")}
-                className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wide text-white/90 hover:text-white hover:bg-white/[0.1] drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)] transition-all"
-              >
-                <HandHeart className="w-4 h-4 text-[#EF4444]" />
-                Do Good
-              </button>
-            </nav>
+                <div className="border-t border-white/[0.05] mt-2 pt-2 flex items-center gap-2">
+                  <ThemeToggle className="flex-1" />
+                </div>
+              </nav>
 
             {/* CTA + mobile toggle */}
             <div className="flex items-center gap-2">
@@ -433,9 +430,10 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.45, duration: 0.7 }}
-            className="text-base md:text-xl lg:text-2xl font-medium text-white/90 leading-relaxed max-w-3xl mx-auto mb-10 md:mb-14 text-pretty drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]"
+            className="text-sm md:text-xl lg:text-2xl font-medium text-white/90 leading-relaxed max-w-3xl mx-auto mb-10 md:mb-14 text-pretty drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]"
           >
-            Housing, jobs, tenant support, local life, businesses, events, trusted services, and AI guidance—all intelligently connected.
+            <span className="hidden md:inline">Housing, jobs, tenant support, local life, businesses, events, trusted services, and AI guidance—all intelligently connected.</span>
+            <span className="md:hidden">Essential services. One place.</span>
           </motion.p>
 
           {/* Functional search */}

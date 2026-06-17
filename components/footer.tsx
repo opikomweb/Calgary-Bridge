@@ -509,40 +509,40 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
           <div className="absolute inset-x-0 -top-16 h-32 bg-gradient-to-b from-transparent via-[#0b1d33]/50 to-[#0b1d33] pointer-events-none" />
         </div>
 
-        {/* Footer Background - Distinctly Different (always a deep navy in both themes) */}
-        <div className="bg-[#0b1d33] relative overflow-hidden">
-          {/* Subtle Grid Pattern */}
-          <div className="absolute inset-0 opacity-[0.02]" style={{
+        {/* Footer Background - Transparent in dark mode to show city skyline */}
+        <div className="bg-gradient-to-b from-[#0b1d33]/95 to-transparent dark:from-transparent dark:to-transparent relative overflow-hidden">
+          {/* Subtle Grid Pattern — hidden in dark mode */}
+          <div className="absolute inset-0 opacity-[0.02] dark:opacity-0" style={{
             backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
             backgroundSize: '40px 40px'
           }} />
 
-          <div className="relative border-b border-white/[0.04] py-4 md:py-5 px-5 md:px-8">
+          <div className="relative border-b border-white/[0.04] py-3 md:py-5 px-5 md:px-8">
             <div className="max-w-[1200px] mx-auto">
-              <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8">
+              <div className="flex flex-wrap items-center justify-center gap-2 md:gap-8 md:gap-y-3">
                 <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-[#1D4ED8]/15 flex items-center justify-center">
-                    <Shield className="w-3.5 h-3.5 text-[#1D4ED8]" />
+                  <div className="w-6 h-6 md:w-7 md:h-7 rounded-lg bg-[#1D4ED8]/15 flex items-center justify-center flex-shrink-0">
+                    <Shield className="w-3 h-3 md:w-3.5 md:h-3.5 text-[#1D4ED8]" />
                   </div>
-                  <span className="text-xs font-semibold text-white/70">Verified</span>
+                  <span className="text-xs md:text-xs font-semibold text-white/70 whitespace-nowrap">Verified</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-[#1D4ED8]/15 flex items-center justify-center">
-                    <FileText className="w-3.5 h-3.5 text-[#1D4ED8]" />
+                  <div className="w-6 h-6 md:w-7 md:h-7 rounded-lg bg-[#1D4ED8]/15 flex items-center justify-center flex-shrink-0">
+                    <FileText className="w-3 h-3 md:w-3.5 md:h-3.5 text-[#1D4ED8]" />
                   </div>
-                  <span className="text-xs font-semibold text-white/70">Updated monthly</span>
+                  <span className="text-xs md:text-xs font-semibold text-white/70 whitespace-nowrap">Updated monthly</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-[#E1251B]/15 flex items-center justify-center">
-                    <Users className="w-3.5 h-3.5 text-[#E1251B]" />
+                  <div className="w-6 h-6 md:w-7 md:h-7 rounded-lg bg-[#E1251B]/15 flex items-center justify-center flex-shrink-0">
+                    <Users className="w-3 h-3 md:w-3.5 md:h-3.5 text-[#E1251B]" />
                   </div>
-                  <span className="text-xs font-semibold text-white/70">Community-driven</span>
+                  <span className="text-xs md:text-xs font-semibold text-white/70 whitespace-nowrap">Community-driven</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-[#E1251B]/15 flex items-center justify-center">
-                    <Heart className="w-3.5 h-3.5 text-[#E1251B]" />
+                  <div className="w-6 h-6 md:w-7 md:h-7 rounded-lg bg-[#E1251B]/15 flex items-center justify-center flex-shrink-0">
+                    <Heart className="w-3 h-3 md:w-3.5 md:h-3.5 text-[#E1251B]" />
                   </div>
-                  <span className="text-xs font-semibold text-white/70">Free to use</span>
+                  <span className="text-xs md:text-xs font-semibold text-white/70 whitespace-nowrap">Free to use</span>
                 </div>
               </div>
             </div>
