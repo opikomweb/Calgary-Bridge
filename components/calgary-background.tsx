@@ -24,23 +24,22 @@ export function CalgaryAnimatedBackground() {
         style={{ background: "radial-gradient(ellipse, rgba(59,130,246,0.08) 0%, transparent 70%)" }}
       />
 
-      {/* Premium Calgary skyline silhouette, anchored to the bottom edge.
-          Using object-contain + bottom anchor so the full skyline — including
-          the Calgary Tower's observation deck and antenna — is always fully
-          visible and never clipped. The container is taller to give the tower
-          room, and max-h is removed so it can breathe on large screens.
-          Day mode: soft glow and slightly visible edges, no white overlay.
-          Dark mode: brighter with luminous blue/white edges for visibility. */}
-      <div className="absolute inset-x-0 bottom-0 h-[52vh] min-h-[320px]">
+      {/* Calgary iconic line-art, anchored to the bottom edge.
+          The source image has a pure black background with white outlines.
+          mix-blend-screen causes the black to become fully transparent, leaving
+          only the white line-art visible — no white block artifact in any mode.
+          Day mode: low opacity so lines are a subtle watermark.
+          Dark mode: higher opacity + soft blue glow for a luminous feel. */}
+      <div className="absolute inset-x-0 bottom-0 h-[45vh] min-h-[260px]">
         <Image
-          src="/calgary-skyline-silhouette.png"
+          src="/calgary-iconic.png"
           alt=""
           fill
           priority
           sizes="100vw"
-          className="object-contain object-bottom opacity-60 dark:opacity-30 mix-blend-screen dark:mix-blend-screen"
+          className="object-contain object-bottom mix-blend-screen opacity-[0.12] dark:opacity-[0.28]"
           style={{
-            filter: 'drop-shadow(0 2px 8px rgba(255,255,255,0.1)) drop-shadow(0 0 12px rgba(125,211,252,0.15))'
+            filter: 'drop-shadow(0 0 10px rgba(147,210,255,0.18)) drop-shadow(0 0 2px rgba(255,255,255,0.12))'
           }}
         />
       </div>
