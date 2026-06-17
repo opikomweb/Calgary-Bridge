@@ -1,11 +1,17 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, Suspense, lazy } from "react";
 import { useAppStore } from "@/lib/store";
 import { languageNames, roleLabels } from "@/lib/data";
 import { LANGUAGES } from "@/lib/languages";
 import { useAuth } from "@/components/auth-provider";
 import { motion, AnimatePresence } from "framer-motion";
+import dynamic from "next/dynamic";
+
+const CalgaryPulsePanel = dynamic(
+  () => import("@/components/calgary-pulse-panel").then(m => ({ default: m.CalgaryPulsePanel })),
+  { ssr: false }
+);
 import {
   User,
   ChevronDown,
@@ -22,6 +28,7 @@ import {
   Phone,
   Trash2,
   Globe,
+  TrendingUp,
 } from "lucide-react";
 import type { Language, UserRole } from "@/lib/types";
 
@@ -65,7 +72,7 @@ export default function ProfileTab() {
   }, []);
 
   return (
-    <div className="min-h-screen pb-24 lg:pb-10">
+    <div className="pb-6 lg:pb-8">
       {/* ── Compact Profile Header ── */}
       <div className="border-b border-[var(--border)] bg-[var(--background)] px-4 md:px-8 py-4 md:py-6 max-w-5xl">
         <motion.div
@@ -150,7 +157,7 @@ export default function ProfileTab() {
       <div className="px-4 md:px-8 py-5 md:py-8 max-w-5xl">
         <div className="grid lg:grid-cols-2 gap-5 md:gap-8">
           {/* Left Column */}
-          <div className="space-y-5 md:space-y-8">
+          <div className="space-y-5 md:space-y-6">
 
             {/* I am a... — single dropdown */}
             <Section icon={<User className="h-4 w-4 text-[#1D4ED8]" />} title="I am a..." delay={0.05}>
@@ -171,6 +178,15 @@ export default function ProfileTab() {
                 <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--foreground-muted)]" />
               </div>
             </Section>
+
+            {/* Calgary Pulse — fills left column on desktop */}
+            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+              <div className="flex items-center gap-2 mb-3">
+                <TrendingUp className="h-4 w-4 text-[#1D4ED8]" />
+                <h2 className="text-sm font-bold text-[var(--foreground)]">Calgary Pulse</h2>
+              </div>
+              <CalgaryPulsePanel />
+            </motion.div>
           </div>
 
           {/* Right Column */}
