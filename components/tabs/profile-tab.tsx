@@ -154,12 +154,20 @@ export default function ProfileTab() {
       </div>
 
       {/* ── Content ── */}
+      {/*
+        Grid layout:
+          Desktop (lg): 2 columns, 2 rows
+            col-1 row-1 → "I am a..."
+            col-2 row-1+2 → Settings + Account  (spans both rows)
+            col-1 row-2 → Calgary Pulse
+          Mobile (single col, DOM order):
+            1. I am a...   2. Settings + Account   3. Calgary Pulse (last)
+      */}
       <div className="px-4 md:px-8 py-5 md:py-8 max-w-5xl">
-        <div className="grid lg:grid-cols-2 gap-5 md:gap-8">
-          {/* Left Column */}
-          <div className="space-y-5 md:space-y-6">
+        <div className="grid lg:grid-cols-2 lg:grid-rows-[auto_1fr] gap-5 md:gap-8 items-start">
 
-            {/* I am a... — single dropdown */}
+          {/* ── I am a... (col-1 row-1 on desktop, first on mobile) ── */}
+          <div className="lg:col-start-1 lg:row-start-1">
             <Section icon={<User className="h-4 w-4 text-[#1D4ED8]" />} title="I am a..." delay={0.05}>
               <div className="relative">
                 <select
@@ -178,19 +186,10 @@ export default function ProfileTab() {
                 <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--foreground-muted)]" />
               </div>
             </Section>
-
-            {/* Calgary Pulse — fills left column on desktop */}
-            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
-              <div className="flex items-center gap-2 mb-3">
-                <TrendingUp className="h-4 w-4 text-[#1D4ED8]" />
-                <h2 className="text-sm font-bold text-[var(--foreground)]">Calgary Pulse</h2>
-              </div>
-              <CalgaryPulsePanel />
-            </motion.div>
           </div>
 
-          {/* Right Column */}
-          <div className="space-y-5 md:space-y-8">
+          {/* ── Settings + Account (col-2 spans both rows on desktop, second on mobile) ── */}
+          <div className="lg:col-start-2 lg:row-start-1 lg:row-span-2 space-y-5 md:space-y-8">
             {/* Settings */}
             <Section icon={<Settings className="h-4 w-4 text-[#1D4ED8]" />} title="Settings" delay={0.1}>
               <div className="bg-[var(--card)] border border-[var(--border)] rounded-xl overflow-hidden divide-y divide-[var(--border)]">
@@ -327,6 +326,21 @@ export default function ProfileTab() {
               </p>
             </div>
           </div>
+
+          {/* ── Calgary Pulse (col-1 row-2 on desktop, LAST on mobile) ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="lg:col-start-1 lg:row-start-2"
+          >
+            <div className="flex items-center gap-2 mb-3">
+              <TrendingUp className="h-4 w-4 text-[#1D4ED8]" />
+              <h2 className="text-sm font-bold text-[var(--foreground)]">Calgary Pulse</h2>
+            </div>
+            <CalgaryPulsePanel />
+          </motion.div>
+
         </div>
       </div>
     </div>
