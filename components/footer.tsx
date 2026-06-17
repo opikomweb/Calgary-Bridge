@@ -517,32 +517,33 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
             backgroundSize: '40px 40px'
           }} />
 
-          <div className="relative border-b border-white/[0.04] py-3 md:py-5 px-5 md:px-8">
+          <div className="relative border-b border-white/[0.04] py-4 md:py-5 px-4 md:px-8">
             <div className="max-w-[1200px] mx-auto">
-              <div className="flex flex-wrap items-center justify-center gap-2 md:gap-8 md:gap-y-3">
-                <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 md:w-7 md:h-7 rounded-lg bg-[#1D4ED8]/15 flex items-center justify-center flex-shrink-0">
-                    <Shield className="w-3 h-3 md:w-3.5 md:h-3.5 text-[#1D4ED8]" />
+              {/* Mobile: 2x2 grid | Desktop: single row flex */}
+              <div className="grid grid-cols-2 md:flex md:items-center md:justify-center gap-4 md:gap-8">
+                <div className="flex flex-col items-center text-center gap-1.5">
+                  <div className="w-7 h-7 md:w-7 md:h-7 rounded-lg bg-[#1D4ED8]/15 flex items-center justify-center">
+                    <Shield className="w-3.5 h-3.5 md:w-3.5 md:h-3.5 text-[#1D4ED8]" />
                   </div>
-                  <span className="text-xs md:text-xs font-semibold text-white/70 whitespace-nowrap">Verified</span>
+                  <span className="text-xs md:text-xs font-semibold text-white/70">Verified</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 md:w-7 md:h-7 rounded-lg bg-[#1D4ED8]/15 flex items-center justify-center flex-shrink-0">
-                    <FileText className="w-3 h-3 md:w-3.5 md:h-3.5 text-[#1D4ED8]" />
+                <div className="flex flex-col items-center text-center gap-1.5">
+                  <div className="w-7 h-7 md:w-7 md:h-7 rounded-lg bg-[#1D4ED8]/15 flex items-center justify-center">
+                    <FileText className="w-3.5 h-3.5 md:w-3.5 md:h-3.5 text-[#1D4ED8]" />
                   </div>
-                  <span className="text-xs md:text-xs font-semibold text-white/70 whitespace-nowrap">Updated monthly</span>
+                  <span className="text-xs md:text-xs font-semibold text-white/70">Updated monthly</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 md:w-7 md:h-7 rounded-lg bg-[#E1251B]/15 flex items-center justify-center flex-shrink-0">
-                    <Users className="w-3 h-3 md:w-3.5 md:h-3.5 text-[#E1251B]" />
+                <div className="flex flex-col items-center text-center gap-1.5">
+                  <div className="w-7 h-7 md:w-7 md:h-7 rounded-lg bg-[#E1251B]/15 flex items-center justify-center">
+                    <Users className="w-3.5 h-3.5 md:w-3.5 md:h-3.5 text-[#E1251B]" />
                   </div>
-                  <span className="text-xs md:text-xs font-semibold text-white/70 whitespace-nowrap">Community-driven</span>
+                  <span className="text-xs md:text-xs font-semibold text-white/70">Community-driven</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 md:w-7 md:h-7 rounded-lg bg-[#E1251B]/15 flex items-center justify-center flex-shrink-0">
-                    <Heart className="w-3 h-3 md:w-3.5 md:h-3.5 text-[#E1251B]" />
+                <div className="flex flex-col items-center text-center gap-1.5">
+                  <div className="w-7 h-7 md:w-7 md:h-7 rounded-lg bg-[#E1251B]/15 flex items-center justify-center">
+                    <Heart className="w-3.5 h-3.5 md:w-3.5 md:h-3.5 text-[#E1251B]" />
                   </div>
-                  <span className="text-xs md:text-xs font-semibold text-white/70 whitespace-nowrap">Free to use</span>
+                  <span className="text-xs md:text-xs font-semibold text-white/70">Free to use</span>
                 </div>
               </div>
             </div>
