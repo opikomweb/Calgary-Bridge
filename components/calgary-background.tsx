@@ -29,8 +29,8 @@ export function CalgaryAnimatedBackground() {
           the Calgary Tower's observation deck and antenna — is always fully
           visible and never clipped. The container is taller to give the tower
           room, and max-h is removed so it can breathe on large screens.
-          Day mode: mix-blend-multiply drops the white backdrop.
-          Dark mode: low opacity tint, normal blend. */}
+          Day mode: soft glow and slightly visible edges, no white overlay.
+          Dark mode: brighter with luminous blue/white edges for visibility. */}
       <div className="absolute inset-x-0 bottom-0 h-[52vh] min-h-[320px]">
         <Image
           src="/calgary-skyline-silhouette.png"
@@ -38,7 +38,10 @@ export function CalgaryAnimatedBackground() {
           fill
           priority
           sizes="100vw"
-          className="object-contain object-bottom opacity-85 mix-blend-multiply dark:opacity-12 dark:mix-blend-normal"
+          className="object-contain object-bottom opacity-60 dark:opacity-30 mix-blend-screen dark:mix-blend-screen"
+          style={{
+            filter: 'drop-shadow(0 2px 8px rgba(255,255,255,0.1)) drop-shadow(0 0 12px rgba(125,211,252,0.15))'
+          }}
         />
       </div>
     </div>
