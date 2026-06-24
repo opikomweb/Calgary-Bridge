@@ -11,12 +11,87 @@ import { CalgaryConnectLogo } from "@/components/calgary-connect-logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageToggle } from "@/components/language-toggle";
 import { useAppStore } from "@/lib/store";
+import { useTranslations, registerStrings } from "@/lib/translation-context";
 import { useRef, useState, useEffect } from "react";
 import Footer from "@/components/footer";
 import type { ResourceCategory } from "@/lib/types";
 
+// Register all landing page strings for translation
+registerStrings(
+  "Calgary's civic intelligence platform",
+  "Everything Calgary. One Place.",
+  "Essential services. One place.",
+  "Housing, jobs, tenant support, local life, businesses, events, trusted services, and AI guidance—all intelligently connected.",
+  "My landlord won't fix the heat...",
+  "I need childcare",
+  "Jobs hiring this week",
+  "Cheap family activities",
+  "How do I get a family doctor?",
+  "Search",
+  "Explore Calgary",
+  "Askonnect — Ask me.",
+  "Open App",
+  // Menu groups
+  "Essentials",
+  "People & Support",
+  "Community & Life",
+  // Essentials items
+  "Housing & Rent",
+  "Rentals, subsidies & tenant help",
+  "Jobs & Career",
+  "Hiring, resumes & training",
+  "Healthcare",
+  "Clinics, doctors & coverage",
+  "Food Support",
+  "Food banks & free meals",
+  "Emergency Help",
+  "Urgent crisis support",
+  // People & Support items
+  "Newcomer Services",
+  "Settlement & language help",
+  "Family & Childcare",
+  "Childcare & parenting",
+  "Senior Services",
+  "Programs for older adults",
+  "Mental Health",
+  "Counselling & crisis lines",
+  "Disability Support",
+  "Accessible services",
+  // Community & Life items
+  "Education",
+  "Schools, classes & upgrading",
+  "Legal Help",
+  "Free legal clinics & rights",
+  "Transit",
+  "Getting around Calgary",
+  "Tourists & Visitors",
+  "Sights, hotels, dining & tours",
+  "Small Business",
+  "Start & grow a business",
+  "Volunteering",
+  "Give back locally",
+);
+
 export default function LandingPage() {
   const { setCurrentPage, setActiveTab, setHasOnboarded, setSearchQuery, setActiveCategory } = useAppStore();
+  const tx = useTranslations({
+    eyebrow: "Calgary's civic intelligence platform",
+    headline: "Everything Calgary. One Place.",
+    sublineDesktop: "Housing, jobs, tenant support, local life, businesses, events, trusted services, and AI guidance—all intelligently connected.",
+    sublineMobile: "Essential services. One place.",
+    placeholder: "My landlord won't fix the heat...",
+    query1: "I need childcare",
+    query2: "Jobs hiring this week",
+    query3: "Cheap family activities",
+    query4: "How do I get a family doctor?",
+    search: "Search",
+    exploreCalgary: "Explore Calgary",
+    askonnect: "Askonnect — Ask me.",
+    openApp: "Open App",
+    essentials: "Essentials",
+    peopleSupport: "People & Support",
+    communityLife: "Community & Life",
+  });
   const heroRef = useRef<HTMLDivElement>(null);
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -275,7 +350,7 @@ export default function LandingPage() {
                 onClick={() => enterApp("home")}
                 className="hidden sm:flex items-center gap-2 btn-primary px-5 py-2.5 rounded-xl text-sm font-semibold"
               >
-                Open App
+                {tx.openApp}
                 <ArrowRight className="w-4 h-4" />
               </button>
               <button
@@ -362,7 +437,7 @@ export default function LandingPage() {
                   }}
                   className="mt-2 btn-primary px-5 py-3 rounded-xl text-base font-semibold flex items-center justify-center gap-2"
                 >
-                  Open App
+                  {tx.openApp}
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </nav>
@@ -413,7 +488,7 @@ export default function LandingPage() {
           >
             <div className="w-2 h-2 rounded-full bg-[#38BDF8] animate-pulse" />
             <span className="text-xs md:text-sm font-medium text-[#38BDF8]">
-              Calgary&apos;s civic intelligence platform
+              {tx.eyebrow}
             </span>
           </motion.div>
 
@@ -424,9 +499,9 @@ export default function LandingPage() {
             transition={{ delay: 0.3, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="text-[clamp(32px,7vw,80px)] font-bold tracking-[-0.03em] leading-[1.02] mb-6 md:mb-8 text-balance"
           >
-            Everything <span className="text-[#E1251B]">Calgary</span>.
+            {tx.headline.split(". ")[0]}<span className="text-[#E1251B]"> Calgary</span>.
             <br />
-            <span className="text-gradient-blue">One Place.</span>
+            <span className="text-gradient-blue">{tx.headline.split(". ")[1]}</span>
           </motion.h1>
 
           {/* Subheadline */}
@@ -436,8 +511,8 @@ export default function LandingPage() {
             transition={{ delay: 0.45, duration: 0.7 }}
             className="text-sm md:text-xl lg:text-2xl font-medium text-white/90 leading-relaxed max-w-3xl mx-auto mb-10 md:mb-14 text-pretty drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]"
           >
-            <span className="hidden md:inline">Housing, jobs, tenant support, local life, businesses, events, trusted services, and AI guidance—all intelligently connected.</span>
-            <span className="md:hidden">Essential services. One place.</span>
+            <span className="hidden md:inline">{tx.sublineDesktop}</span>
+            <span className="md:hidden">{tx.sublineMobile}</span>
           </motion.p>
 
           {/* Functional search */}
@@ -456,7 +531,7 @@ export default function LandingPage() {
                 onKeyDown={(e) => {
                   if (e.key === "Enter") handleSearchSubmit();
                 }}
-                placeholder="My landlord won't fix the heat..."
+                placeholder={tx.placeholder}
                 aria-label="Search Calgary resources"
                 className="w-full h-16 md:h-20 bg-white/[0.16] hover:bg-white/[0.2] focus:bg-white/[0.22] backdrop-blur-xl border border-white/30 hover:border-white/40 focus:border-[#38BDF8]/70 rounded-2xl md:rounded-3xl text-base md:text-xl font-medium text-white placeholder:text-white/70 pl-14 md:pl-20 pr-28 md:pr-32 outline-none transition-all duration-300 shadow-[0_8px_30px_-6px_rgba(0,0,0,0.45)] focus:shadow-[0_0_0_4px_rgba(56,189,248,0.2),0_25px_50px_-12px_rgba(0,0,0,0.6)]"
               />
@@ -464,7 +539,7 @@ export default function LandingPage() {
                 onClick={handleSearchSubmit}
                 className="absolute right-2 md:right-3 top-1/2 -translate-y-1/2 btn-primary px-4 md:px-6 h-12 md:h-14 rounded-xl md:rounded-2xl flex items-center gap-2 text-sm md:text-base font-semibold"
               >
-                <span className="hidden sm:inline">Search</span>
+                <span className="hidden sm:inline">{tx.search}</span>
                 <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
               </button>
             </div>
@@ -477,7 +552,7 @@ export default function LandingPage() {
             transition={{ delay: 0.75 }}
             className="flex flex-wrap justify-center gap-2 md:gap-3 mb-10 md:mb-14"
           >
-            {["I need childcare", "Jobs hiring this week", "Cheap family activities", "How do I get a family doctor?"].map(
+            {[tx.query1, tx.query2, tx.query3, tx.query4].map(
               (q) => (
                 <button
                   key={q}
@@ -506,7 +581,7 @@ export default function LandingPage() {
               onClick={handleExplore}
               className="btn-primary w-full sm:w-auto px-8 md:px-10 py-4 md:py-5 rounded-2xl flex items-center justify-center gap-3 text-base md:text-lg font-semibold"
             >
-              Explore Calgary
+              {tx.exploreCalgary}
               <ArrowRight className="w-5 h-5" />
             </motion.button>
             <motion.button
@@ -522,7 +597,7 @@ export default function LandingPage() {
                   height={28}
                   className="w-7 h-7 rounded-full ring-1 ring-white/30 flex-shrink-0"
                 />
-                Askonnect — Ask me.
+                {tx.askonnect}
             </motion.button>
           </motion.div>
         </motion.div>

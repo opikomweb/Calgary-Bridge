@@ -16,12 +16,29 @@ import { Flag } from "@/components/flag";
 export function LanguageToggle() {
   const { activeLanguage, setActiveLanguage } = useAppStore();
   const [open, setOpen] = useState(false);
+  const [dropdownAbove, setDropdownAbove] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   const current = LANGUAGES.find((l) => l.code === activeLanguage) ?? LANGUAGES[0];
 
   useEffect(() => {
     if (!open) return;
+    
+    // Check if dropdown should open above to stay in viewport
+    const checkPosition = () => {
+      if (ref.current) {
+        const rect = ref.current.getBoundingClientRect();
+        // If less than 300px from bottom, open upward
+        const shouldBeAbove = window.innerHeight - rect.bottom < 300;
+        setDropdownAbove(shouldBeAbove);
+      }
+    };
+    
+    // Initial check and on scroll/resize
+    checkPosition();
+    window.addEventListener("scroll", checkPosition, { passive: true });
+    window.addEventListener("resize", checkPosition, { passive: true });
+    
     function onClickOutside(e: MouseEvent) {
       if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
     }
@@ -33,6 +50,8 @@ export function LanguageToggle() {
     return () => {
       document.removeEventListener("mousedown", onClickOutside);
       document.removeEventListener("keydown", onKey);
+      window.removeEventListener("scroll", checkPosition);
+      window.removeEventListener("resize", checkPosition);
     };
   }, [open]);
 
@@ -82,12 +101,14 @@ export function LanguageToggle() {
         </svg>
       </button>
 
-      {/* ── Dropdown — anchored below trigger, compact width, scrollable ── */}
+      {/* ── Dropdown — anchored below/above trigger, compact width, scrollable ── */}
       {open && (
         <div
           role="listbox"
           aria-label="Select language"
-          className="absolute right-0 top-full mt-0.5 z-[300] bg-background border border-foreground/[0.14] shadow-xl shadow-black/15 dark:shadow-black/50 overflow-y-auto"
+          className={`absolute right-0 z-[300] bg-background border border-foreground/[0.14] shadow-xl shadow-black/15 dark:shadow-black/50 overflow-y-auto ${
+            dropdownAbove ? "bottom-full mb-0.5" : "top-full mt-0.5"
+          }`}
           style={{ borderRadius: 0, minWidth: 108, maxHeight: "calc(100svh - 80px)" }}
         >
           {LANGUAGES.map((lang) => {
