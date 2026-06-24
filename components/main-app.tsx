@@ -72,13 +72,13 @@ export default function MainApp() {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="flex flex-1 flex-col px-4 pt-3">
-            <ul role="list" className="flex flex-1 flex-col gap-y-1">
+          <nav className="flex flex-1 flex-col px-5 pt-4">
+            <ul role="list" className="flex flex-col gap-y-1.5">
               {navItems.map((item) => (
                 <li key={item.id}>
                   <button
                     onClick={() => setActiveTab(item.id)}
-                    className={`group flex w-full items-center gap-x-3 rounded-xl px-4 py-3 text-[15px] font-semibold tracking-tight transition-all duration-200 ${
+                    className={`group flex w-full items-center gap-x-4 rounded-xl px-5 py-4 text-[17px] font-semibold tracking-tight transition-all duration-200 ${
                       activeTab === item.id
                         ? item.highlight
                           ? "bg-[#E1251B] text-white shadow-lg shadow-red-700/25"
@@ -87,14 +87,14 @@ export default function MainApp() {
                     }`}
                   >
                     {item.icon ? (
-                      <item.icon className="h-5 w-5 shrink-0" strokeWidth={activeTab === item.id ? 2.3 : 2} />
+                      <item.icon className="h-6 w-6 shrink-0" strokeWidth={activeTab === item.id ? 2.3 : 2} />
                     ) : (
                       <Image
                         src="/askonnect-avatar.webp"
                         alt=""
-                        width={20}
-                        height={20}
-                        className="h-5 w-5 shrink-0 object-contain"
+                        width={24}
+                        height={24}
+                        className="h-6 w-6 shrink-0 object-contain"
                       />
                     )}
                     <span className="truncate">{item.label}</span>
@@ -103,24 +103,24 @@ export default function MainApp() {
               ))}
             </ul>
 
-            {/* Sidebar Action Buttons */}
-            <div className="mt-auto space-y-2 py-5 border-t border-foreground/[0.06]">
-              <div className="flex items-center justify-between rounded-xl bg-foreground/[0.03] border border-foreground/[0.06] px-4 py-3">
-                <span className="text-[15px] font-semibold text-foreground/80">Appearance</span>
+            {/* Sidebar Action Buttons — pinned to bottom */}
+            <div className="mt-auto space-y-2.5 py-5 border-t border-foreground/[0.06]">
+              <div className="flex items-center justify-between rounded-xl bg-foreground/[0.03] border border-foreground/[0.06] px-5 py-4">
+                <span className="text-[17px] font-semibold text-foreground/80">Appearance</span>
                 <ThemeToggle />
               </div>
               <button
                 onClick={() => setShowRentShield(true)}
-                className="flex w-full items-center gap-3 rounded-xl bg-foreground/[0.03] border border-foreground/[0.06] px-4 py-3 text-[15px] font-bold text-foreground/80 transition-all duration-200 hover:bg-foreground/[0.07] hover:text-foreground"
+                className="flex w-full items-center gap-4 rounded-xl bg-foreground/[0.03] border border-foreground/[0.06] px-5 py-4 text-[17px] font-bold text-foreground/80 transition-all duration-200 hover:bg-foreground/[0.07] hover:text-foreground"
               >
-                <Shield className="h-5 w-5 text-[#1D4ED8] dark:text-[#38BDF8] shrink-0" />
+                <Shield className="h-6 w-6 text-[#1D4ED8] dark:text-[#38BDF8] shrink-0" />
                 RentShield
               </button>
               <button
                 onClick={() => setShowEmergency(true)}
-                className="flex w-full items-center gap-3 rounded-xl bg-[#E1251B] px-4 py-3 text-[15px] font-bold text-white transition-all duration-200 hover:bg-[#B91C1C] hover:shadow-lg hover:shadow-red-700/30"
+                className="flex w-full items-center gap-4 rounded-xl bg-[#E1251B] px-5 py-4 text-[17px] font-bold text-white transition-all duration-200 hover:bg-[#B91C1C] hover:shadow-lg hover:shadow-red-700/30"
               >
-                <AlertTriangle className="h-5 w-5 shrink-0" />
+                <AlertTriangle className="h-6 w-6 shrink-0" />
                 Emergency Hub
               </button>
             </div>
