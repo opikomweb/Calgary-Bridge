@@ -45,6 +45,7 @@ registerStrings(
   "Copyright",
   "Important Disclaimer",
   "Calgary Konnect is an independent platform and is not affiliated with, endorsed by, or connected to the City of Calgary, the Government of Alberta, or any official government body. Information provided is for general reference only. Always verify details directly with service providers. For emergencies, call 911.",
+  "Verified", "Updated monthly", "Community-driven", "Free to use",
 );
 
 // Modal content for each page
@@ -509,6 +510,10 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
     importantDisclaimer: "Important Disclaimer",
     disclaimerText: "Calgary Konnect is an independent platform and is not affiliated with, endorsed by, or connected to the City of Calgary, the Government of Alberta, or any official government body. Information provided is for general reference only. Always verify details directly with service providers. For emergencies, call 911.",
     footerTagline: "Everything Calgary. One Place.",
+    badgeVerified: "Verified",
+    badgeUpdated: "Updated monthly",
+    badgeCommunity: "Community-driven",
+    badgeFree: "Free to use",
   });
 
   const openModal = (key: string) => setActiveModal(key);
@@ -572,25 +577,25 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
                   <div className="w-7 h-7 rounded-lg bg-[#1D4ED8]/15 flex items-center justify-center">
                     <Shield className="w-3.5 h-3.5 text-[#1D4ED8]" />
                   </div>
-                  <span className="text-[11px] font-semibold text-white/70 whitespace-nowrap">Verified</span>
+                  <span className="text-[11px] font-semibold text-white/70 whitespace-nowrap">{tx.badgeVerified}</span>
                 </div>
                 <div className="flex flex-col items-center text-center gap-1.5">
                   <div className="w-7 h-7 rounded-lg bg-[#1D4ED8]/15 flex items-center justify-center">
                     <FileText className="w-3.5 h-3.5 text-[#1D4ED8]" />
                   </div>
-                  <span className="text-[11px] font-semibold text-white/70 whitespace-nowrap">Updated monthly</span>
+                  <span className="text-[11px] font-semibold text-white/70 whitespace-nowrap">{tx.badgeUpdated}</span>
                 </div>
                 <div className="flex flex-col items-center text-center gap-1.5">
                   <div className="w-7 h-7 rounded-lg bg-[#E1251B]/15 flex items-center justify-center">
                     <Users className="w-3.5 h-3.5 text-[#E1251B]" />
                   </div>
-                  <span className="text-[11px] font-semibold text-white/70 whitespace-nowrap">Community-driven</span>
+                  <span className="text-[11px] font-semibold text-white/70 whitespace-nowrap">{tx.badgeCommunity}</span>
                 </div>
                 <div className="flex flex-col items-center text-center gap-1.5">
                   <div className="w-7 h-7 rounded-lg bg-[#E1251B]/15 flex items-center justify-center">
                     <Heart className="w-3.5 h-3.5 text-[#E1251B]" />
                   </div>
-                  <span className="text-[11px] font-semibold text-white/70 whitespace-nowrap">Free to use</span>
+                  <span className="text-[11px] font-semibold text-white/70 whitespace-nowrap">{tx.badgeFree}</span>
                 </div>
               </div>
             </div>

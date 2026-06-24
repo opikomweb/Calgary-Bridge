@@ -65,6 +65,8 @@ registerStrings(
   "Try adjusting your search or category filter",
   "12 programs", "340+ openings", "24/7 available", "10 organizations",
   "Housing & Rent", "Jobs & Career", "Healthcare", "Newcomer Services",
+  "Search or select a category above",
+  "Type a keyword or tap one of the four categories to browse Calgary resources.",
 );
 
 export default function ExploreTab() {
@@ -105,6 +107,8 @@ export default function ExploreTab() {
     resultFound: "result found",
     resultsFound: "results found",
     tryAdjusting: "Try adjusting your search or category filter",
+    searchOrSelect: "Search or select a category above",
+    typeKeyword: "Type a keyword or tap one of the four categories to browse Calgary resources.",
   });
 
   // Build translated hero categories
@@ -418,10 +422,10 @@ export default function ExploreTab() {
                 <Search className="w-7 h-7 text-[#1D4ED8]/60" />
               </div>
               <p className="text-base font-semibold text-foreground/60 mb-1">
-                Search or select a category above
+                {tx.searchOrSelect}
               </p>
               <p className="text-sm text-foreground/40 max-w-xs leading-relaxed">
-                Type a keyword or tap one of the four categories to browse Calgary resources.
+                {tx.typeKeyword}
               </p>
             </motion.div>
           </div>
