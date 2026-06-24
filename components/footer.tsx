@@ -43,6 +43,8 @@ registerStrings(
   "Volunteer With Us",
   "Contact Us",
   "Copyright",
+  "Important Disclaimer",
+  "Calgary Konnect is an independent platform and is not affiliated with, endorsed by, or connected to the City of Calgary, the Government of Alberta, or any official government body. Information provided is for general reference only. Always verify details directly with service providers. For emergencies, call 911.",
 );
 
 // Modal content for each page
@@ -505,6 +507,7 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
     forBusinesses: "For Businesses",
     community: "Community",
     importantDisclaimer: "Important Disclaimer",
+    disclaimerText: "Calgary Konnect is an independent platform and is not affiliated with, endorsed by, or connected to the City of Calgary, the Government of Alberta, or any official government body. Information provided is for general reference only. Always verify details directly with service providers. For emergencies, call 911.",
     footerTagline: "Everything Calgary. One Place.",
   });
 
@@ -789,17 +792,13 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
                         transition={{ duration: 0.22, ease: "easeInOut" }}
                         className="overflow-hidden text-sm text-white/60 leading-relaxed md:hidden"
                       >
-                        Calgary Konnect is an independent platform and is not affiliated with, endorsed by, or connected to the City of Calgary,
-                        the Government of Alberta, or any official government body. Information provided is for general reference only.
-                        Always verify details directly with service providers. For emergencies, call 911.
+                        {tx.disclaimerText}
                       </motion.p>
                     )}
                   </AnimatePresence>
                   {/* Always visible on md+ */}
                   <p className="hidden md:block mt-1 text-sm text-white/60 leading-relaxed">
-                    Calgary Konnect is an independent platform and is not affiliated with, endorsed by, or connected to the City of Calgary,
-                    the Government of Alberta, or any official government body. Information provided is for general reference only.
-                    Always verify details directly with service providers. For emergencies, call 911.
+                    {tx.disclaimerText}
                   </p>
                 </div>
               </div>
