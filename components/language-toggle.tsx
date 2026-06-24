@@ -64,8 +64,15 @@ export function LanguageToggle() {
           <text x="13.5" y="16" textAnchor="middle" fontSize="6" fill="white" fontWeight="bold" fontFamily="system-ui">A</text>
         </svg>
 
-        {/* Active flag — large enough to see clearly */}
-        <span className="text-[18px] leading-none" aria-hidden="true">{current.flag}</span>
+        {/* Active flag — real image, works on Windows where emoji flags are unsupported */}
+        <img
+          src={`https://flagcdn.com/20x15/${current.countryCode.toLowerCase()}.png`}
+          srcSet={`https://flagcdn.com/40x30/${current.countryCode.toLowerCase()}.png 2x`}
+          width={20}
+          height={15}
+          alt={current.nativeName}
+          className="rounded-[2px] flex-shrink-0"
+        />
 
         {/* 2-char label */}
         <span className="text-[11px] font-bold text-foreground/70 leading-none" translate="no">
@@ -110,10 +117,16 @@ export function LanguageToggle() {
                     : "hover:bg-foreground/[0.05]"
                 }`}
               >
-                {/* Flag emoji — the safe cross-platform way to show the language */}
-                <span className="text-[18px] leading-none flex-shrink-0 w-7 text-center" aria-hidden="true">
-                  {lang.flag}
-                </span>
+                {/* Flag image — real PNG, renders on all platforms including Windows */}
+                <img
+                  src={`https://flagcdn.com/20x15/${lang.countryCode.toLowerCase()}.png`}
+                  srcSet={`https://flagcdn.com/40x30/${lang.countryCode.toLowerCase()}.png 2x`}
+                  width={20}
+                  height={15}
+                  alt=""
+                  aria-hidden="true"
+                  className="rounded-[2px] flex-shrink-0"
+                />
 
                 {/* 2-char label — always ASCII/CJK chars that every font can render */}
                 <span
