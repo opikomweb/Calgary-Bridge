@@ -4,6 +4,22 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Shield, FileText, Calculator, AlertCircle, CheckCircle, ExternalLink, Phone } from "lucide-react";
 import { useAppStore } from "@/lib/store";
+import { useTranslations, registerStrings } from "@/lib/translation-context";
+
+// Register rentshield strings for translation
+registerStrings(
+  "RentShield",
+  "Tenant rights & support",
+  "Understand your rights as a tenant in Alberta. Get quick answers and know what to do.",
+  "Know Your Rights",
+  "Quick guide to tenant rights in Alberta",
+  "Rent Increase Checker",
+  "Check if your rent increase is legal",
+  "Lease Help",
+  "Understand common lease terms",
+  "Need immediate help?",
+  "Calgary Legal Guidance: 403-234-9266",
+);
 
 interface RentShieldProps {
   onClose: () => void;
@@ -14,6 +30,20 @@ type Tool = "rights" | "rent-check" | "lease-help" | null;
 export default function RentShield({ onClose }: RentShieldProps) {
   const [activeTool, setActiveTool] = useState<Tool>(null);
   const { addRentShieldResult } = useAppStore();
+  
+  const tx = useTranslations({
+    title: "RentShield",
+    subtitle: "Tenant rights & support",
+    intro: "Understand your rights as a tenant in Alberta. Get quick answers and know what to do.",
+    rightsTitle: "Know Your Rights",
+    rightsDesc: "Quick guide to tenant rights in Alberta",
+    checkerTitle: "Rent Increase Checker",
+    checkerDesc: "Check if your rent increase is legal",
+    leaseTitle: "Lease Help",
+    leaseDesc: "Understand common lease terms",
+    needHelp: "Need immediate help?",
+    legalGuidance: "Calgary Legal Guidance: 403-234-9266",
+  });
 
   return (
     <motion.div
@@ -38,8 +68,8 @@ export default function RentShield({ onClose }: RentShieldProps) {
               <Shield className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h2 className="text-xl font-bold">RentShield</h2>
-              <p className="text-sm text-[var(--foreground-muted)]">Tenant rights & support</p>
+              <h2 className="text-xl font-bold">{tx.title}</h2>
+              <p className="text-sm text-[var(--foreground-muted)]">{tx.subtitle}</p>
             </div>
           </div>
           <button
@@ -62,39 +92,39 @@ export default function RentShield({ onClose }: RentShieldProps) {
                 className="space-y-4"
               >
                 <p className="text-[var(--foreground-muted)] mb-6">
-                  Understand your rights as a tenant in Alberta. Get quick answers and know what to do.
+                  {tx.intro}
                 </p>
 
                 <ToolCard
                   icon={FileText}
-                  title="Know Your Rights"
-                  description="Quick guide to tenant rights in Alberta"
+                  title={tx.rightsTitle}
+                  description={tx.rightsDesc}
                   onClick={() => setActiveTool("rights")}
                 />
                 <ToolCard
                   icon={Calculator}
-                  title="Rent Increase Checker"
-                  description="Check if your rent increase is legal"
+                  title={tx.checkerTitle}
+                  description={tx.checkerDesc}
                   onClick={() => setActiveTool("rent-check")}
                 />
                 <ToolCard
                   icon={AlertCircle}
-                  title="Lease Help"
-                  description="Understand common lease terms"
+                  title={tx.leaseTitle}
+                  description={tx.leaseDesc}
                   onClick={() => setActiveTool("lease-help")}
                 />
 
                 {/* Emergency Contact */}
                 <div className="mt-6 p-4 rounded-xl bg-[var(--secondary)]/10 border border-[var(--secondary)]/30">
                   <p className="text-sm font-medium text-[var(--secondary)] mb-2">
-                    Need immediate help?
+                    {tx.needHelp}
                   </p>
                   <a
                     href="tel:403-234-9266"
                     className="flex items-center gap-2 text-sm text-white hover:underline"
                   >
                     <Phone className="w-4 h-4" />
-                    Calgary Legal Guidance: 403-234-9266
+                    {tx.legalGuidance}
                   </a>
                 </div>
               </motion.div>
