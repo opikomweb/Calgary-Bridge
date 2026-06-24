@@ -74,10 +74,7 @@ interface ResourceCardProps {
   onClaimBusiness?: (resourceId: string) => void;
 }
 
-/**
- * Resolves a LocalizedString for the active language.
- * Falls back to English when a translation isn't available yet.
- */
+/** Resolves a LocalizedString for the active language, falling back to English. */
 function resolveField(record: LocalizedString, lang: Language): string {
   return record[lang] ?? record.en;
 }
