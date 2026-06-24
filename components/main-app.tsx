@@ -12,7 +12,7 @@ import { NAV_ITEMS } from "./nav-items";
 import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
 import { CalgaryAnimatedBackground } from "./calgary-background";
-import { useTranslationContext } from "@/lib/translation-context";
+import { useTranslationContext, registerStrings, useTranslations } from "@/lib/translation-context";
 
 // Lazy-load every tab — only the active tab's JS is fetched, keeping the
 // initial bundle small and first-paint fast.
@@ -26,6 +26,11 @@ const EmergencyHub   = dynamic(() => import("./emergency-hub"),     { ssr: false
 const RentShield     = dynamic(() => import("./rentshield"),        { ssr: false });
 const Footer         = dynamic(() => import("./footer"),            { ssr: false });
 const BusinessSubmission = dynamic(() => import("./business-submission"), { ssr: false });
+
+// Register navigation item labels for translation
+registerStrings(
+  "Home", "Explore", "Askonnect", "Do Good", "Saved", "Profile",
+);
 
 export default function MainApp() {
   const { activeTab, setActiveTab, activeLanguage, showEmergency, setShowEmergency, setCurrentPage, setHasOnboarded } = useAppStore();
@@ -56,8 +61,39 @@ export default function MainApp() {
   }, [translationLanguage]);
 
   const t = (key: string) => translations[key]?.[translationLanguage] || translations[key]?.en || key;
+  
+  // Get translated nav items
+  const tx = useTranslations({
+    home: "Home",
+    explore: "Explore",
+    askonnect: "Askonnect",
+    doGood: "Do Good",
+    saved: "Saved",
+    profile: "Profile",
+  });
 
-  const navItems = NAV_ITEMS;
+  // Create nav items with translated labels
+  const translatedNavItems = NAV_ITEMS.map((item) => ({
+    ...item,
+    label: 
+      item.id === "home" ? tx.home :
+      item.id === "explore" ? tx.explore :
+      item.id === "ai" ? tx.askonnect :
+      item.id === "do-good" ? tx.doGood :
+      item.id === "shortlist" ? tx.saved :
+      item.id === "profile" ? tx.profile :
+      item.label,
+    shortLabel:
+      item.id === "home" ? tx.home :
+      item.id === "explore" ? tx.explore :
+      item.id === "ai" ? tx.askonnect :
+      item.id === "do-good" ? tx.doGood :
+      item.id === "shortlist" ? tx.saved :
+      item.id === "profile" ? tx.profile :
+      item.shortLabel,
+  }));
+
+  const navItems = translatedNavItems;
 
   return (
     <div className="min-h-screen bg-background relative">
