@@ -201,9 +201,9 @@ export default function ResourceCard({
         onClick={() => setIsExpanded((v) => !v)}
         onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setIsExpanded((v) => !v)}
       >
-        <div className="flex flex-col px-2.5 py-2 min-w-0 gap-1.5">
+        <div className="flex flex-col px-3 md:px-3.5 py-2.5 md:py-3 min-w-0 gap-2">
           {/* Title — localized by the translation hook; skip auto-translate */}
-          <p translate="no" className="notranslate text-xs md:text-sm font-bold text-foreground leading-snug line-clamp-2">
+          <p translate="no" className="notranslate text-sm md:text-base font-bold text-foreground leading-snug line-clamp-2">
             {title}
           </p>
 
@@ -261,8 +261,8 @@ export default function ResourceCard({
               transition={{ duration: 0.2 }}
               className="overflow-hidden"
             >
-              <div className="px-4 pb-4 border-t border-foreground/[0.06] pt-3 space-y-3">
-                <p translate="no" className="notranslate text-xs text-foreground/60 leading-relaxed">
+              <div className="px-4 md:px-5 pb-4 md:pb-5 border-t border-foreground/[0.06] pt-4 md:pt-5 space-y-3 md:space-y-4">
+                <p translate="no" className="notranslate text-sm md:text-base text-foreground/75 leading-relaxed md:leading-loose">
                   {resource.summary?.[activeLanguage] || description}
                 </p>
                 {resource.cost && (
