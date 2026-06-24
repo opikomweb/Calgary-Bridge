@@ -12,6 +12,7 @@ import { NAV_ITEMS } from "./nav-items";
 import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
 import { CalgaryAnimatedBackground } from "./calgary-background";
+import { useTranslationContext } from "@/lib/translation-context";
 
 // Lazy-load every tab — only the active tab's JS is fetched, keeping the
 // initial bundle small and first-paint fast.
@@ -28,10 +29,12 @@ const BusinessSubmission = dynamic(() => import("./business-submission"), { ssr:
 
 export default function MainApp() {
   const { activeTab, setActiveTab, activeLanguage, showEmergency, setShowEmergency, setCurrentPage, setHasOnboarded } = useAppStore();
+  const { language: translationLanguage } = useTranslationContext();
   const [showRentShield, setShowRentShield] = React.useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [showBusinessModal, setShowBusinessModal] = React.useState(false);
   const [businessModalMode, setBusinessModalMode] = React.useState<"submit" | "featured">("submit");
+  const [renderKey, setRenderKey] = React.useState(0);
 
   const goToLanding = () => {
     setMobileMenuOpen(false);
@@ -47,7 +50,12 @@ export default function MainApp() {
     }
   }, [activeTab]);
 
-  const t = (key: string) => translations[key]?.[activeLanguage] || translations[key]?.en || key;
+  // Force re-render of all content when language changes to ensure translations propagate
+  React.useEffect(() => {
+    setRenderKey((prev) => prev + 1);
+  }, [translationLanguage]);
+
+  const t = (key: string) => translations[key]?.[translationLanguage] || translations[key]?.en || key;
 
   const navItems = NAV_ITEMS;
 
@@ -253,17 +261,18 @@ export default function MainApp() {
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
           >
-            {activeTab === "home" && <HomeTab />}
-            {activeTab === "explore" && <ExploreTab />}
-              {activeTab === "ai" && <AITab />}
-              {activeTab === "do-good" && <DoGoodTab />}
-              {activeTab === "shortlist" && <ShortlistTab />}
-            {activeTab === "profile" && <ProfileTab />}
+            {activeTab === "home" && <HomeTab key={`home-${renderKey}`} />}
+            {activeTab === "explore" && <ExploreTab key={`explore-${renderKey}`} />}
+              {activeTab === "ai" && <AITab key={`ai-${renderKey}`} />}
+              {activeTab === "do-good" && <DoGoodTab key={`do-good-${renderKey}`} />}
+              {activeTab === "shortlist" && <ShortlistTab key={`shortlist-${renderKey}`} />}
+            {activeTab === "profile" && <ProfileTab key={`profile-${renderKey}`} />}
           </motion.div>
         </AnimatePresence>
 
         {/* Global Footer — About, Privacy, Legal (on every tab) */}
         <Footer
+          key={`footer-${renderKey}`}
           onOpenSubmitBusiness={() => {
             setBusinessModalMode("submit");
             setShowBusinessModal(true);
