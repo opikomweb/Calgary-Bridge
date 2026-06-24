@@ -31,6 +31,31 @@ registerStrings(
   "Explore Calgary",
   "Askonnect — Ask me.",
   "Open App",
+  // Find Your Path section
+  "Find Your Path",
+  "What do you need?",
+  "Start with your situation. We'll take you straight there.",
+  // Pathways
+  "Find Housing & Rent Support",
+  "Affordable rentals, subsidies & tenant rights",
+  "Affordable rentals",
+  "Subsidized programs",
+  "Tenant help",
+  "Looking for Work?",
+  "Resume help, hiring companies & job fairs",
+  "Resume help",
+  "Hiring companies",
+  "Job fairs",
+  "Get Healthcare Access",
+  "Walk-in clinics, family doctors & mental health",
+  "Walk-in clinics",
+  "Family doctors",
+  "Mental health",
+  "New to Calgary?",
+  "Settlement services, language classes & community",
+  "Settlement services",
+  "Language classes",
+  "Community connections",
   // AI Powered Guidance section
   "AI-Powered Guidance",
   "Ask anything about living in Calgary.",
@@ -97,6 +122,31 @@ export default function LandingPage() {
     exploreCalgary: "Explore Calgary",
     askonnect: "Askonnect — Ask me.",
     openApp: "Open App",
+    // Find Your Path Section
+    findYourPath: "Find Your Path",
+    whatDoYouNeed: "What do you need?",
+    startWithSituation: "Start with your situation. We'll take you straight there.",
+    // Pathway titles & descriptions
+    housingTitle: "Find Housing & Rent Support",
+    housingSub: "Affordable rentals, subsidies & tenant rights",
+    housingTag1: "Affordable rentals",
+    housingTag2: "Subsidized programs",
+    housingTag3: "Tenant help",
+    jobsTitle: "Looking for Work?",
+    jobsSub: "Resume help, hiring companies & job fairs",
+    jobsTag1: "Resume help",
+    jobsTag2: "Hiring companies",
+    jobsTag3: "Job fairs",
+    healthcareTitle: "Get Healthcare Access",
+    healthcareSub: "Walk-in clinics, family doctors & mental health",
+    healthcareTag1: "Walk-in clinics",
+    healthcareTag2: "Family doctors",
+    healthcareTag3: "Mental health",
+    newcomerTitle: "New to Calgary?",
+    newcomerSub: "Settlement services, language classes & community",
+    newcomerTag1: "Settlement services",
+    newcomerTag2: "Language classes",
+    newcomerTag3: "Community connections",
     // AI Section
     aiBadge: "AI-Powered Guidance",
     aiHeadline: "Ask anything about living in Calgary.",
@@ -227,9 +277,9 @@ export default function LandingPage() {
   }[] = [
     {
       id: "housing",
-      solution: "Find Housing & Rent Support",
-      sub: "Affordable rentals, subsidies & tenant rights",
-      preview: ["Affordable rentals", "Subsidized programs", "Tenant help"],
+      solution: tx.housingTitle,
+      sub: tx.housingSub,
+      preview: [tx.housingTag1, tx.housingTag2, tx.housingTag3],
       gradient: "linear-gradient(135deg, rgba(14,68,120,0.75) 0%, rgba(12,90,160,0.65) 50%, rgba(14,68,120,0.75) 100%)",
       glassColor: "rgba(56,189,248,0.07)",
       accent: "#38BDF8",
@@ -237,9 +287,9 @@ export default function LandingPage() {
     },
     {
       id: "jobs",
-      solution: "Looking for Work?",
-      sub: "Resume help, hiring companies & job fairs",
-      preview: ["Resume help", "Hiring companies", "Job fairs"],
+      solution: tx.jobsTitle,
+      sub: tx.jobsSub,
+      preview: [tx.jobsTag1, tx.jobsTag2, tx.jobsTag3],
       gradient: "linear-gradient(135deg, rgba(10,40,80,0.75) 0%, rgba(15,58,112,0.65) 50%, rgba(10,40,80,0.75) 100%)",
       glassColor: "rgba(99,179,237,0.07)",
       accent: "#60A5FA",
@@ -247,9 +297,9 @@ export default function LandingPage() {
     },
     {
       id: "healthcare",
-      solution: "Get Healthcare Access",
-      sub: "Walk-in clinics, family doctors & mental health",
-      preview: ["Walk-in clinics", "Family doctors", "Mental health"],
+      solution: tx.healthcareTitle,
+      sub: tx.healthcareSub,
+      preview: [tx.healthcareTag1, tx.healthcareTag2, tx.healthcareTag3],
       gradient: "linear-gradient(135deg, rgba(16,42,86,0.75) 0%, rgba(20,56,110,0.65) 50%, rgba(16,42,86,0.75) 100%)",
       glassColor: "rgba(225,37,27,0.10)",
       accent: "#E1251B",
@@ -257,9 +307,9 @@ export default function LandingPage() {
     },
     {
       id: "newcomer",
-      solution: "New to Calgary?",
-      sub: "Settlement services, language classes & community",
-      preview: ["Settlement services", "Language classes", "Community connections"],
+      solution: tx.newcomerTitle,
+      sub: tx.newcomerSub,
+      preview: [tx.newcomerTag1, tx.newcomerTag2, tx.newcomerTag3],
       gradient: "linear-gradient(135deg, rgba(10,36,72,0.75) 0%, rgba(14,52,104,0.65) 50%, rgba(10,36,72,0.75) 100%)",
       glassColor: "rgba(56,189,248,0.07)",
       accent: "#38BDF8",
@@ -637,12 +687,12 @@ export default function LandingPage() {
             viewport={{ once: true, margin: "-100px" }}
             className="text-center mb-12 md:mb-16"
           >
-            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#38BDF8]/70 mb-4">Find Your Path</p>
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#38BDF8]/70 mb-4">{tx.findYourPath}</p>
             <h2 className="text-[clamp(28px,5vw,48px)] font-bold tracking-tight mb-4 text-balance">
-              What do you need?
+              {tx.whatDoYouNeed}
             </h2>
             <p className="text-base md:text-lg text-white/50 max-w-lg mx-auto text-pretty">
-              Start with your situation. We&apos;ll take you straight there.
+              {tx.startWithSituation}
             </p>
           </motion.div>
 
