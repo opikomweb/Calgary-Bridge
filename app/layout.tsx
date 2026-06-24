@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AuthProvider } from "@/components/auth-provider";
+import { AutoTranslate } from "@/components/auto-translate";
 
 // Poppins — clean, geometric sans-serif used across the whole product
 // for maximum legibility and a consistent, professional look.
@@ -69,6 +70,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <AuthProvider>
+            <AutoTranslate />
             {children}
           </AuthProvider>
         </ThemeProvider>

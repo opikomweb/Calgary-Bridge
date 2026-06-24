@@ -41,7 +41,8 @@ export function LanguageToggle() {
   }
 
   return (
-    <div ref={ref} className="relative flex-shrink-0">
+    // translate="no" — native language names/flags must never be auto-translated.
+    <div ref={ref} translate="no" className="notranslate relative flex-shrink-0">
       {/* ── Trigger ── */}
       <button
         type="button"

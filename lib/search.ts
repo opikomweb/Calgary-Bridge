@@ -449,7 +449,19 @@ export function filterResources(
     return [...byCategory].sort((a, b) => categoryRank(b, category) - categoryRank(a, category));
   }
 
-  return searchResources(byCategory, rawQuery, activeLanguage);
+  // Query present + "All" categories → straightforward ranked search.
+  if (category === "all") return searchResources(list, rawQuery, activeLanguage);
+
+  // Query present + a specific category selected. First honour BOTH:
+  // search only within the chosen category.
+  const scoped = searchResources(byCategory, rawQuery, activeLanguage);
+  if (scoped.length > 0) return scoped;
+
+  // CONFLICT FALLBACK: the words the user typed don't match the category they
+  // picked (e.g. typing "I need childcare" while the Healthcare filter is on).
+  // Rather than dead-ending on "0 results", honour what they actually typed and
+  // search across every category so they still get relevant answers.
+  return searchResources(list, rawQuery, activeLanguage);
 }
 
 // Maps each category to adjacent categories that often help with the same

@@ -103,6 +103,14 @@ export default function ExploreTab() {
   // Show hero cards only on default (no category, no search)
   const showHeroCards = !hasQuery;
 
+  // Detect the "conflict fallback": the user typed something that doesn't match
+  // the category they selected, so results were broadened across all categories.
+  const fallbackActive =
+    activeCategory !== "all" &&
+    searchQuery.trim().length > 0 &&
+    filteredResources.length > 0 &&
+    !filteredResources.some((r) => r.category.includes(activeCategory as ResourceCategory));
+
   return (
     <div className="relative">
 
@@ -286,6 +294,25 @@ export default function ExploreTab() {
               </button>
             )}
           </div>
+
+          {/* Conflict-fallback note — the typed query didn't match the chosen
+              category, so we broadened the search instead of showing nothing. */}
+          {fallbackActive && (
+            <div className="mt-3 flex items-start gap-2.5 rounded-xl border border-[#1D4ED8]/20 bg-[#1D4ED8]/[0.06] px-3.5 py-2.5">
+              <Search className="w-4 h-4 text-[#1D4ED8] mt-0.5 flex-shrink-0" />
+              <p className="text-sm text-foreground/75 leading-relaxed">
+                No <span className="font-semibold">{currentCategoryInfo.label}</span> matches for
+                {" "}&ldquo;<span className="font-semibold">{searchQuery.trim()}</span>&rdquo;, so we&apos;re showing the
+                best results across all categories.{" "}
+                <button
+                  onClick={() => setActiveCategory("all")}
+                  className="font-semibold text-[#1D4ED8] hover:underline"
+                >
+                  Clear filter
+                </button>
+              </p>
+            </div>
+          )}
         </div>
       </section>
       )}
