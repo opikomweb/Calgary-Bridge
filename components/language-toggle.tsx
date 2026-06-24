@@ -60,8 +60,9 @@ export function LanguageToggle() {
           <text x="15" y="18" textAnchor="middle" fontSize="6.5" fill="white" fontWeight="bold" fontFamily="system-ui">A</text>
         </svg>
 
-        {/* Active flag + 2-letter code */}
-        <span className="text-base leading-none" aria-hidden="true">{current.flag}</span>
+        {/* Active flag + 2-letter code — fixed-width centered flag box keeps the
+            row balanced regardless of emoji baseline or code width (EN/SW/YK…). */}
+        <span className="inline-flex w-5 items-center justify-center text-base leading-none" aria-hidden="true">{current.flag}</span>
         <span className="text-[11px] font-bold text-foreground/70 tracking-wider leading-none">{current.label}</span>
 
         {/* Chevron */}
