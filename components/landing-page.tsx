@@ -445,28 +445,32 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.7 }}
-            className="max-w-3xl mx-auto mb-6 md:mb-8"
+            className="max-w-3xl mx-auto mb-6 md:mb-8 group"
           >
-            <div className="relative group">
-              <Search className="absolute left-5 md:left-8 top-1/2 -translate-y-1/2 w-5 h-5 md:w-7 md:h-7 text-[#38BDF8] transition-colors pointer-events-none z-10" />
-              <input
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") handleSearchSubmit();
-                }}
-                placeholder="My landlord won't fix the heat..."
-                aria-label="Search Calgary resources"
-                className="w-full h-16 md:h-20 bg-white/[0.16] hover:bg-white/[0.2] focus:bg-white/[0.22] backdrop-blur-xl border border-white/30 hover:border-white/40 focus:border-[#38BDF8]/70 rounded-2xl md:rounded-3xl text-base md:text-xl font-medium text-white placeholder:text-white/70 pl-14 md:pl-20 pr-28 md:pr-32 outline-none transition-all duration-300 shadow-[0_8px_30px_-6px_rgba(0,0,0,0.45)] focus:shadow-[0_0_0_4px_rgba(56,189,248,0.2),0_25px_50px_-12px_rgba(0,0,0,0.6)]"
-              />
-              <button
-                onClick={handleSearchSubmit}
-                className="absolute right-2 md:right-3 top-1/2 -translate-y-1/2 btn-primary px-4 md:px-6 h-12 md:h-14 rounded-xl md:rounded-2xl flex items-center gap-2 text-sm md:text-base font-semibold"
-              >
-                <span className="hidden sm:inline">Search</span>
-                <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
-              </button>
+            {/* Outer glow ring — always visible to show this is interactive */}
+            <div className="relative rounded-2xl md:rounded-3xl p-[3px] bg-gradient-to-r from-[#38BDF8]/60 via-white/30 to-[#E1251B]/50 shadow-[0_0_40px_8px_rgba(56,189,248,0.25)] transition-all duration-300 group-focus-within:shadow-[0_0_55px_14px_rgba(56,189,248,0.45)]">
+              <div className="relative flex items-center bg-white rounded-[13px] md:rounded-[21px] overflow-hidden">
+                {/* Animated search icon */}
+                <Search className="absolute left-5 md:left-7 w-5 h-5 md:w-6 md:h-6 text-[#1D4ED8] pointer-events-none z-10 transition-transform duration-200 group-focus-within:scale-110" />
+                <input
+                  type="text"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") handleSearchSubmit();
+                  }}
+                  placeholder="My landlord won't fix the heat..."
+                  aria-label="Search Calgary resources"
+                  className="w-full h-16 md:h-20 bg-transparent text-base md:text-xl font-medium text-gray-900 placeholder:text-gray-400 pl-12 md:pl-16 pr-32 md:pr-36 outline-none transition-colors duration-200"
+                />
+                <button
+                  onClick={handleSearchSubmit}
+                  className="absolute right-2 md:right-2.5 top-1/2 -translate-y-1/2 btn-primary px-5 md:px-7 h-12 md:h-14 rounded-xl md:rounded-2xl flex items-center gap-2 text-sm md:text-base font-bold shadow-lg shadow-[#E1251B]/30 hover:shadow-[#E1251B]/50 transition-all"
+                >
+                  <span className="hidden sm:inline">Search</span>
+                  <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
+                </button>
+              </div>
             </div>
           </motion.div>
 
@@ -485,7 +489,7 @@ export default function LandingPage() {
                     setSearchQuery(q);
                     enterApp("home");
                   }}
-                  className="px-4 md:px-5 py-2.5 md:py-3 rounded-full bg-white/[0.1] border border-white/20 text-sm md:text-base font-medium text-white/90 hover:bg-white/[0.18] hover:border-white/30 hover:text-white transition-all duration-300 backdrop-blur-md shadow-sm shadow-black/20"
+                  className="px-4 md:px-5 py-2.5 md:py-3 rounded-full bg-white/[0.15] border border-white/40 text-sm md:text-base font-semibold text-white hover:bg-white hover:text-gray-900 hover:border-white transition-all duration-200 backdrop-blur-md shadow-md shadow-black/30"
                 >
                   {q}
                 </button>
