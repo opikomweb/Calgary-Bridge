@@ -1,8 +1,12 @@
 "use client";
 
+import { motion } from "framer-motion";
+import { Heart, TrendingUp } from "lucide-react";
 import { useAppStore } from "@/lib/store";
 import { resources } from "@/lib/data";
 import { useTranslations, registerStrings } from "@/lib/translation-context";
+import ResourceCard from "@/components/resource-card";
+import { CalgaryPulsePanel } from "@/components/calgary-pulse-panel";
 
 registerStrings(
   "Shortlist",
