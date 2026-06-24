@@ -173,10 +173,10 @@ export default function HomeTab() {
 
   // Specialized pathways
   const specialized = [
-    { id: "tenant", label: tx.tenantRights, description: tx.tenantDesc, icon: "scale" },
-    { id: "family", label: tx.familyKids, description: tx.familyDesc, icon: "heart" },
-    { id: "seniors", label: tx.seniors, description: tx.seniorsDesc, icon: "users" },
-    { id: "emergency", label: tx.emergencyHelp, description: tx.emergencyDesc, icon: "alert" },
+    { id: "tenant", label: tx.tenantRights, description: tx.tenantDesc, icon: "scale", query: "Tenant Rights" },
+    { id: "family", label: tx.familyKids, description: tx.familyDesc, icon: "heart", query: "Family & Kids" },
+    { id: "seniors", label: tx.seniors, description: tx.seniorsDesc, icon: "users", query: "Seniors" },
+    { id: "emergency", label: tx.emergencyHelp, description: tx.emergencyDesc, icon: "alert", query: "Emergency Help" },
   ];
 
   return (
@@ -454,11 +454,11 @@ export default function HomeTab() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.65 + index * 0.05 }}
                   whileHover={{ y: -4, scale: 1.02 }}
-                  onClick={() => setActiveTab("explore")}
-                  className="group p-4 md:p-6 rounded-2xl bg-white dark:bg-foreground/[0.06] border border-foreground/[0.10] dark:border-foreground/[0.08] hover:border-[#1D4ED8]/40 dark:hover:border-white/20 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col items-center text-center"
+                  onClick={() => setSearchQuery(item.query)}
+                  className="group p-4 md:p-6 rounded-2xl bg-white dark:bg-foreground/[0.06] border border-foreground/[0.10] dark:border-foreground/[0.08] hover:border-[#1D4ED8]/40 dark:hover:border-white/20 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col items-center text-center cursor-pointer"
                 >
-                  <h3 className="text-xs sm:text-sm md:text-base font-bold text-[#0b2239] dark:text-foreground mb-1 md:mb-2 leading-tight">{item.label}</h3>
-                  <p className="text-[10px] sm:text-xs md:text-sm text-foreground/65 dark:text-foreground/55 mb-3 md:mb-4 leading-relaxed">{item.description}</p>
+                  <h3 className="text-sm sm:text-base md:text-lg font-bold text-[#0b2239] dark:text-foreground mb-2 md:mb-3 leading-tight">{item.label}</h3>
+                  <p className="text-xs sm:text-sm md:text-base font-semibold text-foreground/70 dark:text-foreground/65 mb-4 md:mb-5 leading-relaxed">{item.description}</p>
                   <div className="flex items-center gap-1 text-[#E1251B] text-xs md:text-sm font-bold mt-auto">
                     <span>{tx.view}</span>
                     <ChevronRight className="w-3 h-3 md:w-3.5 md:h-3.5 group-hover:translate-x-1 transition-transform" />
