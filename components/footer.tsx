@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { CalgaryConnectLogo } from "./calgary-connect-logo";
 import { LanguageToggle } from "./language-toggle";
+import { useTranslations, registerStrings } from "@/lib/translation-context";
 import { 
   MapPin, 
   Mail, 
@@ -25,6 +26,24 @@ interface FooterProps {
   onOpenSubmitBusiness?: () => void;
   onOpenGetFeatured?: () => void;
 }
+
+// Register footer link labels for translation
+registerStrings(
+  "Terms of Service",
+  "Privacy Policy",
+  "Cookie Policy",
+  "Accessibility",
+  "Data Disclaimer",
+  "About Calgary Konnect",
+  "How We Verify Resources",
+  "Community Guidelines",
+  "List Your Business",
+  "Get Featured",
+  "Partnership Inquiry",
+  "Volunteer With Us",
+  "Contact Us",
+  "Copyright",
+);
 
 // Modal content for each page
 const pageContent: Record<string, { title: string; content: React.ReactNode }> = {
@@ -467,6 +486,22 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
   const [disclaimerOpen, setDisclaimerOpen] = useState(false);
   const [openColumns, setOpenColumns] = useState<Record<string, boolean>>({});
 
+  const tx = useTranslations({
+    termsOfService: "Terms of Service",
+    privacyPolicy: "Privacy Policy",
+    cookiePolicy: "Cookie Policy",
+    accessibility: "Accessibility",
+    dataDisclaimer: "Data Disclaimer",
+    aboutCalgary: "About Calgary Konnect",
+    howWeVerify: "How We Verify Resources",
+    communityGuidelines: "Community Guidelines",
+    listYourBusiness: "List Your Business",
+    getFeatured: "Get Featured",
+    partnershipInquiry: "Partnership Inquiry",
+    volunteerWithUs: "Volunteer With Us",
+    contactUs: "Contact Us",
+  });
+
   const openModal = (key: string) => setActiveModal(key);
   const closeModal = () => setActiveModal(null);
 
@@ -474,28 +509,28 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
     setOpenColumns((prev) => ({ ...prev, [key]: !prev[key] }));
 
   const legalLinks = [
-    { label: "Terms of Service", key: "terms" },
-    { label: "Privacy Policy", key: "privacy" },
-    { label: "Cookie Policy", key: "cookies" },
-    { label: "Accessibility", key: "accessibility" },
-    { label: "Data Disclaimer", key: "disclaimer" },
+    { label: tx.termsOfService, key: "terms" },
+    { label: tx.privacyPolicy, key: "privacy" },
+    { label: tx.cookiePolicy, key: "cookies" },
+    { label: tx.accessibility, key: "accessibility" },
+    { label: tx.dataDisclaimer, key: "disclaimer" },
   ];
 
   const resourceLinks = [
-    { label: "About Calgary Konnect", key: "about" },
-    { label: "How We Verify Resources", key: "verification" },
-    { label: "Community Guidelines", key: "guidelines" },
+    { label: tx.aboutCalgary, key: "about" },
+    { label: tx.howWeVerify, key: "verification" },
+    { label: tx.communityGuidelines, key: "guidelines" },
   ];
 
   const businessLinks = [
-    { label: "List Your Business", onClick: onOpenSubmitBusiness },
-    { label: "Get Featured", onClick: onOpenGetFeatured },
-    { label: "Partnership Inquiry", key: "partnership" },
+    { label: tx.listYourBusiness, onClick: onOpenSubmitBusiness },
+    { label: tx.getFeatured, onClick: onOpenGetFeatured },
+    { label: tx.partnershipInquiry, key: "partnership" },
   ];
 
   const communityLinks = [
-    { label: "Volunteer With Us", key: "volunteer" },
-    { label: "Contact Us", key: "contact" },
+    { label: tx.volunteerWithUs, key: "volunteer" },
+    { label: tx.contactUs, key: "contact" },
   ];
 
   return (

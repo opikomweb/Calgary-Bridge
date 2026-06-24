@@ -31,6 +31,15 @@ registerStrings(
   "Explore Calgary",
   "Askonnect — Ask me.",
   "Open App",
+  // AI Powered Guidance section
+  "AI-Powered Guidance",
+  "Ask anything about living in Calgary.",
+  "Not just links. Real answers, step-by-step guidance, and resources matched to your specific situation.",
+  "Try Askonnect",
+  "Can my landlord raise rent mid-lease?",
+  "In Alberta, your landlord cannot increase rent during a fixed-term lease unless the lease specifically allows it.",
+  "For periodic (month-to-month) tenancies, they must give you at least 3 months written notice.",
+  "Ask a follow-up question...",
   // Menu groups
   "Essentials",
   "People & Support",
@@ -88,6 +97,16 @@ export default function LandingPage() {
     exploreCalgary: "Explore Calgary",
     askonnect: "Askonnect — Ask me.",
     openApp: "Open App",
+    // AI Section
+    aiBadge: "AI-Powered Guidance",
+    aiHeadline: "Ask anything about living in Calgary.",
+    aiSubheading: "Not just links. Real answers, step-by-step guidance, and resources matched to your specific situation.",
+    aiButton: "Try Askonnect",
+    aiExample: "Can my landlord raise rent mid-lease?",
+    aiResponse1: "In Alberta, your landlord cannot increase rent during a fixed-term lease unless the lease specifically allows it.",
+    aiResponse2: "For periodic (month-to-month) tenancies, they must give you at least 3 months written notice.",
+    aiPlaceholder: "Ask a follow-up question...",
+    // Menu groups
     essentials: "Essentials",
     peopleSupport: "People & Support",
     communityLife: "Community & Life",
@@ -717,15 +736,15 @@ export default function LandingPage() {
             >
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#38BDF8]/10 border border-[#38BDF8]/20 mb-6 md:mb-8">
                 <Compass className="w-4 h-4 text-[#38BDF8]" />
-                <span className="text-sm font-medium text-[#38BDF8]">AI-Powered Guidance</span>
+                <span className="text-sm font-medium text-[#38BDF8]">{tx.aiBadge}</span>
               </div>
 
               <h2 className="text-[clamp(28px,5vw,48px)] font-bold tracking-tight mb-4 md:mb-6 text-balance">
-                Ask anything about living in Calgary.
+                {tx.aiHeadline}
               </h2>
 
               <p className="text-base md:text-xl text-white/60 leading-relaxed mb-8 md:mb-10 text-pretty">
-                Not just links. Real answers, step-by-step guidance, and resources matched to your specific situation.
+                {tx.aiSubheading}
               </p>
 
               <motion.button
@@ -741,7 +760,7 @@ export default function LandingPage() {
                   height={28}
                   className="w-7 h-7 rounded-full ring-1 ring-white/30 flex-shrink-0"
                 />
-                Try Askonnect
+                {tx.aiButton}
               </motion.button>
             </motion.div>
 
@@ -756,7 +775,7 @@ export default function LandingPage() {
                 <div className="space-y-5 md:space-y-6 mb-6 md:mb-8">
                   <div className="flex justify-end">
                     <div className="bg-[#38BDF8] text-[#061020] px-5 py-3 rounded-2xl rounded-br-md max-w-[280px] text-sm md:text-[15px] font-medium">
-                      Can my landlord raise rent mid-lease?
+                      {tx.aiExample}
                     </div>
                   </div>
 
@@ -771,10 +790,10 @@ export default function LandingPage() {
                     </div>
                     <div className="bg-white/[0.06] px-5 py-4 rounded-2xl rounded-bl-md max-w-[320px]">
                       <p className="text-sm md:text-[15px] text-white/90 leading-relaxed mb-3">
-                        In Alberta, your landlord cannot increase rent during a fixed-term lease unless the lease specifically allows it.
+                        {tx.aiResponse1}
                       </p>
                       <p className="text-sm md:text-[15px] text-white/90 leading-relaxed">
-                        For periodic (month-to-month) tenancies, they must give you at least 3 months written notice.
+                        {tx.aiResponse2}
                       </p>
                     </div>
                   </div>
@@ -783,7 +802,7 @@ export default function LandingPage() {
                 <div className="relative">
                   <input
                     type="text"
-                    placeholder="Ask a follow-up question..."
+                    placeholder={tx.aiPlaceholder}
                     aria-label="Ask the AI a follow-up question"
                     className="w-full h-14 bg-white/[0.04] border border-white/10 rounded-xl text-sm md:text-[15px] text-white placeholder:text-white/40 pl-5 pr-14 outline-none"
                     onClick={handleAskAI}
