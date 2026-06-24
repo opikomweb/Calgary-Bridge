@@ -745,6 +745,37 @@ p {
   padding-bottom: env(safe-area-inset-bottom, 8px);
 }
 
+/* ── Translation engine ─────────────────────────────────────────────────── */
+@keyframes ck-translating-bar {
+  0%   { background-position: 0% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Brand names / phone numbers that must never be translated */
+.notranslate,
+[translate="no"] {
+  unicode-bidi: isolate;
+}
+
+/* RTL layout flip — triggered by TranslationProvider setting dir="rtl" on <html> */
+[dir="rtl"] {
+  /* Bottom nav / tab bar */
+  .bottom-nav-tabs { flex-direction: row-reverse; }
+
+  /* Sidebar */
+  .lg\:left-0 { left: auto !important; right: 0 !important; }
+  .lg\:pl-\[360px\] { padding-left: 0 !important; padding-right: 360px !important; }
+
+  /* Generic inline flex rows */
+  .flex-row { flex-direction: row-reverse; }
+}
+
+/* Noto Sans Arabic — loaded only when an RTL language is selected */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;700&display=swap');
+[dir="rtl"] body {
+  font-family: 'Noto Sans Arabic', var(--font-sans);
+}
+
 /* Community pulse animation */
 @keyframes pulse-ring {
   0% { transform: scale(1); opacity: 0.5; }

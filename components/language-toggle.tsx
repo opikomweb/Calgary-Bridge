@@ -5,6 +5,7 @@ import { useAppStore } from "@/lib/store";
 import { LANGUAGES } from "@/lib/languages";
 import type { Language } from "@/lib/types";
 import { Check } from "lucide-react";
+import { useDOMTranslation } from "@/lib/translation/TranslationProvider";
 
 /**
  * Language picker — compact dropdown anchored directly below the trigger.
@@ -14,6 +15,7 @@ import { Check } from "lucide-react";
  */
 export function LanguageToggle() {
   const { activeLanguage, setActiveLanguage } = useAppStore();
+  const { setLanguage: setDOMLanguage, isTranslating } = useDOMTranslation();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -37,6 +39,7 @@ export function LanguageToggle() {
 
   function select(code: Language) {
     setActiveLanguage(code);
+    setDOMLanguage(code);
     setOpen(false);
   }
 
@@ -45,10 +48,11 @@ export function LanguageToggle() {
       {/* ── Trigger ── */}
       <button
         type="button"
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => !isTranslating && setOpen((v) => !v)}
         aria-label={`Language: ${current.nativeName}. Tap to change.`}
         aria-expanded={open}
-        className="flex items-center gap-1 h-8 px-2 bg-foreground/[0.05] hover:bg-foreground/[0.10] border border-foreground/[0.12] transition-colors select-none"
+        disabled={isTranslating}
+        className="flex items-center gap-1 h-8 px-2 bg-foreground/[0.05] hover:bg-foreground/[0.10] border border-foreground/[0.12] transition-colors select-none disabled:opacity-60 disabled:cursor-wait"
         style={{ borderRadius: 4 }}
       >
         {/* Translate icon SVG */}
@@ -82,7 +86,7 @@ export function LanguageToggle() {
         <div
           role="listbox"
           aria-label="Select language"
-          className="absolute right-0 top-full mt-0.5 z-[300] bg-background border border-foreground/[0.14] shadow-xl shadow-black/15 dark:shadow-black/50 overflow-y-auto"
+          className="notranslate absolute right-0 top-full mt-0.5 z-[300] bg-background border border-foreground/[0.14] shadow-xl shadow-black/15 dark:shadow-black/50 overflow-y-auto"
           style={{ borderRadius: 0, minWidth: 108, maxHeight: "calc(100svh - 80px)" }}
         >
           {LANGUAGES.map((lang) => {
