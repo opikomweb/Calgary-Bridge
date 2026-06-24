@@ -94,7 +94,7 @@ function cleanTranslation(text: string, lang: Language): string {
   
   // Fix double question marks
   if (text.includes("¿?") || text.includes("?¿")) {
-    return text.replace(/¿\?|?\¿/g, "?");
+    return text.replace(/¿\?|\?\¿/g, "?");
   }
   
   return text;
