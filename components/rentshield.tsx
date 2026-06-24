@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Shield, FileText, Calculator, AlertCircle, CheckCircle, ExternalLink, Phone } from "lucide-react";
 import { useAppStore } from "@/lib/store";
 import { useTranslations, registerStrings } from "@/lib/translation-context";
+import { uiText } from "@/lib/data";
 
 // Register rentshield strings for translation
 registerStrings(
@@ -178,25 +179,32 @@ function ToolCard({
 }
 
 function TenantRights({ onBack }: { onBack: () => void }) {
+  const { activeLanguage } = useAppStore();
+  
+  const tx = useTranslations({
+    back: "← Back to tools",
+    yourRights: "Your Rights as a Tenant",
+  });
+
   const rights = [
     {
-      title: "Notice for Rent Increases",
+      title: uiText.noticeForRent?.[activeLanguage] || "Notice for Rent Increases",
       content: "Landlords must give at least 3 months written notice before increasing rent. No limit on how much, but must be in writing.",
     },
     {
-      title: "Right to Privacy",
+      title: uiText.rightPrivacy?.[activeLanguage] || "Right to Privacy",
       content: "Landlord must give 24 hours written notice before entering, except in emergencies.",
     },
     {
-      title: "Security Deposit",
+      title: uiText.securityDeposit?.[activeLanguage] || "Security Deposit",
       content: "Maximum one month's rent. Must be returned within 10 days of moving out (minus any legitimate deductions).",
     },
     {
-      title: "Repairs & Maintenance",
+      title: uiText.repairsMaintenance?.[activeLanguage] || "Repairs & Maintenance",
       content: "Landlord must maintain the property in a safe, livable condition. Report issues in writing.",
     },
     {
-      title: "Eviction Rules",
+      title: uiText.evictionRules?.[activeLanguage] || "Eviction Rules",
       content: "Landlord needs valid reason and proper written notice. You can dispute unfair evictions through RTDRS.",
     },
     {
@@ -215,10 +223,10 @@ function TenantRights({ onBack }: { onBack: () => void }) {
         onClick={onBack}
         className="text-sm text-[#0ea5e9] mb-4 hover:underline"
       >
-        &larr; Back to tools
+        {tx.back}
       </button>
       
-      <h3 className="text-xl font-bold mb-4">Your Rights as a Tenant</h3>
+      <h3 className="text-xl font-bold mb-4">{tx.yourRights}</h3>
       
       <div className="space-y-4">
         {rights.map((right, index) => (
@@ -239,7 +247,7 @@ function TenantRights({ onBack }: { onBack: () => void }) {
         className="flex items-center justify-center gap-2 mt-6 text-sm text-[#0ea5e9] hover:underline"
       >
         <ExternalLink className="w-4 h-4" />
-        Full Alberta Tenant Rights Guide
+        {uiText.fullAlberta?.[activeLanguage] || "Full Alberta Tenant Rights Guide"}
       </a>
     </motion.div>
   );

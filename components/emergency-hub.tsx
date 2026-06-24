@@ -70,15 +70,15 @@ export default function EmergencyHub({ onClose }: EmergencyHubProps) {
           <ul className="space-y-2 text-sm text-white/80">
             <li key="tip-1" className="flex items-start gap-2">
               <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-sky-300" />
-              Layer clothing and cover extremities in cold weather
+              {uiText.winterTip1?.[activeLanguage] || "Layer clothing and cover extremities in cold weather"}
             </li>
             <li key="tip-2" className="flex items-start gap-2">
               <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-sky-300" />
-              Check weather forecasts before traveling
+              {uiText.winterTip2?.[activeLanguage] || "Check weather forecasts before traveling"}
             </li>
             <li key="tip-3" className="flex items-start gap-2">
               <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-sky-300" />
-              Keep emergency supplies in your vehicle
+              {uiText.winterTip3?.[activeLanguage] || "Keep emergency supplies in your vehicle"}
             </li>
             <li key="tip-4" className="flex items-start gap-2">
               <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-sky-300" />
