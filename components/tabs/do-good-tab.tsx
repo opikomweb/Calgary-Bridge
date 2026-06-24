@@ -211,8 +211,7 @@ export default function DoGoodTab() {
               {tx.badge}
             </span>
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-[-0.02em] text-foreground text-balance leading-[1.05]">
-              Do good for{" "}
-              <span className={ACCENT_CLASSES.red.icon}>{tx.headline.split(" for ")[1]}</span>
+              {tx.headline}
             </h1>
             <p className="text-sm md:text-base text-foreground/70 leading-relaxed max-w-xl text-pretty">
               {tx.description}
