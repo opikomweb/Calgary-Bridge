@@ -4,6 +4,23 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Shield, FileText, Calculator, AlertCircle, CheckCircle, ExternalLink, Phone } from "lucide-react";
 import { useAppStore } from "@/lib/store";
+import { useTranslations, registerStrings } from "@/lib/translation-context";
+import { uiText } from "@/lib/data";
+
+// Register rentshield strings for translation
+registerStrings(
+  "RentShield",
+  "Tenant rights & support",
+  "Understand your rights as a tenant in Alberta. Get quick answers and know what to do.",
+  "Know Your Rights",
+  "Quick guide to tenant rights in Alberta",
+  "Rent Increase Checker",
+  "Check if your rent increase is legal",
+  "Lease Help",
+  "Understand common lease terms",
+  "Need immediate help?",
+  "Calgary Legal Guidance: 403-234-9266",
+);
 
 interface RentShieldProps {
   onClose: () => void;
@@ -14,6 +31,20 @@ type Tool = "rights" | "rent-check" | "lease-help" | null;
 export default function RentShield({ onClose }: RentShieldProps) {
   const [activeTool, setActiveTool] = useState<Tool>(null);
   const { addRentShieldResult } = useAppStore();
+  
+  const tx = useTranslations({
+    title: "RentShield",
+    subtitle: "Tenant rights & support",
+    intro: "Understand your rights as a tenant in Alberta. Get quick answers and know what to do.",
+    rightsTitle: "Know Your Rights",
+    rightsDesc: "Quick guide to tenant rights in Alberta",
+    checkerTitle: "Rent Increase Checker",
+    checkerDesc: "Check if your rent increase is legal",
+    leaseTitle: "Lease Help",
+    leaseDesc: "Understand common lease terms",
+    needHelp: "Need immediate help?",
+    legalGuidance: "Calgary Legal Guidance: 403-234-9266",
+  });
 
   return (
     <motion.div
@@ -38,8 +69,8 @@ export default function RentShield({ onClose }: RentShieldProps) {
               <Shield className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h2 className="text-xl font-bold">RentShield</h2>
-              <p className="text-sm text-[var(--foreground-muted)]">Tenant rights & support</p>
+              <h2 className="text-xl font-bold">{tx.title}</h2>
+              <p className="text-sm text-[var(--foreground-muted)]">{tx.subtitle}</p>
             </div>
           </div>
           <button
@@ -62,39 +93,39 @@ export default function RentShield({ onClose }: RentShieldProps) {
                 className="space-y-4"
               >
                 <p className="text-[var(--foreground-muted)] mb-6">
-                  Understand your rights as a tenant in Alberta. Get quick answers and know what to do.
+                  {tx.intro}
                 </p>
 
                 <ToolCard
                   icon={FileText}
-                  title="Know Your Rights"
-                  description="Quick guide to tenant rights in Alberta"
+                  title={tx.rightsTitle}
+                  description={tx.rightsDesc}
                   onClick={() => setActiveTool("rights")}
                 />
                 <ToolCard
                   icon={Calculator}
-                  title="Rent Increase Checker"
-                  description="Check if your rent increase is legal"
+                  title={tx.checkerTitle}
+                  description={tx.checkerDesc}
                   onClick={() => setActiveTool("rent-check")}
                 />
                 <ToolCard
                   icon={AlertCircle}
-                  title="Lease Help"
-                  description="Understand common lease terms"
+                  title={tx.leaseTitle}
+                  description={tx.leaseDesc}
                   onClick={() => setActiveTool("lease-help")}
                 />
 
                 {/* Emergency Contact */}
                 <div className="mt-6 p-4 rounded-xl bg-[var(--secondary)]/10 border border-[var(--secondary)]/30">
                   <p className="text-sm font-medium text-[var(--secondary)] mb-2">
-                    Need immediate help?
+                    {tx.needHelp}
                   </p>
                   <a
                     href="tel:403-234-9266"
                     className="flex items-center gap-2 text-sm text-white hover:underline"
                   >
                     <Phone className="w-4 h-4" />
-                    Calgary Legal Guidance: 403-234-9266
+                    {tx.legalGuidance}
                   </a>
                 </div>
               </motion.div>
@@ -148,25 +179,32 @@ function ToolCard({
 }
 
 function TenantRights({ onBack }: { onBack: () => void }) {
+  const { activeLanguage } = useAppStore();
+  
+  const tx = useTranslations({
+    back: "← Back to tools",
+    yourRights: "Your Rights as a Tenant",
+  });
+
   const rights = [
     {
-      title: "Notice for Rent Increases",
+      title: uiText.noticeForRent?.[activeLanguage] || "Notice for Rent Increases",
       content: "Landlords must give at least 3 months written notice before increasing rent. No limit on how much, but must be in writing.",
     },
     {
-      title: "Right to Privacy",
+      title: uiText.rightPrivacy?.[activeLanguage] || "Right to Privacy",
       content: "Landlord must give 24 hours written notice before entering, except in emergencies.",
     },
     {
-      title: "Security Deposit",
+      title: uiText.securityDeposit?.[activeLanguage] || "Security Deposit",
       content: "Maximum one month's rent. Must be returned within 10 days of moving out (minus any legitimate deductions).",
     },
     {
-      title: "Repairs & Maintenance",
+      title: uiText.repairsMaintenance?.[activeLanguage] || "Repairs & Maintenance",
       content: "Landlord must maintain the property in a safe, livable condition. Report issues in writing.",
     },
     {
-      title: "Eviction Rules",
+      title: uiText.evictionRules?.[activeLanguage] || "Eviction Rules",
       content: "Landlord needs valid reason and proper written notice. You can dispute unfair evictions through RTDRS.",
     },
     {
@@ -185,10 +223,10 @@ function TenantRights({ onBack }: { onBack: () => void }) {
         onClick={onBack}
         className="text-sm text-[#0ea5e9] mb-4 hover:underline"
       >
-        &larr; Back to tools
+        {tx.back}
       </button>
       
-      <h3 className="text-xl font-bold mb-4">Your Rights as a Tenant</h3>
+      <h3 className="text-xl font-bold mb-4">{tx.yourRights}</h3>
       
       <div className="space-y-4">
         {rights.map((right, index) => (
@@ -209,7 +247,7 @@ function TenantRights({ onBack }: { onBack: () => void }) {
         className="flex items-center justify-center gap-2 mt-6 text-sm text-[#0ea5e9] hover:underline"
       >
         <ExternalLink className="w-4 h-4" />
-        Full Alberta Tenant Rights Guide
+        {uiText.fullAlberta?.[activeLanguage] || "Full Alberta Tenant Rights Guide"}
       </a>
     </motion.div>
   );

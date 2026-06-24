@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { CalgaryConnectLogo } from "./calgary-connect-logo";
 import { LanguageToggle } from "./language-toggle";
+import { useTranslations, registerStrings } from "@/lib/translation-context";
 import { 
   MapPin, 
   Mail, 
@@ -25,6 +26,27 @@ interface FooterProps {
   onOpenSubmitBusiness?: () => void;
   onOpenGetFeatured?: () => void;
 }
+
+// Register footer link labels for translation
+registerStrings(
+  "Terms of Service",
+  "Privacy Policy",
+  "Cookie Policy",
+  "Accessibility",
+  "Data Disclaimer",
+  "About Calgary Konnect",
+  "How We Verify Resources",
+  "Community Guidelines",
+  "List Your Business",
+  "Get Featured",
+  "Partnership Inquiry",
+  "Volunteer With Us",
+  "Contact Us",
+  "Copyright",
+  "Important Disclaimer",
+  "Calgary Konnect is an independent platform and is not affiliated with, endorsed by, or connected to the City of Calgary, the Government of Alberta, or any official government body. Information provided is for general reference only. Always verify details directly with service providers. For emergencies, call 911.",
+  "Verified", "Updated monthly", "Community-driven", "Free to use",
+);
 
 // Modal content for each page
 const pageContent: Record<string, { title: string; content: React.ReactNode }> = {
@@ -467,6 +489,33 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
   const [disclaimerOpen, setDisclaimerOpen] = useState(false);
   const [openColumns, setOpenColumns] = useState<Record<string, boolean>>({});
 
+  const tx = useTranslations({
+    termsOfService: "Terms of Service",
+    privacyPolicy: "Privacy Policy",
+    cookiePolicy: "Cookie Policy",
+    accessibility: "Accessibility",
+    dataDisclaimer: "Data Disclaimer",
+    aboutCalgary: "About Calgary Konnect",
+    howWeVerify: "How We Verify Resources",
+    communityGuidelines: "Community Guidelines",
+    listYourBusiness: "List Your Business",
+    getFeatured: "Get Featured",
+    partnershipInquiry: "Partnership Inquiry",
+    volunteerWithUs: "Volunteer With Us",
+    contactUs: "Contact Us",
+    // Footer section headings
+    resources: "Resources",
+    forBusinesses: "For Businesses",
+    community: "Community",
+    importantDisclaimer: "Important Disclaimer",
+    disclaimerText: "Calgary Konnect is an independent platform and is not affiliated with, endorsed by, or connected to the City of Calgary, the Government of Alberta, or any official government body. Information provided is for general reference only. Always verify details directly with service providers. For emergencies, call 911.",
+    footerTagline: "Everything Calgary. One Place.",
+    badgeVerified: "Verified",
+    badgeUpdated: "Updated monthly",
+    badgeCommunity: "Community-driven",
+    badgeFree: "Free to use",
+  });
+
   const openModal = (key: string) => setActiveModal(key);
   const closeModal = () => setActiveModal(null);
 
@@ -474,28 +523,28 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
     setOpenColumns((prev) => ({ ...prev, [key]: !prev[key] }));
 
   const legalLinks = [
-    { label: "Terms of Service", key: "terms" },
-    { label: "Privacy Policy", key: "privacy" },
-    { label: "Cookie Policy", key: "cookies" },
-    { label: "Accessibility", key: "accessibility" },
-    { label: "Data Disclaimer", key: "disclaimer" },
+    { label: tx.termsOfService, key: "terms" },
+    { label: tx.privacyPolicy, key: "privacy" },
+    { label: tx.cookiePolicy, key: "cookies" },
+    { label: tx.accessibility, key: "accessibility" },
+    { label: tx.dataDisclaimer, key: "disclaimer" },
   ];
 
   const resourceLinks = [
-    { label: "About Calgary Konnect", key: "about" },
-    { label: "How We Verify Resources", key: "verification" },
-    { label: "Community Guidelines", key: "guidelines" },
+    { label: tx.aboutCalgary, key: "about" },
+    { label: tx.howWeVerify, key: "verification" },
+    { label: tx.communityGuidelines, key: "guidelines" },
   ];
 
   const businessLinks = [
-    { label: "List Your Business", onClick: onOpenSubmitBusiness },
-    { label: "Get Featured", onClick: onOpenGetFeatured },
-    { label: "Partnership Inquiry", key: "partnership" },
+    { label: tx.listYourBusiness, onClick: onOpenSubmitBusiness },
+    { label: tx.getFeatured, onClick: onOpenGetFeatured },
+    { label: tx.partnershipInquiry, key: "partnership" },
   ];
 
   const communityLinks = [
-    { label: "Volunteer With Us", key: "volunteer" },
-    { label: "Contact Us", key: "contact" },
+    { label: tx.volunteerWithUs, key: "volunteer" },
+    { label: tx.contactUs, key: "contact" },
   ];
 
   return (
@@ -528,25 +577,25 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
                   <div className="w-7 h-7 rounded-lg bg-[#1D4ED8]/15 flex items-center justify-center">
                     <Shield className="w-3.5 h-3.5 text-[#1D4ED8]" />
                   </div>
-                  <span className="text-[11px] font-semibold text-white/70 whitespace-nowrap">Verified</span>
+                  <span className="text-[11px] font-semibold text-white/70 whitespace-nowrap">{tx.badgeVerified}</span>
                 </div>
                 <div className="flex flex-col items-center text-center gap-1.5">
                   <div className="w-7 h-7 rounded-lg bg-[#1D4ED8]/15 flex items-center justify-center">
                     <FileText className="w-3.5 h-3.5 text-[#1D4ED8]" />
                   </div>
-                  <span className="text-[11px] font-semibold text-white/70 whitespace-nowrap">Updated monthly</span>
+                  <span className="text-[11px] font-semibold text-white/70 whitespace-nowrap">{tx.badgeUpdated}</span>
                 </div>
                 <div className="flex flex-col items-center text-center gap-1.5">
                   <div className="w-7 h-7 rounded-lg bg-[#E1251B]/15 flex items-center justify-center">
                     <Users className="w-3.5 h-3.5 text-[#E1251B]" />
                   </div>
-                  <span className="text-[11px] font-semibold text-white/70 whitespace-nowrap">Community-driven</span>
+                  <span className="text-[11px] font-semibold text-white/70 whitespace-nowrap">{tx.badgeCommunity}</span>
                 </div>
                 <div className="flex flex-col items-center text-center gap-1.5">
                   <div className="w-7 h-7 rounded-lg bg-[#E1251B]/15 flex items-center justify-center">
                     <Heart className="w-3.5 h-3.5 text-[#E1251B]" />
                   </div>
-                  <span className="text-[11px] font-semibold text-white/70 whitespace-nowrap">Free to use</span>
+                  <span className="text-[11px] font-semibold text-white/70 whitespace-nowrap">{tx.badgeFree}</span>
                 </div>
               </div>
             </div>
@@ -559,7 +608,7 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
                 {/* Brand Column — dark surface logo */}
                 <div className="md:col-span-3 flex flex-col items-start">
                   <CalgaryConnectLogo size="md" darkSurface />
-                  <p className="text-xs text-white/30 mt-3 text-left">Everything Calgary. One Place.</p>
+                  <p className="text-xs text-white/30 mt-3 text-left">{tx.footerTagline}</p>
                 </div>
 
               {/* Link Columns Container */}
@@ -571,7 +620,7 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
                     className="w-full flex items-center justify-between py-3 sm:py-0 sm:cursor-default"
                     aria-expanded={!!openColumns["resources"]}
                   >
-                    <h4 className="text-sm font-bold text-white sm:mb-4 sm:pb-2 sm:border-b sm:border-white/[0.06] w-full text-left">Resources</h4>
+                    <h4 className="text-sm font-bold text-white sm:mb-4 sm:pb-2 sm:border-b sm:border-white/[0.06] w-full text-left">{tx.resources}</h4>
                     <ChevronUp
                       className={`w-4 h-4 text-white/40 flex-shrink-0 transition-transform sm:hidden ${openColumns["resources"] ? "rotate-0" : "rotate-180"}`}
                     />
@@ -622,7 +671,7 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
                     className="w-full flex items-center justify-between py-3 sm:py-0 sm:cursor-default"
                     aria-expanded={!!openColumns["business"]}
                   >
-                    <h4 className="text-sm font-bold text-white sm:mb-4 sm:pb-2 sm:border-b sm:border-white/[0.06] w-full text-left">For Businesses</h4>
+                    <h4 className="text-sm font-bold text-white sm:mb-4 sm:pb-2 sm:border-b sm:border-white/[0.06] w-full text-left">{tx.forBusinesses}</h4>
                     <ChevronUp
                       className={`w-4 h-4 text-white/40 flex-shrink-0 transition-transform sm:hidden ${openColumns["business"] ? "rotate-0" : "rotate-180"}`}
                     />
@@ -672,7 +721,7 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
                     className="w-full flex items-center justify-between py-3 sm:py-0 sm:cursor-default"
                     aria-expanded={!!openColumns["community"]}
                   >
-                    <h4 className="text-sm font-bold text-white sm:mb-4 sm:pb-2 sm:border-b sm:border-white/[0.06] w-full text-left">Community</h4>
+                    <h4 className="text-sm font-bold text-white sm:mb-4 sm:pb-2 sm:border-b sm:border-white/[0.06] w-full text-left">{tx.community}</h4>
                     <ChevronUp
                       className={`w-4 h-4 text-white/40 flex-shrink-0 transition-transform sm:hidden ${openColumns["community"] ? "rotate-0" : "rotate-180"}`}
                     />
@@ -727,13 +776,13 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
               className="w-full md:cursor-default"
               aria-expanded={disclaimerOpen}
             >
-              <div className="flex items-center gap-3 md:gap-4 p-4 md:p-6 rounded-xl md:rounded-2xl bg-gradient-to-r from-[#E1251B]/[0.08] via-[#E1251B]/[0.04] to-transparent border border-[#E1251B]/15">
+                <div className="flex items-center gap-3 md:gap-4 p-4 md:p-6 rounded-xl md:rounded-2xl bg-gradient-to-r from-[#E1251B]/[0.08] via-[#E1251B]/[0.04] to-transparent border border-[#E1251B]/15">
                 <div className="w-10 h-10 rounded-lg bg-[#E1251B]/15 flex items-center justify-center flex-shrink-0">
                   <AlertCircle className="w-5 h-5 text-[#E1251B]" />
                 </div>
                 <div className="flex-1 min-w-0 text-left">
                   <div className="flex items-center justify-between gap-3">
-                    <strong className="text-[#E1251B] text-sm font-bold">Important Disclaimer</strong>
+                    <strong className="text-[#E1251B] text-sm font-bold">{tx.importantDisclaimer}</strong>
                     <ChevronUp
                       className={`w-4 h-4 text-[#E1251B]/70 flex-shrink-0 transition-transform md:hidden ${disclaimerOpen ? "rotate-0" : "rotate-180"}`}
                     />
@@ -748,17 +797,13 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
                         transition={{ duration: 0.22, ease: "easeInOut" }}
                         className="overflow-hidden text-sm text-white/60 leading-relaxed md:hidden"
                       >
-                        Calgary Konnect is an independent platform and is not affiliated with, endorsed by, or connected to the City of Calgary,
-                        the Government of Alberta, or any official government body. Information provided is for general reference only.
-                        Always verify details directly with service providers. For emergencies, call 911.
+                        {tx.disclaimerText}
                       </motion.p>
                     )}
                   </AnimatePresence>
                   {/* Always visible on md+ */}
                   <p className="hidden md:block mt-1 text-sm text-white/60 leading-relaxed">
-                    Calgary Konnect is an independent platform and is not affiliated with, endorsed by, or connected to the City of Calgary,
-                    the Government of Alberta, or any official government body. Information provided is for general reference only.
-                    Always verify details directly with service providers. For emergencies, call 911.
+                    {tx.disclaimerText}
                   </p>
                 </div>
               </div>

@@ -10,13 +10,34 @@ import {
   TrendingUp, PanelRightClose, PanelRightOpen, Search, MapPin,
 } from "lucide-react";
 import type { Resource, Language } from "@/lib/types";
-import { translateBatch } from "@/lib/translate";
+import { useTranslations, registerStrings, translateDynamic } from "@/lib/translation-context";
 import dynamic from "next/dynamic";
 
 // Lazy-load the 921-line pulse panel — only fetched when visible
 const CalgaryPulsePanel = dynamic(
   () => import("@/components/calgary-pulse-panel").then(m => ({ default: m.CalgaryPulsePanel })),
   { ssr: false }
+);
+
+// Register all static UI strings so the TranslationProvider pre-fetches them.
+registerStrings(
+  "I connect Calgary.",
+  "How can I help you today?",
+  "Try asking",
+  "How do I find affordable housing?",
+  "I'm new to Calgary — where do I start?",
+  "I'm visiting — what should I see?",
+  "Help me find a job or training",
+  "Ask Askonnect anything...",
+  "Recommended Resources",
+  "Search live",
+  "Calgary Pulse",
+  "Live insights from your city",
+  "How do I apply for rental assistance?",
+  "Where can I get free tax help?",
+  "What programs help with childcare costs?",
+  "How do I find ESL classes near me?",
+  "Popular questions",
 );
 
 // Popular chat questions shown below the pulse panel
@@ -37,6 +58,27 @@ const examplePrompts = [
 
 export default function AITab() {
   const { activeLanguage, chatMessages, addChatMessage } = useAppStore();
+  const tx = useTranslations({
+    headline: "I connect Calgary.",
+    subheadline: "How can I help you today?",
+    tryAsking: "Try asking",
+    placeholder: "Ask Askonnect anything...",
+    recommendedResources: "Recommended Resources",
+    searchLive: "Search live",
+    calgaryPulse: "Calgary Pulse",
+    liveInsights: "Live insights from your city",
+    popularQuestions: "Popular questions",
+    prompt1: "How do I find affordable housing?",
+    prompt2: "I'm new to Calgary — where do I start?",
+    prompt3: "I'm visiting — what should I see?",
+    prompt4: "Help me find a job or training",
+    q1: "How do I apply for rental assistance?",
+    q2: "Where can I get free tax help?",
+    q3: "What programs help with childcare costs?",
+    q4: "How do I find ESL classes near me?",
+  });
+  const translatedPrompts = [tx.prompt1, tx.prompt2, tx.prompt3, tx.prompt4];
+  const translatedQuestions = [tx.q1, tx.q2, tx.q3, tx.q4];
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [pulseOpen, setPulseOpen] = useState(true);
@@ -202,8 +244,8 @@ export default function AITab() {
                       transition={{ delay: 0.18 }}
                       className="text-lg md:text-xl lg:text-2xl font-bold tracking-tight text-balance text-left leading-snug"
                     >
-                      I connect Calgary.{" "}
-                      <span className="text-foreground/60 font-medium">How can I help you today?</span>
+                      {tx.headline}{" "}
+                      <span className="text-foreground/60 font-medium">{tx.subheadline}</span>
                     </motion.h1>
                   </motion.div>
 
@@ -215,17 +257,17 @@ export default function AITab() {
                     className="flex flex-col items-center gap-3"
                   >
                     <p className="text-xs font-semibold uppercase tracking-[0.15em] text-foreground/40">
-                      Try asking
+                      {tx.tryAsking}
                     </p>
                     <div className="flex flex-wrap justify-center gap-2 md:gap-2.5">
-                      {examplePrompts.map((prompt, index) => (
+                      {translatedPrompts.map((prompt, index) => (
                         <motion.button
-                          key={prompt}
+                          key={examplePrompts[index]}
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 0.5 + index * 0.06 }}
                           whileTap={{ scale: 0.97 }}
-                          onClick={() => handleSuggestionClick(prompt)}
+                          onClick={() => handleSuggestionClick(examplePrompts[index])}
                           className="rounded-full border border-foreground/10 bg-foreground/[0.04] px-4 py-2.5 text-sm font-medium text-foreground/75 transition-all hover:border-[#38BDF8]/40 hover:bg-[#38BDF8]/10 hover:text-foreground"
                         >
                           {prompt}
@@ -288,7 +330,7 @@ export default function AITab() {
                           {message.role === "assistant" && message.resources && message.resources.length > 0 && (
                             <div className="mt-4 space-y-3">
                               <p className="text-xs font-medium text-[var(--foreground-muted)] uppercase tracking-wider">
-                                Recommended Resources
+                                {tx.recommendedResources}
                               </p>
                               {message.resources.map((resourceId) => {
                                 const resource = resources.find(r => r.id === resourceId);
@@ -301,7 +343,7 @@ export default function AITab() {
                           {message.role === "assistant" && message.webLinks && message.webLinks.length > 0 && (
                             <div className="mt-4">
                               <p className="text-xs font-medium text-[var(--foreground-muted)] uppercase tracking-wider mb-2">
-                                Search live
+                                {tx.searchLive}
                               </p>
                               <div className="flex flex-wrap gap-2">
                                 {message.webLinks.map((link, i) => {
@@ -367,7 +409,7 @@ export default function AITab() {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSend(input)}
-                  placeholder="Ask Askonnect anything..."
+                  placeholder={tx.placeholder}
                   className="flex-1 bg-transparent px-3 md:px-4 py-2.5 md:py-3 text-foreground placeholder:text-foreground/50 focus:outline-none text-sm md:text-base min-w-0"
                 />
                 <motion.button
@@ -396,8 +438,8 @@ export default function AITab() {
                   <TrendingUp className="w-6 h-6 xl:w-7 xl:h-7 text-[#1D4ED8]" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h2 className="text-xl xl:text-2xl font-bold tracking-tight leading-tight">Calgary Pulse</h2>
-                  <p className="text-sm xl:text-base text-foreground/50 mt-0.5 leading-relaxed">Live insights from your city</p>
+                  <h2 className="text-xl xl:text-2xl font-bold tracking-tight leading-tight">{tx.calgaryPulse}</h2>
+                  <p className="text-sm xl:text-base text-foreground/50 mt-0.5 leading-relaxed">{tx.liveInsights}</p>
                 </div>
                 <button
                   onClick={() => setPulseOpen(false)}
@@ -421,13 +463,13 @@ export default function AITab() {
             >
               <h3 className="text-lg xl:text-xl font-bold mb-5 flex items-center gap-3">
                 <TrendingUp className="w-5 h-5 xl:w-6 xl:h-6 text-[#1D4ED8]" />
-                Popular This Week
+                {tx.popularQuestions}
               </h3>
               <div className="space-y-3">
-                {popularQuestions.map((question, i) => (
+                {translatedQuestions.map((question, i) => (
                   <button
-                    key={i}
-                    onClick={() => handleSuggestionClick(question)}
+                    key={popularQuestions[i]}
+                    onClick={() => handleSuggestionClick(popularQuestions[i])}
                     className="w-full text-left p-4 xl:p-5 rounded-2xl bg-foreground/[0.03] border border-foreground/[0.06] hover:bg-foreground/[0.06] hover:border-foreground/[0.12] transition-all text-sm xl:text-base text-foreground/60 hover:text-foreground leading-relaxed"
                   >
                     {question}
@@ -474,7 +516,7 @@ function AIResourceCard({ resource }: { resource: Resource }) {
     if (staticDesc  === sourceDesc)  { toTranslate.push(sourceDesc);  slots.push("desc");  }
 
     if (toTranslate.length > 0) {
-      translateBatch(toTranslate, activeLanguage).then((results) => {
+      Promise.all(toTranslate.map(s => translateDynamic(s, activeLanguage))).then((results) => {
         if (cancelled) return;
         results.forEach((r, i) => {
           if (slots[i] === "title") setCardTitle(r);
@@ -513,10 +555,10 @@ function AIResourceCard({ resource }: { resource: Resource }) {
         </button>
       </div>
 
-      <h4 className="font-bold text-foreground text-base sm:text-lg md:text-xl mb-2 leading-snug text-pretty">
+      <h4 translate="no" className="notranslate font-bold text-foreground text-base sm:text-lg md:text-xl mb-2 leading-snug text-pretty">
         {cardTitle}
       </h4>
-      <p className="text-sm md:text-base text-foreground/60 leading-relaxed line-clamp-3">
+      <p translate="no" className="notranslate text-sm md:text-base text-foreground/60 leading-relaxed line-clamp-3">
         {cardDesc}
       </p>
 

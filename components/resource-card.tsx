@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAppStore } from "@/lib/store";
 import { categoryLabels } from "@/lib/data";
+import { translateDynamic } from "@/lib/translation-context";
 import type { Resource, Language, LocalizedString } from "@/lib/types";
 import {
   Heart,
@@ -113,15 +114,56 @@ export default function ResourceCard({
   const note = resourceNotes[resource.id];
   const isCompleted = note?.completed ?? false;
 
-  // ── Text content ──────────────────────────────────────────────────────
-  // Serve the best available static translation immediately.
-  // Dynamic translation for non-static languages is handled globally by
-  // TranslationProvider's DOM MutationObserver — no per-card API calls needed.
-  const title = resolveField(resource.title, activeLanguage);
-  const description = resolveField(resource.description, activeLanguage);
-  const eligibilityText = resource.eligibility
-    ? resolveField(resource.eligibility, activeLanguage)
-    : "";
+  // ── Runtime translation ────────────────────────────────────────────────
+  // Title and description start with the best available static translation.
+  // When the user selects a language that has no static entry, the Google
+  // Translate API fills it in asynchronously.
+  const [title, setTitle] = useState(() => resolveField(resource.title, activeLanguage));
+  const [description, setDescription] = useState(() => resolveField(resource.description, activeLanguage));
+  const [eligibilityText, setEligibilityText] = useState(
+    () => resource.eligibility ? resolveField(resource.eligibility, activeLanguage) : ""
+  );
+
+  useEffect(() => {
+    let cancelled = false;
+    const sourceTitle = resource.title.en;
+    const sourceDesc  = resource.description.en;
+    const sourceElig  = resource.eligibility?.en ?? "";
+
+    const staticTitle = resolveField(resource.title, activeLanguage);
+    const staticDesc  = resolveField(resource.description, activeLanguage);
+    const staticElig  = resource.eligibility
+      ? resolveField(resource.eligibility, activeLanguage)
+      : "";
+
+    const needsTitle = staticTitle === sourceTitle && activeLanguage !== "en";
+    const needsDesc  = staticDesc  === sourceDesc  && activeLanguage !== "en";
+    const needsElig  = sourceElig && staticElig === sourceElig && activeLanguage !== "en";
+
+    setTitle(staticTitle);
+    setDescription(staticDesc);
+    if (resource.eligibility) setEligibilityText(staticElig);
+
+    const jobs: Array<{ key: "title" | "desc" | "elig"; src: string }> = [];
+    if (needsTitle) jobs.push({ key: "title", src: sourceTitle });
+    if (needsDesc)  jobs.push({ key: "desc",  src: sourceDesc  });
+    if (needsElig && sourceElig) jobs.push({ key: "elig", src: sourceElig });
+
+    if (jobs.length > 0) {
+      Promise.all(jobs.map((j) => translateDynamic(j.src, activeLanguage))).then(
+        (results) => {
+          if (cancelled) return;
+          jobs.forEach((j, i) => {
+            if (j.key === "title") setTitle(results[i]);
+            if (j.key === "desc")  setDescription(results[i]);
+            if (j.key === "elig")  setEligibilityText(results[i]);
+          });
+        },
+      );
+    }
+
+    return () => { cancelled = true; };
+  }, [activeLanguage, resource.id]);
 
   const googleMapsUrl = resource.address
     ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(resource.address)}`
@@ -146,13 +188,17 @@ export default function ResourceCard({
       `}
       style={{ borderRadius: 6 }}
     >
-      <button
-        className="w-full text-left"
+      <div
+        role="button"
+        tabIndex={0}
+        aria-expanded={isExpanded}
+        className="w-full text-left cursor-pointer"
         onClick={() => setIsExpanded((v) => !v)}
+        onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setIsExpanded((v) => !v)}
       >
-        <div className="flex flex-col px-2.5 py-2 min-w-0 gap-1.5">
-          {/* Title */}
-          <p className="text-[14px] font-bold text-foreground leading-snug line-clamp-2">
+        <div className="flex flex-col px-3 md:px-3.5 py-2.5 md:py-3 min-w-0 gap-2">
+          {/* Title — localized by the translation hook; skip auto-translate */}
+          <p translate="no" className="notranslate text-[14px] md:text-base font-bold text-foreground leading-snug line-clamp-2">
             {title}
           </p>
 
@@ -198,7 +244,7 @@ export default function ResourceCard({
             </div>
           </div>
         </div>
-      </button>
+      </div>
 
         {/* Expanded detail */}
         <AnimatePresence initial={false}>
@@ -210,8 +256,8 @@ export default function ResourceCard({
               transition={{ duration: 0.2 }}
               className="overflow-hidden"
             >
-              <div className="px-4 pb-4 border-t border-foreground/[0.06] pt-3 space-y-3">
-                <p className="text-sm text-foreground/75 leading-relaxed">
+              <div className="px-4 md:px-5 pb-4 md:pb-5 border-t border-foreground/[0.06] pt-4 md:pt-5 space-y-3 md:space-y-4">
+                <p translate="no" className="notranslate text-sm md:text-base text-foreground/75 leading-relaxed md:leading-loose">
                   {resource.summary?.[activeLanguage] || description}
                 </p>
                 {resource.cost && (
@@ -256,16 +302,19 @@ export default function ResourceCard({
       }`}
     >
       {/* ── Collapsed header ── */}
-      <button
-        className="w-full text-left"
-        onClick={() => setIsExpanded((v) => !v)}
+      <div
+        role="button"
+        tabIndex={0}
         aria-expanded={isExpanded}
+        className="w-full text-left cursor-pointer"
+        onClick={() => setIsExpanded((v) => !v)}
+        onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setIsExpanded((v) => !v)}
       >
         <div className="flex items-center gap-2 px-3 py-3 min-w-0">
           {/* Left: title + inline tags badge row */}
           <div className="flex-1 min-w-0">
-            {/* Title — larger on desktop for clear visual hierarchy */}
-            <h3 className="font-bold text-[15px] md:text-lg leading-snug text-foreground mb-1.5">
+            {/* Title — full width, wraps naturally (localized by hook) */}
+            <h3 translate="no" className="notranslate font-bold text-[15px] md:text-lg leading-snug text-foreground mb-1.5">
               {title}
             </h3>
             {/* Tags row — sit below title, flush left, no indent */}
@@ -273,7 +322,8 @@ export default function ResourceCard({
               {resource.category.slice(0, 3).map((cat) => (
                 <span
                   key={cat}
-                  className="px-1.5 py-px rounded text-[10px] font-medium bg-[#1D4ED8]/10 dark:bg-sky-500/15 text-[#1D4ED8] dark:text-sky-400 leading-tight"
+                  translate="no"
+                  className="notranslate px-1.5 py-px rounded text-[10px] font-medium bg-[#1D4ED8]/10 dark:bg-sky-500/15 text-[#1D4ED8] dark:text-sky-400 leading-tight"
                 >
                   {categoryLabels[cat]?.[activeLanguage] || cat}
                 </span>
@@ -311,7 +361,7 @@ export default function ResourceCard({
             />
           </div>
         </div>
-      </button>
+      </div>
 
       {/* ── Expanded content ── */}
       <AnimatePresence initial={false}>
@@ -324,8 +374,8 @@ export default function ResourceCard({
             className="overflow-hidden"
           >
             <div className="px-4 pb-4 border-t border-foreground/[0.06] pt-3 space-y-3">
-              {/* Description — readable contrast, not muted */}
-              <p className="text-sm md:text-[15px] text-foreground/80 leading-relaxed">
+              {/* Description — localized by hook; skip auto-translate */}
+              <p translate="no" className="notranslate text-sm md:text-[15px] text-foreground/80 leading-relaxed">
                 {description}
               </p>
 
