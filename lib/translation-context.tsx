@@ -75,6 +75,32 @@ export function registerStrings(...strings: string[]) {
 }
 
 // ---------------------------------------------------------------------------
+// Helper: Fix common translation API issues (e.g., malformed Spanish punctuation)
+// ---------------------------------------------------------------------------
+function cleanTranslation(text: string, lang: Language): string {
+  if (lang !== "es") return text;
+  
+  // Fix Spanish question marks that appear mid-sentence or in wrong position
+  // Example: "Qué es lo que tú ¿necesidad?" → "¿Qué es lo que tú necesidad?"
+  if (text.includes("¿") && !text.startsWith("¿")) {
+    // Move opening question mark to the beginning
+    const withoutQMarks = text.replace(/¿/g, "");
+    if (withoutQMarks.includes("?")) {
+      // Ensure proper Spanish question mark format: ¿...?
+      const cleanedContent = withoutQMarks.replace(/\?/g, "");
+      return `¿${cleanedContent}?`;
+    }
+  }
+  
+  // Fix double question marks
+  if (text.includes("¿?") || text.includes("?¿")) {
+    return text.replace(/¿\?|?\¿/g, "?");
+  }
+  
+  return text;
+}
+
+// ---------------------------------------------------------------------------
 // Batch API call
 // ---------------------------------------------------------------------------
 async function fetchTranslations(
@@ -93,7 +119,11 @@ async function fetchTranslations(
     const data = (await res.json()) as { translations: string[] };
     strings.forEach((s, i) => {
       const tx = data.translations[i];
-      if (tx && tx !== s) map.set(s, tx);
+      if (tx && tx !== s) {
+        // Clean up any malformed translations before caching
+        const cleaned = cleanTranslation(tx, lang);
+        map.set(s, cleaned);
+      }
     });
   } catch { /* network error — return empty, fallback to English */ }
   return map;
