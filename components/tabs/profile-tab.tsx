@@ -5,6 +5,7 @@ import { useAppStore } from "@/lib/store";
 import { languageNames, roleLabels } from "@/lib/data";
 import { LANGUAGES } from "@/lib/languages";
 import { useTranslation } from "@/lib/translate";
+import { Flag } from "@/components/flag";
 import { useAuth } from "@/components/auth-provider";
 import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
@@ -120,7 +121,7 @@ export default function ProfileTab() {
                 aria-label="Select language"
                 className="flex flex-col items-center justify-center gap-0.5 px-2 py-1.5 rounded-lg border border-[var(--border)] bg-[var(--card)] min-w-[44px] hover:border-[#1D4ED8]/50 transition-colors"
               >
-                <span className="text-base leading-none">{LANGUAGES.find(l => l.code === activeLanguage)?.flag}</span>
+                <Flag countryCode={LANGUAGES.find(l => l.code === activeLanguage)?.countryCode ?? "CA"} size={18} />
                 <span className="text-[9px] text-[var(--foreground-muted)] leading-none">
                   {activeLanguage.toUpperCase().replace("-CN", "")}
                 </span>
@@ -135,7 +136,7 @@ export default function ProfileTab() {
                     transition={{ duration: 0.15 }}
                     className="absolute right-0 top-full mt-1.5 w-48 rounded-xl bg-[var(--card)] border border-[var(--border)] shadow-xl overflow-hidden z-50"
                   >
-                    {LANGUAGES.map(({ code, flag, name }) => (
+                    {LANGUAGES.map(({ code, countryCode, name }) => (
                       <button
                         key={code}
                         onClick={() => { setActiveLanguage(code); setLangOpen(false); }}
@@ -145,7 +146,7 @@ export default function ProfileTab() {
                             : "text-[var(--foreground)]"
                         }`}
                       >
-                        <span className="text-base">{flag}</span>
+                        <Flag countryCode={countryCode} size={18} title={name} />
                         <span className="flex-1 text-left">{name}</span>
                         {activeLanguage === code && <Check className="w-3.5 h-3.5 flex-shrink-0" />}
                       </button>

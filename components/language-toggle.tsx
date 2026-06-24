@@ -5,6 +5,7 @@ import { useAppStore } from "@/lib/store";
 import { LANGUAGES } from "@/lib/languages";
 import type { Language } from "@/lib/types";
 import { Check } from "lucide-react";
+import { Flag } from "@/components/flag";
 
 /**
  * Language picker — compact dropdown anchored directly below the trigger.
@@ -60,9 +61,11 @@ export function LanguageToggle() {
           <text x="15" y="18" textAnchor="middle" fontSize="6.5" fill="white" fontWeight="bold" fontFamily="system-ui">A</text>
         </svg>
 
-        {/* Active flag + 2-letter code — fixed-width centered flag box keeps the
-            row balanced regardless of emoji baseline or code width (EN/SW/YK…). */}
-        <span className="inline-flex w-5 items-center justify-center text-base leading-none" aria-hidden="true">{current.flag}</span>
+        {/* Active flag + 2-letter code — real flag image (emoji flags don't
+            render on Windows/Chrome), fixed-width box keeps the row balanced. */}
+        <span className="inline-flex w-5 items-center justify-center leading-none">
+          <Flag countryCode={current.countryCode} size={18} />
+        </span>
         <span className="text-[11px] font-bold text-foreground/70 tracking-wider leading-none">{current.label}</span>
 
         {/* Chevron */}
@@ -103,7 +106,9 @@ export function LanguageToggle() {
                 }`}
               >
                 {/* Flag */}
-                <span className="text-[15px] leading-none w-5 flex-shrink-0">{lang.flag}</span>
+                <span className="inline-flex w-5 flex-shrink-0 items-center justify-center leading-none">
+                  <Flag countryCode={lang.countryCode} size={18} title={lang.nativeName} />
+                </span>
 
                 {/* 2-letter language code (or characters for CJK/Cyrillic) */}
                 <span

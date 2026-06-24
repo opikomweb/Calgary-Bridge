@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useAppStore } from "@/lib/store";
 import { languageNames, categoryLabels } from "@/lib/data";
 import { LANGUAGE_MAP } from "@/lib/languages";
+import { Flag } from "@/components/flag";
 import type { Language, ResourceCategory } from "@/lib/types";
 import { Globe, Compass, ChevronRight, ChevronLeft, ArrowLeft, Home, Scale, Briefcase, GraduationCap, Heart, Brain, Users, Clock, AlertTriangle, Handshake, Store, Palette } from "lucide-react";
 
@@ -305,7 +306,7 @@ function StepLanguage({
                 : "bg-[var(--surface)] border border-[var(--border)] hover:border-[var(--border-hover)]"
             }`}
           >
-            <span className="text-2xl leading-none">{meta?.flag}</span>
+            <Flag countryCode={meta?.countryCode ?? "CA"} size={32} className="shadow-sm" />
             <span className="text-xs font-semibold leading-tight">{languageNames[lang]}</span>
           </motion.button>
           );
