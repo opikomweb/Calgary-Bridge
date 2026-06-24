@@ -70,8 +70,34 @@ function persistCache(lang: Language, map: Map<string, string>) {
 // ---------------------------------------------------------------------------
 const registeredStrings = new Set<string>();
 
+// Listeners notified whenever NEW strings are registered. The provider
+// subscribes so it can translate strings contributed by lazily code-split
+// chunks (tabs/footer are next/dynamic with ssr:false — their module-level
+// registerStrings only runs when the chunk loads, long after the provider's
+// initial fetch). Without this, late-registered strings stay in English.
+const registryListeners = new Set<() => void>();
+
 export function registerStrings(...strings: string[]) {
-  for (const s of strings) if (s.trim()) registeredStrings.add(s.trim());
+  let added = false;
+  for (const s of strings) {
+    const t = s.trim();
+    if (t && !registeredStrings.has(t)) {
+      registeredStrings.add(t);
+      added = true;
+    }
+  }
+  if (added) registryListeners.forEach((fn) => fn());
+  if (typeof window !== "undefined") {
+    (window as unknown as { __reg?: number; __regList?: number }).__reg = registeredStrings.size;
+    (window as unknown as { __reg?: number; __regList?: number }).__regList = registryListeners.size;
+  }
+}
+
+function subscribeRegistry(fn: () => void): () => void {
+  registryListeners.add(fn);
+  return () => {
+    registryListeners.delete(fn);
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -132,7 +158,15 @@ export function TranslationProvider({ children }: { children: React.ReactNode })
   const activeLanguage = useAppStore((s) => s.activeLanguage);
   const [txMap, setTxMap] = useState<Map<string, string>>(new Map());
   const [loading, setLoading] = useState(false);
+  // Bumped whenever new strings are registered (e.g. a lazy tab chunk loads),
+  // so the translate effect re-runs and picks up the newly-registered strings.
+  const [registryVersion, setRegistryVersion] = useState(0);
   const runRef = useRef(0);
+
+  // Subscribe to registry growth from lazily-loaded chunks.
+  useEffect(() => {
+    return subscribeRegistry(() => setRegistryVersion((v) => v + 1));
+  }, []);
 
   useEffect(() => {
     // Apply RTL/LTR on <html> whenever language changes
@@ -148,34 +182,41 @@ export function TranslationProvider({ children }: { children: React.ReactNode })
 
     const run = ++runRef.current;
 
-    async function translate() {
-      setLoading(true);
+    // Debounce so a burst of registerStrings calls (multiple chunks loading
+    // at once) collapses into a single batched API request.
+    const timer = setTimeout(() => {
+      async function translate() {
+        setLoading(true);
 
-      const cached = loadCache(activeLanguage);
+        const cached = loadCache(activeLanguage);
 
-      // Step 1: populate txMap from cache immediately for instant partial render
-      if (cached.size > 0) {
-        setTxMap(new Map(cached));
+        // Step 1: populate txMap from cache immediately for instant partial render
+        if (cached.size > 0) {
+          setTxMap(new Map(cached));
+        }
+
+        // Step 2: find strings not yet in cache
+        const all = Array.from(registeredStrings);
+        const missing = all.filter((s) => !cached.has(s));
+        console.log("[v0] translate run: lang=", activeLanguage, "registered=", all.length, "missing=", missing.length, "sampleMissing=", missing.slice(0, 3));
+
+        if (missing.length > 0) {
+          const fresh = await fetchTranslations(missing, activeLanguage);
+          if (run !== runRef.current) return; // language changed mid-flight
+
+          fresh.forEach((v, k) => cached.set(k, v));
+          persistCache(activeLanguage, cached);
+          setTxMap(new Map(cached));
+        }
+
+        if (run === runRef.current) setLoading(false);
       }
 
-      // Step 2: find strings not yet in cache
-      const all = Array.from(registeredStrings);
-      const missing = all.filter((s) => !cached.has(s));
+      translate();
+    }, 120);
 
-      if (missing.length > 0) {
-        const fresh = await fetchTranslations(missing, activeLanguage);
-        if (run !== runRef.current) return; // language changed mid-flight
-
-        fresh.forEach((v, k) => cached.set(k, v));
-        persistCache(activeLanguage, cached);
-        setTxMap(new Map(cached));
-      }
-
-      if (run === runRef.current) setLoading(false);
-    }
-
-    translate();
-  }, [activeLanguage]);
+    return () => clearTimeout(timer);
+  }, [activeLanguage, registryVersion]);
 
   const value = useMemo<TranslationContextValue>(
     () => ({
