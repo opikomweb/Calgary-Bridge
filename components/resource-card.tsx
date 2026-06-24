@@ -203,7 +203,7 @@ export default function ResourceCard({
       >
         <div className="flex flex-col px-2.5 py-2 min-w-0 gap-1.5">
           {/* Title — localized by the translation hook; skip auto-translate */}
-          <p translate="no" className="notranslate text-[11.5px] font-semibold text-foreground leading-snug line-clamp-2">
+          <p translate="no" className="notranslate text-xs md:text-sm font-bold text-foreground leading-snug line-clamp-2">
             {title}
           </p>
 
@@ -319,7 +319,7 @@ export default function ResourceCard({
           {/* Left: title + inline tags badge row */}
           <div className="flex-1 min-w-0">
             {/* Title — full width, wraps naturally (localized by hook) */}
-            <h3 translate="no" className="notranslate font-semibold text-sm leading-snug text-foreground mb-1">
+            <h3 translate="no" className="notranslate font-bold text-base md:text-lg leading-snug text-foreground mb-2">
               {title}
             </h3>
             {/* Tags row — sit below title, flush left, no indent */}
