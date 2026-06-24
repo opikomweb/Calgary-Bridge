@@ -87,10 +87,6 @@ export function registerStrings(...strings: string[]) {
     }
   }
   if (added) registryListeners.forEach((fn) => fn());
-  if (typeof window !== "undefined") {
-    (window as unknown as { __reg?: number; __regList?: number }).__reg = registeredStrings.size;
-    (window as unknown as { __reg?: number; __regList?: number }).__regList = registryListeners.size;
-  }
 }
 
 function subscribeRegistry(fn: () => void): () => void {
@@ -158,76 +154,114 @@ export function TranslationProvider({ children }: { children: React.ReactNode })
   const activeLanguage = useAppStore((s) => s.activeLanguage);
   const [txMap, setTxMap] = useState<Map<string, string>>(new Map());
   const [loading, setLoading] = useState(false);
-  // Bumped whenever new strings are registered (e.g. a lazy tab chunk loads),
-  // so the translate effect re-runs and picks up the newly-registered strings.
-  const [registryVersion, setRegistryVersion] = useState(0);
   const runRef = useRef(0);
 
-  // Subscribe to registry growth from lazily-loaded chunks.
-  useEffect(() => {
-    return subscribeRegistry(() => setRegistryVersion((v) => v + 1));
+  // Strings requested via t() that are not yet translated. Captured during
+  // render so translation is fully render-driven — immune to registration
+  // timing and to module duplication across next/dynamic(ssr:false) chunks.
+  const pendingRef = useRef<Set<string>>(new Set());
+  const flushScheduledRef = useRef(false);
+  const [flushTick, setFlushTick] = useState(0);
+  // Keep a ref of the live txMap so the t() closure (recreated each render)
+  // and the flush effect always read the freshest translations.
+  const txMapRef = useRef(txMap);
+  txMapRef.current = txMap;
+
+  const scheduleFlush = React.useCallback(() => {
+    if (flushScheduledRef.current) return;
+    flushScheduledRef.current = true;
+    // Microtask debounce: collapse a whole render's worth of misses into one batch.
+    queueMicrotask(() => {
+      flushScheduledRef.current = false;
+      setFlushTick((n) => n + 1);
+    });
   }, []);
 
+  // Language change: set direction, seed from cache, and re-queue everything
+  // currently on screen (plus any module-registered strings) for translation.
   useEffect(() => {
-    // Apply RTL/LTR on <html> whenever language changes
     const meta = getLangMeta(activeLanguage);
     document.documentElement.lang = meta.googleCode;
     document.documentElement.dir = meta.rtl ? "rtl" : "ltr";
 
+    runRef.current++;
+
     if (activeLanguage === "en") {
+      pendingRef.current.clear();
       setTxMap(new Map());
       setLoading(false);
       return;
     }
 
-    const run = ++runRef.current;
+    const cached = loadCache(activeLanguage);
+    setTxMap(new Map(cached));
 
-    // Debounce so a burst of registerStrings calls (multiple chunks loading
-    // at once) collapses into a single batched API request.
-    const timer = setTimeout(() => {
-      async function translate() {
-        setLoading(true);
+    // Seed pending with any module-registered strings missing from cache so we
+    // translate them even before they're rendered (e.g. off-screen tabs).
+    registeredStrings.forEach((s) => {
+      if (!cached.has(s)) pendingRef.current.add(s);
+    });
+    if (pendingRef.current.size > 0) scheduleFlush();
+  }, [activeLanguage, scheduleFlush]);
 
-        const cached = loadCache(activeLanguage);
-
-        // Step 1: populate txMap from cache immediately for instant partial render
-        if (cached.size > 0) {
-          setTxMap(new Map(cached));
+  // Whenever new strings get registered by a late-loading chunk, queue them.
+  useEffect(() => {
+    return subscribeRegistry(() => {
+      if (activeLanguage === "en") return;
+      const cached = txMapRef.current;
+      let added = false;
+      registeredStrings.forEach((s) => {
+        if (!cached.has(s) && !pendingRef.current.has(s)) {
+          pendingRef.current.add(s);
+          added = true;
         }
+      });
+      if (added) scheduleFlush();
+    });
+  }, [activeLanguage, scheduleFlush]);
 
-        // Step 2: find strings not yet in cache
-        const all = Array.from(registeredStrings);
-        const missing = all.filter((s) => !cached.has(s));
-        console.log("[v0] translate run: lang=", activeLanguage, "registered=", all.length, "missing=", missing.length, "sampleMissing=", missing.slice(0, 3));
+  // Flush: translate all pending strings in one batched request.
+  useEffect(() => {
+    if (activeLanguage === "en") return;
+    const pending = Array.from(pendingRef.current).filter(
+      (s) => !txMapRef.current.has(s),
+    );
+    if (pending.length === 0) return;
 
-        if (missing.length > 0) {
-          const fresh = await fetchTranslations(missing, activeLanguage);
-          if (run !== runRef.current) return; // language changed mid-flight
+    const run = runRef.current;
+    setLoading(true);
 
-          fresh.forEach((v, k) => cached.set(k, v));
-          persistCache(activeLanguage, cached);
-          setTxMap(new Map(cached));
-        }
-
-        if (run === runRef.current) setLoading(false);
+    fetchTranslations(pending, activeLanguage).then((fresh) => {
+      if (run !== runRef.current) return; // language changed mid-flight
+      pending.forEach((s) => pendingRef.current.delete(s));
+      if (fresh.size > 0) {
+        const merged = new Map(txMapRef.current);
+        fresh.forEach((v, k) => merged.set(k, v));
+        persistCache(activeLanguage, merged);
+        setTxMap(merged);
       }
-
-      translate();
-    }, 120);
-
-    return () => clearTimeout(timer);
-  }, [activeLanguage, registryVersion]);
+      setLoading(false);
+    });
+  }, [flushTick, activeLanguage]);
 
   const value = useMemo<TranslationContextValue>(
     () => ({
       t: (english: string) => {
         if (activeLanguage === "en") return english;
-        return txMap.get(english.trim()) ?? english;
+        const key = english.trim();
+        const hit = txMap.get(key);
+        if (hit) return hit;
+        // Cache miss — record for the next batched fetch.
+        if (key && !pendingRef.current.has(key)) {
+          pendingRef.current.add(key);
+          scheduleFlush();
+        }
+        return english;
       },
       loading,
       language: activeLanguage,
     }),
-    [txMap, loading, activeLanguage],
+    [txMap, loading, activeLanguage, scheduleFlush],
   );
 
   return (
