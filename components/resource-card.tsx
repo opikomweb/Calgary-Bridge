@@ -197,7 +197,7 @@ export default function ResourceCard({
         onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setIsExpanded((v) => !v)}
       >
         <div className="flex flex-col px-3 md:px-3.5 py-2.5 md:py-3 min-w-0 gap-2">
-          {/* Title — localized by the translation hook; skip auto-translate */}
+          {/* Title — localized by hook; no auto-translate */}
           <p translate="no" className="notranslate text-[14px] md:text-base font-bold text-foreground leading-snug line-clamp-2">
             {title}
           </p>
