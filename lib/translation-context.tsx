@@ -205,3 +205,22 @@ export function useTranslations<T extends Record<string, string>>(
 export function useTranslationContext() {
   return useContext(TranslationContext);
 }
+
+/**
+ * Translate a single dynamic string (e.g. resource title from data) that was
+ * not pre-registered. Checks the shared per-language cache first; only hits
+ * the API on a cache miss. Resolves to English immediately if lang === "en".
+ */
+export async function translateDynamic(
+  text: string,
+  lang: Language,
+): Promise<string> {
+  if (!text.trim() || lang === "en") return text;
+  const map = loadCache(lang);
+  if (map.has(text)) return map.get(text)!;
+  const result = await fetchTranslations([text], lang);
+  const tx = result.get(text) ?? text;
+  map.set(text, tx);
+  persistCache(lang, map);
+  return tx;
+}

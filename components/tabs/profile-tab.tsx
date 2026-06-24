@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect, Suspense, lazy } from "react";
 import { useAppStore } from "@/lib/store";
 import { languageNames, roleLabels } from "@/lib/data";
 import { LANGUAGES } from "@/lib/languages";
-import { useTranslation } from "@/lib/translate";
+import { useTranslations, registerStrings } from "@/lib/translation-context";
 import { Flag } from "@/components/flag";
 import { useAuth } from "@/components/auth-provider";
 import { motion, AnimatePresence } from "framer-motion";
@@ -36,6 +36,29 @@ import type { Language, UserRole } from "@/lib/types";
 
 type Panel = "notifications" | "privacy" | "help" | "rate";
 
+registerStrings(
+  "Select who you are...",
+  "Your name",
+  "Sign in to sync across devices",
+  "Saved", "Priorities",
+  "I am a...", "Settings", "Account",
+  "Notifications",
+  "Get alerts about new resources, deadlines, and seasonal supports.",
+  "Enable notifications",
+  "Privacy",
+  "Calgary Connect stores your saved resources and preferences. When signed in, they sync securely to your account. We never sell your data.",
+  "Clear data on this device",
+  "Help & Support",
+  "Need a hand? Reach Alberta's free 24/7 community help line, or email us.",
+  "Call 211 Alberta",
+  "Rate Calgary Connect",
+  "Thank you for your feedback!",
+  "How are we doing? Tap a star.",
+  "Sign Out", "Sign In", "Sign Up",
+  "Made with care for Calgary residents",
+  "Calgary Pulse",
+);
+
 export default function ProfileTab() {
   const {
     activeLanguage,
@@ -58,9 +81,33 @@ export default function ProfileTab() {
 
   const roles: UserRole[] = ["newcomer", "senior", "business", "ngo", "creator", "family", "student"];
 
-  // <option> text is skipped by the page auto-translator, so localize the
-  // placeholder explicitly via the translation hook.
-  const selectPlaceholder = useTranslation("Select who you are...", activeLanguage);
+  const tx = useTranslations({
+    selectPlaceholder: "Select who you are...",
+    yourName: "Your name",
+    signInSync: "Sign in to sync across devices",
+    saved: "Saved",
+    priorities: "Priorities",
+    iAma: "I am a...",
+    settings: "Settings",
+    account: "Account",
+    notifications: "Notifications",
+    notificationsDesc: "Get alerts about new resources, deadlines, and seasonal supports.",
+    enableNotifications: "Enable notifications",
+    privacy: "Privacy",
+    privacyDesc: "Calgary Connect stores your saved resources and preferences. When signed in, they sync securely to your account. We never sell your data.",
+    clearData: "Clear data on this device",
+    helpSupport: "Help & Support",
+    helpDesc: "Need a hand? Reach Alberta's free 24/7 community help line, or email us.",
+    call211: "Call 211 Alberta",
+    rateApp: "Rate Calgary Connect",
+    thankYou: "Thank you for your feedback!",
+    howAreWe: "How are we doing? Tap a star.",
+    signOut: "Sign Out",
+    signIn: "Sign In",
+    signUp: "Sign Up",
+    madeWithCare: "Made with care for Calgary residents",
+    calgaryPulse: "Calgary Pulse",
+  });
 
   const displayName = user?.name || userName;
 
@@ -97,7 +144,7 @@ export default function ProfileTab() {
               type="text"
               value={displayName}
               onChange={(e) => setUserName(e.target.value)}
-              placeholder="Your name"
+              placeholder={tx.yourName}
               className="text-base font-bold bg-transparent border-none outline-none w-full placeholder:text-[var(--foreground-muted)] leading-tight"
             />
             <p className="text-xs text-[var(--foreground-muted)] truncate leading-tight mt-0.5">
@@ -105,14 +152,14 @@ export default function ProfileTab() {
                 ? user.email
                 : selectedRole
                   ? roleLabels[selectedRole]?.en
-                  : "Sign in to sync across devices"}
+                  : tx.signInSync}
             </p>
           </div>
 
           {/* Mini stats */}
           <div className="flex items-center gap-1.5 flex-shrink-0">
-            <MiniStat value={bookmarkedResources.length} label="Saved" color="#1D4ED8" />
-            <MiniStat value={priorities.length} label="Priorities" color="#E1251B" />
+            <MiniStat value={bookmarkedResources.length} label={tx.saved} color="#1D4ED8" />
+            <MiniStat value={priorities.length} label={tx.priorities} color="#E1251B" />
 
             {/* Language flag dropdown — native names, never auto-translate */}
             <div translate="no" className="notranslate relative" ref={langRef}>
@@ -171,7 +218,7 @@ export default function ProfileTab() {
 
           {/* A — "I am a..." (mobile 1st · desktop top-left) */}
           <div className="lg:col-start-1 lg:row-start-1">
-              <Section icon={<User className="h-4 w-4 text-[#1D4ED8]" />} title="I am a..." delay={0.05}>
+              <Section icon={<User className="h-4 w-4 text-[#1D4ED8]" />} title={tx.iAma} delay={0.05}>
                 <div className="relative">
                   <select
                     value={selectedRole || ""}
@@ -179,7 +226,7 @@ export default function ProfileTab() {
                     aria-label="Select your role"
                     className="w-full appearance-none rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-3 pr-10 text-sm font-medium text-[var(--foreground)] outline-none transition-colors focus:border-[#1D4ED8] focus:ring-2 focus:ring-[#1D4ED8]/20"
                   >
-                    <option value="" disabled>{selectPlaceholder}</option>
+                    <option value="" disabled>{tx.selectPlaceholder}</option>
                     {roles.map((role) => (
                       <option key={role} value={role}>
                         {roleLabels[role]?.[activeLanguage] || roleLabels[role]?.en}
@@ -194,35 +241,34 @@ export default function ProfileTab() {
           {/* B — Settings + Account (mobile 2nd · desktop right column, spans both rows) */}
           <div className="lg:col-start-2 lg:row-start-1 lg:row-span-2 space-y-5 md:space-y-8">
             {/* Settings */}
-            <Section icon={<Settings className="h-4 w-4 text-[#1D4ED8]" />} title="Settings" delay={0.1}>
+            <Section icon={<Settings className="h-4 w-4 text-[#1D4ED8]" />} title={tx.settings} delay={0.1}>
               <div className="bg-[var(--card)] border border-[var(--border)] rounded-xl overflow-hidden divide-y divide-[var(--border)]">
                 <SettingsRow
                   icon={<Bell className="h-4 w-4" />}
-                  label="Notifications"
+                  label={tx.notifications}
                   open={openPanel === "notifications"}
                   onClick={() => togglePanel("notifications")}
                 >
                   <div className="flex items-center justify-between gap-4">
                     <p className="text-sm text-foreground/70 leading-relaxed">
-                      Get alerts about new resources, deadlines, and seasonal supports.
+                      {tx.notificationsDesc}
                     </p>
                     <Toggle
                       checked={notificationsEnabled}
                       onChange={setNotificationsEnabled}
-                      label="Enable notifications"
+                      label={tx.enableNotifications}
                     />
                   </div>
                 </SettingsRow>
 
                 <SettingsRow
                   icon={<Shield className="h-4 w-4" />}
-                  label="Privacy"
+                  label={tx.privacy}
                   open={openPanel === "privacy"}
                   onClick={() => togglePanel("privacy")}
                 >
                   <p className="text-sm text-foreground/70 leading-relaxed mb-3">
-                    Calgary Connect stores your saved resources and preferences. When signed in,
-                    they sync securely to your account. We never sell your data.
+                    {tx.privacyDesc}
                   </p>
                   <button
                     onClick={() => {
@@ -234,22 +280,22 @@ export default function ProfileTab() {
                     className="flex items-center gap-2 text-sm font-semibold text-[#E1251B] hover:underline"
                   >
                     <Trash2 className="h-4 w-4" />
-                    Clear data on this device
+                    {tx.clearData}
                   </button>
                 </SettingsRow>
 
                 <SettingsRow
                   icon={<HelpCircle className="h-4 w-4" />}
-                  label="Help & Support"
+                  label={tx.helpSupport}
                   open={openPanel === "help"}
                   onClick={() => togglePanel("help")}
                 >
                   <p className="text-sm text-foreground/70 leading-relaxed mb-3">
-                    Need a hand? Reach Alberta&apos;s free 24/7 community help line, or email us.
+                    {tx.helpDesc}
                   </p>
                   <div className="space-y-2">
                     <a href="tel:211" className="flex items-center gap-2.5 text-sm font-semibold text-[#1D4ED8] hover:underline">
-                      <Phone className="h-4 w-4" /> Call 211 Alberta
+                      <Phone className="h-4 w-4" /> {tx.call211}
                     </a>
                     <a
                       href="mailto:support@calgaryconnect.ca"
@@ -262,13 +308,13 @@ export default function ProfileTab() {
 
                 <SettingsRow
                   icon={<Star className="h-4 w-4" />}
-                  label="Rate Calgary Connect"
+                  label={tx.rateApp}
                   open={openPanel === "rate"}
                   onClick={() => togglePanel("rate")}
                   isLast
                 >
                   <p className="text-sm text-foreground/70 leading-relaxed mb-3">
-                    {rating > 0 ? "Thank you for your feedback!" : "How are we doing? Tap a star."}
+                    {rating > 0 ? tx.thankYou : tx.howAreWe}
                   </p>
                   <div className="flex items-center gap-1">
                     {[1, 2, 3, 4, 5].map((n) => (
@@ -291,7 +337,7 @@ export default function ProfileTab() {
             {/* Account */}
             <Section
               icon={<User className={`h-4 w-4 ${user ? "text-[#1D4ED8]" : "text-[#E1251B]"}`} />}
-              title="Account"
+              title={tx.account}
               delay={0.15}
             >
               {isPending ? (
@@ -302,7 +348,7 @@ export default function ProfileTab() {
                   className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#E1251B]/10 border border-[#E1251B]/30 text-[#E1251B] hover:bg-[#E1251B]/20 transition-colors text-sm font-semibold"
                 >
                   <LogOut className="h-4 w-4" />
-                  Sign Out
+                  {tx.signOut}
                 </button>
               ) : (
                 <div className="grid grid-cols-2 gap-2.5">
@@ -310,13 +356,13 @@ export default function ProfileTab() {
                     onClick={() => openAuth("sign-in")}
                     className="flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl border border-[#1D4ED8]/40 text-[#1D4ED8] text-sm font-semibold hover:bg-[#1D4ED8]/10 transition-colors"
                   >
-                    <LogIn className="h-4 w-4" /> Sign In
+                    <LogIn className="h-4 w-4" /> {tx.signIn}
                   </button>
                   <button
                     onClick={() => openAuth("sign-up")}
                     className="flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#E1251B] to-[#B91C1C] text-white text-sm font-semibold shadow-sm hover:shadow-md transition-all active:scale-[0.98]"
                   >
-                    <UserPlus className="h-4 w-4" /> Sign Up
+                    <UserPlus className="h-4 w-4" /> {tx.signUp}
                   </button>
                 </div>
               )}
@@ -325,7 +371,7 @@ export default function ProfileTab() {
             <div className="text-center lg:text-left">
               <p className="text-xs text-[var(--foreground-muted)]">Calgary Connect</p>
               <p className="text-xs text-[var(--foreground-muted)] mt-0.5">
-                Made with care for Calgary residents
+                {tx.madeWithCare}
               </p>
             </div>
           </div>
@@ -339,7 +385,7 @@ export default function ProfileTab() {
           >
             <div className="flex items-center gap-2 mb-3">
               <TrendingUp className="h-4 w-4 text-[#1D4ED8]" />
-              <h2 className="text-sm font-bold text-[var(--foreground)]">Calgary Pulse</h2>
+              <h2 className="text-sm font-bold text-[var(--foreground)]">{tx.calgaryPulse}</h2>
             </div>
             <CalgaryPulsePanel />
           </motion.div>

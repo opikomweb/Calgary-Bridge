@@ -1,19 +1,22 @@
 "use client";
 
 import { useAppStore } from "@/lib/store";
-import { resources, uiText, translations } from "@/lib/data";
-import { Heart, TrendingUp } from "lucide-react";
-import ResourceCard from "../resource-card";
-import dynamic from "next/dynamic";
-import { motion } from "framer-motion";
+import { resources } from "@/lib/data";
+import { useTranslations, registerStrings } from "@/lib/translation-context";
 
-const CalgaryPulsePanel = dynamic(
-  () => import("@/components/calgary-pulse-panel").then(m => ({ default: m.CalgaryPulsePanel })),
-  { ssr: false }
+registerStrings(
+  "Shortlist",
+  "Your shortlist is empty",
+  "Tap the heart icon on any resource to save it here",
 );
 
 export default function ShortlistTab() {
   const { activeLanguage, bookmarkedResources } = useAppStore();
+  const tx = useTranslations({
+    title: "Shortlist",
+    empty: "Your shortlist is empty",
+    emptyHint: "Tap the heart icon on any resource to save it here",
+  });
 
   const bookmarkedItems = resources.filter((resource) =>
     bookmarkedResources.includes(resource.id)
@@ -26,7 +29,7 @@ export default function ShortlistTab() {
         <div className="flex items-center gap-3">
           <Heart className="h-5 w-5 text-[#E1251B]" />
           <h2 className="text-xl font-bold">
-            {translations.shortlist?.[activeLanguage] ?? translations.shortlist?.en ?? "Shortlist"}
+            {tx.title}
           </h2>
           <span className="rounded-full bg-[#E1251B]/15 px-2.5 py-1 text-sm font-semibold text-[#E1251B]">
             {bookmarkedItems.length}
@@ -49,10 +52,10 @@ export default function ShortlistTab() {
                 <Heart className="h-7 w-7 text-[var(--foreground-muted)]" />
               </div>
               <p className="text-base font-semibold text-foreground/70">
-                {uiText.emptyShortlist?.[activeLanguage] ?? uiText.emptyShortlist?.en}
+                {tx.empty}
               </p>
               <p className="mt-1.5 text-sm text-[var(--foreground-muted)] max-w-xs leading-relaxed">
-                {uiText.emptyShortlistHint?.[activeLanguage] ?? uiText.emptyShortlistHint?.en}
+                {tx.emptyHint}
               </p>
             </div>
           ) : (

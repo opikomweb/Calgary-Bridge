@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAppStore } from "@/lib/store";
 import { categoryLabels } from "@/lib/data";
-import { translateBatch } from "@/lib/translate";
+import { translateDynamic } from "@/lib/translation-context";
 import type { Resource, Language, LocalizedString } from "@/lib/types";
 import {
   Heart,
@@ -148,22 +148,23 @@ export default function ResourceCard({
     setDescription(staticDesc);
     if (resource.eligibility) setEligibilityText(staticElig);
 
-    // Batch-translate anything that still needs it
-    const toTranslate: string[] = [];
-    const indices: ("title" | "desc" | "elig")[] = [];
-    if (needsTitle) { toTranslate.push(sourceTitle); indices.push("title"); }
-    if (needsDesc)  { toTranslate.push(sourceDesc);  indices.push("desc");  }
-    if (needsElig && sourceElig)  { toTranslate.push(sourceElig);  indices.push("elig");  }
+    // Translate anything that still needs it — shares the TranslationProvider cache.
+    const jobs: Array<{ key: "title" | "desc" | "elig"; src: string }> = [];
+    if (needsTitle) jobs.push({ key: "title", src: sourceTitle });
+    if (needsDesc)  jobs.push({ key: "desc",  src: sourceDesc  });
+    if (needsElig && sourceElig) jobs.push({ key: "elig", src: sourceElig });
 
-    if (toTranslate.length > 0) {
-      translateBatch(toTranslate, activeLanguage).then((results) => {
-        if (cancelled) return;
-        results.forEach((r, i) => {
-          if (indices[i] === "title") setTitle(r);
-          if (indices[i] === "desc")  setDescription(r);
-          if (indices[i] === "elig")  setEligibilityText(r);
-        });
-      });
+    if (jobs.length > 0) {
+      Promise.all(jobs.map((j) => translateDynamic(j.src, activeLanguage))).then(
+        (results) => {
+          if (cancelled) return;
+          jobs.forEach((j, i) => {
+            if (j.key === "title") setTitle(results[i]);
+            if (j.key === "desc")  setDescription(results[i]);
+            if (j.key === "elig")  setEligibilityText(results[i]);
+          });
+        },
+      );
     }
 
     return () => { cancelled = true; };
@@ -192,9 +193,13 @@ export default function ResourceCard({
       `}
       style={{ borderRadius: 6 }}
     >
-      <button
-        className="w-full text-left"
+      <div
+        role="button"
+        tabIndex={0}
+        aria-expanded={isExpanded}
+        className="w-full text-left cursor-pointer"
         onClick={() => setIsExpanded((v) => !v)}
+        onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setIsExpanded((v) => !v)}
       >
         <div className="flex flex-col px-2.5 py-2 min-w-0 gap-1.5">
           {/* Title — localized by the translation hook; skip auto-translate */}
@@ -244,7 +249,7 @@ export default function ResourceCard({
             </div>
           </div>
         </div>
-      </button>
+      </div>
 
         {/* Expanded detail */}
         <AnimatePresence initial={false}>
@@ -302,10 +307,13 @@ export default function ResourceCard({
       }`}
     >
       {/* ── Collapsed header ── */}
-      <button
-        className="w-full text-left"
-        onClick={() => setIsExpanded((v) => !v)}
+      <div
+        role="button"
+        tabIndex={0}
         aria-expanded={isExpanded}
+        className="w-full text-left cursor-pointer"
+        onClick={() => setIsExpanded((v) => !v)}
+        onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setIsExpanded((v) => !v)}
       >
         <div className="flex items-center gap-2 px-3 py-3 min-w-0">
           {/* Left: title + inline tags badge row */}
@@ -358,7 +366,7 @@ export default function ResourceCard({
             />
           </div>
         </div>
-      </button>
+      </div>
 
       {/* ── Expanded content ── */}
       <AnimatePresence initial={false}>
