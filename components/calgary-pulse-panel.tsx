@@ -863,7 +863,7 @@ export function CalgaryPulsePanel() {
         </AnimatePresence>
       </motion.div>
 
-      {/* ---- What's Happening in Calgary ---------------------------------- */}
+      {/* ---- Calgary Pulse news feed -------------------------------------- */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -874,7 +874,7 @@ export function CalgaryPulsePanel() {
           <div className="flex items-center gap-2">
             <Radio className="w-3.5 h-3.5 text-foreground/50 flex-shrink-0" />
             <p className="text-sm font-black text-foreground uppercase tracking-[0.06em]">
-              What&apos;s Happening in Calgary
+              Calgary Pulse
             </p>
           </div>
           <span className="flex items-center gap-1.5 text-[9px] text-foreground/45 font-semibold">
