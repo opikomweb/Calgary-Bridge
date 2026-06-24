@@ -869,18 +869,14 @@ export function CalgaryPulsePanel() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
       >
-        {/* Coloured section header band */}
-        <div className="flex items-center justify-between px-3 py-2.5 rounded-xl bg-[#E1251B] dark:bg-[#b91c1c] mb-3">
+        {/* Section header with deep blue styling */}
+        <div className="flex items-center justify-between px-3 py-2.5 rounded-xl bg-[#1D4ED8] dark:bg-[#1e40af] mb-3">
           <div className="flex items-center gap-2">
             <Radio className="w-3.5 h-3.5 text-white/80 flex-shrink-0" />
             <p className="text-[11px] font-black text-white uppercase tracking-[0.14em]">
               What&apos;s Happening in Calgary
             </p>
           </div>
-          <span className="flex items-center gap-1.5 text-[9px] text-white/65 font-semibold">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse inline-block" />
-            Live
-          </span>
         </div>
 
         {/* Source legend — compact inline row, no background pills */}

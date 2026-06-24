@@ -223,48 +223,8 @@ export default function ProfileTab() {
       <div className="px-4 md:px-8 py-5 md:py-8 max-w-5xl">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-8 items-start">
 
-          {/* LEFT COLUMN — Settings + Account first, then "I am a..." on desktop (Desktop Col 1) */}
+          {/* LEFT COLUMN — Settings + Account + "I am a..." (Desktop Col 1) */}
           <div className="space-y-5 md:space-y-8 lg:col-start-1 lg:row-start-1">
-            
-            {/* A — "I am a..." (mobile 1st · desktop top) */}
-            <Section icon={<User className="h-4 w-4 text-[#1D4ED8]" />} title={tx.iAma} delay={0.05}>
-              <div className="relative">
-                <select
-                  value={selectedRole || ""}
-                  onChange={(e) => setSelectedRole(e.target.value as UserRole)}
-                  aria-label="Select your role"
-                  className="w-full appearance-none rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-3 pr-10 text-sm font-medium text-[var(--foreground)] outline-none transition-colors focus:border-[#1D4ED8] focus:ring-2 focus:ring-[#1D4ED8]/20"
-                >
-                  <option value="" disabled>{tx.selectPlaceholder}</option>
-                  {roles.map((role) => (
-                    <option key={role} value={role}>
-                      {roleLabels[role]?.[activeLanguage] || roleLabels[role]?.en}
-                    </option>
-                  ))}
-                </select>
-                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--foreground-muted)]" />
-              </div>
-            </Section>
-
-            {/* Divider line */}
-            <div className="h-px bg-[var(--border)] hidden lg:block" />
-
-            {/* C — Calgary Pulse (moved here) */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-            >
-              <div className="flex items-center gap-2 mb-3">
-                <TrendingUp className="h-4 w-4 text-[#1D4ED8]" />
-                <h2 className="text-sm font-bold text-[var(--foreground)]">{tx.calgaryPulse}</h2>
-              </div>
-              <CalgaryPulsePanel />
-            </motion.div>
-          </div>
-
-          {/* RIGHT COLUMN — Calgary Pulse + What's Happening */}
-          <div className="lg:col-start-2 lg:row-start-1 space-y-5 md:space-y-8 order-3 lg:order-2">
             {/* Settings */}
             <Section icon={<Settings className="h-4 w-4 text-[#1D4ED8]" />} title={tx.settings} delay={0.1}>
               <div className="bg-[var(--card)] border border-[var(--border)] rounded-xl overflow-hidden divide-y divide-[var(--border)]">
@@ -392,6 +352,35 @@ export default function ProfileTab() {
                 </div>
               )}
             </Section>
+
+            {/* Divider line between left settings and right weather */}
+            <div className="h-px bg-[var(--border)]" />
+
+            {/* "I am a..." selector */}
+            <Section icon={<User className="h-4 w-4 text-[#1D4ED8]" />} title={tx.iAma} delay={0.05}>
+              <div className="relative">
+                <select
+                  value={selectedRole || ""}
+                  onChange={(e) => setSelectedRole(e.target.value as UserRole)}
+                  aria-label="Select your role"
+                  className="w-full appearance-none rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-3 pr-10 text-sm font-medium text-[var(--foreground)] outline-none transition-colors focus:border-[#1D4ED8] focus:ring-2 focus:ring-[#1D4ED8]/20"
+                >
+                  <option value="" disabled>{tx.selectPlaceholder}</option>
+                  {roles.map((role) => (
+                    <option key={role} value={role}>
+                      {roleLabels[role]?.[activeLanguage] || roleLabels[role]?.en}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--foreground-muted)]" />
+              </div>
+            </Section>
+          </div>
+
+          {/* RIGHT COLUMN — Calgary Pulse (includes What's Happening) (Desktop Col 2) */}
+          <div className="space-y-5 md:space-y-8 lg:col-start-2 lg:row-start-1">
+            {/* Calgary Pulse Panel — contains weather and What's Happening news */}
+            <CalgaryPulsePanel />
 
             <div className="text-center lg:text-left">
               <p className="text-xs text-[var(--foreground-muted)]">Calgary Connect</p>

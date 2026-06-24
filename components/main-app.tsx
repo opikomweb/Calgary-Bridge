@@ -30,6 +30,9 @@ const BusinessSubmission = dynamic(() => import("./business-submission"), { ssr:
 // Register navigation item labels for translation
 registerStrings(
   "Home", "Explore", "Askonnect", "Do Good", "Saved", "Profile",
+  "Appearance",
+  "RentShield",
+  "Emergency Hub",
 );
 
 export default function MainApp() {
@@ -70,6 +73,9 @@ export default function MainApp() {
     doGood: "Do Good",
     saved: "Saved",
     profile: "Profile",
+    appearance: "Appearance",
+    rentShield: "RentShield",
+    emergencyHub: "Emergency Hub",
   });
 
   // Create nav items with translated labels
@@ -150,7 +156,7 @@ export default function MainApp() {
             {/* Sidebar Action Buttons */}
             <div className="mt-auto space-y-2 py-5 border-t border-foreground/[0.06]">
               <div className="flex items-center justify-between rounded-xl bg-foreground/[0.03] border border-foreground/[0.06] px-4 py-3">
-                <span className="text-sm font-medium text-foreground/70">Appearance</span>
+                <span className="text-sm font-medium text-foreground/70">{tx.appearance}</span>
                 <ThemeToggle />
               </div>
               <button
@@ -158,14 +164,14 @@ export default function MainApp() {
                 className="flex w-full items-center gap-3 rounded-xl bg-foreground/[0.03] border border-foreground/[0.06] px-4 py-3 text-sm font-semibold text-foreground/70 transition-all duration-200 hover:bg-foreground/[0.07] hover:text-foreground"
               >
                 <Shield className="h-5 w-5 text-[#1D4ED8] dark:text-[#38BDF8] shrink-0" />
-                RentShield
+                {tx.rentShield}
               </button>
               <button
                 onClick={() => setShowEmergency(true)}
                 className="flex w-full items-center gap-3 rounded-xl bg-[#E1251B] px-4 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-[#B91C1C] hover:shadow-lg hover:shadow-red-700/30"
               >
                 <AlertTriangle className="h-5 w-5 shrink-0" />
-                Emergency Hub
+                {tx.emergencyHub}
               </button>
             </div>
           </nav>
@@ -258,7 +264,7 @@ export default function MainApp() {
 
               <div className="mt-6 space-y-2 pt-6 border-t border-foreground/[0.06]">
                 <div className="flex items-center justify-between rounded-xl bg-foreground/[0.03] border border-foreground/[0.06] px-4 py-3">
-                  <span className="text-sm font-medium text-foreground/70">Appearance</span>
+                  <span className="text-sm font-medium text-foreground/70">{tx.appearance}</span>
                   <ThemeToggle />
                 </div>
                 <button
@@ -269,7 +275,7 @@ export default function MainApp() {
                   className="flex w-full items-center gap-3 rounded-xl bg-foreground/[0.03] border border-foreground/[0.06] px-4 py-3 text-sm font-semibold text-foreground/70 hover:bg-foreground/[0.07] hover:text-foreground transition-colors"
                 >
                 <Shield className="h-5 w-5 text-[#1D4ED8] dark:text-[#38BDF8] shrink-0" />
-                  RentShield
+                  {tx.rentShield}
                 </button>
                 <button
                   onClick={() => {
@@ -279,7 +285,7 @@ export default function MainApp() {
                   className="flex w-full items-center gap-3 rounded-xl bg-[#E1251B] px-4 py-3 text-sm font-bold text-white hover:bg-[#B91C1C] transition-colors"
                 >
                   <AlertTriangle className="h-5 w-5 shrink-0" />
-                  Emergency Hub
+                  {tx.emergencyHub}
                 </button>
               </div>
             </motion.div>
