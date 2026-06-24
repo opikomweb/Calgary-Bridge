@@ -98,7 +98,7 @@ export default function ProfileTab() {
               {user
                 ? user.email
                 : selectedRole
-                  ? roleLabels[selectedRole]?.[activeLanguage] || roleLabels[selectedRole]?.en
+                  ? roleLabels[selectedRole]?.en
                   : "Sign in to sync across devices"}
             </p>
           </div>
@@ -108,8 +108,8 @@ export default function ProfileTab() {
             <MiniStat value={bookmarkedResources.length} label="Saved" color="#1D4ED8" />
             <MiniStat value={priorities.length} label="Priorities" color="#E1251B" />
 
-            {/* Language flag dropdown */}
-            <div className="relative" ref={langRef}>
+            {/* Language flag dropdown — native names, never auto-translate */}
+            <div translate="no" className="notranslate relative" ref={langRef}>
               <button
                 onClick={() => setLangOpen((o) => !o)}
                 aria-label="Select language"

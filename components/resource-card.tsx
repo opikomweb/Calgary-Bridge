@@ -197,8 +197,8 @@ export default function ResourceCard({
         onClick={() => setIsExpanded((v) => !v)}
       >
         <div className="flex flex-col px-2.5 py-2 min-w-0 gap-1.5">
-          {/* Title */}
-          <p className="text-[11.5px] font-semibold text-foreground leading-snug line-clamp-2">
+          {/* Title — localized by the translation hook; skip auto-translate */}
+          <p translate="no" className="notranslate text-[11.5px] font-semibold text-foreground leading-snug line-clamp-2">
             {title}
           </p>
 
@@ -257,7 +257,7 @@ export default function ResourceCard({
               className="overflow-hidden"
             >
               <div className="px-4 pb-4 border-t border-foreground/[0.06] pt-3 space-y-3">
-                <p className="text-xs text-foreground/60 leading-relaxed">
+                <p translate="no" className="notranslate text-xs text-foreground/60 leading-relaxed">
                   {resource.summary?.[activeLanguage] || description}
                 </p>
                 {resource.cost && (
@@ -310,8 +310,8 @@ export default function ResourceCard({
         <div className="flex items-center gap-2 px-3 py-3 min-w-0">
           {/* Left: title + inline tags badge row */}
           <div className="flex-1 min-w-0">
-            {/* Title — full width, wraps naturally */}
-            <h3 className="font-semibold text-sm leading-snug text-foreground mb-1">
+            {/* Title — full width, wraps naturally (localized by hook) */}
+            <h3 translate="no" className="notranslate font-semibold text-sm leading-snug text-foreground mb-1">
               {title}
             </h3>
             {/* Tags row — sit below title, flush left, no indent */}
@@ -319,7 +319,8 @@ export default function ResourceCard({
               {resource.category.slice(0, 3).map((cat) => (
                 <span
                   key={cat}
-                  className="px-1.5 py-px rounded text-[10px] font-medium bg-[#1D4ED8]/10 dark:bg-sky-500/15 text-[#1D4ED8] dark:text-sky-400 leading-tight"
+                  translate="no"
+                  className="notranslate px-1.5 py-px rounded text-[10px] font-medium bg-[#1D4ED8]/10 dark:bg-sky-500/15 text-[#1D4ED8] dark:text-sky-400 leading-tight"
                 >
                   {categoryLabels[cat]?.[activeLanguage] || cat}
                 </span>
@@ -370,8 +371,8 @@ export default function ResourceCard({
             className="overflow-hidden"
           >
             <div className="px-4 pb-4 border-t border-foreground/[0.06] pt-3 space-y-3">
-              {/* Description */}
-              <p className="text-xs md:text-sm text-[var(--foreground-muted)] leading-relaxed">
+              {/* Description — localized by hook; skip auto-translate */}
+              <p translate="no" className="notranslate text-xs md:text-sm text-[var(--foreground-muted)] leading-relaxed">
                 {description}
               </p>
 

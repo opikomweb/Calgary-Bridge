@@ -513,10 +513,10 @@ function AIResourceCard({ resource }: { resource: Resource }) {
         </button>
       </div>
 
-      <h4 className="font-bold text-foreground text-base sm:text-lg md:text-xl mb-2 leading-snug text-pretty">
+      <h4 translate="no" className="notranslate font-bold text-foreground text-base sm:text-lg md:text-xl mb-2 leading-snug text-pretty">
         {cardTitle}
       </h4>
-      <p className="text-sm md:text-base text-foreground/60 leading-relaxed line-clamp-3">
+      <p translate="no" className="notranslate text-sm md:text-base text-foreground/60 leading-relaxed line-clamp-3">
         {cardDesc}
       </p>
 
