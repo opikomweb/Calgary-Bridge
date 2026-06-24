@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAppStore } from "@/lib/store";
 import { categoryLabels } from "@/lib/data";
@@ -74,10 +74,7 @@ interface ResourceCardProps {
   onClaimBusiness?: (resourceId: string) => void;
 }
 
-/**
- * Resolves a LocalizedString for the active language.
- * Falls back to English when a translation isn't available yet.
- */
+/** Resolves a LocalizedString for the active language, falling back to English. */
 function resolveField(record: LocalizedString, lang: Language): string {
   return record[lang] ?? record.en;
 }
@@ -120,8 +117,6 @@ export default function ResourceCard({
   // Translate API fills it in asynchronously.
   const [title, setTitle] = useState(() => resolveField(resource.title, activeLanguage));
   const [description, setDescription] = useState(() => resolveField(resource.description, activeLanguage));
-  // Eligibility uses a ref+state pair so it's always accessible regardless of
-  // TS control-flow narrowing around the compact variant early return.
   const [eligibilityText, setEligibilityText] = useState(
     () => resource.eligibility ? resolveField(resource.eligibility, activeLanguage) : ""
   );
@@ -132,7 +127,6 @@ export default function ResourceCard({
     const sourceDesc  = resource.description.en;
     const sourceElig  = resource.eligibility?.en ?? "";
 
-    // Use static translation if available for this language
     const staticTitle = resolveField(resource.title, activeLanguage);
     const staticDesc  = resolveField(resource.description, activeLanguage);
     const staticElig  = resource.eligibility
@@ -143,12 +137,10 @@ export default function ResourceCard({
     const needsDesc  = staticDesc  === sourceDesc  && activeLanguage !== "en";
     const needsElig  = sourceElig && staticElig === sourceElig && activeLanguage !== "en";
 
-    // Set static values immediately
     setTitle(staticTitle);
     setDescription(staticDesc);
     if (resource.eligibility) setEligibilityText(staticElig);
 
-    // Translate anything that still needs it — shares the TranslationProvider cache.
     const jobs: Array<{ key: "title" | "desc" | "elig"; src: string }> = [];
     if (needsTitle) jobs.push({ key: "title", src: sourceTitle });
     if (needsDesc)  jobs.push({ key: "desc",  src: sourceDesc  });
@@ -202,8 +194,8 @@ export default function ResourceCard({
         onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setIsExpanded((v) => !v)}
       >
         <div className="flex flex-col px-3 md:px-3.5 py-2.5 md:py-3 min-w-0 gap-2">
-          {/* Title — localized by the translation hook; skip auto-translate */}
-          <p translate="no" className="notranslate text-sm md:text-base font-bold text-foreground leading-snug line-clamp-2">
+          {/* Title — localized by hook; no auto-translate */}
+          <p translate="no" className="notranslate text-[14px] md:text-base font-bold text-foreground leading-snug line-clamp-2">
             {title}
           </p>
 
@@ -319,7 +311,7 @@ export default function ResourceCard({
           {/* Left: title + inline tags badge row */}
           <div className="flex-1 min-w-0">
             {/* Title — full width, wraps naturally (localized by hook) */}
-            <h3 translate="no" className="notranslate font-bold text-base md:text-lg leading-snug text-foreground mb-2">
+            <h3 translate="no" className="notranslate font-bold text-[15px] md:text-lg leading-snug text-foreground mb-1.5">
               {title}
             </h3>
             {/* Tags row — sit below title, flush left, no indent */}
@@ -380,7 +372,7 @@ export default function ResourceCard({
           >
             <div className="px-4 pb-4 border-t border-foreground/[0.06] pt-3 space-y-3">
               {/* Description — localized by hook; skip auto-translate */}
-              <p translate="no" className="notranslate text-xs md:text-sm text-[var(--foreground-muted)] leading-relaxed">
+              <p translate="no" className="notranslate text-sm md:text-[15px] text-foreground/80 leading-relaxed">
                 {description}
               </p>
 

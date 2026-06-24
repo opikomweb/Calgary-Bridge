@@ -322,8 +322,8 @@ export default function HomeTab() {
                 transition={{ delay: 0.3 }}
                 className="text-center"
               >
-                <p className="text-xs font-semibold text-[#1D4ED8] dark:text-[#38BDF8] uppercase tracking-[0.15em] mb-3">{tx.startHere}</p>
-                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight">{tx.whatMost} <span className="text-calgary-red">{tx.calgarians}</span> {tx.sectionNeed}</h2>
+                <p className="text-xs font-bold text-[#1D4ED8] dark:text-[#38BDF8] uppercase tracking-[0.18em] mb-3">{tx.startHere}</p>
+                <h2 className="text-3xl md:text-4xl lg:text-[42px] font-bold tracking-tight">{tx.whatMost} <span className="text-calgary-red">{tx.calgarians}</span> {tx.sectionNeed}</h2>
               </motion.div>
             </div>
 
@@ -361,23 +361,23 @@ export default function HomeTab() {
                       </div>
                       
                       <div className="flex-1 flex flex-col items-center">
-                        <h3 className="text-base md:text-xl lg:text-2xl font-bold text-white mb-2 md:mb-3 leading-tight tracking-[-0.01em]">{pathway.solution}</h3>
-                        <p className="text-xs md:text-sm text-white/60 leading-relaxed line-clamp-2 md:line-clamp-none">{pathway.description}</p>
+                        <h3 className="text-lg md:text-2xl lg:text-[28px] font-bold text-white mb-2 md:mb-3 leading-tight tracking-[-0.02em]">{pathway.solution}</h3>
+                        <p className="text-sm md:text-base text-white/80 leading-relaxed line-clamp-2 md:line-clamp-none">{pathway.description}</p>
                       </div>
                       
                       <div className="flex flex-col items-center gap-3 mt-4 md:mt-6">
                         <span 
-                          className="text-xs font-semibold px-3 py-1.5 md:px-4 md:py-2 rounded-full border"
+                          className="text-xs md:text-sm font-bold px-3 py-1.5 md:px-4 md:py-2 rounded-full border"
                           style={{ 
-                            backgroundColor: `${pathway.accent}12`, 
-                            borderColor: `${pathway.accent}25`,
+                            backgroundColor: `${pathway.accent}18`, 
+                            borderColor: `${pathway.accent}35`,
                             color: pathway.accent 
                           }}
                         >
                           {pathway.stats}
                         </span>
-                        <div className="hidden md:flex items-center gap-2 text-white/60 group-hover:text-white transition-colors">
-                          <span className="text-sm font-medium">{tx.explore}</span>
+                        <div className="hidden md:flex items-center gap-2 text-white/70 group-hover:text-white transition-colors">
+                          <span className="text-base font-semibold">{tx.explore}</span>
                           <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </div>
                       </div>
@@ -418,11 +418,11 @@ export default function HomeTab() {
                 </motion.div>
                 
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs font-bold text-[#E1251B] uppercase tracking-[0.15em] mb-1.5">{tx.askonnect}</p>
-                  <h3 className="text-lg md:text-2xl font-bold text-white mb-1 leading-tight">
+                  <p className="text-xs font-bold text-[#E1251B] uppercase tracking-[0.18em] mb-1.5">{tx.askonnect}</p>
+                  <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-1.5 leading-tight">
                     {tx.personalizedGuidance}
                   </h3>
-                  <p className="text-sm text-white/65 leading-relaxed">
+                  <p className="text-sm md:text-base text-white/75 leading-relaxed">
                     {tx.realAnswers}
                   </p>
                 </div>
@@ -457,9 +457,9 @@ export default function HomeTab() {
                   onClick={() => setSearchQuery(item.query)}
                   className="group p-4 md:p-6 rounded-2xl bg-white dark:bg-foreground/[0.06] border border-foreground/[0.10] dark:border-foreground/[0.08] hover:border-[#1D4ED8]/40 dark:hover:border-white/20 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col items-center text-center cursor-pointer"
                 >
-                  <h3 className="text-sm sm:text-base md:text-lg font-bold text-[#0b2239] dark:text-foreground mb-2 md:mb-3 leading-tight">{item.label}</h3>
-                  <p className="text-xs sm:text-sm md:text-base font-semibold text-foreground/70 dark:text-foreground/65 mb-4 md:mb-5 leading-relaxed">{item.description}</p>
-                  <div className="flex items-center gap-1 text-[#E1251B] text-xs md:text-sm font-bold mt-auto">
+                  <h3 className="text-sm md:text-base lg:text-lg font-bold text-[#0b2239] dark:text-foreground mb-1.5 md:mb-2 leading-tight">{item.label}</h3>
+                  <p className="text-xs md:text-sm text-foreground/70 dark:text-foreground/60 mb-3 md:mb-4 leading-relaxed">{item.description}</p>
+                  <div className="flex items-center gap-1 text-[#E1251B] text-sm font-bold mt-auto">
                     <span>{tx.view}</span>
                     <ChevronRight className="w-3 h-3 md:w-3.5 md:h-3.5 group-hover:translate-x-1 transition-transform" />
                   </div>

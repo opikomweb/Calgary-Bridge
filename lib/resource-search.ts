@@ -30,6 +30,37 @@ const KEYWORD_TO_CATEGORY: Record<string, ResourceCategory[]> = {
   visit: ["tourism"], tourist: ["tourism"], tour: ["tourism"], sightsee: ["tourism"],
   hotel: ["tourism"], restaurant: ["tourism"], attraction: ["tourism"], banff: ["tourism"],
   rockies: ["tourism"], tax: ["community"], arts: ["arts"], art: ["arts"],
+  // Staffing / jobs
+  staffing: ["jobs"], agency: ["jobs"], placement: ["jobs"], recruiter: ["jobs"],
+  temp: ["jobs"], contract: ["jobs"], trades: ["jobs", "education"],
+  // Healthcare / clinics (note: "clinic", "hospital", "doctor", "health" already defined above)
+  walkin: ["healthcare"], "walk-in": ["healthcare"],
+  urgent: ["healthcare", "emergency"], chumir: ["healthcare", "emergency"],
+  // Mental health (counselling, therapy, crisis already above)
+  psychology: ["mental-health"], psychologist: ["mental-health"],
+  therapist: ["mental-health"], ptsd: ["mental-health"], trauma: ["mental-health"],
+  // Food (bank, food, hungry, meal already above)
+  hamper: ["food"], pantry: ["food"], produce: ["food"],
+  market: ["food", "farmers-market"],
+  // Disability (disability, accessible, aish already above)
+  wheelchair: ["disability"], vision: ["disability"], blind: ["disability"],
+  // Business / workspace
+  coworking: ["workspace"], workspace: ["workspace"], makerspace: ["workspace"],
+  founder: ["business", "community"],
+  networking: ["community", "business"], mixer: ["community", "business"],
+  // Logistics/shipping
+  shipping: ["logistics"], courier: ["logistics"], freight: ["logistics"],
+  parcel: ["logistics"],
+  // Cultural
+  ethnic: ["ethnic-market"], spice: ["ethnic-market"],
+  // Home services
+  plumber: ["essentials"], hvac: ["essentials"], furnace: ["essentials"],
+  electrical: ["essentials"], mechanic: ["essentials"], locksmith: ["essentials"],
+  moving: ["essentials"], mover: ["essentials"],
+  // Seniors
+  dementia: ["senior"],
+  // Childcare (child, kids, family, daycare already above)
+  montessori: ["family", "education"],
 };
 
 const STOPWORDS = new Set([

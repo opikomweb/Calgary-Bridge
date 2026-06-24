@@ -416,17 +416,43 @@ export default function ExploreTab() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.25 }}
-              className="flex flex-col items-center text-center pt-4 pb-6"
+              className="flex flex-col items-center text-center pt-6 pb-10"
             >
-              <div className="w-16 h-16 rounded-2xl bg-[#1D4ED8]/08 border border-[#1D4ED8]/15 flex items-center justify-center mb-4">
-                <Search className="w-7 h-7 text-[#1D4ED8]/60" />
+              {/* Icon with animated pulse ring — signals this is an active input area */}
+              <div className="relative mb-5">
+                {/* Outer pulse ring */}
+                <motion.div
+                  animate={{ scale: [1, 1.18, 1], opacity: [0.18, 0.06, 0.18] }}
+                  transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute inset-0 rounded-2xl bg-[#1D4ED8]"
+                  style={{ margin: "-8px" }}
+                />
+                {/* Icon container — sharp edges, strong blue */}
+                <div className="relative w-20 h-20 rounded-2xl bg-[#1D4ED8] shadow-lg shadow-[#1D4ED8]/30 flex items-center justify-center">
+                  <Search className="w-9 h-9 text-white" strokeWidth={2} />
+                </div>
               </div>
-              <p className="text-base font-semibold text-foreground/60 mb-1">
+
+              {/* Primary label — high contrast */}
+              <p className="text-lg font-bold text-foreground mb-2">
                 {tx.searchOrSelect}
               </p>
-              <p className="text-sm text-foreground/40 max-w-xs leading-relaxed">
+
+              {/* Supporting text */}
+              <p className="text-sm text-foreground/55 max-w-[280px] leading-relaxed">
                 {tx.typeKeyword}
               </p>
+
+              {/* Animated typing caret — reinforces "type something here" */}
+              <div className="mt-5 flex items-center gap-1.5 px-4 py-2 rounded-lg bg-foreground/[0.04] border border-foreground/[0.08]">
+                <Search className="w-3.5 h-3.5 text-foreground/30 flex-shrink-0" />
+                <span className="text-sm text-foreground/30 font-medium">Try &quot;I need childcare&quot;</span>
+                <motion.span
+                  animate={{ opacity: [1, 0, 1] }}
+                  transition={{ duration: 1, repeat: Infinity }}
+                  className="w-0.5 h-4 bg-[#1D4ED8] rounded-full ml-0.5"
+                />
+              </div>
             </motion.div>
           </div>
         </section>
