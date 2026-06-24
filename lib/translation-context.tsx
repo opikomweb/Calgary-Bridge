@@ -79,24 +79,14 @@ export function registerStrings(...strings: string[]) {
 // ---------------------------------------------------------------------------
 function cleanTranslation(text: string, lang: Language): string {
   if (lang !== "es") return text;
-  
-  // Fix Spanish question marks that appear mid-sentence or in wrong position
-  // Example: "Qué es lo que tú ¿necesidad?" → "¿Qué es lo que tú necesidad?"
+
+  // If ¿ appears somewhere other than the start, move it to the front.
+  // e.g. "Qué es lo que tú ¿necesidad?" → "¿Qué es lo que tú necesidad?"
   if (text.includes("¿") && !text.startsWith("¿")) {
-    // Move opening question mark to the beginning
-    const withoutQMarks = text.replace(/¿/g, "");
-    if (withoutQMarks.includes("?")) {
-      // Ensure proper Spanish question mark format: ¿...?
-      const cleanedContent = withoutQMarks.replace(/\?/g, "");
-      return `¿${cleanedContent}?`;
-    }
+    const stripped = text.split("¿").join("");
+    return "¿" + stripped;
   }
-  
-  // Fix double question marks
-  if (text.includes("¿?") || text.includes("?¿")) {
-    return text.replace(/¿\?|\?\¿/g, "?");
-  }
-  
+
   return text;
 }
 
