@@ -102,6 +102,8 @@ function collectTranslatableNodes(root: Element | Document): {
           const el = node as Element;
           if (SKIP_TAGS.has(el.tagName)) return NodeFilter.FILTER_REJECT;
           if (SKIP_CLASSES.some((c) => el.classList.contains(c))) return NodeFilter.FILTER_REJECT;
+          // Standard HTML translate="no" — reject entire subtree
+          if (el.getAttribute('translate') === 'no') return NodeFilter.FILTER_REJECT;
           return NodeFilter.FILTER_SKIP;
         }
         if (node.nodeType === Node.TEXT_NODE) {
@@ -129,8 +131,9 @@ function collectTranslatableNodes(root: Element | Document): {
     // SKIP_TAGS (script/style/svg etc) — never translate
     if (SKIP_TAGS.has(el.tagName)) return;
     // SKIP_TEXT_TAGS (input/textarea/select) — translate attributes but not text
-    // So we do NOT skip them here for attribute collection
     if (SKIP_CLASSES.some((c) => el.classList.contains(c))) return;
+    // Respect translate="no" on the element itself or any ancestor
+    if (el.closest('[translate="no"]')) return;
     TRANSLATABLE_ATTRS.forEach((attr) => {
       const val = el.getAttribute(attr);
       if (val && val.trim().length > 1) {

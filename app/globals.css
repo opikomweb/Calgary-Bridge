@@ -770,10 +770,21 @@ p {
   .flex-row { flex-direction: row-reverse; }
 }
 
-/* Noto Sans Arabic — loaded only when an RTL language is selected */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;700&display=swap');
+/* Multi-script font stack for language picker — Gurmukhi, Ethiopic, Arabic.
+   Fonts are loaded via <link> in layout.tsx to avoid PostCSS @import errors. */
+.notranslate,
+[translate="no"] {
+  font-family:
+    'Noto Sans Gurmukhi',
+    'Noto Sans Ethiopic',
+    'Noto Sans Arabic',
+    var(--font-sans),
+    sans-serif;
+}
+
+/* RTL body font override */
 [dir="rtl"] body {
-  font-family: 'Noto Sans Arabic', var(--font-sans);
+  font-family: 'Noto Sans Arabic', var(--font-sans), sans-serif;
 }
 
 /* Community pulse animation */

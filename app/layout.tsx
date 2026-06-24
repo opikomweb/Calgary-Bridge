@@ -60,6 +60,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="bg-background" suppressHydrationWarning>
+      <head>
+        {/* Noto Sans multi-script fonts — Gurmukhi (Punjabi), Ethiopic (Amharic), Arabic
+            Required for the language picker dropdown to render all native script names */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;600;700&family=Noto+Sans+Ethiopic:wght@400;600;700&family=Noto+Sans+Gurmukhi:wght@400;600;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body
         className={`${poppins.variable} font-sans antialiased bg-background text-foreground`}
       >
