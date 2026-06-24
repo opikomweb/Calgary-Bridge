@@ -10,7 +10,7 @@ import {
   TrendingUp, PanelRightClose, PanelRightOpen, Search, MapPin,
 } from "lucide-react";
 import type { Resource, Language } from "@/lib/types";
-import { useTranslations, registerStrings } from "@/lib/translation-context";
+import { useTranslations, registerStrings, translateDynamic } from "@/lib/translation-context";
 import dynamic from "next/dynamic";
 
 // Lazy-load the 921-line pulse panel — only fetched when visible
@@ -516,7 +516,7 @@ function AIResourceCard({ resource }: { resource: Resource }) {
     if (staticDesc  === sourceDesc)  { toTranslate.push(sourceDesc);  slots.push("desc");  }
 
     if (toTranslate.length > 0) {
-      translateBatch(toTranslate, activeLanguage).then((results) => {
+      Promise.all(toTranslate.map(s => translateDynamic(s, activeLanguage))).then((results) => {
         if (cancelled) return;
         results.forEach((r, i) => {
           if (slots[i] === "title") setCardTitle(r);
