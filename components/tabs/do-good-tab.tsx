@@ -12,7 +12,34 @@ import {
   ChevronUp,
 } from "lucide-react";
 import { doGoodCategories, doGoodImpactStats, type DoGoodCategory } from "@/lib/do-good";
+import { useTranslations, registerStrings } from "@/lib/translation-context";
 import React from "react";
+
+// Register all Do Good page strings for translation - includes all category content
+registerStrings(
+  "Give back to Calgary",
+  "Do good for your city.",
+  "Curated ways to help your neighbours — volunteer, donate, sponsor a family, and improve our streets. Every link goes straight to a trusted Calgary organization.",
+  "Community associations",
+  "Open volunteer roles",
+  "Food bank impact",
+  "Crisis line staffed by volunteers",
+  "Calgary is built by neighbours helping neighbours.",
+  "Pick one thing this week. A single shift, a small donation, or one report to 311 makes the whole city stronger.",
+  "Back to top",
+  // Section titles
+  "Volunteer your time",
+  "Donate to local charities",
+  "Sponsor & help a family",
+  "Better our city",
+  "Learn to give better",
+  // Section taglines
+  "Trusted Calgary organizations that need hands every week. Most provide training — no experience required.",
+  "Every dollar stays in Calgary. These registered charities turn donations directly into food, shelter, and safety.",
+  "Go beyond a donation — directly support a household, a newcomer, or a child through structured Calgary programs.",
+  "Small civic actions add up. Report problems, green your neighbourhood, and shape Calgary's future.",
+  "Free and low-cost Calgary training that makes your contribution safer and more effective.",
+);
 
 const ICONS = {
   HandHeart,
@@ -55,7 +82,56 @@ function getCatAccent(accent: string): AccentKey {
     : "red";
 }
 
+function getTranslatedCategory(category: DoGoodCategory, tx: ReturnType<typeof useTranslations>) {
+  const titleMap: Record<string, string> = {
+    volunteer: tx.volunteerTitle,
+    donate: tx.donateTitle,
+    sponsor: tx.sponsorTitle,
+    city: tx.cityTitle,
+    learn: tx.learnTitle,
+  };
+
+  const tagMap: Record<string, string> = {
+    volunteer: tx.volunteerTag,
+    donate: tx.donateTag,
+    sponsor: tx.sponsorTag,
+    city: tx.cityTag,
+    learn: tx.learnTag,
+  };
+
+  return {
+    ...category,
+    title: titleMap[category.id] || category.title,
+    tagline: tagMap[category.id] || category.tagline,
+  };
+}
+
 export default function DoGoodTab() {
+  const tx = useTranslations({
+    badge: "Give back to Calgary",
+    headline: "Do good for your city.",
+    description: "Curated ways to help your neighbours — volunteer, donate, sponsor a family, and improve our streets. Every link goes straight to a trusted Calgary organization.",
+    communityAssoc: "Community associations",
+    volunteerRoles: "Open volunteer roles",
+    foodBankImpact: "Food bank impact",
+    crisisLine: "Crisis line staffed by volunteers",
+    neighborsHeading: "Calgary is built by neighbours helping neighbours.",
+    neighborsSub: "Pick one thing this week. A single shift, a small donation, or one report to 311 makes the whole city stronger.",
+    backToTop: "Back to top",
+    // Category titles
+    volunteerTitle: "Volunteer your time",
+    donateTitle: "Donate to local charities",
+    sponsorTitle: "Sponsor & help a family",
+    cityTitle: "Better our city",
+    learnTitle: "Learn to give better",
+    // Category taglines
+    volunteerTag: "Trusted Calgary organizations that need hands every week. Most provide training — no experience required.",
+    donateTag: "Every dollar stays in Calgary. These registered charities turn donations directly into food, shelter, and safety.",
+    sponsorTag: "Go beyond a donation — directly support a household, a newcomer, or a child through structured Calgary programs.",
+    cityTag: "Small civic actions add up. Report problems, green your neighbourhood, and shape Calgary's future.",
+    learnTag: "Free and low-cost Calgary training that makes your contribution safer and more effective.",
+  });
+
   return (
     <div className="min-h-screen bg-background">
       {/* ========== HERO ========== */}
@@ -69,31 +145,37 @@ export default function DoGoodTab() {
           >
             <span className={`inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-[0.15em] ${ACCENT_CLASSES.red.badge}`}>
               <HandHeart className="w-3.5 h-3.5" />
-              Give back to Calgary
+              {tx.badge}
             </span>
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-[-0.02em] text-foreground text-balance leading-[1.05]">
               Do good for{" "}
-              <span className={ACCENT_CLASSES.red.icon}>your city</span>.
+              <span className={ACCENT_CLASSES.red.icon}>{tx.headline.split(" for ")[1]}</span>
             </h1>
             <p className="text-sm md:text-base text-foreground/70 leading-relaxed max-w-xl text-pretty">
-              Curated ways to help your neighbours — volunteer, donate, sponsor a family, and improve our streets. Every link goes straight to a trusted Calgary organization.
+              {tx.description}
             </p>
           </motion.div>
 
           {/* Impact stats */}
           <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-            {doGoodImpactStats.map((stat, i) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.1 + i * 0.05 }}
-                className="rounded-2xl bg-card border border-border p-4 md:p-5"
-              >
-                <p className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">{stat.value}</p>
-                <p className="text-xs md:text-sm text-foreground/55 mt-1 leading-snug">{stat.label}</p>
-              </motion.div>
-            ))}
+            {doGoodImpactStats.map((stat, i) => {
+              const txStat = stat.label === "Community associations" ? tx.communityAssoc 
+                : stat.label === "Open volunteer roles" ? tx.volunteerRoles
+                : stat.label === "Food bank impact" ? tx.foodBankImpact
+                : tx.crisisLine;
+              return (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.1 + i * 0.05 }}
+                  className="rounded-2xl bg-card border border-border p-4 md:p-5"
+                >
+                  <p className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">{stat.value}</p>
+                  <p className="text-xs md:text-sm text-foreground/55 mt-1 leading-snug">{txStat}</p>
+                </motion.div>
+              );
+            })}
           </div>
 
           {/* Quick jump nav */}
@@ -117,9 +199,12 @@ export default function DoGoodTab() {
       </section>
 
       {/* ========== CATEGORY SECTIONS ========== */}
-      {doGoodCategories.map((cat) => (
-        <CategorySection key={cat.id} category={cat} />
-      ))}
+      {doGoodCategories.map((cat) => {
+        const translatedCat = getTranslatedCategory(cat, tx);
+        return (
+          <CategorySection key={cat.id} category={translatedCat} tx={tx} />
+        );
+      })}
 
       {/* ========== CLOSING CTA ========== */}
       <section className="pb-24 md:pb-16 pt-4">
@@ -127,17 +212,17 @@ export default function DoGoodTab() {
           <div className="rounded-3xl bg-card border border-border p-7 md:p-10 text-center">
             <HandHeart className={`w-9 h-9 mx-auto mb-4 ${ACCENT_CLASSES.red.icon}`} />
             <h2 className="text-xl md:text-2xl font-bold text-foreground text-balance mb-2">
-              Calgary is built by neighbours helping neighbours.
+              {tx.neighborsHeading}
             </h2>
             <p className="text-foreground/65 max-w-md mx-auto leading-relaxed text-sm text-pretty mb-6">
-              Pick one thing this week. A single shift, a small donation, or one report to 311 makes the whole city stronger.
+              {tx.neighborsSub}
             </p>
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold transition-colors shadow-sm ${ACCENT_CLASSES.red.actionBtn}`}
             >
               <ChevronUp className="w-4 h-4" strokeWidth={2.5} />
-              Back to top
+              {tx.backToTop}
             </button>
           </div>
         </div>
@@ -146,7 +231,7 @@ export default function DoGoodTab() {
   );
 }
 
-function CategorySection({ category }: { category: DoGoodCategory }) {
+function CategorySection({ category, tx }: { category: DoGoodCategory; tx: ReturnType<typeof useTranslations> }) {
   const Icon = ICONS[category.icon];
   const ac = getCatAccent(category.accent);
   const cls = ACCENT_CLASSES[ac];
