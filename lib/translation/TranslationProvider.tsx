@@ -12,10 +12,15 @@ import {
 import type { Language } from '@/lib/types';
 
 // ─── NODES THAT MUST NEVER BE TRANSLATED ────────────────────────────────────
+// INPUT / TEXTAREA are NOT here — we still want their placeholder/aria-label
+// attributes translated. We skip their TEXT NODES separately in the walker.
 const SKIP_TAGS = new Set([
   'SCRIPT', 'STYLE', 'NOSCRIPT', 'CODE', 'PRE', 'KBD', 'SAMP', 'VAR',
-  'MATH', 'SVG', 'INPUT', 'TEXTAREA',
+  'MATH', 'SVG',
 ]);
+
+// Tags whose TEXT NODES we skip (but still collect their attributes)
+const SKIP_TEXT_TAGS = new Set(['INPUT', 'TEXTAREA', 'SELECT']);
 
 const SKIP_CLASSES = ['notranslate', 'no-translate', 'konnect-brand'];
 
@@ -100,6 +105,9 @@ function collectTranslatableNodes(root: Element | Document): {
           return NodeFilter.FILTER_SKIP;
         }
         if (node.nodeType === Node.TEXT_NODE) {
+          const parent = (node as Text).parentElement;
+          // Skip text nodes inside input/textarea/select — only attrs matter there
+          if (parent && SKIP_TEXT_TAGS.has(parent.tagName)) return NodeFilter.FILTER_SKIP;
           const text = (node as Text).nodeValue?.trim();
           if (text && text.length > 1) return NodeFilter.FILTER_ACCEPT;
         }
@@ -118,7 +126,10 @@ function collectTranslatableNodes(root: Element | Document): {
 
   const allElements = (root as Element).querySelectorAll?.('*') ?? [];
   allElements.forEach((el) => {
+    // SKIP_TAGS (script/style/svg etc) — never translate
     if (SKIP_TAGS.has(el.tagName)) return;
+    // SKIP_TEXT_TAGS (input/textarea/select) — translate attributes but not text
+    // So we do NOT skip them here for attribute collection
     if (SKIP_CLASSES.some((c) => el.classList.contains(c))) return;
     TRANSLATABLE_ATTRS.forEach((attr) => {
       const val = el.getAttribute(attr);
@@ -190,10 +201,12 @@ export function TranslationProvider({ children }: { children: ReactNode }) {
 
     setIsTranslating(true);
 
-    // Set lang + dir on <html> for RTL support
+    // Set lang + dir on <html> for RTL support (Arabic, Urdu, Farsi)
     const RTL_LANGS: Language[] = ['ar'];
+    // Also check the LANGUAGES meta for rtl flag
+    const langMeta = (await import('@/lib/languages')).getLangMeta(lang);
     document.documentElement.lang = lang;
-    document.documentElement.dir = RTL_LANGS.includes(lang) ? 'rtl' : 'ltr';
+    document.documentElement.dir = (RTL_LANGS.includes(lang) || langMeta?.rtl) ? 'rtl' : 'ltr';
 
     await translateSubtree(document.body, lang);
 
