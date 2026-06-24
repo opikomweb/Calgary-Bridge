@@ -35,7 +35,7 @@ registerStrings(
   "Find Your Path",
   "What do you need?",
   "Start with your situation. We'll take you straight there.",
-  // Pathways
+  // Pathway titles & descriptions
   "Find Housing & Rent Support",
   "Affordable rentals, subsidies & tenant rights",
   "Affordable rentals",
@@ -65,7 +65,11 @@ registerStrings(
   "In Alberta, your landlord cannot increase rent during a fixed-term lease unless the lease specifically allows it.",
   "For periodic (month-to-month) tenancies, they must give you at least 3 months written notice.",
   "Ask a follow-up question...",
-  // Menu groups
+  // Footer CTA section
+  "Calgary, finally connected.",
+  "Join thousands of Calgarians who have found the help they need.",
+  "Get Started",
+  // Menu groups & items
   "Essentials",
   "People & Support",
   "Community & Life",
@@ -104,6 +108,12 @@ registerStrings(
   "Start & grow a business",
   "Volunteering",
   "Give back locally",
+  // Footer section headings
+  "Resources",
+  "For Businesses",
+  "Community",
+  "Important Disclaimer",
+  "Everything Calgary. One Place.",
 );
 
 export default function LandingPage() {
@@ -156,10 +166,36 @@ export default function LandingPage() {
     aiResponse1: "In Alberta, your landlord cannot increase rent during a fixed-term lease unless the lease specifically allows it.",
     aiResponse2: "For periodic (month-to-month) tenancies, they must give you at least 3 months written notice.",
     aiPlaceholder: "Ask a follow-up question...",
+    // Footer CTA Section
+    finallyConnected: "Calgary, finally connected.",
+    finallyConnectedSub: "Join thousands of Calgarians who have found the help they need.",
+    getStarted: "Get Started",
     // Menu groups
     essentials: "Essentials",
     peopleSupport: "People & Support",
     communityLife: "Community & Life",
+    // Footer headings
+    footerResources: "Resources",
+    footerBusiness: "For Businesses",
+    footerCommunity: "Community",
+    footerTagline: "Everything Calgary. One Place.",
+    // Menu item labels (for all categories)
+    housingRent: "Housing & Rent",
+    jobsCareer: "Jobs & Career",
+    healthcare: "Healthcare",
+    foodSupport: "Food Support",
+    emergencyHelp: "Emergency Help",
+    newcomerServices: "Newcomer Services",
+    familyChildcare: "Family & Childcare",
+    seniorServices: "Senior Services",
+    mentalHealth: "Mental Health",
+    disabilitySupport: "Disability Support",
+    education: "Education",
+    legalHelp: "Legal Help",
+    transit: "Transit",
+    touristsVisitors: "Tourists & Visitors",
+    smallBusiness: "Small Business",
+    volunteering: "Volunteering",
   });
   const heroRef = useRef<HTMLDivElement>(null);
   const [scrolled, setScrolled] = useState(false);
@@ -232,34 +268,34 @@ export default function LandingPage() {
     items: { label: string; category: ResourceCategory; icon: React.ElementType; desc: string }[];
   }[] = [
     {
-      label: "Essentials",
+      label: tx.essentials,
       items: [
-        { label: "Housing & Rent", category: "housing", icon: Home, desc: "Rentals, subsidies & tenant help" },
-        { label: "Jobs & Career", category: "jobs", icon: Briefcase, desc: "Hiring, resumes & training" },
-        { label: "Healthcare", category: "healthcare", icon: Heart, desc: "Clinics, doctors & coverage" },
-        { label: "Food Support", category: "food", icon: Utensils, desc: "Food banks & free meals" },
-        { label: "Emergency Help", category: "emergency", icon: AlertTriangle, desc: "Urgent crisis support" },
+        { label: tx.housingRent, category: "housing", icon: Home, desc: "Rentals, subsidies & tenant help" },
+        { label: tx.jobsCareer, category: "jobs", icon: Briefcase, desc: "Hiring, resumes & training" },
+        { label: tx.healthcare, category: "healthcare", icon: Heart, desc: "Clinics, doctors & coverage" },
+        { label: tx.foodSupport, category: "food", icon: Utensils, desc: "Food banks & free meals" },
+        { label: tx.emergencyHelp, category: "emergency", icon: AlertTriangle, desc: "Urgent crisis support" },
       ],
     },
     {
-      label: "People & Support",
+      label: tx.peopleSupport,
       items: [
-        { label: "Newcomer Services", category: "newcomer", icon: Users, desc: "Settlement & language help" },
-        { label: "Family & Childcare", category: "family", icon: Baby, desc: "Childcare & parenting" },
-        { label: "Senior Services", category: "senior", icon: Users, desc: "Programs for older adults" },
-        { label: "Mental Health", category: "mental-health", icon: Brain, desc: "Counselling & crisis lines" },
-        { label: "Disability Support", category: "disability", icon: Accessibility, desc: "Accessible services" },
+        { label: tx.newcomerServices, category: "newcomer", icon: Users, desc: "Settlement & language help" },
+        { label: tx.familyChildcare, category: "family", icon: Baby, desc: "Childcare & parenting" },
+        { label: tx.seniorServices, category: "senior", icon: Users, desc: "Programs for older adults" },
+        { label: tx.mentalHealth, category: "mental-health", icon: Brain, desc: "Counselling & crisis lines" },
+        { label: tx.disabilitySupport, category: "disability", icon: Accessibility, desc: "Accessible services" },
       ],
     },
     {
-      label: "Community & Life",
+      label: tx.communityLife,
       items: [
-        { label: "Education", category: "education", icon: GraduationCap, desc: "Schools, classes & upgrading" },
-        { label: "Legal Help", category: "legal", icon: Scale, desc: "Free legal clinics & rights" },
-        { label: "Transit", category: "transit", icon: Bus, desc: "Getting around Calgary" },
-        { label: "Tourists & Visitors", category: "tourism", icon: MapPin, desc: "Sights, hotels, dining & tours" },
-        { label: "Small Business", category: "business", icon: Building2, desc: "Start & grow a business" },
-        { label: "Volunteering", category: "volunteering", icon: HandHeart, desc: "Give back locally" },
+        { label: tx.education, category: "education", icon: GraduationCap, desc: "Schools, classes & upgrading" },
+        { label: tx.legalHelp, category: "legal", icon: Scale, desc: "Free legal clinics & rights" },
+        { label: tx.transit, category: "transit", icon: Bus, desc: "Getting around Calgary" },
+        { label: tx.touristsVisitors, category: "tourism", icon: MapPin, desc: "Sights, hotels, dining & tours" },
+        { label: tx.smallBusiness, category: "business", icon: Building2, desc: "Start & grow a business" },
+        { label: tx.volunteering, category: "volunteering", icon: HandHeart, desc: "Give back locally" },
       ],
     },
   ];
@@ -883,10 +919,10 @@ export default function LandingPage() {
             viewport={{ once: true }}
           >
             <h2 className="text-[clamp(28px,5vw,48px)] font-bold tracking-tight mb-4 md:mb-6 text-balance">
-              Calgary, finally connected.
+              {tx.finallyConnected}
             </h2>
             <p className="text-base md:text-xl text-white/60 mb-8 md:mb-12 max-w-xl mx-auto text-pretty">
-              Join thousands of Calgarians who have found the help they need.
+              {tx.finallyConnectedSub}
             </p>
             <motion.button
               whileHover={{ scale: 1.03, y: -2 }}
@@ -894,7 +930,7 @@ export default function LandingPage() {
               onClick={handleExplore}
               className="btn-primary px-10 md:px-12 py-4 md:py-5 rounded-2xl flex items-center gap-3 text-base md:text-lg font-semibold mx-auto"
             >
-              Get Started
+              {tx.getStarted}
               <ArrowRight className="w-5 h-5" />
             </motion.button>
           </motion.div>
