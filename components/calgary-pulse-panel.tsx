@@ -919,3 +919,5 @@ export function CalgaryPulsePanel() {
     </div>
   );
 }
+
+export default CalgaryPulsePanel;
