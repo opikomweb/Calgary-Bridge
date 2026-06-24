@@ -1,10 +1,9 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAppStore } from "@/lib/store";
 import { categoryLabels } from "@/lib/data";
-import { translateBatch } from "@/lib/translate";
 import type { Resource, Language, LocalizedString } from "@/lib/types";
 import {
   Heart,
@@ -114,60 +113,15 @@ export default function ResourceCard({
   const note = resourceNotes[resource.id];
   const isCompleted = note?.completed ?? false;
 
-  // ── Runtime translation ────────────────────────────────────────────────
-  // Title and description start with the best available static translation.
-  // When the user selects a language that has no static entry, the Google
-  // Translate API fills it in asynchronously.
-  const [title, setTitle] = useState(() => resolveField(resource.title, activeLanguage));
-  const [description, setDescription] = useState(() => resolveField(resource.description, activeLanguage));
-  // Eligibility uses a ref+state pair so it's always accessible regardless of
-  // TS control-flow narrowing around the compact variant early return.
-  const [eligibilityText, setEligibilityText] = useState(
-    () => resource.eligibility ? resolveField(resource.eligibility, activeLanguage) : ""
-  );
-
-  useEffect(() => {
-    let cancelled = false;
-    const sourceTitle = resource.title.en;
-    const sourceDesc  = resource.description.en;
-    const sourceElig  = resource.eligibility?.en ?? "";
-
-    // Use static translation if available for this language
-    const staticTitle = resolveField(resource.title, activeLanguage);
-    const staticDesc  = resolveField(resource.description, activeLanguage);
-    const staticElig  = resource.eligibility
-      ? resolveField(resource.eligibility, activeLanguage)
-      : "";
-
-    const needsTitle = staticTitle === sourceTitle && activeLanguage !== "en";
-    const needsDesc  = staticDesc  === sourceDesc  && activeLanguage !== "en";
-    const needsElig  = sourceElig && staticElig === sourceElig && activeLanguage !== "en";
-
-    // Set static values immediately
-    setTitle(staticTitle);
-    setDescription(staticDesc);
-    if (resource.eligibility) setEligibilityText(staticElig);
-
-    // Batch-translate anything that still needs it
-    const toTranslate: string[] = [];
-    const indices: ("title" | "desc" | "elig")[] = [];
-    if (needsTitle) { toTranslate.push(sourceTitle); indices.push("title"); }
-    if (needsDesc)  { toTranslate.push(sourceDesc);  indices.push("desc");  }
-    if (needsElig && sourceElig)  { toTranslate.push(sourceElig);  indices.push("elig");  }
-
-    if (toTranslate.length > 0) {
-      translateBatch(toTranslate, activeLanguage).then((results) => {
-        if (cancelled) return;
-        results.forEach((r, i) => {
-          if (indices[i] === "title") setTitle(r);
-          if (indices[i] === "desc")  setDescription(r);
-          if (indices[i] === "elig")  setEligibilityText(r);
-        });
-      });
-    }
-
-    return () => { cancelled = true; };
-  }, [activeLanguage, resource.id]);
+  // ── Text content ──────────────────────────────────────────────────────
+  // Serve the best available static translation immediately.
+  // Dynamic translation for non-static languages is handled globally by
+  // TranslationProvider's DOM MutationObserver — no per-card API calls needed.
+  const title = resolveField(resource.title, activeLanguage);
+  const description = resolveField(resource.description, activeLanguage);
+  const eligibilityText = resource.eligibility
+    ? resolveField(resource.eligibility, activeLanguage)
+    : "";
 
   const googleMapsUrl = resource.address
     ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(resource.address)}`
@@ -198,7 +152,7 @@ export default function ResourceCard({
       >
         <div className="flex flex-col px-2.5 py-2 min-w-0 gap-1.5">
           {/* Title */}
-          <p className="text-[11.5px] font-semibold text-foreground leading-snug line-clamp-2">
+          <p className="text-[13px] font-bold text-foreground leading-snug line-clamp-2">
             {title}
           </p>
 
@@ -311,7 +265,7 @@ export default function ResourceCard({
           {/* Left: title + inline tags badge row */}
           <div className="flex-1 min-w-0">
             {/* Title — full width, wraps naturally */}
-            <h3 className="font-semibold text-sm leading-snug text-foreground mb-1">
+            <h3 className="font-bold text-base leading-snug text-foreground mb-1.5">
               {title}
             </h3>
             {/* Tags row — sit below title, flush left, no indent */}

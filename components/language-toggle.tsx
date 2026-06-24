@@ -63,10 +63,10 @@ export function LanguageToggle() {
           <text x="15" y="18" textAnchor="middle" fontSize="6.5" fill="white" fontWeight="bold" fontFamily="system-ui">A</text>
         </svg>
 
-        {/* Active flag + native language name (short) */}
-        <span className="text-base leading-none" aria-hidden="true">{current.flag}</span>
-        <span className="text-[11px] font-bold text-foreground/70 leading-none max-w-[52px] truncate">
-          {current.nativeName}
+        {/* Active flag + 2-char label */}
+        <span className="text-xl leading-none" aria-hidden="true">{current.flag}</span>
+        <span className="text-[11px] font-bold text-foreground/70 leading-none">
+          {current.label}
         </span>
 
         {/* Chevron */}
