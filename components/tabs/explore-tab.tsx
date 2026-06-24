@@ -14,71 +14,111 @@ import ResourceCard from "../resource-card";
 import LiveResults from "../live-results";
 import { filterResources } from "@/lib/search";
 import type { ResourceCategory } from "@/lib/types";
+import { useTranslations, registerStrings } from "@/lib/translation-context";
 
-const allCategories: { id: ResourceCategory | "all"; label: string; icon: React.ElementType }[] = [
-  { id: "all", label: "All Resources", icon: Search },
-  { id: "housing", label: "Housing & Rent", icon: Home },
-  { id: "jobs", label: "Jobs & Career", icon: Briefcase },
-  { id: "healthcare", label: "Healthcare", icon: Heart },
-  { id: "family", label: "Family & Childcare", icon: Baby },
-  { id: "newcomer", label: "Newcomer Services", icon: Users },
-  { id: "emergency", label: "Emergency Help", icon: AlertTriangle },
-  { id: "food", label: "Food Support", icon: Utensils },
-  { id: "mental-health", label: "Mental Health", icon: Brain },
-  { id: "senior", label: "Senior Services", icon: Users },
-  { id: "disability", label: "Disability Support", icon: Accessibility },
-  { id: "transit", label: "Transit", icon: Bus },
-  { id: "education", label: "Education", icon: GraduationCap },
-  { id: "legal", label: "Legal Help", icon: Scale },
-  { id: "business", label: "Business & Licensing", icon: Building2 },
-  { id: "workspace", label: "Workspaces", icon: Laptop },
-  { id: "storage", label: "Storage Facilities", icon: Package },
-  { id: "ethnic-market", label: "Cultural & Ethnic Stores", icon: Store },
-  { id: "farmers-market", label: "Farmers Markets", icon: Sprout },
-  { id: "essentials", label: "Local Essentials", icon: Wrench },
-  { id: "tourism", label: "Tourists & Visitors", icon: MapPin },
-  { id: "logistics", label: "Shipping & Logistics", icon: Truck },
-  { id: "community", label: "Community", icon: Users },
+// Static IDs + icons — labels are injected from the translation context at render time.
+const CATEGORY_DEFS: { id: ResourceCategory | "all"; icon: React.ElementType; txKey: string }[] = [
+  { id: "all", icon: Search, txKey: "allResources" },
+  { id: "housing", icon: Home, txKey: "housing" },
+  { id: "jobs", icon: Briefcase, txKey: "jobs" },
+  { id: "healthcare", icon: Heart, txKey: "healthcare" },
+  { id: "family", icon: Baby, txKey: "family" },
+  { id: "newcomer", icon: Users, txKey: "newcomer" },
+  { id: "emergency", icon: AlertTriangle, txKey: "emergency" },
+  { id: "food", icon: Utensils, txKey: "food" },
+  { id: "mental-health", icon: Brain, txKey: "mentalHealth" },
+  { id: "senior", icon: Users, txKey: "senior" },
+  { id: "disability", icon: Accessibility, txKey: "disability" },
+  { id: "transit", icon: Bus, txKey: "transit" },
+  { id: "education", icon: GraduationCap, txKey: "education" },
+  { id: "legal", icon: Scale, txKey: "legal" },
+  { id: "business", icon: Building2, txKey: "business" },
+  { id: "workspace", icon: Laptop, txKey: "workspace" },
+  { id: "storage", icon: Package, txKey: "storage" },
+  { id: "ethnic-market", icon: Store, txKey: "ethnicMarket" },
+  { id: "farmers-market", icon: Sprout, txKey: "farmersMarket" },
+  { id: "essentials", icon: Wrench, txKey: "essentials" },
+  { id: "tourism", icon: MapPin, txKey: "tourism" },
+  { id: "logistics", icon: Truck, txKey: "logistics" },
+  { id: "community", icon: Users, txKey: "community" },
 ];
 
-// 4 Hero categories with GLASSY premium treatment
-const heroCategories = [
-  { 
-    id: "housing" as ResourceCategory, 
-    icon: Home, 
-    label: "Housing & Rent",
-    stat: "12 programs",
-    accentColor: "#38BDF8",
-    bgGradient: "from-[#0c2d4d] to-[#071a2e]",
-  },
-  { 
-    id: "jobs" as ResourceCategory, 
-    icon: Briefcase, 
-    label: "Jobs & Career",
-    stat: "340+ openings",
-    accentColor: "#38BDF8",
-    bgGradient: "from-[#0c2d4d] to-[#071a2e]",
-  },
-  { 
-    id: "healthcare" as ResourceCategory, 
-    icon: Heart, 
-    label: "Healthcare",
-    stat: "24/7 available",
-    accentColor: "#38BDF8",
-    bgGradient: "from-[#0c2d4d] to-[#071a2e]",
-  },
-  { 
-    id: "newcomer" as ResourceCategory, 
-    icon: Users, 
-    label: "Newcomer Services",
-    stat: "10 organizations",
-    accentColor: "#38BDF8",
-    bgGradient: "from-[#0c2d4d] to-[#071a2e]",
-  },
+// 4 Hero categories — labels are injected from translation context at render time.
+const HERO_CATEGORY_DEFS = [
+  { id: "housing" as ResourceCategory, icon: Home, txLabel: "housing", txStat: "housing12" },
+  { id: "jobs" as ResourceCategory, icon: Briefcase, txLabel: "jobs", txStat: "jobs340" },
+  { id: "healthcare" as ResourceCategory, icon: Heart, txLabel: "healthcare", txStat: "health247" },
+  { id: "newcomer" as ResourceCategory, icon: Users, txLabel: "newcomer", txStat: "newcomer10" },
 ];
+
+registerStrings(
+  "All Resources", "Housing & Rent", "Jobs & Career", "Healthcare",
+  "Family & Childcare", "Newcomer Services", "Emergency Help", "Food Support",
+  "Mental Health", "Senior Services", "Disability Support", "Transit",
+  "Education", "Legal Help", "Business & Licensing", "Workspaces",
+  "Storage Facilities", "Cultural & Ethnic Stores", "Farmers Markets",
+  "Local Essentials", "Tourists & Visitors", "Shipping & Logistics", "Community",
+  "Explore", "Resources",
+  "Every verified Calgary service and program, searchable and filterable.",
+  "Search resources...",
+  "results found", "result found", "No results",
+  "Try adjusting your search or filter.",
+  "12 programs", "340+ openings", "24/7 available", "10 organizations",
+  "Housing & Rent", "Jobs & Career", "Healthcare", "Newcomer Services",
+);
 
 export default function ExploreTab() {
   const { activeLanguage, activeCategory, setActiveCategory, searchQuery, setSearchQuery } = useAppStore();
+  const tx = useTranslations({
+    explore: "Explore",
+    resources: "Resources",
+    subtitle: "Every verified Calgary service and program, searchable and filterable.",
+    searchPlaceholder: "Search resources...",
+    allResources: "All Resources",
+    housing: "Housing & Rent",
+    jobs: "Jobs & Career",
+    healthcare: "Healthcare",
+    family: "Family & Childcare",
+    newcomer: "Newcomer Services",
+    emergency: "Emergency Help",
+    food: "Food Support",
+    mentalHealth: "Mental Health",
+    senior: "Senior Services",
+    disability: "Disability Support",
+    transit: "Transit",
+    education: "Education",
+    legal: "Legal Help",
+    business: "Business & Licensing",
+    workspace: "Workspaces",
+    storage: "Storage Facilities",
+    ethnicMarket: "Cultural & Ethnic Stores",
+    farmersMarket: "Farmers Markets",
+    essentials: "Local Essentials",
+    tourism: "Tourists & Visitors",
+    logistics: "Shipping & Logistics",
+    community: "Community",
+    housing12: "12 programs",
+    jobs340: "340+ openings",
+    health247: "24/7 available",
+    newcomer10: "10 organizations",
+  });
+
+  // Build translated hero categories
+  const heroCategories = HERO_CATEGORY_DEFS.map((d) => ({
+    id: d.id,
+    icon: d.icon,
+    label: tx[d.txLabel as keyof typeof tx] ?? d.txLabel,
+    stat: tx[d.txStat as keyof typeof tx] ?? d.txStat,
+    accentColor: "#38BDF8",
+    bgGradient: "from-[#0c2d4d] to-[#071a2e]",
+  }));
+
+  // Build translated category list from static defs + tx lookup
+  const allCategories = CATEGORY_DEFS.map((d) => ({
+    id: d.id,
+    icon: d.icon,
+    label: tx[d.txKey as keyof typeof tx] ?? d.txKey,
+  }));
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -124,11 +164,11 @@ export default function ExploreTab() {
           >
             <h1 className="heading-accent text-[clamp(32px,6vw,56px)] font-bold tracking-[-0.02em] leading-[1.1] mb-4">
               <span>
-                Explore <span className="text-calgary-red">Resources</span>
+                {tx.explore} <span className="text-calgary-red">{tx.resources}</span>
               </span>
             </h1>
             <p className="text-base md:text-lg text-foreground/70 max-w-xl leading-relaxed">
-              Every verified Calgary service and program, searchable and filterable.
+              {tx.subtitle}
             </p>
           </motion.div>
         </div>
@@ -148,7 +188,7 @@ export default function ExploreTab() {
               <Search className="absolute left-4 md:left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-[#1D4ED8] dark:text-[#38BDF8]" />
               <input
                 type="text"
-                placeholder="Search resources..."
+                placeholder={tx.searchPlaceholder}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full h-14 md:h-16 bg-white dark:bg-[rgba(15,23,42,0.9)] hover:bg-white border-2 border-foreground/[0.15] hover:border-foreground/[0.25] focus:border-[#1D4ED8] dark:focus:border-[#38BDF8] rounded-xl md:rounded-2xl text-base text-foreground placeholder:text-foreground/45 pl-12 md:pl-14 pr-4 outline-none transition-all duration-300 focus:shadow-[0_0_0_4px_rgba(29,78,216,0.08)] dark:focus:shadow-[0_0_0_4px_rgba(56,189,248,0.08)] shadow-sm"

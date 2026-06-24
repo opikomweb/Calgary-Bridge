@@ -8,9 +8,110 @@ import ResourceCard from "../resource-card";
 import SearchExtras from "../search-extras";
 import { searchResources, getSimilarResources } from "@/lib/search";
 import React from "react";
+import { useTranslations, registerStrings } from "@/lib/translation-context";
+
+// Register all static UI strings once at module load so TranslationProvider
+// can pre-fetch them all in a single batch when the language changes.
+registerStrings(
+  "What do you", "need?",
+  "Search for housing, jobs, healthcare, or ask Askonnect anything about Calgary.",
+  "My landlord won't fix the heat...",
+  "I need childcare", "Jobs hiring now", "Family activities",
+  "Search Results", "Clear Search",
+  "resources found", "resource found",
+  "No results found",
+  "We couldn't find any resources matching your search. Try different keywords or ask our AI assistant.",
+  "Ask the AI instead",
+  "Start Here",
+  "What most", "Calgarians", "need.",
+  "Find Housing & Rent Support",
+  "Affordable rentals, subsidized programs, rent supplements, and tenant assistance",
+  "12 programs",
+  "Looking for Work?",
+  "Resume building, job fairs, skills training, career counseling, and hiring companies",
+  "340+ openings",
+  "Get Healthcare Access",
+  "Walk-in clinics, family doctors, mental health support, and Alberta Health registration",
+  "24/7 available",
+  "New to Calgary?",
+  "Settlement services, language classes, community connections, and integration support",
+  "10 orgs",
+  "Explore",
+  "Specialized Support", "For specific situations.",
+  "Tenant Rights", "Lease help, rent disputes, eviction support",
+  "Family & Kids", "Daycare, youth programs, family activities",
+  "Seniors", "Home care, transportation, social programs",
+  "Emergency Help", "Crisis lines, shelters, urgent support",
+  "View",
+  "Recommended", "Top resources this month.", "View all",
+  "Hidden Gems", "Programs most people miss.",
+  "Services in your area",
+  "Calgary Food Bank", "Calgary Drop-In Centre", "Alpha House Calgary",
+  "Calgary Immigrant Women's Assoc.", "Alex Community Health Centre",
+  "Free", "Health", "Always Open",
+  "Mon–Fri 9–5", "24/7", "Mon–Sat 8–6",
+  "Askonnect",
+  "Get personalized guidance",
+  "Real answers, step-by-step help, and matched Calgary resources.",
+);
 
 export default function HomeTab() {
   const { activeLanguage, searchQuery, setSearchQuery, setActiveTab } = useAppStore();
+  // Animate only once on first mount; language re-renders must not reset to opacity:0.
+  const hasAnimated = React.useRef(false);
+  React.useEffect(() => { hasAnimated.current = true; }, []);
+
+  const tx = useTranslations({
+    headline1: "What do you",
+    headline2: "need?",
+    subtitle: "Search for housing, jobs, healthcare, or ask Askonnect anything about Calgary.",
+    searchPlaceholder: "My landlord won't fix the heat...",
+    chip1: "I need childcare",
+    chip2: "Jobs hiring now",
+    chip3: "Family activities",
+    searchResultsLabel: "Search Results",
+    clearSearch: "Clear Search",
+    noResultsTitle: "No results found",
+    noResultsBody: "We couldn't find any resources matching your search. Try different keywords or ask our AI assistant.",
+    askAI: "Ask the AI instead",
+    startHere: "Start Here",
+    whatMost: "What most",
+    calgarians: "Calgarians",
+    sectionNeed: "need.",
+    specializedSupport: "Specialized Support",
+    forSpecific: "For specific situations.",
+    recommended: "Recommended",
+    topResources: "Top resources this month.",
+    viewAll: "View all",
+    hiddenGems: "Hidden Gems",
+    programsMiss: "Programs most people miss.",
+    servicesArea: "Services in your area",
+    explore: "Explore",
+    view: "View",
+    askonnect: "Askonnect",
+    personalizedGuidance: "Get personalized guidance",
+    realAnswers: "Real answers, step-by-step help, and matched Calgary resources.",
+    housing: "Find Housing & Rent Support",
+    housingDesc: "Affordable rentals, subsidized programs, rent supplements, and tenant assistance",
+    housing12: "12 programs",
+    jobs: "Looking for Work?",
+    jobsDesc: "Resume building, job fairs, skills training, career counseling, and hiring companies",
+    jobs340: "340+ openings",
+    health: "Get Healthcare Access",
+    healthDesc: "Walk-in clinics, family doctors, mental health support, and Alberta Health registration",
+    health247: "24/7 available",
+    newcomer: "New to Calgary?",
+    newcomerDesc: "Settlement services, language classes, community connections, and integration support",
+    newcomer10: "10 orgs",
+    tenantRights: "Tenant Rights",
+    tenantDesc: "Lease help, rent disputes, eviction support",
+    familyKids: "Family & Kids",
+    familyDesc: "Daycare, youth programs, family activities",
+    seniors: "Seniors",
+    seniorsDesc: "Home care, transportation, social programs",
+    emergencyHelp: "Emergency Help",
+    emergencyDesc: "Crisis lines, shelters, urgent support",
+  });
   const [showScrollTop, setShowScrollTop] = React.useState(false);
 
   React.useEffect(() => {
@@ -35,47 +136,47 @@ export default function HomeTab() {
     {
       id: "housing",
       icon: Home,
-      solution: "Find Housing & Rent Support",
-      description: "Affordable rentals, subsidized programs, rent supplements, and tenant assistance",
+      solution: tx.housing,
+      description: tx.housingDesc,
       bgGradient: "from-[#0c2d4d] to-[#071a2e]",
       accent: "#38BDF8",
-      stats: "12 programs",
+      stats: tx.housing12,
     },
     {
       id: "jobs",
       icon: Briefcase,
-      solution: "Looking for Work?",
-      description: "Resume building, job fairs, skills training, career counseling, and hiring companies",
+      solution: tx.jobs,
+      description: tx.jobsDesc,
       bgGradient: "from-[#0c2d4d] to-[#071a2e]",
       accent: "#38BDF8",
-      stats: "340+ openings",
+      stats: tx.jobs340,
     },
     {
       id: "health",
       icon: Heart,
-      solution: "Get Healthcare Access",
-      description: "Walk-in clinics, family doctors, mental health support, and Alberta Health registration",
+      solution: tx.health,
+      description: tx.healthDesc,
       bgGradient: "from-[#0c2d4d] to-[#071a2e]",
       accent: "#38BDF8",
-      stats: "24/7 available",
+      stats: tx.health247,
     },
     {
       id: "newcomer",
       icon: Users,
-      solution: "New to Calgary?",
-      description: "Settlement services, language classes, community connections, and integration support",
+      solution: tx.newcomer,
+      description: tx.newcomerDesc,
       bgGradient: "from-[#0c2d4d] to-[#071a2e]",
       accent: "#38BDF8",
-      stats: "10 orgs",
+      stats: tx.newcomer10,
     },
   ];
 
   // Specialized pathways
   const specialized = [
-    { id: "tenant", label: "Tenant Rights", description: "Lease help, rent disputes, eviction support", icon: "scale" },
-    { id: "family", label: "Family & Kids", description: "Daycare, youth programs, family activities", icon: "heart" },
-    { id: "seniors", label: "Seniors", description: "Home care, transportation, social programs", icon: "users" },
-    { id: "emergency", label: "Emergency Help", description: "Crisis lines, shelters, urgent support", icon: "alert" },
+    { id: "tenant", label: tx.tenantRights, description: tx.tenantDesc, icon: "scale" },
+    { id: "family", label: tx.familyKids, description: tx.familyDesc, icon: "heart" },
+    { id: "seniors", label: tx.seniors, description: tx.seniorsDesc, icon: "users" },
+    { id: "emergency", label: tx.emergencyHelp, description: tx.emergencyDesc, icon: "alert" },
   ];
 
   return (
@@ -100,59 +201,51 @@ export default function HomeTab() {
       {/* ========== HERO SEARCH ========== */}
       <section className="relative pt-8 pb-10 md:pt-24 md:pb-20 lg:pt-32 lg:pb-28">
         <div className="max-w-[720px] mx-auto px-6 md:px-8 lg:px-12 relative z-10">
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="text-[clamp(32px,7vw,56px)] font-bold tracking-[-0.02em] leading-[1.1]"
+          <h1
+            className="text-[clamp(32px,7vw,56px)] font-bold tracking-[-0.02em] leading-[1.1] animate-fade-in-up"
           >
-            What do you <span className="text-calgary-red">need?</span>
-          </motion.h1>
+            {tx.headline1} <span className="text-calgary-red">{tx.headline2}</span>
+          </h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15, duration: 0.6 }}
-            className="text-base md:text-lg text-foreground/70 mt-4 md:mt-6 mb-8 md:mb-10 leading-relaxed"
+          <p
+            className="text-base md:text-lg text-foreground/70 mt-4 md:mt-6 mb-8 md:mb-10 leading-relaxed animate-fade-in-up [animation-delay:150ms]"
           >
-            Search for housing, jobs, healthcare, or ask Askonnect anything about Calgary.
-          </motion.p>
+            {tx.subtitle}
+          </p>
 
           {/* Search bar */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            className="relative max-w-xl"
+          <div
+            className="relative max-w-xl animate-fade-in-up [animation-delay:200ms]"
           >
             <Search className="absolute left-4 md:left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-[#1D4ED8] dark:text-[#38BDF8]" />
             <input
               type="text"
-              placeholder="My landlord won't fix the heat..."
+              placeholder={tx.searchPlaceholder}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full h-14 md:h-16 bg-white dark:bg-[rgba(15,23,42,0.9)] hover:bg-white dark:hover:bg-[rgba(15,23,42,0.95)] border-2 border-foreground/[0.15] hover:border-foreground/[0.25] focus:border-[#1D4ED8] dark:focus:border-[#38BDF8] rounded-xl md:rounded-2xl text-base text-foreground placeholder:text-foreground/40 pl-12 md:pl-14 pr-4 md:pr-6 outline-none transition-all duration-300 focus:shadow-[0_0_0_4px_rgba(29,78,216,0.1)] dark:focus:shadow-[0_0_0_4px_rgba(56,189,248,0.1)] shadow-sm"
             />
-          </motion.div>
+          </div>
 
           {/* Quick queries */}
           {!searchQuery && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
-              className="flex flex-wrap gap-2 md:gap-3 mt-4 md:mt-6"
+            <div
+              className="flex flex-wrap gap-2 md:gap-3 mt-4 md:mt-6 animate-fade-in-up [animation-delay:400ms]"
             >
-              {["I need childcare", "Jobs hiring now", "Family activities"].map((q) => (
+              {([
+                [tx.chip1, "I need childcare"],
+                [tx.chip2, "Jobs hiring now"],
+                [tx.chip3, "Family activities"],
+              ] as [string, string][]).map(([label, query]) => (
                 <button
-                  key={q}
-                  onClick={() => setSearchQuery(q)}
+                  key={query}
+                  onClick={() => setSearchQuery(query)}
                   className="px-3.5 md:px-4 py-2 md:py-2.5 rounded-lg md:rounded-xl bg-white dark:bg-foreground/[0.06] border border-foreground/[0.15] dark:border-foreground/[0.12] text-sm font-medium text-foreground hover:bg-[#1D4ED8] hover:border-[#1D4ED8] hover:text-white dark:hover:bg-[#38BDF8]/10 dark:hover:border-[#38BDF8]/40 dark:hover:text-foreground transition-all duration-300 shadow-sm"
                 >
-                  {q}
+                  {label}
                 </button>
               ))}
-            </motion.div>
+            </div>
           )}
         </div>
       </section>
@@ -164,7 +257,7 @@ export default function HomeTab() {
           <div className="glass-card rounded-2xl md:rounded-3xl p-5 md:p-6 mb-6 md:mb-8">
             <div className="flex flex-col sm:flex-row sm:items-center gap-4">
               <div className="flex-1 min-w-0">
-                <p className="text-xs text-foreground/50 mb-1 uppercase tracking-wider font-medium">Search Results</p>
+                <p className="text-xs text-foreground/50 mb-1 uppercase tracking-wider font-medium">{tx.searchResultsLabel}</p>
                 <h2 className="text-xl md:text-2xl font-bold leading-tight truncate">
                   &quot;{searchQuery}&quot;
                 </h2>
@@ -173,7 +266,7 @@ export default function HomeTab() {
                 onClick={() => setSearchQuery("")}
                 className="px-4 py-2.5 rounded-xl bg-foreground/[0.06] border border-foreground/[0.08] text-sm font-semibold text-foreground/70 hover:bg-foreground/[0.1] hover:text-foreground transition-all flex-shrink-0"
               >
-                Clear Search
+                {tx.clearSearch}
               </button>
             </div>
           </div>
@@ -199,15 +292,15 @@ export default function HomeTab() {
               <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-foreground/[0.06] flex items-center justify-center mx-auto mb-6">
                 <Search className="w-8 h-8 md:w-10 md:h-10 text-foreground/30" />
               </div>
-              <h3 className="text-xl md:text-2xl font-bold mb-3">No results found</h3>
+              <h3 className="text-xl md:text-2xl font-bold mb-3">{tx.noResultsTitle}</h3>
               <p className="text-base text-foreground/50 mb-8 max-w-md mx-auto leading-relaxed">
-                We couldn&apos;t find any resources matching your search. Try different keywords or ask our AI assistant.
+                {tx.noResultsBody}
               </p>
               <button
                 onClick={() => setActiveTab("ai")}
                 className="px-8 py-4 rounded-xl md:rounded-2xl bg-[#E1251B] text-white text-base font-bold hover:bg-[#B91C1C] transition-colors"
               >
-                Ask the AI instead
+                {tx.askAI}
               </button>
             </div>
           )}
@@ -229,8 +322,8 @@ export default function HomeTab() {
                 transition={{ delay: 0.3 }}
                 className="text-center"
               >
-                <p className="text-xs font-semibold text-[#1D4ED8] dark:text-[#38BDF8] uppercase tracking-[0.15em] mb-3">Start Here</p>
-                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight">What most <span className="text-calgary-red">Calgarians</span> need.</h2>
+                <p className="text-xs font-semibold text-[#1D4ED8] dark:text-[#38BDF8] uppercase tracking-[0.15em] mb-3">{tx.startHere}</p>
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight">{tx.whatMost} <span className="text-calgary-red">{tx.calgarians}</span> {tx.sectionNeed}</h2>
               </motion.div>
             </div>
 
@@ -284,7 +377,7 @@ export default function HomeTab() {
                           {pathway.stats}
                         </span>
                         <div className="hidden md:flex items-center gap-2 text-white/60 group-hover:text-white transition-colors">
-                          <span className="text-sm font-medium">Explore</span>
+                          <span className="text-sm font-medium">{tx.explore}</span>
                           <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </div>
                       </div>
@@ -325,12 +418,12 @@ export default function HomeTab() {
                 </motion.div>
                 
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs font-bold text-[#E1251B] uppercase tracking-[0.15em] mb-1.5">Askonnect</p>
+                  <p className="text-xs font-bold text-[#E1251B] uppercase tracking-[0.15em] mb-1.5">{tx.askonnect}</p>
                   <h3 className="text-lg md:text-2xl font-bold text-white mb-1 leading-tight">
-                    Get personalized guidance
+                    {tx.personalizedGuidance}
                   </h3>
                   <p className="text-sm text-white/65 leading-relaxed">
-                    Real answers, step-by-step help, and matched Calgary resources.
+                    {tx.realAnswers}
                   </p>
                 </div>
                 
@@ -348,8 +441,8 @@ export default function HomeTab() {
                 transition={{ delay: 0.6 }}
                 className="text-center"
               >
-                <p className="text-xs font-semibold text-[#1D4ED8] dark:text-[#38BDF8] uppercase tracking-[0.15em] mb-3">Specialized Support</p>
-                <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">For specific situations.</h2>
+                <p className="text-xs font-semibold text-[#1D4ED8] dark:text-[#38BDF8] uppercase tracking-[0.15em] mb-3">{tx.specializedSupport}</p>
+                <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">{tx.forSpecific}</h2>
               </motion.div>
             </div>
 
@@ -367,7 +460,7 @@ export default function HomeTab() {
                   <h3 className="text-xs sm:text-sm md:text-base font-bold text-[#0b2239] dark:text-foreground mb-1 md:mb-2 leading-tight">{item.label}</h3>
                   <p className="text-[10px] sm:text-xs md:text-sm text-foreground/65 dark:text-foreground/55 mb-3 md:mb-4 leading-relaxed">{item.description}</p>
                   <div className="flex items-center gap-1 text-[#E1251B] text-xs md:text-sm font-bold mt-auto">
-                    <span>View</span>
+                    <span>{tx.view}</span>
                     <ChevronRight className="w-3 h-3 md:w-3.5 md:h-3.5 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </motion.button>
@@ -379,13 +472,13 @@ export default function HomeTab() {
           <section className="px-6 md:px-8 lg:px-12 pt-4 pb-16 md:pb-28 max-w-[1200px] mx-auto relative z-10">
             <div className="pb-8 md:pb-10">
               <div className="text-center">
-                <p className="text-xs font-bold text-[#1D4ED8] dark:text-[#38BDF8] uppercase tracking-[0.15em] mb-3">Recommended</p>
-                <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">Top resources this month.</h2>
+                <p className="text-xs font-bold text-[#1D4ED8] dark:text-[#38BDF8] uppercase tracking-[0.15em] mb-3">{tx.recommended}</p>
+                <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">{tx.topResources}</h2>
                 <button
                   onClick={() => setActiveTab("explore")}
                   className="text-[#E1251B] text-sm font-bold inline-flex items-center gap-1.5 hover:gap-2 transition-all mt-3"
                 >
-                  View all <ArrowRight className="w-4 h-4" />
+                  {tx.viewAll} <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
             </div>
@@ -409,13 +502,13 @@ export default function HomeTab() {
             <section className="px-6 md:px-8 lg:px-12 pt-4 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">
               <div className="pb-8 md:pb-10">
                 <div className="text-center">
-                  <p className="text-xs font-bold text-[#1D4ED8] dark:text-[#38BDF8] uppercase tracking-[0.15em] mb-3">Hidden Gems</p>
-                  <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">Programs most people miss.</h2>
+                  <p className="text-xs font-bold text-[#1D4ED8] dark:text-[#38BDF8] uppercase tracking-[0.15em] mb-3">{tx.hiddenGems}</p>
+                  <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">{tx.programsMiss}</h2>
                   <button
                     onClick={() => setActiveTab("explore")}
                   className="text-[#E1251B] text-sm font-bold inline-flex items-center gap-1.5 hover:gap-2 transition-all mt-3"
                   >
-                    View all <ArrowRight className="w-4 h-4" />
+                    {tx.viewAll} <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
               </div>
@@ -439,7 +532,7 @@ export default function HomeTab() {
           <section className="px-6 md:px-8 lg:px-12 pb-4 max-w-[1200px] mx-auto relative z-10">
             <div className="flex items-center gap-2 mb-4">
               <MapPin className="w-4 h-4 text-[#1D4ED8] dark:text-[#38BDF8]" />
-              <h2 className="text-sm font-bold text-[#1D4ED8] dark:text-[#38BDF8] uppercase tracking-[0.15em]">Services in your area</h2>
+              <h2 className="text-sm font-bold text-[#1D4ED8] dark:text-[#38BDF8] uppercase tracking-[0.15em]">{tx.servicesArea}</h2>
             </div>
 
             {/* One-line compact bullet rows */}
