@@ -165,8 +165,11 @@ export function TranslationProvider({ children }: { children: ReactNode }) {
   const queueRef = useRef<Set<Element>>(new Set());
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const activeLanguageRef = useRef<Language>('en');
+  // Stable ref to the reconnect function so translateSubtree can call it without deps
+  const reconnectObserverRef = useRef<(() => void) | null>(null);
 
   // ── TRANSLATE A SUBTREE ──────────────────────────────────────────────────
+  // Uses observerRef directly (via ref) — no circular useCallback dependency.
   const translateSubtree = useCallback(async (root: Element, lang: Language) => {
     if (lang === 'en') return;
     const { textNodes, attrNodes } = collectTranslatableNodes(root);
@@ -180,6 +183,9 @@ export function TranslationProvider({ children }: { children: ReactNode }) {
 
     const translated = await batchTranslate(allTexts, lang);
 
+    // ── Pause observer BEFORE writing so DOM mutations don't re-trigger translation ──
+    observerRef.current?.disconnect();
+
     let i = 0;
     textNodes.forEach((node) => {
       const original = node.nodeValue ?? '';
@@ -190,6 +196,12 @@ export function TranslationProvider({ children }: { children: ReactNode }) {
     attrNodes.forEach(({ el, attr }) => {
       el.setAttribute(attr, translated[i++] ?? el.getAttribute(attr) ?? '');
     });
+
+    // ── Reconnect observer after all writes are done ──
+    // Use the ref-based reconnect so we don't need setupObserver in deps.
+    if (activeLanguageRef.current !== 'en') {
+      reconnectObserverRef.current?.();
+    }
   }, []);
 
   // ── FULL PAGE TRANSLATION ────────────────────────────────────────────────
@@ -216,7 +228,21 @@ export function TranslationProvider({ children }: { children: ReactNode }) {
   // ── MUTATION OBSERVER ────────────────────────────────────────────────────
   const setupObserver = useCallback((lang: Language) => {
     observerRef.current?.disconnect();
-    if (lang === 'en') return;
+    if (lang === 'en') { reconnectObserverRef.current = null; return; }
+
+    const startObserving = () => {
+      if (!observerRef.current) return;
+      observerRef.current.observe(document.body, {
+        childList: true,
+        subtree: true,
+        characterData: true,
+        attributes: true,
+        attributeFilter: TRANSLATABLE_ATTRS,
+      });
+    };
+
+    // Keep a stable reconnect fn so translateSubtree can call it without circular deps
+    reconnectObserverRef.current = startObserving;
 
     observerRef.current = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
@@ -244,13 +270,7 @@ export function TranslationProvider({ children }: { children: ReactNode }) {
       }, 50);
     });
 
-    observerRef.current.observe(document.body, {
-      childList: true,
-      subtree: true,
-      characterData: true,
-      attributes: true,
-      attributeFilter: TRANSLATABLE_ATTRS,
-    });
+    startObserving();
   }, [translateSubtree]);
 
   // ── LANGUAGE CHANGE HANDLER ──────────────────────────────────────────────

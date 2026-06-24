@@ -63,9 +63,11 @@ export function LanguageToggle() {
           <text x="15" y="18" textAnchor="middle" fontSize="6.5" fill="white" fontWeight="bold" fontFamily="system-ui">A</text>
         </svg>
 
-        {/* Active flag + 2-letter code */}
+        {/* Active flag + native language name (short) */}
         <span className="text-base leading-none" aria-hidden="true">{current.flag}</span>
-        <span className="text-[11px] font-bold text-foreground/70 tracking-wider leading-none">{current.label}</span>
+        <span className="text-[11px] font-bold text-foreground/70 leading-none max-w-[52px] truncate">
+          {current.nativeName}
+        </span>
 
         {/* Chevron */}
         <svg
@@ -87,7 +89,7 @@ export function LanguageToggle() {
           role="listbox"
           aria-label="Select language"
           className="notranslate absolute right-0 top-full mt-0.5 z-[300] bg-background border border-foreground/[0.14] shadow-xl shadow-black/15 dark:shadow-black/50 overflow-y-auto"
-          style={{ borderRadius: 0, minWidth: 108, maxHeight: "calc(100svh - 80px)" }}
+          style={{ borderRadius: 0, minWidth: 160, maxHeight: "calc(100svh - 80px)" }}
         >
           {LANGUAGES.map((lang) => {
             const isActive = lang.code === activeLanguage;
@@ -107,13 +109,13 @@ export function LanguageToggle() {
                 {/* Flag */}
                 <span className="text-[15px] leading-none w-5 flex-shrink-0">{lang.flag}</span>
 
-                {/* 2-letter language code (or characters for CJK/Cyrillic) */}
+                {/* Language name in its native script */}
                 <span
-                  className={`text-[12px] font-bold tracking-wide leading-none flex-1 text-left ${
+                  className={`text-[12px] font-semibold leading-none flex-1 text-left truncate ${
                     isActive ? "text-[#1D4ED8] dark:text-sky-400" : "text-foreground/70"
                   }`}
                 >
-                  {lang.label}
+                  {lang.nativeName}
                 </span>
 
                 {/* Active tick */}
