@@ -5,6 +5,7 @@ import { useAppStore } from "@/lib/store";
 import { LANGUAGES } from "@/lib/languages";
 import type { Language } from "@/lib/types";
 import { Check } from "lucide-react";
+import { Flag } from "@/components/flag";
 
 /**
  * Language picker — compact dropdown anchored directly below the trigger.
@@ -15,12 +16,29 @@ import { Check } from "lucide-react";
 export function LanguageToggle() {
   const { activeLanguage, setActiveLanguage } = useAppStore();
   const [open, setOpen] = useState(false);
+  const [dropdownAbove, setDropdownAbove] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   const current = LANGUAGES.find((l) => l.code === activeLanguage) ?? LANGUAGES[0];
 
   useEffect(() => {
     if (!open) return;
+    
+    // Check if dropdown should open above to stay in viewport
+    const checkPosition = () => {
+      if (ref.current) {
+        const rect = ref.current.getBoundingClientRect();
+        // If less than 300px from bottom, open upward
+        const shouldBeAbove = window.innerHeight - rect.bottom < 300;
+        setDropdownAbove(shouldBeAbove);
+      }
+    };
+    
+    // Initial check and on scroll/resize
+    checkPosition();
+    window.addEventListener("scroll", checkPosition, { passive: true });
+    window.addEventListener("resize", checkPosition, { passive: true });
+    
     function onClickOutside(e: MouseEvent) {
       if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
     }
@@ -32,6 +50,8 @@ export function LanguageToggle() {
     return () => {
       document.removeEventListener("mousedown", onClickOutside);
       document.removeEventListener("keydown", onKey);
+      window.removeEventListener("scroll", checkPosition);
+      window.removeEventListener("resize", checkPosition);
     };
   }, [open]);
 
@@ -41,7 +61,8 @@ export function LanguageToggle() {
   }
 
   return (
-    <div ref={ref} className="relative flex-shrink-0">
+    // translate="no" — native language names/flags must never be auto-translated.
+    <div ref={ref} translate="no" className="notranslate relative flex-shrink-0">
       {/* ── Trigger ── */}
       <button
         type="button"
@@ -59,8 +80,11 @@ export function LanguageToggle() {
           <text x="15" y="18" textAnchor="middle" fontSize="6.5" fill="white" fontWeight="bold" fontFamily="system-ui">A</text>
         </svg>
 
-        {/* Active flag + 2-letter code */}
-        <span className="text-base leading-none" aria-hidden="true">{current.flag}</span>
+        {/* Active flag + 2-letter code — real flag image (emoji flags don't
+            render on Windows/Chrome), fixed-width box keeps the row balanced. */}
+        <span className="inline-flex w-5 items-center justify-center leading-none">
+          <Flag countryCode={current.countryCode} size={18} />
+        </span>
         <span className="text-[11px] font-bold text-foreground/70 tracking-wider leading-none">{current.label}</span>
 
         {/* Chevron */}
@@ -77,12 +101,14 @@ export function LanguageToggle() {
         </svg>
       </button>
 
-      {/* ── Dropdown — anchored below trigger, compact width, scrollable ── */}
+      {/* ── Dropdown — anchored below/above trigger, compact width, scrollable ── */}
       {open && (
         <div
           role="listbox"
           aria-label="Select language"
-          className="absolute right-0 top-full mt-0.5 z-[300] bg-background border border-foreground/[0.14] shadow-xl shadow-black/15 dark:shadow-black/50 overflow-y-auto"
+          className={`absolute right-0 z-[300] bg-background border border-foreground/[0.14] shadow-xl shadow-black/15 dark:shadow-black/50 overflow-y-auto ${
+            dropdownAbove ? "bottom-full mb-0.5" : "top-full mt-0.5"
+          }`}
           style={{ borderRadius: 0, minWidth: 108, maxHeight: "calc(100svh - 80px)" }}
         >
           {LANGUAGES.map((lang) => {
@@ -101,7 +127,9 @@ export function LanguageToggle() {
                 }`}
               >
                 {/* Flag */}
-                <span className="text-[15px] leading-none w-5 flex-shrink-0">{lang.flag}</span>
+                <span className="inline-flex w-5 flex-shrink-0 items-center justify-center leading-none">
+                  <Flag countryCode={lang.countryCode} size={18} title={lang.nativeName} />
+                </span>
 
                 {/* 2-letter language code (or characters for CJK/Cyrillic) */}
                 <span

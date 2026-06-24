@@ -7,6 +7,24 @@ import {
   ExternalLink, RefreshCw, Eye, Cloud, Loader2,
   Radio, ChevronRight, ArrowUpRight,
 } from "lucide-react";
+import { useAppStore } from "@/lib/store";
+import { useTranslations, registerStrings } from "@/lib/translation-context";
+import type { Language } from "@/lib/types";
+
+registerStrings(
+  "Updated", "Just now", "ago", "Refresh",
+  "Feels", "Clear sky", "Partly cloudy", "Overcast", "Fog", "Drizzle",
+  "Rain", "Snow", "Rain showers", "Snow showers", "Thunderstorm", "Variable",
+  "Thunderstorm Warning", "Snow Conditions", "Rainy Day", "Warm Summer Day",
+  "Summer Weather", "Winter Weather", "Spring Weather", "Autumn Weather",
+  "Air Quality · AQHI", "Ideal for outdoor activity",
+  "Low", "Moderate", "High", "Very High",
+  "Humid",
+  "Active Alerts", "Environment Canada",
+  "All clear", "No active alerts for Calgary",
+  "Headlines unavailable — check back shortly.",
+  "Read full story",
+);
 
 // ---- Types ------------------------------------------------------------------
 
@@ -50,30 +68,32 @@ type PulseData = {
 
 // ---- Weather helpers --------------------------------------------------------
 
-function wmoToDesc(code: number): string {
-  if (code === 0) return "Clear sky";
-  if (code <= 2) return "Partly cloudy";
-  if (code === 3) return "Overcast";
-  if (code <= 49) return "Fog";
-  if (code <= 57) return "Drizzle";
-  if (code <= 67) return "Rain";
-  if (code <= 77) return "Snow";
-  if (code <= 82) return "Rain showers";
-  if (code <= 86) return "Snow showers";
-  if (code <= 99) return "Thunderstorm";
-  return "Variable";
+type TxMap = Record<string, string>;
+
+function wmoToDesc(code: number, tx: TxMap): string {
+  if (code === 0) return tx["Clear sky"] ?? "Clear sky";
+  if (code <= 2) return tx["Partly cloudy"] ?? "Partly cloudy";
+  if (code === 3) return tx["Overcast"] ?? "Overcast";
+  if (code <= 49) return tx["Fog"] ?? "Fog";
+  if (code <= 57) return tx["Drizzle"] ?? "Drizzle";
+  if (code <= 67) return tx["Rain"] ?? "Rain";
+  if (code <= 77) return tx["Snow"] ?? "Snow";
+  if (code <= 82) return tx["Rain showers"] ?? "Rain showers";
+  if (code <= 86) return tx["Snow showers"] ?? "Snow showers";
+  if (code <= 99) return tx["Thunderstorm"] ?? "Thunderstorm";
+  return tx["Variable"] ?? "Variable";
 }
 
-function getSeasonLabel(temp: number, wmo: number): string {
+function getSeasonLabel(temp: number, wmo: number, tx: TxMap): string {
   const month = new Date().getMonth();
-  if (wmo >= 95) return "Thunderstorm Warning";
-  if (wmo >= 71 && wmo <= 77) return "Snow Conditions";
-  if ((wmo >= 51 && wmo <= 67) || (wmo >= 80 && wmo <= 82)) return "Rainy Day";
-  if (month >= 5 && month <= 8 && temp >= 22) return "Warm Summer Day";
-  if (month >= 5 && month <= 8) return "Summer Weather";
-  if (month === 11 || month <= 1) return "Winter Weather";
-  if (month >= 2 && month <= 4) return "Spring Weather";
-  return "Autumn Weather";
+  if (wmo >= 95) return tx["Thunderstorm Warning"] ?? "Thunderstorm Warning";
+  if (wmo >= 71 && wmo <= 77) return tx["Snow Conditions"] ?? "Snow Conditions";
+  if ((wmo >= 51 && wmo <= 67) || (wmo >= 80 && wmo <= 82)) return tx["Rainy Day"] ?? "Rainy Day";
+  if (month >= 5 && month <= 8 && temp >= 22) return tx["Warm Summer Day"] ?? "Warm Summer Day";
+  if (month >= 5 && month <= 8) return tx["Summer Weather"] ?? "Summer Weather";
+  if (month === 11 || month <= 1) return tx["Winter Weather"] ?? "Winter Weather";
+  if (month >= 2 && month <= 4) return tx["Spring Weather"] ?? "Spring Weather";
+  return tx["Autumn Weather"] ?? "Autumn Weather";
 }
 
 /** Determine which scene to show based on WMO code */
@@ -531,14 +551,14 @@ function alertIconColour(title: string): string {
   return "text-amber-500";
 }
 
-function timeAgo(iso: string): string {
+function timeAgo(iso: string, tx: TxMap): string {
   const diff = Date.now() - new Date(iso).getTime();
   const m = Math.floor(diff / 60000);
-  if (m < 2) return "Just now";
-  if (m < 60) return `${m}m ago`;
+  if (m < 2) return tx["Just now"] ?? "Just now";
+  if (m < 60) return `${m}m ${tx["ago"] ?? "ago"}`;
   const h = Math.floor(m / 60);
-  if (h < 24) return `${h}h ago`;
-  return `${Math.floor(h / 24)}d ago`;
+  if (h < 24) return `${h}h ${tx["ago"] ?? "ago"}`;
+  return `${Math.floor(h / 24)}d ${tx["ago"] ?? "ago"}`;
 }
 
 // ---- Skeleton ---------------------------------------------------------------
@@ -561,7 +581,7 @@ function PulseSkeleton() {
 
 // ---- Accordion news item ----------------------------------------------------
 
-function NewsAccordionItem({ item, index }: { item: NewsItem; index: number }) {
+function NewsAccordionItem({ item, index, tx }: { item: NewsItem; index: number; tx: TxMap }) {
   const [open, setOpen] = useState(false);
   const style = sourceBadgeStyle(item.source);
 
@@ -637,7 +657,7 @@ function NewsAccordionItem({ item, index }: { item: NewsItem; index: number }) {
                 className="inline-flex items-center gap-1 text-[11px] font-bold text-[#E1251B] hover:underline"
                 onClick={(e) => e.stopPropagation()}
               >
-                Read full story
+                {tx["Read full story"] ?? "Read full story"}
                 <ArrowUpRight className="w-3 h-3" />
               </a>
             </div>
@@ -659,7 +679,7 @@ function NewsAccordionItem({ item, index }: { item: NewsItem; index: number }) {
                 className="inline-flex items-center gap-1 text-[11px] font-bold text-[#E1251B] hover:underline"
                 onClick={(e) => e.stopPropagation()}
               >
-                Read full story
+                {tx["Read full story"] ?? "Read full story"}
                 <ArrowUpRight className="w-3 h-3" />
               </a>
             </div>
@@ -673,10 +693,78 @@ function NewsAccordionItem({ item, index }: { item: NewsItem; index: number }) {
 // ---- Main component ---------------------------------------------------------
 
 export function CalgaryPulsePanel() {
+  const { activeLanguage } = useAppStore();
   const [data, setData] = useState<PulseData | null>(null);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<string>("");
+
+  const tx = useTranslations({
+    updated: "Updated",
+    justNow: "Just now",
+    ago: "ago",
+    refresh: "Refresh",
+    feels: "Feels",
+    clearSky: "Clear sky",
+    partlyCloudy: "Partly cloudy",
+    overcast: "Overcast",
+    fog: "Fog",
+    drizzle: "Drizzle",
+    rain: "Rain",
+    snow: "Snow",
+    rainShowers: "Rain showers",
+    snowShowers: "Snow showers",
+    thunderstorm: "Thunderstorm",
+    variable: "Variable",
+    thunderstormWarning: "Thunderstorm Warning",
+    snowConditions: "Snow Conditions",
+    rainyDay: "Rainy Day",
+    warmSummerDay: "Warm Summer Day",
+    summerWeather: "Summer Weather",
+    winterWeather: "Winter Weather",
+    springWeather: "Spring Weather",
+    autumnWeather: "Autumn Weather",
+    airQuality: "Air Quality · AQHI",
+    idealOutdoor: "Ideal for outdoor activity",
+    low: "Low",
+    moderate: "Moderate",
+    high: "High",
+    veryHigh: "Very High",
+    humid: "Humid",
+    activeAlerts: "Active Alerts",
+    envCanada: "Environment Canada",
+    allClear: "All clear",
+    noAlerts: "No active alerts for Calgary",
+    headlinesUnavailable: "Headlines unavailable — check back shortly.",
+    readFullStory: "Read full story",
+    whatsHappening: "What's Happening in Calgary",
+  });
+
+  // Build a plain object keyed by English source string for helper functions
+  const txMap: TxMap = {
+    "Just now": tx.justNow,
+    "ago": tx.ago,
+    "Clear sky": tx.clearSky,
+    "Partly cloudy": tx.partlyCloudy,
+    "Overcast": tx.overcast,
+    "Fog": tx.fog,
+    "Drizzle": tx.drizzle,
+    "Rain": tx.rain,
+    "Snow": tx.snow,
+    "Rain showers": tx.rainShowers,
+    "Snow showers": tx.snowShowers,
+    "Thunderstorm": tx.thunderstorm,
+    "Variable": tx.variable,
+    "Thunderstorm Warning": tx.thunderstormWarning,
+    "Snow Conditions": tx.snowConditions,
+    "Rainy Day": tx.rainyDay,
+    "Warm Summer Day": tx.warmSummerDay,
+    "Summer Weather": tx.summerWeather,
+    "Winter Weather": tx.winterWeather,
+    "Spring Weather": tx.springWeather,
+    "Autumn Weather": tx.autumnWeather,
+    "Read full story": tx.readFullStory,
+  };
 
   const load = useCallback(async (showRefreshing = false) => {
     if (showRefreshing) setRefreshing(true);
@@ -685,14 +773,15 @@ export function CalgaryPulsePanel() {
       if (!res.ok) throw new Error("fetch failed");
       const json: PulseData = await res.json();
       setData(json);
-      setLastUpdated(timeAgo(json.fetchedAt));
+      setLastUpdated(timeAgo(json.fetchedAt, txMap));
     } catch {
       // keep stale data if available
     } finally {
       setLoading(false);
       setRefreshing(false);
     }
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeLanguage]);
 
   useEffect(() => {
     load();
@@ -702,10 +791,11 @@ export function CalgaryPulsePanel() {
 
   useEffect(() => {
     const id = setInterval(() => {
-      if (data?.fetchedAt) setLastUpdated(timeAgo(data.fetchedAt));
+      if (data?.fetchedAt) setLastUpdated(timeAgo(data.fetchedAt, txMap));
     }, 60_000);
     return () => clearInterval(id);
-  }, [data]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, activeLanguage]);
 
   if (loading) return <PulseSkeleton />;
 
@@ -717,7 +807,7 @@ export function CalgaryPulsePanel() {
 
       {/* Header: last updated + refresh */}
       <div className="flex items-center justify-between text-xs text-foreground/40">
-        <span>Updated {lastUpdated}</span>
+        <span>{tx.updated} {lastUpdated}</span>
         <button
           onClick={() => load(true)}
           disabled={refreshing}
@@ -725,7 +815,7 @@ export function CalgaryPulsePanel() {
           className="flex items-center gap-1 hover:text-foreground/70 transition-colors disabled:opacity-50"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? "animate-spin" : ""}`} />
-          Refresh
+          {tx.refresh}
         </button>
       </div>
 
@@ -748,10 +838,10 @@ export function CalgaryPulsePanel() {
               <p className="text-[9px] font-black uppercase tracking-[0.18em] text-white/70">Calgary, AB</p>
               <div className="flex items-baseline gap-2">
                 <span className="text-2xl font-black text-white leading-none" style={{ textShadow: "0 1px 6px rgba(0,0,0,0.45)" }}>{weather.temp}°C</span>
-                <span className="text-xs font-semibold text-white/90" style={{ textShadow: "0 1px 4px rgba(0,0,0,0.40)" }}>{getSeasonLabel(weather.temp, weather.wmoCode)}</span>
+                <span className="text-xs font-semibold text-white/90" style={{ textShadow: "0 1px 4px rgba(0,0,0,0.40)" }}>{getSeasonLabel(weather.temp, weather.wmoCode, txMap)}</span>
               </div>
               <p className="text-[10px] text-white/75" style={{ textShadow: "0 1px 3px rgba(0,0,0,0.35)" }}>
-                Feels {weather.feelsLike}°C &middot; {wmoToDesc(weather.wmoCode)}
+                {tx.feels} {weather.feelsLike}°C &middot; {wmoToDesc(weather.wmoCode, txMap)}
               </p>
             </div>
           </div>
@@ -770,7 +860,7 @@ export function CalgaryPulsePanel() {
                 <Droplets className="w-3 h-3 text-white/55 flex-shrink-0" />
                 <div className="text-center">
                   <span className="text-sm font-black text-white leading-none">{weather.humidity}%</span>
-                  <span className="text-[8px] text-white/45 block uppercase tracking-wide">Humid</span>
+                  <span className="text-[8px] text-white/45 block uppercase tracking-wide">{tx.humid}</span>
                 </div>
               </div>
               <div className="flex items-center justify-center gap-1.5 py-2">
@@ -800,13 +890,15 @@ export function CalgaryPulsePanel() {
           <Activity className="w-4 h-4 text-[#1D4ED8] dark:text-[#60A5FA]" />
         </div>
         <div className="min-w-0 flex-1">
-          <p className="text-xs font-bold text-foreground/80">Air Quality · AQHI</p>
-          {aqhi && <p className="text-[10px] text-foreground/50 mt-0.5 leading-snug">{aqhi.label}</p>}
+          <p className="text-xs font-bold text-foreground/80">{tx.airQuality}</p>
+          {aqhi && <p className="text-[10px] text-foreground/50 mt-0.5 leading-snug">{tx.idealOutdoor}</p>}
         </div>
         {aqhi ? (
           <div className="text-right flex-shrink-0">
             <span className={`text-xl font-black leading-none ${aqhiColour(aqhi.risk)}`}>{aqhi.value}</span>
-            <p className={`text-[10px] font-bold mt-0.5 ${aqhiColour(aqhi.risk)}`}>{aqhi.risk}</p>
+            <p className={`text-[10px] font-bold mt-0.5 ${aqhiColour(aqhi.risk)}`}>
+              {aqhi.risk === "Low" ? tx.low : aqhi.risk === "Moderate" ? tx.moderate : aqhi.risk === "High" ? tx.high : tx.veryHigh}
+            </p>
           </div>
         ) : (
           <span className="text-xs text-foreground/35">—</span>
@@ -821,8 +913,8 @@ export function CalgaryPulsePanel() {
       >
         <div className="flex items-center gap-2 mb-2">
           <AlertTriangle className="w-3.5 h-3.5 text-foreground/45 flex-shrink-0" />
-          <p className="text-[10px] font-bold text-foreground/60 uppercase tracking-widest">Active Alerts</p>
-          <span className="ml-auto text-[9px] text-foreground/35">Environment Canada</span>
+          <p className="text-[10px] font-bold text-foreground/60 uppercase tracking-widest">{tx.activeAlerts}</p>
+          <span className="ml-auto text-[9px] text-foreground/35">{tx.envCanada}</span>
         </div>
 
         <AnimatePresence mode="popLayout">
@@ -835,8 +927,8 @@ export function CalgaryPulsePanel() {
             >
               <Eye className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
               <div>
-                <p className="text-xs font-semibold text-emerald-700 dark:text-emerald-400">All clear</p>
-                <p className="text-[10px] text-foreground/45">No active alerts for Calgary</p>
+                <p className="text-xs font-semibold text-emerald-700 dark:text-emerald-400">{tx.allClear}</p>
+                <p className="text-[10px] text-foreground/45">{tx.noAlerts}</p>
               </div>
             </motion.div>
           ) : (
@@ -869,18 +961,14 @@ export function CalgaryPulsePanel() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
       >
-        {/* Coloured section header band */}
-        <div className="flex items-center justify-between px-3 py-2.5 rounded-xl bg-[#E1251B] dark:bg-[#b91c1c] mb-3">
+        {/* Section header with deep blue styling */}
+        <div className="flex items-center justify-between px-3 py-2.5 rounded-xl bg-[#1D4ED8] dark:bg-[#1e40af] mb-3">
           <div className="flex items-center gap-2">
             <Radio className="w-3.5 h-3.5 text-white/80 flex-shrink-0" />
             <p className="text-[11px] font-black text-white uppercase tracking-[0.14em]">
-              What&apos;s Happening in Calgary
+              {tx.whatsHappening}
             </p>
           </div>
-          <span className="flex items-center gap-1.5 text-[9px] text-white/65 font-semibold">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse inline-block" />
-            Live
-          </span>
         </div>
 
         {/* Source legend — compact inline row, no background pills */}
@@ -902,10 +990,10 @@ export function CalgaryPulsePanel() {
         {/* Headline list — no card backgrounds, just divider lines */}
         <div>
           {news.length === 0 ? (
-            <p className="text-xs text-foreground/45 py-3 pl-5">Headlines unavailable — check back shortly.</p>
+            <p className="text-xs text-foreground/45 py-3 pl-5">{tx.headlinesUnavailable}</p>
           ) : (
             news.map((item, i) => (
-              <NewsAccordionItem key={item.link + i} item={item} index={i} />
+              <NewsAccordionItem key={item.link + i} item={item} index={i} tx={txMap} />
             ))
           )}
         </div>

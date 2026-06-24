@@ -11,12 +11,192 @@ import { CalgaryConnectLogo } from "@/components/calgary-connect-logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageToggle } from "@/components/language-toggle";
 import { useAppStore } from "@/lib/store";
+import { useTranslations, registerStrings } from "@/lib/translation-context";
 import { useRef, useState, useEffect } from "react";
 import Footer from "@/components/footer";
 import type { ResourceCategory } from "@/lib/types";
 
+// Register all landing page strings for translation
+registerStrings(
+  "Calgary's civic intelligence platform",
+  "Everything Calgary. One Place.",
+  "Essential services. One place.",
+  "Housing, jobs, tenant support, local life, businesses, events, trusted services, and AI guidance—all intelligently connected.",
+  "My landlord won't fix the heat...",
+  "I need childcare",
+  "Jobs hiring this week",
+  "Cheap family activities",
+  "How do I get a family doctor?",
+  "Search",
+  "Explore Calgary",
+  "Askonnect — Ask me.",
+  "Open App",
+  // Find Your Path section
+  "Find Your Path",
+  "What do you need?",
+  "Start with your situation. We'll take you straight there.",
+  // Pathway titles & descriptions
+  "Find Housing & Rent Support",
+  "Affordable rentals, subsidies & tenant rights",
+  "Affordable rentals",
+  "Subsidized programs",
+  "Tenant help",
+  "Looking for Work?",
+  "Resume help, hiring companies & job fairs",
+  "Resume help",
+  "Hiring companies",
+  "Job fairs",
+  "Get Healthcare Access",
+  "Walk-in clinics, family doctors & mental health",
+  "Walk-in clinics",
+  "Family doctors",
+  "Mental health",
+  "New to Calgary?",
+  "Settlement services, language classes & community",
+  "Settlement services",
+  "Language classes",
+  "Community connections",
+  // AI Powered Guidance section
+  "AI-Powered Guidance",
+  "Ask anything about living in Calgary.",
+  "Not just links. Real answers, step-by-step guidance, and resources matched to your specific situation.",
+  "Try Askonnect",
+  "Can my landlord raise rent mid-lease?",
+  "In Alberta, your landlord cannot increase rent during a fixed-term lease unless the lease specifically allows it.",
+  "For periodic (month-to-month) tenancies, they must give you at least 3 months written notice.",
+  "Ask a follow-up question...",
+  // Footer CTA section
+  "Calgary, finally connected.",
+  "Join thousands of Calgarians who have found the help they need.",
+  "Get Started",
+  // Menu groups & items
+  "Essentials",
+  "People & Support",
+  "Community & Life",
+  // Essentials items
+  "Housing & Rent",
+  "Rentals, subsidies & tenant help",
+  "Jobs & Career",
+  "Hiring, resumes & training",
+  "Healthcare",
+  "Clinics, doctors & coverage",
+  "Food Support",
+  "Food banks & free meals",
+  "Emergency Help",
+  "Urgent crisis support",
+  // People & Support items
+  "Newcomer Services",
+  "Settlement & language help",
+  "Family & Childcare",
+  "Childcare & parenting",
+  "Senior Services",
+  "Programs for older adults",
+  "Mental Health",
+  "Counselling & crisis lines",
+  "Disability Support",
+  "Accessible services",
+  // Community & Life items
+  "Education",
+  "Schools, classes & upgrading",
+  "Legal Help",
+  "Free legal clinics & rights",
+  "Transit",
+  "Getting around Calgary",
+  "Tourists & Visitors",
+  "Sights, hotels, dining & tours",
+  "Small Business",
+  "Start & grow a business",
+  "Volunteering",
+  "Give back locally",
+  // Footer section headings
+  "Resources",
+  "For Businesses",
+  "Community",
+  "Important Disclaimer",
+  "Everything Calgary. One Place.",
+);
+
 export default function LandingPage() {
   const { setCurrentPage, setActiveTab, setHasOnboarded, setSearchQuery, setActiveCategory } = useAppStore();
+  const tx = useTranslations({
+    eyebrow: "Calgary's civic intelligence platform",
+    headline: "Everything Calgary. One Place.",
+    sublineDesktop: "Housing, jobs, tenant support, local life, businesses, events, trusted services, and AI guidance—all intelligently connected.",
+    sublineMobile: "Essential services. One place.",
+    placeholder: "My landlord won't fix the heat...",
+    query1: "I need childcare",
+    query2: "Jobs hiring this week",
+    query3: "Cheap family activities",
+    query4: "How do I get a family doctor?",
+    search: "Search",
+    exploreCalgary: "Explore Calgary",
+    askonnect: "Askonnect — Ask me.",
+    openApp: "Open App",
+    // Find Your Path Section
+    findYourPath: "Find Your Path",
+    whatDoYouNeed: "What do you need?",
+    startWithSituation: "Start with your situation. We'll take you straight there.",
+    // Pathway titles & descriptions
+    housingTitle: "Find Housing & Rent Support",
+    housingSub: "Affordable rentals, subsidies & tenant rights",
+    housingTag1: "Affordable rentals",
+    housingTag2: "Subsidized programs",
+    housingTag3: "Tenant help",
+    jobsTitle: "Looking for Work?",
+    jobsSub: "Resume help, hiring companies & job fairs",
+    jobsTag1: "Resume help",
+    jobsTag2: "Hiring companies",
+    jobsTag3: "Job fairs",
+    healthcareTitle: "Get Healthcare Access",
+    healthcareSub: "Walk-in clinics, family doctors & mental health",
+    healthcareTag1: "Walk-in clinics",
+    healthcareTag2: "Family doctors",
+    healthcareTag3: "Mental health",
+    newcomerTitle: "New to Calgary?",
+    newcomerSub: "Settlement services, language classes & community",
+    newcomerTag1: "Settlement services",
+    newcomerTag2: "Language classes",
+    newcomerTag3: "Community connections",
+    // AI Section
+    aiBadge: "AI-Powered Guidance",
+    aiHeadline: "Ask anything about living in Calgary.",
+    aiSubheading: "Not just links. Real answers, step-by-step guidance, and resources matched to your specific situation.",
+    aiButton: "Try Askonnect",
+    aiExample: "Can my landlord raise rent mid-lease?",
+    aiResponse1: "In Alberta, your landlord cannot increase rent during a fixed-term lease unless the lease specifically allows it.",
+    aiResponse2: "For periodic (month-to-month) tenancies, they must give you at least 3 months written notice.",
+    aiPlaceholder: "Ask a follow-up question...",
+    // Footer CTA Section
+    finallyConnected: "Calgary, finally connected.",
+    finallyConnectedSub: "Join thousands of Calgarians who have found the help they need.",
+    getStarted: "Get Started",
+    // Menu groups
+    essentials: "Essentials",
+    peopleSupport: "People & Support",
+    communityLife: "Community & Life",
+    // Footer headings
+    footerResources: "Resources",
+    footerBusiness: "For Businesses",
+    footerCommunity: "Community",
+    footerTagline: "Everything Calgary. One Place.",
+    // Menu item labels (for all categories)
+    housingRent: "Housing & Rent",
+    jobsCareer: "Jobs & Career",
+    healthcare: "Healthcare",
+    foodSupport: "Food Support",
+    emergencyHelp: "Emergency Help",
+    newcomerServices: "Newcomer Services",
+    familyChildcare: "Family & Childcare",
+    seniorServices: "Senior Services",
+    mentalHealth: "Mental Health",
+    disabilitySupport: "Disability Support",
+    education: "Education",
+    legalHelp: "Legal Help",
+    transit: "Transit",
+    touristsVisitors: "Tourists & Visitors",
+    smallBusiness: "Small Business",
+    volunteering: "Volunteering",
+  });
   const heroRef = useRef<HTMLDivElement>(null);
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -88,34 +268,34 @@ export default function LandingPage() {
     items: { label: string; category: ResourceCategory; icon: React.ElementType; desc: string }[];
   }[] = [
     {
-      label: "Essentials",
+      label: tx.essentials,
       items: [
-        { label: "Housing & Rent", category: "housing", icon: Home, desc: "Rentals, subsidies & tenant help" },
-        { label: "Jobs & Career", category: "jobs", icon: Briefcase, desc: "Hiring, resumes & training" },
-        { label: "Healthcare", category: "healthcare", icon: Heart, desc: "Clinics, doctors & coverage" },
-        { label: "Food Support", category: "food", icon: Utensils, desc: "Food banks & free meals" },
-        { label: "Emergency Help", category: "emergency", icon: AlertTriangle, desc: "Urgent crisis support" },
+        { label: tx.housingRent, category: "housing", icon: Home, desc: "Rentals, subsidies & tenant help" },
+        { label: tx.jobsCareer, category: "jobs", icon: Briefcase, desc: "Hiring, resumes & training" },
+        { label: tx.healthcare, category: "healthcare", icon: Heart, desc: "Clinics, doctors & coverage" },
+        { label: tx.foodSupport, category: "food", icon: Utensils, desc: "Food banks & free meals" },
+        { label: tx.emergencyHelp, category: "emergency", icon: AlertTriangle, desc: "Urgent crisis support" },
       ],
     },
     {
-      label: "People & Support",
+      label: tx.peopleSupport,
       items: [
-        { label: "Newcomer Services", category: "newcomer", icon: Users, desc: "Settlement & language help" },
-        { label: "Family & Childcare", category: "family", icon: Baby, desc: "Childcare & parenting" },
-        { label: "Senior Services", category: "senior", icon: Users, desc: "Programs for older adults" },
-        { label: "Mental Health", category: "mental-health", icon: Brain, desc: "Counselling & crisis lines" },
-        { label: "Disability Support", category: "disability", icon: Accessibility, desc: "Accessible services" },
+        { label: tx.newcomerServices, category: "newcomer", icon: Users, desc: "Settlement & language help" },
+        { label: tx.familyChildcare, category: "family", icon: Baby, desc: "Childcare & parenting" },
+        { label: tx.seniorServices, category: "senior", icon: Users, desc: "Programs for older adults" },
+        { label: tx.mentalHealth, category: "mental-health", icon: Brain, desc: "Counselling & crisis lines" },
+        { label: tx.disabilitySupport, category: "disability", icon: Accessibility, desc: "Accessible services" },
       ],
     },
     {
-      label: "Community & Life",
+      label: tx.communityLife,
       items: [
-        { label: "Education", category: "education", icon: GraduationCap, desc: "Schools, classes & upgrading" },
-        { label: "Legal Help", category: "legal", icon: Scale, desc: "Free legal clinics & rights" },
-        { label: "Transit", category: "transit", icon: Bus, desc: "Getting around Calgary" },
-        { label: "Tourists & Visitors", category: "tourism", icon: MapPin, desc: "Sights, hotels, dining & tours" },
-        { label: "Small Business", category: "business", icon: Building2, desc: "Start & grow a business" },
-        { label: "Volunteering", category: "volunteering", icon: HandHeart, desc: "Give back locally" },
+        { label: tx.education, category: "education", icon: GraduationCap, desc: "Schools, classes & upgrading" },
+        { label: tx.legalHelp, category: "legal", icon: Scale, desc: "Free legal clinics & rights" },
+        { label: tx.transit, category: "transit", icon: Bus, desc: "Getting around Calgary" },
+        { label: tx.touristsVisitors, category: "tourism", icon: MapPin, desc: "Sights, hotels, dining & tours" },
+        { label: tx.smallBusiness, category: "business", icon: Building2, desc: "Start & grow a business" },
+        { label: tx.volunteering, category: "volunteering", icon: HandHeart, desc: "Give back locally" },
       ],
     },
   ];
@@ -133,9 +313,9 @@ export default function LandingPage() {
   }[] = [
     {
       id: "housing",
-      solution: "Find Housing & Rent Support",
-      sub: "Affordable rentals, subsidies & tenant rights",
-      preview: ["Affordable rentals", "Subsidized programs", "Tenant help"],
+      solution: tx.housingTitle,
+      sub: tx.housingSub,
+      preview: [tx.housingTag1, tx.housingTag2, tx.housingTag3],
       gradient: "linear-gradient(135deg, rgba(14,68,120,0.75) 0%, rgba(12,90,160,0.65) 50%, rgba(14,68,120,0.75) 100%)",
       glassColor: "rgba(56,189,248,0.07)",
       accent: "#38BDF8",
@@ -143,9 +323,9 @@ export default function LandingPage() {
     },
     {
       id: "jobs",
-      solution: "Looking for Work?",
-      sub: "Resume help, hiring companies & job fairs",
-      preview: ["Resume help", "Hiring companies", "Job fairs"],
+      solution: tx.jobsTitle,
+      sub: tx.jobsSub,
+      preview: [tx.jobsTag1, tx.jobsTag2, tx.jobsTag3],
       gradient: "linear-gradient(135deg, rgba(10,40,80,0.75) 0%, rgba(15,58,112,0.65) 50%, rgba(10,40,80,0.75) 100%)",
       glassColor: "rgba(99,179,237,0.07)",
       accent: "#60A5FA",
@@ -153,9 +333,9 @@ export default function LandingPage() {
     },
     {
       id: "healthcare",
-      solution: "Get Healthcare Access",
-      sub: "Walk-in clinics, family doctors & mental health",
-      preview: ["Walk-in clinics", "Family doctors", "Mental health"],
+      solution: tx.healthcareTitle,
+      sub: tx.healthcareSub,
+      preview: [tx.healthcareTag1, tx.healthcareTag2, tx.healthcareTag3],
       gradient: "linear-gradient(135deg, rgba(16,42,86,0.75) 0%, rgba(20,56,110,0.65) 50%, rgba(16,42,86,0.75) 100%)",
       glassColor: "rgba(225,37,27,0.10)",
       accent: "#E1251B",
@@ -163,9 +343,9 @@ export default function LandingPage() {
     },
     {
       id: "newcomer",
-      solution: "New to Calgary?",
-      sub: "Settlement services, language classes & community",
-      preview: ["Settlement services", "Language classes", "Community connections"],
+      solution: tx.newcomerTitle,
+      sub: tx.newcomerSub,
+      preview: [tx.newcomerTag1, tx.newcomerTag2, tx.newcomerTag3],
       gradient: "linear-gradient(135deg, rgba(10,36,72,0.75) 0%, rgba(14,52,104,0.65) 50%, rgba(10,36,72,0.75) 100%)",
       glassColor: "rgba(56,189,248,0.07)",
       accent: "#38BDF8",
@@ -275,7 +455,7 @@ export default function LandingPage() {
                 onClick={() => enterApp("home")}
                 className="hidden sm:flex items-center gap-2 btn-primary px-5 py-2.5 rounded-xl text-sm font-semibold"
               >
-                Open App
+                {tx.openApp}
                 <ArrowRight className="w-4 h-4" />
               </button>
               <button
@@ -362,7 +542,7 @@ export default function LandingPage() {
                   }}
                   className="mt-2 btn-primary px-5 py-3 rounded-xl text-base font-semibold flex items-center justify-center gap-2"
                 >
-                  Open App
+                  {tx.openApp}
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </nav>
@@ -413,7 +593,7 @@ export default function LandingPage() {
           >
             <div className="w-2 h-2 rounded-full bg-[#38BDF8] animate-pulse" />
             <span className="text-xs md:text-sm font-medium text-[#38BDF8]">
-              Calgary&apos;s civic intelligence platform
+              {tx.eyebrow}
             </span>
           </motion.div>
 
@@ -424,9 +604,9 @@ export default function LandingPage() {
             transition={{ delay: 0.3, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="text-[clamp(32px,7vw,80px)] font-bold tracking-[-0.03em] leading-[1.02] mb-6 md:mb-8 text-balance"
           >
-            Everything <span className="text-[#E1251B]">Calgary</span>.
+            {tx.headline.split(". ")[0]}<span className="text-[#E1251B]"> Calgary</span>.
             <br />
-            <span className="text-gradient-blue">One Place.</span>
+            <span className="text-gradient-blue">{tx.headline.split(". ")[1]}</span>
           </motion.h1>
 
           {/* Subheadline */}
@@ -436,8 +616,8 @@ export default function LandingPage() {
             transition={{ delay: 0.45, duration: 0.7 }}
             className="text-sm md:text-xl lg:text-2xl font-medium text-white/90 leading-relaxed max-w-3xl mx-auto mb-10 md:mb-14 text-pretty drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]"
           >
-            <span className="hidden md:inline">Housing, jobs, tenant support, local life, businesses, events, trusted services, and AI guidance—all intelligently connected.</span>
-            <span className="md:hidden">Essential services. One place.</span>
+            <span className="hidden md:inline">{tx.sublineDesktop}</span>
+            <span className="md:hidden">{tx.sublineMobile}</span>
           </motion.p>
 
           {/* Functional search */}
@@ -456,7 +636,7 @@ export default function LandingPage() {
                 onKeyDown={(e) => {
                   if (e.key === "Enter") handleSearchSubmit();
                 }}
-                placeholder="My landlord won't fix the heat..."
+                placeholder={tx.placeholder}
                 aria-label="Search Calgary resources"
                 className="w-full h-16 md:h-20 bg-white/[0.16] hover:bg-white/[0.2] focus:bg-white/[0.22] backdrop-blur-xl border border-white/30 hover:border-white/40 focus:border-[#38BDF8]/70 rounded-2xl md:rounded-3xl text-base md:text-xl font-medium text-white placeholder:text-white/70 pl-14 md:pl-20 pr-28 md:pr-32 outline-none transition-all duration-300 shadow-[0_8px_30px_-6px_rgba(0,0,0,0.45)] focus:shadow-[0_0_0_4px_rgba(56,189,248,0.2),0_25px_50px_-12px_rgba(0,0,0,0.6)]"
               />
@@ -464,7 +644,7 @@ export default function LandingPage() {
                 onClick={handleSearchSubmit}
                 className="absolute right-2 md:right-3 top-1/2 -translate-y-1/2 btn-primary px-4 md:px-6 h-12 md:h-14 rounded-xl md:rounded-2xl flex items-center gap-2 text-sm md:text-base font-semibold"
               >
-                <span className="hidden sm:inline">Search</span>
+                <span className="hidden sm:inline">{tx.search}</span>
                 <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
               </button>
             </div>
@@ -477,7 +657,7 @@ export default function LandingPage() {
             transition={{ delay: 0.75 }}
             className="flex flex-wrap justify-center gap-2 md:gap-3 mb-10 md:mb-14"
           >
-            {["I need childcare", "Jobs hiring this week", "Cheap family activities", "How do I get a family doctor?"].map(
+            {[tx.query1, tx.query2, tx.query3, tx.query4].map(
               (q) => (
                 <button
                   key={q}
@@ -506,7 +686,7 @@ export default function LandingPage() {
               onClick={handleExplore}
               className="btn-primary w-full sm:w-auto px-8 md:px-10 py-4 md:py-5 rounded-2xl flex items-center justify-center gap-3 text-base md:text-lg font-semibold"
             >
-              Explore Calgary
+              {tx.exploreCalgary}
               <ArrowRight className="w-5 h-5" />
             </motion.button>
             <motion.button
@@ -522,7 +702,7 @@ export default function LandingPage() {
                   height={28}
                   className="w-7 h-7 rounded-full ring-1 ring-white/30 flex-shrink-0"
                 />
-                Askonnect — Ask me.
+                {tx.askonnect}
             </motion.button>
           </motion.div>
         </motion.div>
@@ -543,12 +723,12 @@ export default function LandingPage() {
             viewport={{ once: true, margin: "-100px" }}
             className="text-center mb-12 md:mb-16"
           >
-            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#38BDF8]/70 mb-4">Find Your Path</p>
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#38BDF8]/70 mb-4">{tx.findYourPath}</p>
             <h2 className="text-[clamp(28px,5vw,48px)] font-bold tracking-tight mb-4 text-balance">
-              What do you need?
+              {tx.whatDoYouNeed}
             </h2>
             <p className="text-base md:text-lg text-white/50 max-w-lg mx-auto text-pretty">
-              Start with your situation. We&apos;ll take you straight there.
+              {tx.startWithSituation}
             </p>
           </motion.div>
 
@@ -642,15 +822,15 @@ export default function LandingPage() {
             >
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#38BDF8]/10 border border-[#38BDF8]/20 mb-6 md:mb-8">
                 <Compass className="w-4 h-4 text-[#38BDF8]" />
-                <span className="text-sm font-medium text-[#38BDF8]">AI-Powered Guidance</span>
+                <span className="text-sm font-medium text-[#38BDF8]">{tx.aiBadge}</span>
               </div>
 
               <h2 className="text-[clamp(28px,5vw,48px)] font-bold tracking-tight mb-4 md:mb-6 text-balance">
-                Ask anything about living in Calgary.
+                {tx.aiHeadline}
               </h2>
 
               <p className="text-base md:text-xl text-white/60 leading-relaxed mb-8 md:mb-10 text-pretty">
-                Not just links. Real answers, step-by-step guidance, and resources matched to your specific situation.
+                {tx.aiSubheading}
               </p>
 
               <motion.button
@@ -666,7 +846,7 @@ export default function LandingPage() {
                   height={28}
                   className="w-7 h-7 rounded-full ring-1 ring-white/30 flex-shrink-0"
                 />
-                Try Askonnect
+                {tx.aiButton}
               </motion.button>
             </motion.div>
 
@@ -681,7 +861,7 @@ export default function LandingPage() {
                 <div className="space-y-5 md:space-y-6 mb-6 md:mb-8">
                   <div className="flex justify-end">
                     <div className="bg-[#38BDF8] text-[#061020] px-5 py-3 rounded-2xl rounded-br-md max-w-[280px] text-sm md:text-[15px] font-medium">
-                      Can my landlord raise rent mid-lease?
+                      {tx.aiExample}
                     </div>
                   </div>
 
@@ -696,10 +876,10 @@ export default function LandingPage() {
                     </div>
                     <div className="bg-white/[0.06] px-5 py-4 rounded-2xl rounded-bl-md max-w-[320px]">
                       <p className="text-sm md:text-[15px] text-white/90 leading-relaxed mb-3">
-                        In Alberta, your landlord cannot increase rent during a fixed-term lease unless the lease specifically allows it.
+                        {tx.aiResponse1}
                       </p>
                       <p className="text-sm md:text-[15px] text-white/90 leading-relaxed">
-                        For periodic (month-to-month) tenancies, they must give you at least 3 months written notice.
+                        {tx.aiResponse2}
                       </p>
                     </div>
                   </div>
@@ -708,7 +888,7 @@ export default function LandingPage() {
                 <div className="relative">
                   <input
                     type="text"
-                    placeholder="Ask a follow-up question..."
+                    placeholder={tx.aiPlaceholder}
                     aria-label="Ask the AI a follow-up question"
                     className="w-full h-14 bg-white/[0.04] border border-white/10 rounded-xl text-sm md:text-[15px] text-white placeholder:text-white/40 pl-5 pr-14 outline-none"
                     onClick={handleAskAI}
@@ -739,10 +919,10 @@ export default function LandingPage() {
             viewport={{ once: true }}
           >
             <h2 className="text-[clamp(28px,5vw,48px)] font-bold tracking-tight mb-4 md:mb-6 text-balance">
-              Calgary, finally connected.
+              {tx.finallyConnected}
             </h2>
             <p className="text-base md:text-xl text-white/60 mb-8 md:mb-12 max-w-xl mx-auto text-pretty">
-              Join thousands of Calgarians who have found the help they need.
+              {tx.finallyConnectedSub}
             </p>
             <motion.button
               whileHover={{ scale: 1.03, y: -2 }}
@@ -750,7 +930,7 @@ export default function LandingPage() {
               onClick={handleExplore}
               className="btn-primary px-10 md:px-12 py-4 md:py-5 rounded-2xl flex items-center gap-3 text-base md:text-lg font-semibold mx-auto"
             >
-              Get Started
+              {tx.getStarted}
               <ArrowRight className="w-5 h-5" />
             </motion.button>
           </motion.div>

@@ -20,6 +20,51 @@ import {
   Zap,
   Shield
 } from "lucide-react";
+import { useTranslations, registerStrings } from "@/lib/translation-context";
+
+// Register business submission strings for translation
+registerStrings(
+  "Basic Listing",
+  "Free",
+  "Forever",
+  "Enhanced",
+  "$49",
+  "/month",
+  "Featured",
+  "$149",
+  "/month",
+  "Standard directory listing",
+  "Basic business information",
+  "Contact details displayed",
+  "Community reviews",
+  "Everything in Basic",
+  "Priority search placement",
+  "Detailed service descriptions",
+  "Photo gallery (up to 10)",
+  "Direct booking link",
+  "Monthly analytics report",
+  "Everything in Enhanced",
+  "Featured badge on listing",
+  "Homepage spotlight rotation",
+  "AI recommendation priority",
+  "Dedicated account manager",
+  "Social media promotion",
+  "Press release inclusion",
+  "Housing & Rent",
+  "Jobs & Career",
+  "Healthcare",
+  "Family & Childcare",
+  "Education",
+  "Legal Services",
+  "Food & Meals",
+  "Transportation",
+  "Mental Health",
+  "Senior Services",
+  "Newcomer Services",
+  "Small Business",
+  "Community",
+  "Other",
+);
 
 interface BusinessSubmissionProps {
   isOpen: boolean;
@@ -44,13 +89,25 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
     contactEmail: "",
     package: "basic",
   });
+  
+  const tx = useTranslations({
+    basicName: "Basic Listing",
+    basicPrice: "Free",
+    basicPriceNote: "Forever",
+    enhancedName: "Enhanced",
+    enhancedPrice: "$49",
+    enhancedPriceNote: "/month",
+    featuredName: "Featured",
+    featuredPrice: "$149",
+    featuredPriceNote: "/month",
+  });
 
   const packages = [
     {
       id: "basic",
-      name: "Basic Listing",
-      price: "Free",
-      priceNote: "Forever",
+      name: tx.basicName,
+      price: tx.basicPrice,
+      priceNote: tx.basicPriceNote,
       features: [
         "Standard directory listing",
         "Basic business information",
@@ -63,9 +120,9 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
     },
     {
       id: "enhanced",
-      name: "Enhanced",
-      price: "$49",
-      priceNote: "/month",
+      name: tx.enhancedName,
+      price: tx.enhancedPrice,
+      priceNote: tx.enhancedPriceNote,
       features: [
         "Everything in Basic",
         "Priority search placement",
@@ -80,9 +137,9 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
     },
     {
       id: "featured",
-      name: "Featured",
-      price: "$149",
-      priceNote: "/month",
+      name: tx.featuredName,
+      price: tx.featuredPrice,
+      priceNote: tx.featuredPriceNote,
       features: [
         "Everything in Enhanced",
         "Featured badge on listing",

@@ -12,6 +12,7 @@ import { NAV_ITEMS } from "./nav-items";
 import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
 import { CalgaryAnimatedBackground } from "./calgary-background";
+import { useTranslationContext, registerStrings, useTranslations } from "@/lib/translation-context";
 
 // Lazy-load every tab — only the active tab's JS is fetched, keeping the
 // initial bundle small and first-paint fast.
@@ -26,12 +27,22 @@ const RentShield     = dynamic(() => import("./rentshield"),        { ssr: false
 const Footer         = dynamic(() => import("./footer"),            { ssr: false });
 const BusinessSubmission = dynamic(() => import("./business-submission"), { ssr: false });
 
+// Register navigation item labels for translation
+registerStrings(
+  "Home", "Explore", "Askonnect", "Do Good", "Saved", "Profile",
+  "Appearance",
+  "RentShield",
+  "Emergency Hub",
+);
+
 export default function MainApp() {
   const { activeTab, setActiveTab, activeLanguage, showEmergency, setShowEmergency, setCurrentPage, setHasOnboarded } = useAppStore();
+  const { language: translationLanguage } = useTranslationContext();
   const [showRentShield, setShowRentShield] = React.useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [showBusinessModal, setShowBusinessModal] = React.useState(false);
   const [businessModalMode, setBusinessModalMode] = React.useState<"submit" | "featured">("submit");
+  const [renderKey, setRenderKey] = React.useState(0);
 
   const goToLanding = () => {
     setMobileMenuOpen(false);
@@ -47,9 +58,48 @@ export default function MainApp() {
     }
   }, [activeTab]);
 
-  const t = (key: string) => translations[key]?.[activeLanguage] || translations[key]?.en || key;
+  // Force re-render of all content when language changes to ensure translations propagate
+  React.useEffect(() => {
+    setRenderKey((prev) => prev + 1);
+  }, [translationLanguage]);
 
-  const navItems = NAV_ITEMS;
+  const t = (key: string) => translations[key]?.[translationLanguage] || translations[key]?.en || key;
+  
+  // Get translated nav items
+  const tx = useTranslations({
+    home: "Home",
+    explore: "Explore",
+    askonnect: "Askonnect",
+    doGood: "Do Good",
+    saved: "Saved",
+    profile: "Profile",
+    appearance: "Appearance",
+    rentShield: "RentShield",
+    emergencyHub: "Emergency Hub",
+  });
+
+  // Create nav items with translated labels
+  const translatedNavItems = NAV_ITEMS.map((item) => ({
+    ...item,
+    label: 
+      item.id === "home" ? tx.home :
+      item.id === "explore" ? tx.explore :
+      item.id === "ai" ? tx.askonnect :
+      item.id === "do-good" ? tx.doGood :
+      item.id === "shortlist" ? tx.saved :
+      item.id === "profile" ? tx.profile :
+      item.label,
+    shortLabel:
+      item.id === "home" ? tx.home :
+      item.id === "explore" ? tx.explore :
+      item.id === "ai" ? tx.askonnect :
+      item.id === "do-good" ? tx.doGood :
+      item.id === "shortlist" ? tx.saved :
+      item.id === "profile" ? tx.profile :
+      item.shortLabel,
+  }));
+
+  const navItems = translatedNavItems;
 
   return (
     <div className="min-h-screen bg-background relative">
@@ -106,7 +156,7 @@ export default function MainApp() {
             {/* Sidebar Action Buttons */}
             <div className="mt-auto space-y-2 py-5 border-t border-foreground/[0.06]">
               <div className="flex items-center justify-between rounded-xl bg-foreground/[0.03] border border-foreground/[0.06] px-4 py-3">
-                <span className="text-sm font-medium text-foreground/70">Appearance</span>
+                <span className="text-sm font-medium text-foreground/70">{tx.appearance}</span>
                 <ThemeToggle />
               </div>
               <button
@@ -114,14 +164,14 @@ export default function MainApp() {
                 className="flex w-full items-center gap-3 rounded-xl bg-foreground/[0.03] border border-foreground/[0.06] px-4 py-3 text-sm font-semibold text-foreground/70 transition-all duration-200 hover:bg-foreground/[0.07] hover:text-foreground"
               >
                 <Shield className="h-5 w-5 text-[#1D4ED8] dark:text-[#38BDF8] shrink-0" />
-                RentShield
+                {tx.rentShield}
               </button>
               <button
                 onClick={() => setShowEmergency(true)}
                 className="flex w-full items-center gap-3 rounded-xl bg-[#E1251B] px-4 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-[#B91C1C] hover:shadow-lg hover:shadow-red-700/30"
               >
                 <AlertTriangle className="h-5 w-5 shrink-0" />
-                Emergency Hub
+                {tx.emergencyHub}
               </button>
             </div>
           </nav>
@@ -214,7 +264,7 @@ export default function MainApp() {
 
               <div className="mt-6 space-y-2 pt-6 border-t border-foreground/[0.06]">
                 <div className="flex items-center justify-between rounded-xl bg-foreground/[0.03] border border-foreground/[0.06] px-4 py-3">
-                  <span className="text-sm font-medium text-foreground/70">Appearance</span>
+                  <span className="text-sm font-medium text-foreground/70">{tx.appearance}</span>
                   <ThemeToggle />
                 </div>
                 <button
@@ -225,7 +275,7 @@ export default function MainApp() {
                   className="flex w-full items-center gap-3 rounded-xl bg-foreground/[0.03] border border-foreground/[0.06] px-4 py-3 text-sm font-semibold text-foreground/70 hover:bg-foreground/[0.07] hover:text-foreground transition-colors"
                 >
                 <Shield className="h-5 w-5 text-[#1D4ED8] dark:text-[#38BDF8] shrink-0" />
-                  RentShield
+                  {tx.rentShield}
                 </button>
                 <button
                   onClick={() => {
@@ -235,7 +285,7 @@ export default function MainApp() {
                   className="flex w-full items-center gap-3 rounded-xl bg-[#E1251B] px-4 py-3 text-sm font-bold text-white hover:bg-[#B91C1C] transition-colors"
                 >
                   <AlertTriangle className="h-5 w-5 shrink-0" />
-                  Emergency Hub
+                  {tx.emergencyHub}
                 </button>
               </div>
             </motion.div>
@@ -253,17 +303,18 @@ export default function MainApp() {
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
           >
-            {activeTab === "home" && <HomeTab />}
-            {activeTab === "explore" && <ExploreTab />}
-              {activeTab === "ai" && <AITab />}
-              {activeTab === "do-good" && <DoGoodTab />}
-              {activeTab === "shortlist" && <ShortlistTab />}
-            {activeTab === "profile" && <ProfileTab />}
+            {activeTab === "home" && <HomeTab key={`home-${renderKey}`} />}
+            {activeTab === "explore" && <ExploreTab key={`explore-${renderKey}`} />}
+              {activeTab === "ai" && <AITab key={`ai-${renderKey}`} />}
+              {activeTab === "do-good" && <DoGoodTab key={`do-good-${renderKey}`} />}
+              {activeTab === "shortlist" && <ShortlistTab key={`shortlist-${renderKey}`} />}
+            {activeTab === "profile" && <ProfileTab key={`profile-${renderKey}`} />}
           </motion.div>
         </AnimatePresence>
 
         {/* Global Footer — About, Privacy, Legal (on every tab) */}
         <Footer
+          key={`footer-${renderKey}`}
           onOpenSubmitBusiness={() => {
             setBusinessModalMode("submit");
             setShowBusinessModal(true);
