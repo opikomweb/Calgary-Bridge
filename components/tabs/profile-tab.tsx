@@ -211,19 +211,20 @@ export default function ProfileTab() {
       {/* ── Content ── */}
       {/*
         Desktop layout (2 columns):
-        - LEFT column: "I am a..." + divider line + Calgary Pulse + What's Happening
-        - RIGHT column: Settings + Account
+        - LEFT column: Settings + Account + "I am a..."
+        - RIGHT column: Calgary Pulse + What's Happening
         
         Mobile layout (single column):
-        - User info/Settings first
+        - Settings + Account first
+        - Then "I am a..."
         - Then Calgary Pulse + Weather
         - Then What's Happening in Calgary (at bottom)
       */}
       <div className="px-4 md:px-8 py-5 md:py-8 max-w-5xl">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-8 items-start">
 
-          {/* LEFT COLUMN — "I am a..." + divider + Calgary Pulse + What's Happening */}
-          <div className="space-y-5 md:space-y-8 lg:col-start-1">
+          {/* LEFT COLUMN — Settings + Account first, then "I am a..." on desktop (Desktop Col 1) */}
+          <div className="space-y-5 md:space-y-8 lg:col-start-1 lg:row-start-1">
             
             {/* A — "I am a..." (mobile 1st · desktop top) */}
             <Section icon={<User className="h-4 w-4 text-[#1D4ED8]" />} title={tx.iAma} delay={0.05}>
@@ -262,8 +263,8 @@ export default function ProfileTab() {
             </motion.div>
           </div>
 
-          {/* RIGHT COLUMN — Settings + Account + Footer */}
-          <div className="lg:col-start-2 lg:row-start-1 space-y-5 md:space-y-8">
+          {/* RIGHT COLUMN — Calgary Pulse + What's Happening */}
+          <div className="lg:col-start-2 lg:row-start-1 space-y-5 md:space-y-8 order-3 lg:order-2">
             {/* Settings */}
             <Section icon={<Settings className="h-4 w-4 text-[#1D4ED8]" />} title={tx.settings} delay={0.1}>
               <div className="bg-[var(--card)] border border-[var(--border)] rounded-xl overflow-hidden divide-y divide-[var(--border)]">
