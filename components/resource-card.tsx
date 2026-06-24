@@ -152,7 +152,7 @@ export default function ResourceCard({
       >
         <div className="flex flex-col px-2.5 py-2 min-w-0 gap-1.5">
           {/* Title */}
-          <p className="text-[13px] font-bold text-foreground leading-snug line-clamp-2">
+          <p className="text-[14px] font-bold text-foreground leading-snug line-clamp-2">
             {title}
           </p>
 
@@ -211,7 +211,7 @@ export default function ResourceCard({
               className="overflow-hidden"
             >
               <div className="px-4 pb-4 border-t border-foreground/[0.06] pt-3 space-y-3">
-                <p className="text-xs text-foreground/60 leading-relaxed">
+                <p className="text-sm text-foreground/75 leading-relaxed">
                   {resource.summary?.[activeLanguage] || description}
                 </p>
                 {resource.cost && (
@@ -264,8 +264,8 @@ export default function ResourceCard({
         <div className="flex items-center gap-2 px-3 py-3 min-w-0">
           {/* Left: title + inline tags badge row */}
           <div className="flex-1 min-w-0">
-            {/* Title — full width, wraps naturally */}
-            <h3 className="font-bold text-base leading-snug text-foreground mb-1.5">
+            {/* Title — larger on desktop for clear visual hierarchy */}
+            <h3 className="font-bold text-[15px] md:text-lg leading-snug text-foreground mb-1.5">
               {title}
             </h3>
             {/* Tags row — sit below title, flush left, no indent */}
@@ -324,8 +324,8 @@ export default function ResourceCard({
             className="overflow-hidden"
           >
             <div className="px-4 pb-4 border-t border-foreground/[0.06] pt-3 space-y-3">
-              {/* Description */}
-              <p className="text-xs md:text-sm text-[var(--foreground-muted)] leading-relaxed">
+              {/* Description — readable contrast, not muted */}
+              <p className="text-sm md:text-[15px] text-foreground/80 leading-relaxed">
                 {description}
               </p>
 
