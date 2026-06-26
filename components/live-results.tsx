@@ -5,6 +5,26 @@ import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, Star, Phone, ExternalLink, Globe, Loader2, Search, BadgeCheck } from "lucide-react";
 import type { LivePlace } from "@/app/api/live-search/route";
 import type { ResourceCategory } from "@/lib/types";
+import { useTranslations, registerStrings } from "@/lib/translation-context";
+
+registerStrings(
+  "Search live on Google Maps",
+  "Find verified, highly-rated providers for",
+  "near you — pulled live and ranked by rating and reviews.",
+  "Searching\u2026",
+  "Search again",
+  "Search live",
+  "Pick a category or type a search term to enable live results.",
+  "Live from Google Maps",
+  "verified result",
+  "verified results",
+  "No verified live matches found right now. Your curated resources above are still the best place to start.",
+  "Google reviews",
+  "Open now",
+  "Closed now",
+  "Directions",
+  "Website",
+);
 
 interface LiveResultsProps {
   category: ResourceCategory | "all";
@@ -17,6 +37,22 @@ export default function LiveResults({ category, query, categoryLabel }: LiveResu
   const [results, setResults] = useState<LivePlace[]>([]);
   const [label, setLabel] = useState("");
   const [error, setError] = useState("");
+
+  const tx = useTranslations({
+    heading: "Search live on Google Maps",
+    descPrefix: "Find verified, highly-rated providers for",
+    descSuffix: "near you — pulled live and ranked by rating and reviews.",
+    searching: "Searching\u2026",
+    searchAgain: "Search again",
+    searchLive: "Search live",
+    pickCategory: "Pick a category or type a search term to enable live results.",
+    liveFromMaps: "Live from Google Maps",
+    verifiedResult: "verified result",
+    verifiedResults: "verified results",
+    noMatches: "No verified live matches found right now. Your curated resources above are still the best place to start.",
+    directions: "Directions",
+    website: "Website",
+  });
 
   const canSearch = (category !== "all" && !!category) || query.trim().length >= 2;
 
@@ -56,11 +92,10 @@ export default function LiveResults({ category, query, categoryLabel }: LiveResu
             </div>
             <div className="space-y-1">
               <h3 className="text-lg md:text-xl font-bold text-foreground leading-snug">
-                Search live on Google Maps
+                {tx.heading}
               </h3>
               <p className="text-sm text-foreground/50 leading-relaxed max-w-md">
-                Find verified, highly-rated providers for {subject} near you &mdash; pulled live and
-                ranked by rating and reviews.
+                {tx.descPrefix} {subject} &mdash; {tx.descSuffix}
               </p>
             </div>
           </div>
@@ -73,12 +108,12 @@ export default function LiveResults({ category, query, categoryLabel }: LiveResu
             {status === "loading" ? (
               <>
                 <Loader2 className="h-4 w-4 animate-spin" />
-                Searching&hellip;
+                {tx.searching}
               </>
             ) : (
               <>
                 <Search className="h-4 w-4" />
-                {status === "done" ? "Search again" : "Search live"}
+                {status === "done" ? tx.searchAgain : tx.searchLive}
               </>
             )}
           </button>
@@ -86,7 +121,7 @@ export default function LiveResults({ category, query, categoryLabel }: LiveResu
 
         {!canSearch && (
           <p className="mt-3 text-xs text-foreground/40">
-            Pick a category or type a search term to enable live results.
+            {tx.pickCategory}
           </p>
         )}
       </div>
@@ -114,16 +149,15 @@ export default function LiveResults({ category, query, categoryLabel }: LiveResu
           >
             {results.length === 0 ? (
               <p className="text-sm text-foreground/45 py-6 text-center">
-                No verified live matches found right now. Your curated resources above are still the
-                best place to start.
+                {tx.noMatches}
               </p>
             ) : (
               <>
                 <div className="flex items-center gap-2 mb-4">
                   <BadgeCheck className="h-4 w-4 text-[#38BDF8]" />
                   <p className="text-sm font-medium text-foreground/70">
-                    Live from Google Maps
-                    <span className="text-foreground/40"> &middot; {results.length} verified result{results.length !== 1 ? "s" : ""}</span>
+                    {tx.liveFromMaps}
+                    <span className="text-foreground/40"> &middot; {results.length} {results.length !== 1 ? tx.verifiedResults : tx.verifiedResult}</span>
                   </p>
                 </div>
                 <div className="grid md:grid-cols-2 gap-4 md:gap-5">
@@ -141,6 +175,14 @@ export default function LiveResults({ category, query, categoryLabel }: LiveResu
 }
 
 function LivePlaceCard({ place, index }: { place: LivePlace; index: number }) {
+  const txCard = useTranslations({
+    googleReviews: "Google reviews",
+    openNow: "Open now",
+    closedNow: "Closed now",
+    directions: "Directions",
+    website: "Website",
+  });
+
   const mapsUrl =
     place.mapsUrl ||
     `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
@@ -166,12 +208,12 @@ function LivePlaceCard({ place, index }: { place: LivePlace; index: number }) {
 
       {(place.reviews || place.openNow !== undefined) && (
         <div className="mt-1.5 flex items-center gap-2 text-xs text-foreground/65">
-          {place.reviews ? <span>{place.reviews} Google reviews</span> : null}
+          {place.reviews ? <span>{place.reviews} {txCard.googleReviews}</span> : null}
           {place.openNow !== undefined && (
             <>
               {place.reviews ? <span className="text-foreground/30">&middot;</span> : null}
               <span className={place.openNow ? "text-[#22C55E] font-semibold" : "text-foreground/55"}>
-                {place.openNow ? "Open now" : "Closed now"}
+                {place.openNow ? txCard.openNow : txCard.closedNow}
               </span>
             </>
           )}
@@ -193,7 +235,7 @@ function LivePlaceCard({ place, index }: { place: LivePlace; index: number }) {
           className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#38BDF8]/15 text-[#38BDF8] hover:bg-[#38BDF8]/25 transition-colors text-xs font-medium"
         >
           <MapPin className="h-3.5 w-3.5" />
-          Directions
+          {txCard.directions}
         </a>
         {place.phone && (
           <a
@@ -212,7 +254,7 @@ function LivePlaceCard({ place, index }: { place: LivePlace; index: number }) {
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-foreground/[0.05] text-foreground/70 hover:bg-foreground/[0.08] transition-colors text-xs font-medium"
           >
             <Globe className="h-3.5 w-3.5" />
-            Website
+            {txCard.website}
           </a>
         )}
       </div>

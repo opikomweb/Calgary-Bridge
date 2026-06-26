@@ -19,6 +19,28 @@ import {
 } from "@/app/actions/account";
 import type { Language, UserRole } from "@/lib/types";
 import type { User } from "@supabase/supabase-js";
+import { useTranslations, registerStrings } from "@/lib/translation-context";
+
+registerStrings(
+  "Welcome back",
+  "Sign in to sync your saved resources",
+  "Create account",
+  "Join Calgary Connect — everything in one place",
+  "Full name",
+  "Email address",
+  "Password",
+  "8+ characters",
+  "Signing in\u2026",
+  "Creating account\u2026",
+  "Sign in",
+  "No account?",
+  "Create one",
+  "Already have one?",
+  "Show password",
+  "Hide password",
+  "Account created! Check your inbox for a confirmation link, then sign in.",
+  "Close",
+);
 
 type AuthUser = { id: string; name: string; email: string } | null;
 
@@ -221,6 +243,27 @@ function AuthModal({
   const [showPassword, setShowPassword] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
 
+  const tx = useTranslations({
+    welcomeBack: "Welcome back",
+    signInSubtitle: "Sign in to sync your saved resources",
+    createAccount: "Create account",
+    createSubtitle: "Join Calgary Connect — everything in one place",
+    fullName: "Full name",
+    emailAddress: "Email address",
+    password: "Password",
+    eightPlus: "8+ characters",
+    signingIn: "Signing in\u2026",
+    creatingAccount: "Creating account\u2026",
+    signIn: "Sign in",
+    noAccount: "No account?",
+    createOne: "Create one",
+    alreadyHaveOne: "Already have one?",
+    showPassword: "Show password",
+    hidePassword: "Hide password",
+    successMsg: "Account created! Check your inbox for a confirmation link, then sign in.",
+    close: "Close",
+  });
+
   const switchMode = (m: "sign-in" | "sign-up") => {
     setMode(m);
     setError("");
@@ -279,17 +322,15 @@ function AuthModal({
         <div className="flex items-start justify-between mb-5">
           <div>
             <h2 className="text-xl font-bold text-foreground">
-              {mode === "sign-in" ? "Welcome back" : "Create account"}
+              {mode === "sign-in" ? tx.welcomeBack : tx.createAccount}
             </h2>
             <p className="text-xs text-foreground/55 mt-0.5">
-              {mode === "sign-in"
-                ? "Sign in to sync your saved resources"
-                : "Join Calgary Connect — everything in one place"}
+              {mode === "sign-in" ? tx.signInSubtitle : tx.createSubtitle}
             </p>
           </div>
           <button
             onClick={onClose}
-            aria-label="Close"
+            aria-label={tx.close}
             className="rounded-xl p-2 text-foreground/40 hover:text-foreground hover:bg-foreground/[0.06] transition-colors -mt-1 -mr-1"
           >
             <svg
@@ -310,7 +351,7 @@ function AuthModal({
 
         {successMsg ? (
           <div className="rounded-xl bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-300 dark:border-emerald-700 p-4 text-sm text-emerald-800 dark:text-emerald-300 leading-relaxed">
-            {successMsg}
+            {tx.successMsg}
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -320,7 +361,7 @@ function AuthModal({
                   htmlFor="modal-name"
                   className="block text-xs font-semibold text-foreground/70 mb-1.5"
                 >
-                  Full name
+                  {tx.fullName}
                 </label>
                 <input
                   id="modal-name"
@@ -340,7 +381,7 @@ function AuthModal({
                 htmlFor="modal-email"
                 className="block text-xs font-semibold text-foreground/70 mb-1.5"
               >
-                Email address
+                {tx.emailAddress}
               </label>
               <input
                 id="modal-email"
@@ -359,7 +400,7 @@ function AuthModal({
                 htmlFor="modal-password"
                 className="block text-xs font-semibold text-foreground/70 mb-1.5"
               >
-                Password
+                {tx.password}
               </label>
               <div className="relative">
                 <input
@@ -370,7 +411,7 @@ function AuthModal({
                   autoComplete={
                     mode === "sign-in" ? "current-password" : "new-password"
                   }
-                  placeholder={mode === "sign-up" ? "8+ characters" : "••••••••"}
+                  placeholder={mode === "sign-up" ? tx.eightPlus : "••••••••"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full rounded-xl border border-border bg-background px-3.5 py-2.5 pr-10 text-sm text-foreground placeholder:text-foreground/35 focus:outline-none focus:ring-2 focus:ring-[#1D4ED8] dark:focus:ring-[#38BDF8] transition"
@@ -378,7 +419,7 @@ function AuthModal({
                 <button
                   type="button"
                   onClick={() => setShowPassword((v) => !v)}
-                  aria-label={showPassword ? "Hide password" : "Show password"}
+                  aria-label={showPassword ? tx.hidePassword : tx.showPassword}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-foreground/40 hover:text-foreground/70 transition-colors"
                 >
                   {showPassword ? (
@@ -432,24 +473,24 @@ function AuthModal({
             >
               {pending
                 ? mode === "sign-in"
-                  ? "Signing in…"
-                  : "Creating account…"
+                  ? tx.signingIn
+                  : tx.creatingAccount
                 : mode === "sign-in"
-                  ? "Sign in"
-                  : "Create account"}
+                  ? tx.signIn
+                  : tx.createAccount}
             </button>
           </form>
         )}
 
         <p className="mt-5 text-center text-xs text-foreground/50">
-          {mode === "sign-in" ? "No account? " : "Already have one? "}
+          {mode === "sign-in" ? `${tx.noAccount} ` : `${tx.alreadyHaveOne} `}
           <button
             onClick={() =>
               switchMode(mode === "sign-in" ? "sign-up" : "sign-in")
             }
             className="font-semibold text-[#E1251B] hover:underline"
           >
-            {mode === "sign-in" ? "Create one" : "Sign in"}
+            {mode === "sign-in" ? tx.createOne : tx.signIn}
           </button>
         </p>
       </div>

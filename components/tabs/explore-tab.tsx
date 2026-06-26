@@ -234,6 +234,7 @@ export default function ExploreTab() {
                         key={category.id}
                         onClick={() => {
                           setActiveCategory(category.id as ResourceCategory);
+                          setSearchQuery("");
                           setDropdownOpen(false);
                         }}
                         className={`w-full flex items-center gap-3 px-4 md:px-5 py-3 md:py-4 text-left text-sm transition-all ${
@@ -279,7 +280,7 @@ export default function ExploreTab() {
                 transition={{ delay: 0.2 + index * 0.05 }}
                 whileHover={{ scale: 1.02, y: -4 }}
                 whileTap={{ scale: 0.98 }}
-                onClick={() => setActiveCategory(category.id)}
+                onClick={() => { setActiveCategory(category.id); setSearchQuery(""); }}
                 className={`relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-br ${category.bgGradient} border border-white/10 p-4 md:p-6 lg:p-8 transition-all group hover:shadow-lg`}
               >
                 {/* Accent Glow */}

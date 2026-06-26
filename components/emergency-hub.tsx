@@ -1,7 +1,7 @@
 "use client";
 
 import { emergencyContacts } from "@/lib/data";
-import { useTranslations, registerStrings } from "@/lib/translation-context";
+import { useTranslations, useT, registerStrings } from "@/lib/translation-context";
 import { X, Phone, AlertTriangle, Snowflake } from "lucide-react";
 
 registerStrings(
@@ -13,10 +13,45 @@ registerStrings(
   "Keep emergency supplies in your vehicle",
   "Know the signs of frostbite and hypothermia",
   "Close",
+  // Emergency contact names
+  "Emergency Services",
+  "Distress Centre",
+  "AHS Mental Health Help Line",
+  "Health Link",
+  "211 Alberta",
+  "HELP Team (formerly DOAP)",
+  // Emergency contact descriptions
+  "Police, Fire, Ambulance - Life-threatening emergencies only",
+  "24/7 Crisis Support, Suicide Prevention, Counselling",
+  "24/7 Mental Health Crisis Support",
+  "Health Advice, Symptom Assessment, Service Navigation",
+  "Community & Social Services Information",
+  "Help for vulnerable people on the street",
 );
 
 interface EmergencyHubProps {
   onClose: () => void;
+}
+
+// Separate component so useT is called in React context with the correct name/description per card
+function EmergencyContactCard({ contact }: { contact: { name: string; number: string; description: string } }) {
+  const tName = useT(contact.name);
+  const tDescription = useT(contact.description);
+  return (
+    <a
+      href={`tel:${contact.number}`}
+      className="flex items-center gap-4 rounded-xl bg-white/10 p-4 transition-all active:scale-95"
+    >
+      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/20">
+        <Phone className="h-5 w-5 text-white" />
+      </div>
+      <div className="flex-1">
+        <h3 className="font-semibold text-white">{tName}</h3>
+        <p className="text-sm text-white/70">{tDescription}</p>
+      </div>
+      <span className="text-lg font-bold text-white">{contact.number}</span>
+    </a>
+  );
 }
 
 export default function EmergencyHub({ onClose }: EmergencyHubProps) {
@@ -56,20 +91,7 @@ export default function EmergencyHub({ onClose }: EmergencyHubProps) {
         {/* Emergency Contacts */}
         <div className="space-y-3">
           {emergencyContacts.map((contact) => (
-            <a
-              key={contact.name}
-              href={`tel:${contact.number}`}
-              className="flex items-center gap-4 rounded-xl bg-white/10 p-4 transition-all active:scale-95"
-            >
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/20">
-                <Phone className="h-5 w-5 text-white" />
-              </div>
-              <div className="flex-1">
-                <h3 className="font-semibold text-white">{contact.name}</h3>
-                <p className="text-sm text-white/70">{contact.description}</p>
-              </div>
-              <span className="text-lg font-bold text-white">{contact.number}</span>
-            </a>
+            <EmergencyContactCard key={contact.name} contact={contact} />
           ))}
         </div>
 
