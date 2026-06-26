@@ -2,7 +2,6 @@
 
 import React from "react";
 import { useAppStore } from "@/lib/store";
-import { translations } from "@/lib/data";
 import Image from "next/image";
 import { AlertTriangle, Shield, Menu, X } from "lucide-react";
 import { ThemeToggle } from "./theme-toggle";
@@ -12,7 +11,7 @@ import { NAV_ITEMS } from "./nav-items";
 import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
 import { CalgaryAnimatedBackground } from "./calgary-background";
-import { useTranslationContext, registerStrings, useTranslations } from "@/lib/translation-context";
+import { registerStrings, useTranslations } from "@/lib/translation-context";
 
 // Lazy-load every tab — only the active tab's JS is fetched, keeping the
 // initial bundle small and first-paint fast.
@@ -36,13 +35,11 @@ registerStrings(
 );
 
 export default function MainApp() {
-  const { activeTab, setActiveTab, activeLanguage, showEmergency, setShowEmergency, setCurrentPage, setHasOnboarded } = useAppStore();
-  const { language: translationLanguage } = useTranslationContext();
+  const { activeTab, setActiveTab, showEmergency, setShowEmergency, setCurrentPage, setHasOnboarded } = useAppStore();
   const [showRentShield, setShowRentShield] = React.useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [showBusinessModal, setShowBusinessModal] = React.useState(false);
   const [businessModalMode, setBusinessModalMode] = React.useState<"submit" | "featured">("submit");
-  const [renderKey, setRenderKey] = React.useState(0);
 
   const goToLanding = () => {
     setMobileMenuOpen(false);
@@ -58,13 +55,6 @@ export default function MainApp() {
     }
   }, [activeTab]);
 
-  // Force re-render of all content when language changes to ensure translations propagate
-  React.useEffect(() => {
-    setRenderKey((prev) => prev + 1);
-  }, [translationLanguage]);
-
-  const t = (key: string) => translations[key]?.[translationLanguage] || translations[key]?.en || key;
-  
   // Get translated nav items
   const tx = useTranslations({
     home: "Home",
@@ -303,18 +293,17 @@ export default function MainApp() {
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
           >
-            {activeTab === "home" && <HomeTab key={`home-${renderKey}`} />}
-            {activeTab === "explore" && <ExploreTab key={`explore-${renderKey}`} />}
-              {activeTab === "ai" && <AITab key={`ai-${renderKey}`} />}
-              {activeTab === "do-good" && <DoGoodTab key={`do-good-${renderKey}`} />}
-              {activeTab === "shortlist" && <ShortlistTab key={`shortlist-${renderKey}`} />}
-            {activeTab === "profile" && <ProfileTab key={`profile-${renderKey}`} />}
+            {activeTab === "home" && <HomeTab />}
+            {activeTab === "explore" && <ExploreTab />}
+            {activeTab === "ai" && <AITab />}
+            {activeTab === "do-good" && <DoGoodTab />}
+            {activeTab === "shortlist" && <ShortlistTab />}
+            {activeTab === "profile" && <ProfileTab />}
           </motion.div>
         </AnimatePresence>
 
         {/* Global Footer — About, Privacy, Legal (on every tab) */}
         <Footer
-          key={`footer-${renderKey}`}
           onOpenSubmitBusiness={() => {
             setBusinessModalMode("submit");
             setShowBusinessModal(true);
@@ -374,16 +363,21 @@ export default function MainApp() {
                     )}
                     <span className="text-[10px] font-bold tracking-tight">{item.shortLabel}</span>
                   </>
-                ) : item.icon ? (
-                  <item.icon className="h-6 w-6 shrink-0" strokeWidth={1.8} />
                 ) : (
-                  <Image
-                    src="/askonnect-avatar.webp"
-                    alt=""
-                    width={22}
-                    height={22}
-                    className="h-[22px] w-[22px] object-contain shrink-0 opacity-85"
-                  />
+                  <>
+                    {item.icon ? (
+                      <item.icon className="h-5 w-5 shrink-0" strokeWidth={1.8} />
+                    ) : (
+                      <Image
+                        src="/askonnect-avatar.webp"
+                        alt=""
+                        width={20}
+                        height={20}
+                        className="h-5 w-5 object-contain shrink-0 opacity-75"
+                      />
+                    )}
+                    <span className="text-[10px] font-medium tracking-tight opacity-70">{item.shortLabel}</span>
+                  </>
                 )}
               </button>
             );

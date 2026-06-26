@@ -709,7 +709,7 @@ export default function LandingPage() {
       </section>
 
       {/* ========== IMMERSIVE PATHWAYS — Solutions First ========== */}
-      <section className="relative py-14 md:py-20 lg:py-24">
+      <section className="relative py-10 md:py-16 lg:py-20">
         {/* Subtle blue ambient glow behind the cards */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-[#1D4ED8]/10 blur-[120px] rounded-full" />
@@ -809,7 +809,7 @@ export default function LandingPage() {
       </section>
 
       {/* ========== AI SECTION — Conversational Preview ========== */}
-      <section className="relative py-14 md:py-20 lg:py-24 overflow-hidden">
+      <section className="relative py-10 md:py-16 lg:py-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#38BDF8]/5 to-transparent" />
 
         <div className="max-w-[1200px] mx-auto px-5 md:px-8 relative z-10">
@@ -866,13 +866,13 @@ export default function LandingPage() {
                   </div>
 
                   <div className="flex gap-3">
-              <div className="relative w-8 h-8 rounded-full overflow-hidden ring-1 ring-white/20 flex-shrink-0">
-                <Image
-                  src="/askonnect-avatar.webp"
-                  alt="Askonnect"
-                  fill
-                  className="object-cover"
-                />
+                    <div className="relative w-8 h-8 rounded-full overflow-hidden ring-1 ring-white/20 flex-shrink-0">
+                      <Image
+                        src="/askonnect-avatar.webp"
+                        alt="Askonnect"
+                        fill
+                        className="object-cover"
+                      />
                     </div>
                     <div className="bg-white/[0.06] px-5 py-4 rounded-2xl rounded-bl-md max-w-[320px]">
                       <p className="text-sm md:text-[15px] text-white/90 leading-relaxed mb-3">

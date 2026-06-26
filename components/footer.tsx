@@ -487,7 +487,12 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
   const currentYear = new Date().getFullYear();
   const [activeModal, setActiveModal] = useState<string | null>(null);
   const [disclaimerOpen, setDisclaimerOpen] = useState(false);
-  const [openColumns, setOpenColumns] = useState<Record<string, boolean>>({});
+  // Start all columns open so content is immediately visible on mobile and desktop.
+  const [openColumns, setOpenColumns] = useState<Record<string, boolean>>({
+    resources: true,
+    business: true,
+    community: true,
+  });
 
   const tx = useTranslations({
     termsOfService: "Terms of Service",
@@ -617,7 +622,7 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
                 <div className="border-b border-white/[0.06] sm:border-none">
                   <button
                     onClick={() => toggleColumn("resources")}
-                    className="w-full flex items-center justify-between py-3 sm:py-0 sm:cursor-default"
+                    className="w-full flex items-center justify-between py-3 sm:py-0 sm:pointer-events-none"
                     aria-expanded={!!openColumns["resources"]}
                   >
                     <h4 className="text-sm font-bold text-white sm:mb-4 sm:pb-2 sm:border-b sm:border-white/[0.06] w-full text-left">{tx.resources}</h4>
@@ -626,13 +631,13 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
                     />
                   </button>
                   <AnimatePresence initial={false}>
-                    {(openColumns["resources"]) && (
+                    {openColumns["resources"] && (
                       <motion.ul
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.22, ease: "easeInOut" }}
-                        className="overflow-hidden sm:!h-auto sm:!opacity-100 space-y-2.5 pb-3 sm:pb-0"
+                        className="overflow-hidden space-y-2.5 pb-3 sm:pb-0"
                       >
                         {resourceLinks.map((link) => (
                           <li key={link.label}>
@@ -648,27 +653,13 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
                       </motion.ul>
                     )}
                   </AnimatePresence>
-                  {/* Always visible on sm+ */}
-                  <ul className="hidden sm:block space-y-2.5">
-                    {resourceLinks.map((link) => (
-                      <li key={link.label}>
-                        <button
-                          onClick={() => openModal(link.key)}
-                          className="text-sm text-white/50 hover:text-[#E1251B] transition-colors text-left flex items-center gap-1.5 group"
-                        >
-                          <ChevronRight className="w-3 h-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-[#E1251B]" />
-                          {link.label}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
 
                 {/* For Businesses Column */}
                 <div className="border-b border-white/[0.06] sm:border-none">
                   <button
                     onClick={() => toggleColumn("business")}
-                    className="w-full flex items-center justify-between py-3 sm:py-0 sm:cursor-default"
+                    className="w-full flex items-center justify-between py-3 sm:py-0 sm:pointer-events-none"
                     aria-expanded={!!openColumns["business"]}
                   >
                     <h4 className="text-sm font-bold text-white sm:mb-4 sm:pb-2 sm:border-b sm:border-white/[0.06] w-full text-left">{tx.forBusinesses}</h4>
@@ -699,26 +690,13 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
                       </motion.ul>
                     )}
                   </AnimatePresence>
-                  <ul className="hidden sm:block space-y-2.5">
-                    {businessLinks.map((link) => (
-                      <li key={link.label}>
-                        <button
-                          onClick={link.onClick ?? (() => openModal(link.key!))}
-                          className="text-sm text-white/50 hover:text-[#E1251B] transition-colors text-left flex items-center gap-1.5 group"
-                        >
-                          <ChevronRight className="w-3 h-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-[#E1251B]" />
-                          {link.label}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
 
                 {/* Community Column */}
                 <div className="border-b border-white/[0.06] sm:border-none">
                   <button
                     onClick={() => toggleColumn("community")}
-                    className="w-full flex items-center justify-between py-3 sm:py-0 sm:cursor-default"
+                    className="w-full flex items-center justify-between py-3 sm:py-0 sm:pointer-events-none"
                     aria-expanded={!!openColumns["community"]}
                   >
                     <h4 className="text-sm font-bold text-white sm:mb-4 sm:pb-2 sm:border-b sm:border-white/[0.06] w-full text-left">{tx.community}</h4>
@@ -749,19 +727,6 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
                       </motion.ul>
                     )}
                   </AnimatePresence>
-                  <ul className="hidden sm:block space-y-2.5">
-                    {communityLinks.map((link) => (
-                      <li key={link.label}>
-                        <button
-                          onClick={() => openModal(link.key)}
-                          className="text-sm text-white/50 hover:text-[#E1251B] transition-colors text-left flex items-center gap-1.5 group"
-                        >
-                          <ChevronRight className="w-3 h-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-[#E1251B]" />
-                          {link.label}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
               </div>
             </div>

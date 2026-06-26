@@ -155,13 +155,19 @@ export function TranslationProvider({ children }: { children: React.ReactNode })
 
   // Read localStorage synchronously on first render so cached translations
   // are available immediately — no waiting for a useEffect tick.
-  const [txMap, setTxMap] = useState<Map<string, string>>(() =>
-    activeLanguage === "en" ? new Map() : loadCache(activeLanguage),
-  );
+  // Guard against SSR (no localStorage in Node) with typeof check.
+  const [txMap, setTxMap] = useState<Map<string, string>>(() => {
+    if (activeLanguage === "en" || typeof window === "undefined") return new Map();
+    return loadCache(activeLanguage);
+  });
   const [loading, setLoading] = useState(false);
   const runRef = useRef(0);
   const txMapRef = useRef(txMap);
   txMapRef.current = txMap;
+  // Keep a ref of the current language so registry-subscription callbacks
+  // always read the live value even if the effect closure is stale.
+  const activeLangRef = useRef(activeLanguage);
+  activeLangRef.current = activeLanguage;
 
   // Strings discovered during render that aren't in the current txMap yet.
   // Collected per-render and flushed in one batched API call.
@@ -227,15 +233,18 @@ export function TranslationProvider({ children }: { children: React.ReactNode })
   }, [activeLanguage, scheduleFlush]);
 
   // When a lazy-loaded chunk registers new strings, queue them too.
+  // Use activeLangRef so this callback always reads the live language value,
+  // even if the outer effect closure has gone stale (e.g. rapid language switches).
   useEffect(() => {
     return subscribeRegistry(() => {
-      if (activeLanguage === "en") return;
+      const lang = activeLangRef.current;
+      if (lang === "en") return;
       registeredStrings.forEach((s) => {
         if (!txMapRef.current.has(s)) pendingRef.current.add(s);
       });
-      if (pendingRef.current.size > 0) scheduleFlush(activeLanguage);
+      if (pendingRef.current.size > 0) scheduleFlush(lang);
     });
-  }, [activeLanguage, scheduleFlush]);
+  }, [scheduleFlush]);
 
   const value = useMemo<TranslationContextValue>(
     () => ({
