@@ -1,84 +1,39 @@
 "use client";
 
-/**
- * AppRouter — mounts client-side only.
- *
- * LandingPage is statically rendered by page.tsx (RSC) so above-the-fold
- * content is visible before JS runs. Once zustand/persist rehydrates, this
- * component decides which view to overlay:
- *
- *   not yet hydrated         → render a solid background cover instantly so
- *                              a returning user never sees LandingPage flash
- *   not onboarded            → Onboarding
- *   onboarded (main/explore) → MainApp
- *   landing + not onboarded  → hide the cover; LandingPage already visible
- *
- * The `initialState` snapshot is read synchronously from the zustand store
- * before hydration — zustand populates its in-memory state from
- * localStorage during the `persist` middleware's synchronous initialisation,
- * so reading it in the module body (outside React) gives the correct value
- * on the very first render, before any effect fires.
- */
-
 import { useEffect, useState } from "react";
 import { useAppStore } from "@/lib/store";
 import dynamic from "next/dynamic";
 
-const Onboarding = dynamic(() => import("./onboarding"), { ssr: false });
-const MainApp    = dynamic(() => import("./main-app"),    { ssr: false });
+const LandingPage = dynamic(() => import("./landing-page"), { ssr: false });
+const Onboarding  = dynamic(() => import("./onboarding"),   { ssr: false });
+const MainApp     = dynamic(() => import("./main-app"),      { ssr: false });
 
 export default function AppRouter() {
   const currentPage  = useAppStore((s) => s.currentPage);
   const hasOnboarded = useAppStore((s) => s.hasOnboarded);
 
-  // Track whether zustand/persist has finished rehydrating. We start with
-  // `true` only if we can already determine we're on the landing page
-  // (i.e. no persisted "hasOnboarded" in localStorage). This eliminates the
-  // flash for returning users while still showing the landing for new ones.
-  const [hydrated, setHydrated] = useState(() => {
-    if (typeof window === "undefined") return false;
-    try {
-      const raw = localStorage.getItem("calgary-connect-storage");
-      if (!raw) return false; // new user, no storage — start as not hydrated
-      const parsed = JSON.parse(raw);
-      // If stored state shows onboarded, we need to show cover immediately
-      return !parsed?.state?.hasOnboarded;
-    } catch {
-      return false;
-    }
-  });
+  // Wait one tick for zustand/persist to rehydrate from localStorage before
+  // deciding which view to show.  Rendering null for a single tick is
+  // imperceptible and prevents flashing the wrong view.
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => { setHydrated(true); }, []);
 
-  useEffect(() => {
-    setHydrated(true);
-  }, []);
+  if (!hydrated) return null;
 
-  // Before hydration: if the user is onboarded, show a solid background cover
-  // so the landing page never flashes through.
-  if (!hydrated) {
-    return (
-      <div
-        className="fixed inset-0 z-50 bg-background"
-        aria-hidden="true"
-      />
-    );
+  // New user — show landing page
+  if (currentPage === "landing" && !hasOnboarded) {
+    return <LandingPage />;
   }
-
-  // User is on landing and hasn't onboarded — LandingPage is already visible.
-  if (currentPage === "landing" && !hasOnboarded) return null;
 
   // Needs onboarding
   if (currentPage === "onboarding" || !hasOnboarded) {
-    return (
-      <div className="fixed inset-0 z-50 bg-background">
-        <Onboarding />
-      </div>
-    );
+    return <Onboarding />;
   }
 
-  // Fully onboarded — show the main app
-  return (
-    <div className="fixed inset-0 z-50 bg-background">
-      <MainApp />
-    </div>
-  );
+  // Fully onboarded — render MainApp directly with NO wrapper div.
+  // Any wrapper (fixed, absolute, relative) that sizes itself to the viewport
+  // traps the scroll context: window.scrollY stays 0 because the browser sees
+  // the wrapper as the scroll container, not the document.  MainApp already
+  // manages its own full-page layout so it needs no outer element at all.
+  return <MainApp />;
 }
