@@ -21,6 +21,7 @@ registerStrings(
   "Calgary's civic intelligence platform",
   "Everything Calgary. One Place.",
   "Essential services. One place.",
+  "Connected. Informed. Local.",
   "Housing, jobs, tenant support, local life, businesses, events, trusted services, and AI guidance—all intelligently connected.",
   "My landlord won't fix the heat...",
   "I need childcare",
@@ -121,6 +122,7 @@ export default function LandingPage() {
   const tx = useTranslations({
     eyebrow: "Calgary's civic intelligence platform",
     headline: "Everything Calgary. One Place.",
+    connectedTagline: "Connected. Informed. Local.",
     sublineDesktop: "Housing, jobs, tenant support, local life, businesses, events, trusted services, and AI guidance—all intelligently connected.",
     sublineMobile: "Essential services. One place.",
     placeholder: "My landlord won't fix the heat...",
@@ -610,15 +612,20 @@ export default function LandingPage() {
           </motion.h1>
 
           {/* Subheadline */}
-          <motion.p
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.45, duration: 0.7 }}
-            className="text-sm md:text-xl lg:text-2xl font-medium text-white/90 leading-relaxed max-w-3xl mx-auto mb-10 md:mb-14 text-pretty drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]"
+            className="max-w-3xl mx-auto mb-10 md:mb-14"
           >
-            <span className="hidden md:inline">{tx.sublineDesktop}</span>
-            <span className="md:hidden">{tx.sublineMobile}</span>
-          </motion.p>
+            <p className="text-xl md:text-3xl lg:text-4xl font-semibold text-white leading-tight mb-3 drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
+              {tx.connectedTagline}
+            </p>
+            <p className="text-xs md:text-sm text-white/55 leading-relaxed text-pretty">
+              <span className="hidden md:inline">{tx.sublineDesktop}</span>
+              <span className="md:hidden">{tx.sublineMobile}</span>
+            </p>
+          </motion.div>
 
           {/* Functional search */}
           <motion.div
