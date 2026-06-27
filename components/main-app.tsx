@@ -12,6 +12,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
 import { CalgaryAnimatedBackground } from "./calgary-background";
 import { registerStrings, useTranslations } from "@/lib/translation-context";
+import { getLangMeta } from "@/lib/languages";
 
 // Lazy-load every tab — only the active tab's JS is fetched, keeping the
 // initial bundle small and first-paint fast.
@@ -35,7 +36,8 @@ registerStrings(
 );
 
 export default function MainApp() {
-  const { activeTab, setActiveTab, showEmergency, setShowEmergency, setCurrentPage, setHasOnboarded } = useAppStore();
+  const { activeTab, setActiveTab, showEmergency, setShowEmergency, setCurrentPage, setHasOnboarded, activeLanguage } = useAppStore();
+  const isRTL = getLangMeta(activeLanguage).rtl ?? false;
   const [showRentShield, setShowRentShield] = React.useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [showBusinessModal, setShowBusinessModal] = React.useState(false);
@@ -92,13 +94,13 @@ export default function MainApp() {
   const navItems = translatedNavItems;
 
   return (
-    <div className="min-h-screen bg-background relative">
+    <div dir={isRTL ? "rtl" : "ltr"} className="min-h-screen bg-background relative">
       {/* Animated Calgary Background with Tower, River, Bridge */}
       <CalgaryAnimatedBackground />
 
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex lg:w-[340px] lg:flex-col lg:fixed lg:inset-y-0 lg:z-50">
-        <div className="flex grow flex-col overflow-y-auto border-r border-foreground/[0.08] bg-background shadow-sm">
+      <aside className="hidden lg:flex lg:w-[340px] lg:flex-col lg:fixed lg:inset-y-0 lg:start-0 lg:z-50">
+          <div className="flex grow flex-col overflow-y-auto border-e border-foreground/[0.08] bg-background shadow-sm">
           {/* Logo Section */}
           <div className="px-4 pt-4 pb-3 border-b border-foreground/[0.06] flex items-center justify-between gap-3">
             <button
@@ -213,11 +215,11 @@ export default function MainApp() {
             onClick={() => setMobileMenuOpen(false)}
           >
             <motion.div
-              initial={{ x: "100%" }}
+              initial={{ x: isRTL ? "-100%" : "100%" }}
               animate={{ x: 0 }}
-              exit={{ x: "100%" }}
+              exit={{ x: isRTL ? "-100%" : "100%" }}
               transition={{ type: "spring", damping: 25 }}
-              className="absolute right-0 top-0 bottom-0 w-[85%] max-w-[360px] bg-background border-l border-foreground/[0.1] shadow-2xl shadow-black/30 ring-1 ring-inset ring-foreground/[0.06] p-8"
+              className="absolute end-0 top-0 bottom-0 w-[85%] max-w-[360px] bg-background border-s border-foreground/[0.1] shadow-2xl shadow-black/30 ring-1 ring-inset ring-foreground/[0.06] p-8"
               onClick={(e) => e.stopPropagation()}
             >
               <nav className="mt-8 space-y-1">
@@ -284,7 +286,7 @@ export default function MainApp() {
       </AnimatePresence>
 
       {/* Main Content Area */}
-      <main className="lg:pl-[360px] lg:pr-8 relative z-10 min-w-0">
+      <main className="lg:ps-[360px] lg:pe-8 relative z-10 min-w-0">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
@@ -319,7 +321,7 @@ export default function MainApp() {
       </main>
 
       {/* Mobile Bottom Navigation — solid bg, no backdrop-blur so no white haze */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-background border-t border-foreground/[0.10] safe-area-pb">
+      <nav className="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-background border-t border-foreground/[0.10] safe-area-pb">
         <div className="flex items-center justify-between px-1 py-2">
           {navItems.map((item) => {
             const active = activeTab === item.id;
