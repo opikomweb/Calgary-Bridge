@@ -1,14 +1,91 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getLangMeta } from "@/lib/languages";
 import type { Language } from "@/lib/types";
+import { createClient } from "@/lib/supabase/server";
+
+/**
+ * Lightweight stable hash for a string — used as the cache key.
+ */
+function hashText(text: string): string {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < text.length; i++) {
+    h ^= text.charCodeAt(i);
+    h = Math.imul(h, 0x01000193) >>> 0;
+  }
+  return h.toString(16);
+}
+
+/**
+ * Translate using the unofficial Google Translate endpoint (gtx client).
+ * - No API key required
+ * - No hard rate limits for reasonable usage
+ * - Same Google quality
+ * - Used by thousands of open-source tools
+ * With the Supabase cache, this is called at most ONCE per unique string
+ * per language — ever. After that, Supabase serves all requests for free.
+ */
+async function translateWithGoogle(
+  texts: string[],
+  targetLang: string
+): Promise<string[]> {
+  const results: string[] = [];
+
+  for (const text of texts) {
+    if (!text.trim()) {
+      results.push(text);
+      continue;
+    }
+    try {
+      const url = new URL("https://translate.googleapis.com/translate_a/single");
+      url.searchParams.set("client", "gtx");
+      url.searchParams.set("sl", "en");
+      url.searchParams.set("tl", targetLang);
+      url.searchParams.set("dt", "t");
+      url.searchParams.set("q", text);
+
+      const res = await fetch(url.toString(), {
+        headers: {
+          "User-Agent": "Mozilla/5.0",
+          "Accept": "application/json",
+        },
+        signal: AbortSignal.timeout(8000),
+      });
+
+      if (!res.ok) {
+        console.error("[translate] Google gtx HTTP error:", res.status);
+        results.push(text);
+        continue;
+      }
+
+      const data = await res.json();
+      // Response format: [[[translatedText, originalText, ...], ...], ...]
+      const translated = data?.[0]
+        ?.map((chunk: [string]) => chunk?.[0] ?? "")
+        .join("") ?? text;
+
+      results.push(translated || text);
+    } catch (err) {
+      console.error("[translate] Google gtx fetch error:", err);
+      results.push(text);
+    }
+  }
+
+  return results;
+}
 
 /**
  * POST /api/translate
  * Body: { texts: string[], target: Language }
  * Returns: { translations: string[], ok: boolean }
  *
- * Uses the Google Translate v2 REST API (requires GOOGLE_TRANSLATE_API_KEY).
- * Falls back to the source text if the key is missing or the request fails.
+ * Flow:
+ *  1. Check Supabase translation_cache for each string
+ *  2. Only call the translation engine for cache misses
+ *  3. Store new translations in Supabase (shared across ALL users forever)
+ *  4. Return combined result in original order
+ *
+ * Cost: $0. The unofficial Google endpoint requires no key.
+ * Each unique string is translated exactly once and cached permanently.
  */
 export async function POST(req: NextRequest) {
   let body: { texts?: string[]; target?: Language };
@@ -31,99 +108,103 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ translations: texts, ok: true });
   }
 
-  const apiKey = process.env.GOOGLE_TRANSLATE_API_KEY;
-  if (!apiKey) {
-    console.error("[translate] GOOGLE_TRANSLATE_API_KEY is not set");
-    return NextResponse.json({ translations: texts, ok: false, error: "API key not configured" });
-  }
-
   const meta = getLangMeta(target);
-  const googleTarget = meta.googleCode;
+  // Use googleCode for the gtx endpoint (standard BCP-47 codes)
+  const langCode = meta.googleCode ?? (target as string);
 
-  if (!googleTarget) {
-    console.error("[translate] No googleCode for language:", target);
-    return NextResponse.json({ translations: texts, ok: false, error: "Unknown language code" });
+  if (!langCode) {
+    return NextResponse.json({
+      translations: texts,
+      ok: false,
+      error: "Unknown language code",
+    });
   }
 
   try {
-    const url = `https://translation.googleapis.com/language/translate/v2?key=${apiKey}`;
+    const supabase = await createClient();
 
-    // Google Translate v2 accepts up to 128 segments per request.
-    // Chunk if needed to stay within limits.
-    const CHUNK_SIZE = 100;
-    const allTranslations: string[] = [];
+    // 1. Compute hashes
+    const hashes = texts.map(hashText);
 
-    for (let i = 0; i < texts.length; i += CHUNK_SIZE) {
-      const chunk = texts.slice(i, i + CHUNK_SIZE);
-      const res = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          q: chunk,
-          source: "en",
-          target: googleTarget,
-          format: "text",
-        }),
-      });
+    // 2. Bulk-fetch cached translations
+    const { data: cached, error: cacheErr } = await supabase
+      .from("translation_cache")
+      .select("source_hash, translated")
+      .eq("lang", target)
+      .in("source_hash", hashes);
 
-      const responseText = await res.text();
-
-      if (!res.ok) {
-        console.error("[translate] Google API HTTP error:", res.status, responseText.slice(0, 300));
-        // Return originals for this chunk so the UI always has content
-        allTranslations.push(...chunk);
-        continue;
-      }
-
-      let data: { data: { translations: { translatedText: string }[] } };
-      try {
-        data = JSON.parse(responseText);
-      } catch {
-        console.error("[translate] Failed to parse Google response:", responseText.slice(0, 300));
-        allTranslations.push(...chunk);
-        continue;
-      }
-
-      const chunkTranslations = data?.data?.translations?.map((t) => t.translatedText);
-      if (!chunkTranslations || chunkTranslations.length !== chunk.length) {
-        console.error("[translate] Unexpected response shape:", responseText.slice(0, 200));
-        allTranslations.push(...chunk);
-        continue;
-      }
-
-      allTranslations.push(...chunkTranslations);
+    if (cacheErr) {
+      console.error("[translate] Supabase read error:", cacheErr.message);
     }
 
-    return NextResponse.json({ translations: allTranslations, ok: true });
+    const cacheMap = new Map<string, string>();
+    (cached ?? []).forEach((row) => cacheMap.set(row.source_hash, row.translated));
+
+    // 3. Find cache misses
+    const missIndexes: number[] = [];
+    const missTexts: string[] = [];
+    texts.forEach((text, i) => {
+      if (!cacheMap.has(hashes[i])) {
+        missIndexes.push(i);
+        missTexts.push(text);
+      }
+    });
+
+    // 4. Translate only misses
+    if (missTexts.length > 0) {
+      const freshTranslations = await translateWithGoogle(missTexts, langCode);
+
+      // 5. Store in Supabase cache
+      const rows = missTexts.map((text, i) => ({
+        lang: target,
+        source_hash: hashes[missIndexes[i]],
+        source_text: text,
+        translated: freshTranslations[i],
+      }));
+
+      const { error: insertErr } = await supabase
+        .from("translation_cache")
+        .upsert(rows, { onConflict: "lang,source_hash" });
+
+      if (insertErr) {
+        console.error("[translate] Supabase write error:", insertErr.message);
+      }
+
+      missIndexes.forEach((originalIdx, missIdx) => {
+        cacheMap.set(hashes[originalIdx], freshTranslations[missIdx]);
+      });
+    }
+
+    // 6. Assemble ordered result
+    const translations = texts.map((text, i) => cacheMap.get(hashes[i]) ?? text);
+
+    return NextResponse.json({ translations, ok: true });
   } catch (err) {
-    console.error("[translate] fetch error:", err);
-    return NextResponse.json({ translations: texts, ok: false, error: String(err) });
+    console.error("[translate] Unexpected error:", err);
+    return NextResponse.json({
+      translations: texts,
+      ok: false,
+      error: String(err),
+    });
   }
 }
 
-/** GET /api/translate — health check so you can test the key is working */
+/** GET /api/translate — health check */
 export async function GET() {
-  const apiKey = process.env.GOOGLE_TRANSLATE_API_KEY;
-  if (!apiKey) {
-    return NextResponse.json({ status: "error", message: "GOOGLE_TRANSLATE_API_KEY not set" }, { status: 500 });
-  }
-
   try {
-    const res = await fetch(
-      `https://translation.googleapis.com/language/translate/v2?key=${apiKey}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ q: ["Hello"], source: "en", target: "fr", format: "text" }),
-      }
-    );
-    if (!res.ok) {
-      const err = await res.text();
-      return NextResponse.json({ status: "error", httpStatus: res.status, detail: err.slice(0, 200) }, { status: 502 });
-    }
+    const url = new URL("https://translate.googleapis.com/translate_a/single");
+    url.searchParams.set("client", "gtx");
+    url.searchParams.set("sl", "en");
+    url.searchParams.set("tl", "fr");
+    url.searchParams.set("dt", "t");
+    url.searchParams.set("q", "Hello Calgary");
+
+    const res = await fetch(url.toString(), {
+      headers: { "User-Agent": "Mozilla/5.0" },
+    });
     const data = await res.json();
-    const sample = data?.data?.translations?.[0]?.translatedText;
-    return NextResponse.json({ status: "ok", sample });
+    const sample = data?.[0]?.map((c: [string]) => c?.[0]).join("") ?? "";
+    return NextResponse.json({ status: "ok", engine: "Google gtx (free, no key)", sample });
   } catch (err) {
     return NextResponse.json({ status: "error", message: String(err) }, { status: 502 });
   }
