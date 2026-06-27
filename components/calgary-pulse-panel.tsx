@@ -7,6 +7,26 @@ import {
   ExternalLink, RefreshCw, Eye, Cloud, Loader2,
   Radio, ChevronRight, ArrowUpRight,
 } from "lucide-react";
+import { useTranslations, useTranslationContext, registerStrings } from "@/lib/translation-context";
+
+registerStrings(
+  "Air Quality · AQHI",
+  "Active Alerts",
+  "All clear",
+  "No active alerts for Calgary",
+  "Calgary Pulse",
+  "Live",
+  "Read full story",
+  "Refresh",
+  "Headlines unavailable — check back shortly.",
+  "Updated",
+  "Clear sky", "Partly cloudy", "Overcast", "Fog", "Drizzle",
+  "Rain", "Snow", "Rain showers", "Snow showers", "Thunderstorm", "Variable",
+  "Thunderstorm Warning", "Snow Conditions", "Rainy Day",
+  "Warm Summer Day", "Summer Weather", "Winter Weather", "Spring Weather", "Autumn Weather",
+  "Feels", "km/h", "Humid", "UV",
+  "Just now", "ago",
+);
 
 // ---- Types ------------------------------------------------------------------
 
@@ -531,14 +551,14 @@ function alertIconColour(title: string): string {
   return "text-amber-500";
 }
 
-function timeAgo(iso: string): string {
+function timeAgo(iso: string, t: (s: string) => string): string {
   const diff = Date.now() - new Date(iso).getTime();
   const m = Math.floor(diff / 60000);
-  if (m < 2) return "Just now";
-  if (m < 60) return `${m}m ago`;
+  if (m < 2) return t("Just now");
+  if (m < 60) return `${m}m ${t("ago")}`;
   const h = Math.floor(m / 60);
-  if (h < 24) return `${h}h ago`;
-  return `${Math.floor(h / 24)}d ago`;
+  if (h < 24) return `${h}h ${t("ago")}`;
+  return `${Math.floor(h / 24)}d ${t("ago")}`;
 }
 
 // ---- Skeleton ---------------------------------------------------------------
@@ -561,7 +581,7 @@ function PulseSkeleton() {
 
 // ---- Accordion news item ----------------------------------------------------
 
-function NewsAccordionItem({ item, index }: { item: NewsItem; index: number }) {
+function NewsAccordionItem({ item, index, t }: { item: NewsItem; index: number; t: (s: string) => string }) {
   const [open, setOpen] = useState(false);
   const style = sourceBadgeStyle(item.source);
 
@@ -637,7 +657,7 @@ function NewsAccordionItem({ item, index }: { item: NewsItem; index: number }) {
                 className="inline-flex items-center gap-1 text-[11px] font-bold text-[#E1251B] hover:underline"
                 onClick={(e) => e.stopPropagation()}
               >
-                Read full story
+                {t("Read full story")}
                 <ArrowUpRight className="w-3 h-3" />
               </a>
             </div>
@@ -659,7 +679,7 @@ function NewsAccordionItem({ item, index }: { item: NewsItem; index: number }) {
                 className="inline-flex items-center gap-1 text-[11px] font-bold text-[#E1251B] hover:underline"
                 onClick={(e) => e.stopPropagation()}
               >
-                Read full story
+                {t("Read full story")}
                 <ArrowUpRight className="w-3 h-3" />
               </a>
             </div>
@@ -678,6 +698,24 @@ export function CalgaryPulsePanel() {
   const [refreshing, setRefreshing] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<string>("");
 
+  const tx = useTranslations({
+    airQuality: "Air Quality · AQHI",
+    activeAlerts: "Active Alerts",
+    allClear: "All clear",
+    noAlerts: "No active alerts for Calgary",
+    calgaryPulse: "Calgary Pulse",
+    live: "Live",
+    refresh: "Refresh",
+    headlinesUnavailable: "Headlines unavailable — check back shortly.",
+    updated: "Updated",
+    feels: "Feels",
+    kmh: "km/h",
+    humid: "Humid",
+    uv: "UV",
+  });
+
+  const { t } = useTranslationContext();
+
   const load = useCallback(async (showRefreshing = false) => {
     if (showRefreshing) setRefreshing(true);
     try {
@@ -685,14 +723,14 @@ export function CalgaryPulsePanel() {
       if (!res.ok) throw new Error("fetch failed");
       const json: PulseData = await res.json();
       setData(json);
-      setLastUpdated(timeAgo(json.fetchedAt));
+      setLastUpdated(timeAgo(json.fetchedAt, t));
     } catch {
       // keep stale data if available
     } finally {
       setLoading(false);
       setRefreshing(false);
     }
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     load();
@@ -702,10 +740,10 @@ export function CalgaryPulsePanel() {
 
   useEffect(() => {
     const id = setInterval(() => {
-      if (data?.fetchedAt) setLastUpdated(timeAgo(data.fetchedAt));
+      if (data?.fetchedAt) setLastUpdated(timeAgo(data.fetchedAt, t));
     }, 60_000);
     return () => clearInterval(id);
-  }, [data]);
+  }, [data, t]);
 
   if (loading) return <PulseSkeleton />;
 
@@ -717,7 +755,7 @@ export function CalgaryPulsePanel() {
 
       {/* Header: last updated + refresh */}
       <div className="flex items-center justify-between text-xs text-foreground/40">
-        <span>Updated {lastUpdated}</span>
+        <span>{tx.updated} {lastUpdated}</span>
         <button
           onClick={() => load(true)}
           disabled={refreshing}
@@ -725,7 +763,7 @@ export function CalgaryPulsePanel() {
           className="flex items-center gap-1 hover:text-foreground/70 transition-colors disabled:opacity-50"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? "animate-spin" : ""}`} />
-          Refresh
+          {tx.refresh}
         </button>
       </div>
 
@@ -748,10 +786,10 @@ export function CalgaryPulsePanel() {
               <p className="text-[9px] font-black uppercase tracking-[0.18em] text-white/70">Calgary, AB</p>
               <div className="flex items-baseline gap-2">
                 <span className="text-2xl font-black text-white leading-none" style={{ textShadow: "0 1px 6px rgba(0,0,0,0.45)" }}>{weather.temp}°C</span>
-                <span className="text-xs font-semibold text-white/90" style={{ textShadow: "0 1px 4px rgba(0,0,0,0.40)" }}>{getSeasonLabel(weather.temp, weather.wmoCode)}</span>
+                <span className="text-xs font-semibold text-white/90" style={{ textShadow: "0 1px 4px rgba(0,0,0,0.40)" }}>{t(getSeasonLabel(weather.temp, weather.wmoCode))}</span>
               </div>
               <p className="text-[10px] text-white/75" style={{ textShadow: "0 1px 3px rgba(0,0,0,0.35)" }}>
-                Feels {weather.feelsLike}°C &middot; {wmoToDesc(weather.wmoCode)}
+                {tx.feels} {weather.feelsLike}°C &middot; {t(wmoToDesc(weather.wmoCode))}
               </p>
             </div>
           </div>
@@ -763,21 +801,21 @@ export function CalgaryPulsePanel() {
                 <Wind className="w-3 h-3 text-white/55 flex-shrink-0" />
                 <div className="text-center">
                   <span className="text-sm font-black text-white leading-none">{weather.windKph}</span>
-                  <span className="text-[8px] text-white/45 block uppercase tracking-wide">km/h</span>
+                  <span className="text-[8px] text-white/45 block uppercase tracking-wide">{tx.kmh}</span>
                 </div>
               </div>
               <div className="flex items-center justify-center gap-1.5 py-2">
                 <Droplets className="w-3 h-3 text-white/55 flex-shrink-0" />
                 <div className="text-center">
                   <span className="text-sm font-black text-white leading-none">{weather.humidity}%</span>
-                  <span className="text-[8px] text-white/45 block uppercase tracking-wide">Humid</span>
+                  <span className="text-[8px] text-white/45 block uppercase tracking-wide">{tx.humid}</span>
                 </div>
               </div>
               <div className="flex items-center justify-center gap-1.5 py-2">
                 <Sun className="w-3 h-3 text-white/55 flex-shrink-0" />
                 <div className="text-center">
                   <span className="text-sm font-black text-white leading-none">{weather.uvIndex}</span>
-                  <span className="text-[8px] text-white/45 block uppercase tracking-wide">UV</span>
+                  <span className="text-[8px] text-white/45 block uppercase tracking-wide">{tx.uv}</span>
                 </div>
               </div>
             </div>
@@ -800,7 +838,7 @@ export function CalgaryPulsePanel() {
           <Activity className="w-4 h-4 text-[#1D4ED8] dark:text-[#60A5FA]" />
         </div>
         <div className="min-w-0 flex-1">
-          <p className="text-xs font-bold text-foreground/80">Air Quality · AQHI</p>
+          <p className="text-xs font-bold text-foreground/80">{tx.airQuality}</p>
           {aqhi && <p className="text-[10px] text-foreground/50 mt-0.5 leading-snug">{aqhi.label}</p>}
         </div>
         {aqhi ? (
@@ -821,7 +859,7 @@ export function CalgaryPulsePanel() {
       >
         <div className="flex items-center gap-2 mb-2">
           <AlertTriangle className="w-3.5 h-3.5 text-foreground/45 flex-shrink-0" />
-          <p className="text-[10px] font-bold text-foreground/60 uppercase tracking-widest">Active Alerts</p>
+          <p className="text-[10px] font-bold text-foreground/60 uppercase tracking-widest">{tx.activeAlerts}</p>
           <span className="ml-auto text-[9px] text-foreground/35">Environment Canada</span>
         </div>
 
@@ -835,8 +873,8 @@ export function CalgaryPulsePanel() {
             >
               <Eye className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
               <div>
-                <p className="text-xs font-semibold text-emerald-700 dark:text-emerald-400">All clear</p>
-                <p className="text-[10px] text-foreground/45">No active alerts for Calgary</p>
+                <p className="text-xs font-semibold text-emerald-700 dark:text-emerald-400">{tx.allClear}</p>
+                <p className="text-[10px] text-foreground/45">{tx.noAlerts}</p>
               </div>
             </motion.div>
           ) : (
@@ -874,12 +912,12 @@ export function CalgaryPulsePanel() {
           <div className="flex items-center gap-2">
             <Radio className="w-3.5 h-3.5 text-foreground/50 flex-shrink-0" />
             <p className="text-sm font-black text-foreground uppercase tracking-[0.06em]">
-              Calgary Pulse
+              {tx.calgaryPulse}
             </p>
           </div>
           <span className="flex items-center gap-1.5 text-[9px] text-foreground/45 font-semibold">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse inline-block" />
-            Live
+            {tx.live}
           </span>
         </div>
 
@@ -902,10 +940,10 @@ export function CalgaryPulsePanel() {
         {/* Headline list — no card backgrounds, just divider lines */}
         <div>
           {news.length === 0 ? (
-            <p className="text-xs text-foreground/45 py-3 pl-5">Headlines unavailable — check back shortly.</p>
+            <p className="text-xs text-foreground/45 py-3 pl-5">{tx.headlinesUnavailable}</p>
           ) : (
             news.map((item, i) => (
-              <NewsAccordionItem key={item.link + i} item={item} index={i} />
+              <NewsAccordionItem key={item.link + i} item={item} index={i} t={t} />
             ))
           )}
         </div>

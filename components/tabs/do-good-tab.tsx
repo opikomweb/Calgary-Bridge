@@ -245,6 +245,13 @@ export default function DoGoodTab() {
             {doGoodCategories.map((cat) => {
               const Icon = ICONS[cat.icon];
               const ac = getCatAccent(cat.accent);
+              const titleMap: Record<string, string> = {
+                volunteer: tx.volunteerTitle,
+                donate: tx.donateTitle,
+                sponsor: tx.sponsorTitle,
+                city: tx.cityTitle,
+                learn: tx.learnTitle,
+              };
               return (
                 <a
                   key={cat.id}
@@ -252,7 +259,7 @@ export default function DoGoodTab() {
                   className={`inline-flex items-center gap-2 rounded-full bg-foreground/[0.06] hover:bg-foreground/[0.10] border border-border px-4 py-2 text-sm font-semibold text-foreground/80 hover:text-foreground transition-colors`}
                 >
                   <Icon className={`w-4 h-4 ${ACCENT_CLASSES[ac].navIcon}`} />
-                  {cat.title}
+                  {titleMap[cat.id] || cat.title}
                 </a>
               );
             })}

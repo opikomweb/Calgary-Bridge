@@ -24,46 +24,46 @@ import { useTranslations, registerStrings } from "@/lib/translation-context";
 
 // Register business submission strings for translation
 registerStrings(
-  "Basic Listing",
-  "Free",
-  "Forever",
-  "Enhanced",
-  "$49",
-  "/month",
-  "Featured",
-  "$149",
-  "/month",
-  "Standard directory listing",
-  "Basic business information",
-  "Contact details displayed",
-  "Community reviews",
-  "Everything in Basic",
-  "Priority search placement",
-  "Detailed service descriptions",
-  "Photo gallery (up to 10)",
-  "Direct booking link",
-  "Monthly analytics report",
-  "Everything in Enhanced",
-  "Featured badge on listing",
-  "Homepage spotlight rotation",
-  "AI recommendation priority",
-  "Dedicated account manager",
-  "Social media promotion",
+  // Package names/prices
+  "Basic Listing", "Free", "Forever",
+  "Enhanced", "$49", "/month",
+  "Featured", "$149", "/month",
+  // Package features
+  "Standard directory listing", "Basic business information",
+  "Contact details displayed", "Community reviews",
+  "Everything in Basic", "Priority search placement",
+  "Detailed service descriptions", "Photo gallery (up to 10)",
+  "Direct booking link", "Monthly analytics report",
+  "Everything in Enhanced", "Featured badge on listing",
+  "Homepage spotlight rotation", "AI recommendation priority",
+  "Dedicated account manager", "Social media promotion",
   "Press release inclusion",
-  "Housing & Rent",
-  "Jobs & Career",
-  "Healthcare",
-  "Family & Childcare",
-  "Education",
-  "Legal Services",
-  "Food & Meals",
-  "Transportation",
-  "Mental Health",
-  "Senior Services",
-  "Newcomer Services",
-  "Small Business",
-  "Community",
-  "Other",
+  // Categories
+  "Housing & Rent", "Jobs & Career", "Healthcare", "Family & Childcare",
+  "Education", "Legal Services", "Food & Meals", "Transportation",
+  "Mental Health", "Senior Services", "Newcomer Services",
+  "Small Business", "Community", "Other",
+  // Modal header
+  "List Your Business", "Help Calgarians discover your services",
+  "Get Featured on Calgary Konnect",
+  "Reach thousands of Calgarians looking for services like yours",
+  // Step labels
+  "Business Info", "Details", "Package",
+  // Step 1 field labels
+  "Business Name *", "Enter your business name",
+  "Category *", "Select a category",
+  "Description *", "Describe your services and what makes you unique...",
+  "Continue",
+  // Step 2 field labels
+  "Phone Number", "Email", "Website", "Address", "Hours", "Cost",
+  "Select pricing", "Low Cost", "Sliding Scale", "Paid",
+  "Back",
+  // Step 3
+  "Most Popular", "Submit Listing",
+  // Step 4
+  "Listing Submitted!", "Thank you for submitting your listing.",
+  "Our team will review your submission within 2-3 business days.",
+  "Close",
 );
 
 interface BusinessSubmissionProps {
@@ -100,6 +100,61 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
     featuredName: "Featured",
     featuredPrice: "$149",
     featuredPriceNote: "/month",
+    // Package features
+    f1: "Standard directory listing",
+    f2: "Basic business information",
+    f3: "Contact details displayed",
+    f4: "Community reviews",
+    f5: "Everything in Basic",
+    f6: "Priority search placement",
+    f7: "Detailed service descriptions",
+    f8: "Photo gallery (up to 10)",
+    f9: "Direct booking link",
+    f10: "Monthly analytics report",
+    f11: "Everything in Enhanced",
+    f12: "Featured badge on listing",
+    f13: "Homepage spotlight rotation",
+    f14: "AI recommendation priority",
+    f15: "Dedicated account manager",
+    f16: "Social media promotion",
+    f17: "Press release inclusion",
+    // Header
+    listYourBusiness: "List Your Business",
+    listSubtitle: "Help Calgarians discover your services",
+    getFeatured: "Get Featured on Calgary Konnect",
+    featuredSubtitle: "Reach thousands of Calgarians looking for services like yours",
+    // Steps
+    stepBizInfo: "Business Info",
+    stepDetails: "Details",
+    stepPackage: "Package",
+    // Step 1
+    businessName: "Business Name *",
+    bizNamePlaceholder: "Enter your business name",
+    categoryLabel: "Category *",
+    selectCategory: "Select a category",
+    descriptionLabel: "Description *",
+    descPlaceholder: "Describe your services and what makes you unique...",
+    continueBtn: "Continue",
+    // Step 2
+    phoneLabel: "Phone Number",
+    emailLabel: "Email",
+    websiteLabel: "Website",
+    addressLabel: "Address",
+    hoursLabel: "Hours",
+    costLabel: "Cost",
+    selectPricing: "Select pricing",
+    lowCost: "Low Cost",
+    slidingScale: "Sliding Scale",
+    paid: "Paid",
+    backBtn: "Back",
+    // Step 3
+    mostPopular: "Most Popular",
+    submitListing: "Submit Listing",
+    // Step 4
+    submitted: "Listing Submitted!",
+    submittedDesc: "Thank you for submitting your listing.",
+    submittedNote: "Our team will review your submission within 2-3 business days.",
+    close: "Close",
   });
 
   const packages = [
@@ -108,12 +163,7 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
       name: tx.basicName,
       price: tx.basicPrice,
       priceNote: tx.basicPriceNote,
-      features: [
-        "Standard directory listing",
-        "Basic business information",
-        "Contact details displayed",
-        "Community reviews",
-      ],
+      features: [tx.f1, tx.f2, tx.f3, tx.f4],
       color: "from-slate-600 to-slate-700",
       accent: "text-slate-300",
       popular: false,
@@ -123,14 +173,7 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
       name: tx.enhancedName,
       price: tx.enhancedPrice,
       priceNote: tx.enhancedPriceNote,
-      features: [
-        "Everything in Basic",
-        "Priority search placement",
-        "Detailed service descriptions",
-        "Photo gallery (up to 10)",
-        "Direct booking link",
-        "Monthly analytics report",
-      ],
+      features: [tx.f5, tx.f6, tx.f7, tx.f8, tx.f9, tx.f10],
       color: "from-sky-600 to-sky-700",
       accent: "text-sky-300",
       popular: true,
@@ -140,36 +183,31 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
       name: tx.featuredName,
       price: tx.featuredPrice,
       priceNote: tx.featuredPriceNote,
-      features: [
-        "Everything in Enhanced",
-        "Featured badge on listing",
-        "Homepage spotlight rotation",
-        "AI recommendation priority",
-        "Dedicated account manager",
-        "Social media promotion",
-        "Press release inclusion",
-      ],
+      features: [tx.f11, tx.f12, tx.f13, tx.f14, tx.f15, tx.f16, tx.f17],
       color: "from-[#E1251B] to-[#b91c1c]",
       accent: "text-[#E1251B]",
       popular: false,
     },
   ];
 
-  const categories = [
-    "Housing & Rent",
-    "Jobs & Career",
-    "Healthcare",
-    "Family & Childcare",
-    "Education",
-    "Legal Services",
-    "Food & Meals",
-    "Transportation",
-    "Mental Health",
-    "Senior Services",
-    "Newcomer Services",
-    "Small Business",
-    "Community",
-    "Other",
+  // Keep English as option values (for form data), display translated labels in a parallel array
+  const categoryValues = [
+    "Housing & Rent", "Jobs & Career", "Healthcare", "Family & Childcare",
+    "Education", "Legal Services", "Food & Meals", "Transportation",
+    "Mental Health", "Senior Services", "Newcomer Services",
+    "Small Business", "Community", "Other",
+  ];
+  const categoryTx = useTranslations({
+    c1: "Housing & Rent", c2: "Jobs & Career", c3: "Healthcare", c4: "Family & Childcare",
+    c5: "Education", c6: "Legal Services", c7: "Food & Meals", c8: "Transportation",
+    c9: "Mental Health", c10: "Senior Services", c11: "Newcomer Services",
+    c12: "Small Business", c13: "Community", c14: "Other",
+  });
+  const categoryLabels = [
+    categoryTx.c1, categoryTx.c2, categoryTx.c3, categoryTx.c4,
+    categoryTx.c5, categoryTx.c6, categoryTx.c7, categoryTx.c8,
+    categoryTx.c9, categoryTx.c10, categoryTx.c11, categoryTx.c12,
+    categoryTx.c13, categoryTx.c14,
   ];
 
   const handleSubmit = () => {
@@ -212,13 +250,10 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
               </div>
               <div>
                 <h2 className="text-3xl font-bold text-white">
-                  {mode === "featured" ? "Get Featured on Calgary Konnect" : "List Your Business"}
+                  {mode === "featured" ? tx.getFeatured : tx.listYourBusiness}
                 </h2>
                 <p className="text-white/50 mt-1">
-                  {mode === "featured" 
-                    ? "Reach thousands of Calgarians looking for services like yours"
-                    : "Help Calgarians discover your services"
-                  }
+                  {mode === "featured" ? tx.featuredSubtitle : tx.listSubtitle}
                 </p>
               </div>
             </div>
@@ -238,7 +273,7 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
                       {step > s ? <Check className="w-5 h-5" /> : s}
                     </div>
                     <span className={`text-sm font-medium ${step >= s ? "text-white" : "text-white/40"}`}>
-                      {s === 1 ? "Business Info" : s === 2 ? "Details" : "Package"}
+                      {s === 1 ? tx.stepBizInfo : s === 2 ? tx.stepDetails : tx.stepPackage}
                     </span>
                     {s < 3 && <div className={`w-12 h-0.5 ${step > s ? "bg-sky-500" : "bg-white/10"}`} />}
                   </div>
@@ -257,36 +292,36 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
                 className="space-y-6"
               >
                 <div>
-                  <label className="block text-sm font-semibold text-white mb-3">Business Name *</label>
+                  <label className="block text-sm font-semibold text-white mb-3">{tx.businessName}</label>
                   <input
                     type="text"
                     value={formData.businessName}
                     onChange={(e) => setFormData({ ...formData, businessName: e.target.value })}
-                    placeholder="Enter your business name"
+                    placeholder={tx.bizNamePlaceholder}
                     className="w-full h-14 bg-white/[0.04] border border-white/[0.08] rounded-2xl px-5 text-white placeholder:text-white/30 focus:border-sky-500/50 focus:outline-none transition-all"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-white mb-3">Category *</label>
+                  <label className="block text-sm font-semibold text-white mb-3">{tx.categoryLabel}</label>
                   <select
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                     className="w-full h-14 bg-white/[0.04] border border-white/[0.08] rounded-2xl px-5 text-white focus:border-sky-500/50 focus:outline-none transition-all appearance-none cursor-pointer"
                   >
-                    <option value="" className="bg-[#0a1628]">Select a category</option>
-                    {categories.map((cat) => (
-                      <option key={cat} value={cat} className="bg-[#0a1628]">{cat}</option>
+                    <option value="" className="bg-[#0a1628]">{tx.selectCategory}</option>
+                    {categoryValues.map((val, i) => (
+                      <option key={val} value={val} className="bg-[#0a1628]">{categoryLabels[i]}</option>
                     ))}
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-white mb-3">Description *</label>
+                  <label className="block text-sm font-semibold text-white mb-3">{tx.descriptionLabel}</label>
                   <textarea
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    placeholder="Describe your services and what makes you unique..."
+                    placeholder={tx.descPlaceholder}
                     rows={4}
                     className="w-full bg-white/[0.04] border border-white/[0.08] rounded-2xl p-5 text-white placeholder:text-white/30 focus:border-sky-500/50 focus:outline-none transition-all resize-none"
                   />
@@ -297,7 +332,7 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
                   disabled={!formData.businessName || !formData.category || !formData.description}
                   className="w-full h-14 rounded-2xl bg-gradient-to-r from-sky-500 to-sky-600 text-white font-bold flex items-center justify-center gap-3 hover:shadow-lg hover:shadow-sky-500/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Continue <ArrowRight className="w-5 h-5" />
+                  {tx.continueBtn} <ArrowRight className="w-5 h-5" />
                 </button>
               </motion.div>
             )}
@@ -313,7 +348,7 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
                   <div>
                     <label className="block text-sm font-semibold text-white mb-3">
                       <Phone className="w-4 h-4 inline mr-2" />
-                      Phone Number
+                      {tx.phoneLabel}
                     </label>
                     <input
                       type="tel"
@@ -326,7 +361,7 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
                   <div>
                     <label className="block text-sm font-semibold text-white mb-3">
                       <Mail className="w-4 h-4 inline mr-2" />
-                      Email
+                      {tx.emailLabel}
                     </label>
                     <input
                       type="email"
@@ -341,7 +376,7 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
                 <div>
                   <label className="block text-sm font-semibold text-white mb-3">
                     <Globe className="w-4 h-4 inline mr-2" />
-                    Website
+                    {tx.websiteLabel}
                   </label>
                   <input
                     type="url"
@@ -355,7 +390,7 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
                 <div>
                   <label className="block text-sm font-semibold text-white mb-3">
                     <MapPin className="w-4 h-4 inline mr-2" />
-                    Address
+                    {tx.addressLabel}
                   </label>
                   <input
                     type="text"
@@ -370,7 +405,7 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
                   <div>
                     <label className="block text-sm font-semibold text-white mb-3">
                       <Clock className="w-4 h-4 inline mr-2" />
-                      Hours
+                      {tx.hoursLabel}
                     </label>
                     <input
                       type="text"
@@ -383,18 +418,18 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
                   <div>
                     <label className="block text-sm font-semibold text-white mb-3">
                       <DollarSign className="w-4 h-4 inline mr-2" />
-                      Cost
+                      {tx.costLabel}
                     </label>
                     <select
                       value={formData.cost}
                       onChange={(e) => setFormData({ ...formData, cost: e.target.value })}
                       className="w-full h-14 bg-white/[0.04] border border-white/[0.08] rounded-2xl px-5 text-white focus:border-sky-500/50 focus:outline-none transition-all appearance-none cursor-pointer"
                     >
-                      <option value="" className="bg-[#0a1628]">Select pricing</option>
-                      <option value="free" className="bg-[#0a1628]">Free</option>
-                      <option value="low-cost" className="bg-[#0a1628]">Low Cost</option>
-                      <option value="sliding-scale" className="bg-[#0a1628]">Sliding Scale</option>
-                      <option value="paid" className="bg-[#0a1628]">Paid</option>
+                      <option value="" className="bg-[#0a1628]">{tx.selectPricing}</option>
+                      <option value="free" className="bg-[#0a1628]">{tx.basicPrice}</option>
+                      <option value="low-cost" className="bg-[#0a1628]">{tx.lowCost}</option>
+                      <option value="sliding-scale" className="bg-[#0a1628]">{tx.slidingScale}</option>
+                      <option value="paid" className="bg-[#0a1628]">{tx.paid}</option>
                     </select>
                   </div>
                 </div>
@@ -404,13 +439,13 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
                     onClick={() => setStep(1)}
                     className="flex-1 h-14 rounded-2xl bg-white/[0.06] border border-white/[0.08] text-white font-bold hover:bg-white/[0.1] transition-all"
                   >
-                    Back
+                    {tx.backBtn}
                   </button>
                   <button
                     onClick={() => setStep(3)}
                     className="flex-1 h-14 rounded-2xl bg-gradient-to-r from-sky-500 to-sky-600 text-white font-bold flex items-center justify-center gap-3 hover:shadow-lg hover:shadow-sky-500/30 transition-all"
                   >
-                    Continue <ArrowRight className="w-5 h-5" />
+                    {tx.continueBtn} <ArrowRight className="w-5 h-5" />
                   </button>
                 </div>
               </motion.div>
@@ -436,7 +471,7 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
                     >
                       {pkg.popular && (
                         <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-sky-500 to-sky-600 text-white text-xs font-bold">
-                          Most Popular
+                          {tx.mostPopular}
                         </div>
                       )}
                       
@@ -469,13 +504,13 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
                     onClick={() => setStep(2)}
                     className="flex-1 h-14 rounded-2xl bg-white/[0.06] border border-white/[0.08] text-white font-bold hover:bg-white/[0.1] transition-all"
                   >
-                    Back
+                    {tx.backBtn}
                   </button>
                   <button
                     onClick={handleSubmit}
                     className="flex-1 h-14 rounded-2xl bg-gradient-to-r from-sky-500 to-sky-600 text-white font-bold flex items-center justify-center gap-3 hover:shadow-lg hover:shadow-sky-500/30 transition-all"
                   >
-                    Submit Listing <Check className="w-5 h-5" />
+                    {tx.submitListing} <Check className="w-5 h-5" />
                   </button>
                 </div>
               </motion.div>
@@ -491,16 +526,18 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
                 <div className="w-24 h-24 rounded-full bg-gradient-to-br from-sky-500 to-sky-600 flex items-center justify-center mx-auto mb-8">
                   <Check className="w-12 h-12 text-white" />
                 </div>
-                <h3 className="text-3xl font-bold text-white mb-4">Submission Received!</h3>
-                <p className="text-lg text-white/60 max-w-md mx-auto mb-8">
-                  Thank you for submitting your business. Our team will review your listing and 
-                  get back to you within 2-3 business days.
+                <h3 className="text-3xl font-bold text-white mb-4">{tx.submitted}</h3>
+                <p className="text-lg text-white/60 max-w-md mx-auto mb-2">
+                  {tx.submittedDesc}
+                </p>
+                <p className="text-white/40 max-w-md mx-auto mb-8">
+                  {tx.submittedNote}
                 </p>
                 <button
                   onClick={onClose}
                   className="h-14 px-10 rounded-2xl bg-gradient-to-r from-sky-500 to-sky-600 text-white font-bold hover:shadow-lg hover:shadow-sky-500/30 transition-all"
                 >
-                  Done
+                  {tx.close}
                 </button>
               </motion.div>
             )}

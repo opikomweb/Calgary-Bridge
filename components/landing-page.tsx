@@ -12,6 +12,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageToggle } from "@/components/language-toggle";
 import { useAppStore } from "@/lib/store";
 import { useTranslations, registerStrings } from "@/lib/translation-context";
+import { getLangMeta } from "@/lib/languages";
 import { useRef, useState, useEffect } from "react";
 import Footer from "@/components/footer";
 import type { ResourceCategory } from "@/lib/types";
@@ -21,6 +22,7 @@ registerStrings(
   "Calgary's civic intelligence platform",
   "Everything Calgary. One Place.",
   "Essential services. One place.",
+  "Connected. Informed. Local.",
   "Housing, jobs, tenant support, local life, businesses, events, trusted services, and AI guidance—all intelligently connected.",
   "My landlord won't fix the heat...",
   "I need childcare",
@@ -117,10 +119,12 @@ registerStrings(
 );
 
 export default function LandingPage() {
-  const { setCurrentPage, setActiveTab, setHasOnboarded, setSearchQuery, setActiveCategory } = useAppStore();
+  const { setCurrentPage, setActiveTab, setHasOnboarded, setSearchQuery, setActiveCategory, activeLanguage } = useAppStore();
+  const isRTL = getLangMeta(activeLanguage).rtl ?? false;
   const tx = useTranslations({
     eyebrow: "Calgary's civic intelligence platform",
     headline: "Everything Calgary. One Place.",
+    connectedTagline: "Connected. Informed. Local.",
     sublineDesktop: "Housing, jobs, tenant support, local life, businesses, events, trusted services, and AI guidance—all intelligently connected.",
     sublineMobile: "Essential services. One place.",
     placeholder: "My landlord won't fix the heat...",
@@ -205,13 +209,13 @@ export default function LandingPage() {
   const [query, setQuery] = useState("");
 
   const { scrollYProgress } = useScroll({
-    target: heroRef,
     offset: ["start start", "end start"],
   });
 
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const heroScale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95]);
-  const heroY = useTransform(scrollYProgress, [0, 0.5], [0, 100]);
+  // Clamp opacity to [0.1, 1] so mobile RTL layout shifts never fully hide the hero
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0.1]);
+  const heroScale = useTransform(scrollYProgress, [0, 0.6], [1, 0.95]);
+  const heroY = useTransform(scrollYProgress, [0, 0.6], [0, 80]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -354,7 +358,7 @@ export default function LandingPage() {
   ];
 
   return (
-    <div className="dark min-h-screen bg-[#061528] text-white overflow-x-hidden" style={{ background: "linear-gradient(160deg, #0d2044 0%, #071630 40%, #050e20 100%)" }}>
+    <div dir={isRTL ? "rtl" : "ltr"} className="dark min-h-screen bg-[#061528] text-white overflow-x-hidden" style={{ background: "linear-gradient(160deg, #0d2044 0%, #071630 40%, #050e20 100%)" }}>
       {/* ========== GLASSY STICKY HEADER ========== */}
       <header
         className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
@@ -404,7 +408,7 @@ export default function LandingPage() {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 8, scale: 0.97 }}
                         transition={{ duration: 0.15 }}
-                        className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-[340px]"
+                        className="absolute top-full start-1/2 -translate-x-1/2 rtl:translate-x-1/2 pt-3 w-[340px]"
                       >
                         <div className="bg-[#0a1628]/95 backdrop-blur-2xl border border-white/[0.08] rounded-2xl shadow-2xl shadow-black/40 p-2 overflow-hidden">
                           {group.items.map((item) => (
@@ -554,10 +558,11 @@ export default function LandingPage() {
       {/* ========== HERO — IMMERSIVE CALGARY ========== */}
       <section
         ref={heroRef}
-        className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-16 md:pt-20"
+        className="relative min-h-[100svh] flex items-center justify-center pt-16 md:pt-20"
+        style={{ isolation: "isolate" }}
       >
         {/* Authentic Calgary daytime skyline background */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none overflow-hidden" dir="ltr">
           {/* Base sky gradient (matches the photo's blue sky) */}
           <div className="absolute inset-0 bg-gradient-to-b from-[#1e4a80] via-[#0f2e5c] to-[#061020]" />
 
@@ -604,21 +609,26 @@ export default function LandingPage() {
             transition={{ delay: 0.3, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="text-[clamp(32px,7vw,80px)] font-bold tracking-[-0.03em] leading-[1.02] mb-6 md:mb-8 text-balance"
           >
-            {tx.headline.split(". ")[0]}<span className="text-[#E1251B]"> Calgary</span>.
+            {tx.headline.split(" Calgary")[0]} <span className="text-[#E1251B]">Calgary</span>.
             <br />
             <span className="text-gradient-blue">{tx.headline.split(". ")[1]}</span>
           </motion.h1>
 
           {/* Subheadline */}
-          <motion.p
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.45, duration: 0.7 }}
-            className="text-sm md:text-xl lg:text-2xl font-medium text-white/90 leading-relaxed max-w-3xl mx-auto mb-10 md:mb-14 text-pretty drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]"
+            className="max-w-3xl mx-auto mb-10 md:mb-14"
           >
-            <span className="hidden md:inline">{tx.sublineDesktop}</span>
-            <span className="md:hidden">{tx.sublineMobile}</span>
-          </motion.p>
+            <p className="text-xl md:text-3xl lg:text-4xl font-semibold text-white leading-tight mb-3 drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
+              {tx.connectedTagline}
+            </p>
+            <p className="text-xs md:text-sm text-white/55 leading-relaxed text-pretty">
+              <span className="hidden md:inline">{tx.sublineDesktop}</span>
+              <span className="md:hidden">{tx.sublineMobile}</span>
+            </p>
+          </motion.div>
 
           {/* Functional search */}
           <motion.div
@@ -628,7 +638,7 @@ export default function LandingPage() {
             className="max-w-3xl mx-auto mb-6 md:mb-8"
           >
             <div className="relative group">
-              <Search className="absolute left-5 md:left-8 top-1/2 -translate-y-1/2 w-5 h-5 md:w-7 md:h-7 text-[#38BDF8] transition-colors pointer-events-none z-10" />
+              <Search className="absolute start-5 md:start-8 top-1/2 -translate-y-1/2 w-5 h-5 md:w-7 md:h-7 text-[#38BDF8] transition-colors pointer-events-none z-10" />
               <input
                 type="text"
                 value={query}
@@ -638,11 +648,11 @@ export default function LandingPage() {
                 }}
                 placeholder={tx.placeholder}
                 aria-label="Search Calgary resources"
-                className="w-full h-16 md:h-20 bg-white/[0.16] hover:bg-white/[0.2] focus:bg-white/[0.22] backdrop-blur-xl border border-white/30 hover:border-white/40 focus:border-[#38BDF8]/70 rounded-2xl md:rounded-3xl text-base md:text-xl font-medium text-white placeholder:text-white/70 pl-14 md:pl-20 pr-28 md:pr-32 outline-none transition-all duration-300 shadow-[0_8px_30px_-6px_rgba(0,0,0,0.45)] focus:shadow-[0_0_0_4px_rgba(56,189,248,0.2),0_25px_50px_-12px_rgba(0,0,0,0.6)]"
+                className="w-full h-16 md:h-20 bg-white/[0.16] hover:bg-white/[0.2] focus:bg-white/[0.22] backdrop-blur-xl border border-white/30 hover:border-white/40 focus:border-[#38BDF8]/70 rounded-2xl md:rounded-3xl text-base md:text-xl font-medium text-white placeholder:text-white/70 ps-14 md:ps-20 pe-28 md:pe-32 outline-none transition-all duration-300 shadow-[0_8px_30px_-6px_rgba(0,0,0,0.45)] focus:shadow-[0_0_0_4px_rgba(56,189,248,0.2),0_25px_50px_-12px_rgba(0,0,0,0.6)]"
               />
               <button
                 onClick={handleSearchSubmit}
-                className="absolute right-2 md:right-3 top-1/2 -translate-y-1/2 btn-primary px-4 md:px-6 h-12 md:h-14 rounded-xl md:rounded-2xl flex items-center gap-2 text-sm md:text-base font-semibold"
+                className="absolute end-2 md:end-3 top-1/2 -translate-y-1/2 btn-primary px-4 md:px-6 h-12 md:h-14 rounded-xl md:rounded-2xl flex items-center gap-2 text-sm md:text-base font-semibold"
               >
                 <span className="hidden sm:inline">{tx.search}</span>
                 <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
@@ -709,7 +719,7 @@ export default function LandingPage() {
       </section>
 
       {/* ========== IMMERSIVE PATHWAYS — Solutions First ========== */}
-      <section className="relative py-14 md:py-20 lg:py-24">
+      <section className="relative py-10 md:py-16 lg:py-20">
         {/* Subtle blue ambient glow behind the cards */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-[#1D4ED8]/10 blur-[120px] rounded-full" />
@@ -809,7 +819,7 @@ export default function LandingPage() {
       </section>
 
       {/* ========== AI SECTION — Conversational Preview ========== */}
-      <section className="relative py-14 md:py-20 lg:py-24 overflow-hidden">
+      <section className="relative py-10 md:py-16 lg:py-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#38BDF8]/5 to-transparent" />
 
         <div className="max-w-[1200px] mx-auto px-5 md:px-8 relative z-10">
@@ -866,13 +876,13 @@ export default function LandingPage() {
                   </div>
 
                   <div className="flex gap-3">
-              <div className="relative w-8 h-8 rounded-full overflow-hidden ring-1 ring-white/20 flex-shrink-0">
-                <Image
-                  src="/askonnect-avatar.webp"
-                  alt="Askonnect"
-                  fill
-                  className="object-cover"
-                />
+                    <div className="relative w-8 h-8 rounded-full overflow-hidden ring-1 ring-white/20 flex-shrink-0">
+                      <Image
+                        src="/askonnect-avatar.webp"
+                        alt="Askonnect"
+                        fill
+                        className="object-cover"
+                      />
                     </div>
                     <div className="bg-white/[0.06] px-5 py-4 rounded-2xl rounded-bl-md max-w-[320px]">
                       <p className="text-sm md:text-[15px] text-white/90 leading-relaxed mb-3">

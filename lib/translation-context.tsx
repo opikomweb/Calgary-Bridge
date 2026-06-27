@@ -152,97 +152,99 @@ const TranslationContext = createContext<TranslationContextValue>({
 
 export function TranslationProvider({ children }: { children: React.ReactNode }) {
   const activeLanguage = useAppStore((s) => s.activeLanguage);
-  const [txMap, setTxMap] = useState<Map<string, string>>(new Map());
+
+  // Read localStorage synchronously on first render so cached translations
+  // are available immediately — no waiting for a useEffect tick.
+  // Guard against SSR (no localStorage in Node) with typeof check.
+  const [txMap, setTxMap] = useState<Map<string, string>>(() => {
+    if (activeLanguage === "en" || typeof window === "undefined") return new Map();
+    return loadCache(activeLanguage);
+  });
   const [loading, setLoading] = useState(false);
   const runRef = useRef(0);
-
-  // Strings requested via t() that are not yet translated. Captured during
-  // render so translation is fully render-driven — immune to registration
-  // timing and to module duplication across next/dynamic(ssr:false) chunks.
-  const pendingRef = useRef<Set<string>>(new Set());
-  const flushScheduledRef = useRef(false);
-  const [flushTick, setFlushTick] = useState(0);
-  // Keep a ref of the live txMap so the t() closure (recreated each render)
-  // and the flush effect always read the freshest translations.
   const txMapRef = useRef(txMap);
   txMapRef.current = txMap;
+  // Keep a ref of the current language so registry-subscription callbacks
+  // always read the live value even if the effect closure is stale.
+  const activeLangRef = useRef(activeLanguage);
+  activeLangRef.current = activeLanguage;
 
-  const scheduleFlush = React.useCallback(() => {
-    if (flushScheduledRef.current) return;
-    flushScheduledRef.current = true;
-    // Microtask debounce: collapse a whole render's worth of misses into one batch.
-    queueMicrotask(() => {
-      flushScheduledRef.current = false;
-      setFlushTick((n) => n + 1);
-    });
+  // Strings discovered during render that aren't in the current txMap yet.
+  // Collected per-render and flushed in one batched API call.
+  const pendingRef = useRef<Set<string>>(new Set());
+  const flushTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const scheduleFlush = React.useCallback((lang: Language) => {
+    if (flushTimerRef.current) return;
+    // 80ms debounce — collapses an entire render tree's worth of t() misses
+    // into a single fetch. Short enough to feel instant.
+    flushTimerRef.current = setTimeout(() => {
+      flushTimerRef.current = null;
+      const pending = Array.from(pendingRef.current).filter(
+        (s) => !txMapRef.current.has(s),
+      );
+      if (!pending.length) return;
+      const run = runRef.current;
+      setLoading(true);
+      fetchTranslations(pending, lang).then((fresh) => {
+        if (run !== runRef.current) return;
+        pending.forEach((s) => pendingRef.current.delete(s));
+        if (fresh.size > 0) {
+          const merged = new Map(txMapRef.current);
+          fresh.forEach((v, k) => merged.set(k, v));
+          persistCache(lang, merged);
+          setTxMap(merged);
+        }
+        setLoading(false);
+      });
+    }, 80);
   }, []);
 
-  // Language change: set direction, seed from cache, and re-queue everything
-  // currently on screen (plus any module-registered strings) for translation.
+  // Language switch: apply direction, seed from cache instantly, then fetch missing.
   useEffect(() => {
     const meta = getLangMeta(activeLanguage);
     document.documentElement.lang = meta.googleCode;
     document.documentElement.dir = meta.rtl ? "rtl" : "ltr";
 
+    // Cancel any in-flight debounce from the previous language.
+    if (flushTimerRef.current) {
+      clearTimeout(flushTimerRef.current);
+      flushTimerRef.current = null;
+    }
+    pendingRef.current.clear();
     runRef.current++;
 
     if (activeLanguage === "en") {
-      pendingRef.current.clear();
       setTxMap(new Map());
       setLoading(false);
       return;
     }
 
+    // Apply cache synchronously to avoid a blank flash.
     const cached = loadCache(activeLanguage);
     setTxMap(new Map(cached));
 
-    // Seed pending with any module-registered strings missing from cache so we
-    // translate them even before they're rendered (e.g. off-screen tabs).
+    // Queue any registered strings not yet in cache for immediate fetch.
+    const lang = activeLanguage;
     registeredStrings.forEach((s) => {
       if (!cached.has(s)) pendingRef.current.add(s);
     });
-    if (pendingRef.current.size > 0) scheduleFlush();
+    if (pendingRef.current.size > 0) scheduleFlush(lang);
   }, [activeLanguage, scheduleFlush]);
 
-  // Whenever new strings get registered by a late-loading chunk, queue them.
+  // When a lazy-loaded chunk registers new strings, queue them too.
+  // Use activeLangRef so this callback always reads the live language value,
+  // even if the outer effect closure has gone stale (e.g. rapid language switches).
   useEffect(() => {
     return subscribeRegistry(() => {
-      if (activeLanguage === "en") return;
-      const cached = txMapRef.current;
-      let added = false;
+      const lang = activeLangRef.current;
+      if (lang === "en") return;
       registeredStrings.forEach((s) => {
-        if (!cached.has(s) && !pendingRef.current.has(s)) {
-          pendingRef.current.add(s);
-          added = true;
-        }
+        if (!txMapRef.current.has(s)) pendingRef.current.add(s);
       });
-      if (added) scheduleFlush();
+      if (pendingRef.current.size > 0) scheduleFlush(lang);
     });
-  }, [activeLanguage, scheduleFlush]);
-
-  // Flush: translate all pending strings in one batched request.
-  useEffect(() => {
-    if (activeLanguage === "en") return;
-    const pending = Array.from(pendingRef.current).filter(
-      (s) => !txMapRef.current.has(s),
-    );
-    if (pending.length === 0) return;
-
-    const run = runRef.current;
-    setLoading(true);
-
-    fetchTranslations(pending, activeLanguage).then((fresh) => {
-      if (run !== runRef.current) return; // language changed mid-flight
-      pending.forEach((s) => pendingRef.current.delete(s));
-      if (fresh.size > 0) {
-        const merged = new Map(txMapRef.current);
-        fresh.forEach((v, k) => merged.set(k, v));
-        persistCache(activeLanguage, merged);
-        setTxMap(merged);
-      }
-      setLoading(false);
-    });
-  }, [flushTick, activeLanguage]);
+  }, [scheduleFlush]);
 
   const value = useMemo<TranslationContextValue>(
     () => ({
@@ -251,10 +253,10 @@ export function TranslationProvider({ children }: { children: React.ReactNode })
         const key = english.trim();
         const hit = txMap.get(key);
         if (hit) return hit;
-        // Cache miss — record for the next batched fetch.
-        if (key && !pendingRef.current.has(key)) {
+        // Render-time cache miss — queue and flush.
+        if (key) {
           pendingRef.current.add(key);
-          scheduleFlush();
+          scheduleFlush(activeLanguage);
         }
         return english;
       },
