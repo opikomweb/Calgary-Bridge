@@ -471,7 +471,7 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
                     >
                       {pkg.popular && (
                         <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-sky-500 to-sky-600 text-white text-xs font-bold">
-                          Most Popular
+                          {tx.mostPopular}
                         </div>
                       )}
                       
@@ -504,13 +504,13 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
                     onClick={() => setStep(2)}
                     className="flex-1 h-14 rounded-2xl bg-white/[0.06] border border-white/[0.08] text-white font-bold hover:bg-white/[0.1] transition-all"
                   >
-                    Back
+                    {tx.backBtn}
                   </button>
                   <button
                     onClick={handleSubmit}
                     className="flex-1 h-14 rounded-2xl bg-gradient-to-r from-sky-500 to-sky-600 text-white font-bold flex items-center justify-center gap-3 hover:shadow-lg hover:shadow-sky-500/30 transition-all"
                   >
-                    Submit Listing <Check className="w-5 h-5" />
+                    {tx.submitListing} <Check className="w-5 h-5" />
                   </button>
                 </div>
               </motion.div>
@@ -526,16 +526,18 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
                 <div className="w-24 h-24 rounded-full bg-gradient-to-br from-sky-500 to-sky-600 flex items-center justify-center mx-auto mb-8">
                   <Check className="w-12 h-12 text-white" />
                 </div>
-                <h3 className="text-3xl font-bold text-white mb-4">Submission Received!</h3>
-                <p className="text-lg text-white/60 max-w-md mx-auto mb-8">
-                  Thank you for submitting your business. Our team will review your listing and 
-                  get back to you within 2-3 business days.
+                <h3 className="text-3xl font-bold text-white mb-4">{tx.submitted}</h3>
+                <p className="text-lg text-white/60 max-w-md mx-auto mb-2">
+                  {tx.submittedDesc}
+                </p>
+                <p className="text-white/40 max-w-md mx-auto mb-8">
+                  {tx.submittedNote}
                 </p>
                 <button
                   onClick={onClose}
                   className="h-14 px-10 rounded-2xl bg-gradient-to-r from-sky-500 to-sky-600 text-white font-bold hover:shadow-lg hover:shadow-sky-500/30 transition-all"
                 >
-                  Done
+                  {tx.close}
                 </button>
               </motion.div>
             )}
