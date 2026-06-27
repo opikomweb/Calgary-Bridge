@@ -604,7 +604,7 @@ export default function LandingPage() {
             transition={{ delay: 0.3, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="text-[clamp(32px,7vw,80px)] font-bold tracking-[-0.03em] leading-[1.02] mb-6 md:mb-8 text-balance"
           >
-            {tx.headline.split(". ")[0]}<span className="text-[#E1251B]"> Calgary</span>.
+            Everything <span className="text-[#E1251B]">Calgary</span>.
             <br />
             <span className="text-gradient-blue">{tx.headline.split(". ")[1]}</span>
           </motion.h1>
