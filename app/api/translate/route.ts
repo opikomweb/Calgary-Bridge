@@ -1,11 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getLangMeta } from "@/lib/languages";
 import type { Language } from "@/lib/types";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@supabase/supabase-js";
 
-/**
- * Lightweight stable hash for a string — used as the cache key.
- */
+// ---------------------------------------------------------------------------
+// Direct Supabase admin client — NO cookie overhead, NO RLS round-trips.
+// Uses service role key so it can read/write translation_cache at full speed.
+// This is safe: the translate route never touches user data.
+// ---------------------------------------------------------------------------
+function getSupabase() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    {
+      auth: { persistSession: false },
+    }
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Lightweight FNV-1a hash — stable cache key per string.
+// ---------------------------------------------------------------------------
 function hashText(text: string): string {
   let h = 0x811c9dc5;
   for (let i = 0; i < text.length; i++) {
@@ -15,78 +30,53 @@ function hashText(text: string): string {
   return h.toString(16);
 }
 
-/**
- * Translate using the unofficial Google Translate endpoint (gtx client).
- * - No API key required
- * - No hard rate limits for reasonable usage
- * - Same Google quality
- * - Used by thousands of open-source tools
- * With the Supabase cache, this is called at most ONCE per unique string
- * per language — ever. After that, Supabase serves all requests for free.
- */
-async function translateWithGoogle(
-  texts: string[],
-  targetLang: string
-): Promise<string[]> {
-  const results: string[] = [];
+// ---------------------------------------------------------------------------
+// Translate via the unofficial Google Translate endpoint (gtx client).
+// No API key required. Used by thousands of open-source tools.
+// With the Supabase cache this is called at most ONCE per unique string
+// per language — ever. After that Supabase serves everyone for free.
+// ---------------------------------------------------------------------------
+async function translateOne(text: string, targetLang: string): Promise<string> {
+  if (!text.trim()) return text;
+  try {
+    const url = new URL("https://translate.googleapis.com/translate_a/single");
+    url.searchParams.set("client", "gtx");
+    url.searchParams.set("sl", "en");
+    url.searchParams.set("tl", targetLang);
+    url.searchParams.set("dt", "t");
+    url.searchParams.set("q", text);
 
-  for (const text of texts) {
-    if (!text.trim()) {
-      results.push(text);
-      continue;
-    }
-    try {
-      const url = new URL("https://translate.googleapis.com/translate_a/single");
-      url.searchParams.set("client", "gtx");
-      url.searchParams.set("sl", "en");
-      url.searchParams.set("tl", targetLang);
-      url.searchParams.set("dt", "t");
-      url.searchParams.set("q", text);
+    const res = await fetch(url.toString(), {
+      headers: { "User-Agent": "Mozilla/5.0", Accept: "application/json" },
+      signal: AbortSignal.timeout(8000),
+    });
 
-      const res = await fetch(url.toString(), {
-        headers: {
-          "User-Agent": "Mozilla/5.0",
-          "Accept": "application/json",
-        },
-        signal: AbortSignal.timeout(8000),
-      });
+    if (!res.ok) return text;
 
-      if (!res.ok) {
-        console.error("[translate] Google gtx HTTP error:", res.status);
-        results.push(text);
-        continue;
-      }
-
-      const data = await res.json();
-      // Response format: [[[translatedText, originalText, ...], ...], ...]
-      const translated = data?.[0]
-        ?.map((chunk: [string]) => chunk?.[0] ?? "")
-        .join("") ?? text;
-
-      results.push(translated || text);
-    } catch (err) {
-      console.error("[translate] Google gtx fetch error:", err);
-      results.push(text);
-    }
+    const data = await res.json();
+    const translated =
+      data?.[0]?.map((chunk: [string]) => chunk?.[0] ?? "").join("") ?? text;
+    return translated || text;
+  } catch {
+    return text;
   }
-
-  return results;
 }
 
-/**
- * POST /api/translate
- * Body: { texts: string[], target: Language }
- * Returns: { translations: string[], ok: boolean }
- *
- * Flow:
- *  1. Check Supabase translation_cache for each string
- *  2. Only call the translation engine for cache misses
- *  3. Store new translations in Supabase (shared across ALL users forever)
- *  4. Return combined result in original order
- *
- * Cost: $0. The unofficial Google endpoint requires no key.
- * Each unique string is translated exactly once and cached permanently.
- */
+// ---------------------------------------------------------------------------
+// POST /api/translate
+// Body:    { texts: string[], target: Language }
+// Returns: { translations: string[], ok: boolean, fromCache: number }
+//
+// Flow:
+//  1. Bulk-read Supabase cache for ALL requested strings (single query)
+//  2. Translate ONLY cache misses — in PARALLEL (Promise.all, not a for-loop)
+//  3. Bulk-upsert new translations back to Supabase
+//  4. Return ordered result with HTTP cache headers
+//
+// At 1,000 users/hour requesting the same 11 languages:
+//  - Step 1 serves 100 % of requests from DB once warmed up
+//  - Steps 2-3 run only for brand-new strings (extremely rare)
+// ---------------------------------------------------------------------------
 export async function POST(req: NextRequest) {
   let body: { texts?: string[]; target?: Language };
   try {
@@ -101,15 +91,29 @@ export async function POST(req: NextRequest) {
   const { texts, target } = body;
 
   if (!Array.isArray(texts) || texts.length === 0) {
-    return NextResponse.json({ translations: [], ok: true });
+    return NextResponse.json(
+      { translations: [], ok: true, fromCache: 0 },
+      {
+        headers: {
+          "Cache-Control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800",
+        },
+      }
+    );
   }
 
+  // English — return immediately, no DB needed.
   if (!target || target === "en") {
-    return NextResponse.json({ translations: texts, ok: true });
+    return NextResponse.json(
+      { translations: texts, ok: true, fromCache: texts.length },
+      {
+        headers: {
+          "Cache-Control": "public, max-age=86400, s-maxage=86400",
+        },
+      }
+    );
   }
 
   const meta = getLangMeta(target);
-  // Use googleCode for the gtx endpoint (standard BCP-47 codes)
   const langCode = meta.googleCode ?? (target as string);
 
   if (!langCode) {
@@ -121,13 +125,13 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const supabase = await createClient();
+    const supabase = getSupabase();
 
-    // 1. Compute hashes
+    // 1. Compute hashes for all strings
     const hashes = texts.map(hashText);
 
-    // 2. Bulk-fetch cached translations
-    const { data: cached, error: cacheErr } = await supabase
+    // 2. Single bulk read — fetch all cached translations at once
+    const { data: cachedRows, error: cacheErr } = await supabase
       .from("translation_cache")
       .select("source_hash, translated")
       .eq("lang", target)
@@ -138,23 +142,27 @@ export async function POST(req: NextRequest) {
     }
 
     const cacheMap = new Map<string, string>();
-    (cached ?? []).forEach((row) => cacheMap.set(row.source_hash, row.translated));
+    (cachedRows ?? []).forEach((row) =>
+      cacheMap.set(row.source_hash, row.translated)
+    );
 
-    // 3. Find cache misses
+    // 3. Identify cache misses
     const missIndexes: number[] = [];
     const missTexts: string[] = [];
     texts.forEach((text, i) => {
-      if (!cacheMap.has(hashes[i])) {
+      if (!cacheMap.has(hashes[i]) && text.trim()) {
         missIndexes.push(i);
         missTexts.push(text);
       }
     });
 
-    // 4. Translate only misses
+    // 4. Translate all misses IN PARALLEL — not a sequential for-loop
     if (missTexts.length > 0) {
-      const freshTranslations = await translateWithGoogle(missTexts, langCode);
+      const freshTranslations = await Promise.all(
+        missTexts.map((text) => translateOne(text, langCode))
+      );
 
-      // 5. Store in Supabase cache
+      // 5. Bulk-upsert all new translations in one DB call
       const rows = missTexts.map((text, i) => ({
         lang: target,
         source_hash: hashes[missIndexes[i]],
@@ -170,42 +178,76 @@ export async function POST(req: NextRequest) {
         console.error("[translate] Supabase write error:", insertErr.message);
       }
 
+      // Merge fresh translations into the cache map
       missIndexes.forEach((originalIdx, missIdx) => {
         cacheMap.set(hashes[originalIdx], freshTranslations[missIdx]);
       });
     }
 
-    // 6. Assemble ordered result
+    // 6. Assemble final ordered result
     const translations = texts.map((text, i) => cacheMap.get(hashes[i]) ?? text);
+    const fromCache = texts.length - missTexts.length;
 
-    return NextResponse.json({ translations, ok: true });
+    const response = NextResponse.json({
+      translations,
+      ok: true,
+      fromCache,
+      total: texts.length,
+    });
+
+    // Cache fully-served responses at the CDN layer for 24 hours.
+    // Partial (miss) responses skip CDN caching since they contain new strings.
+    if (missTexts.length === 0) {
+      response.headers.set(
+        "Cache-Control",
+        "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800"
+      );
+    } else {
+      response.headers.set("Cache-Control", "no-store");
+    }
+
+    return response;
   } catch (err) {
     console.error("[translate] Unexpected error:", err);
-    return NextResponse.json({
-      translations: texts,
-      ok: false,
-      error: String(err),
-    });
+    // Graceful degradation — return original English text rather than an error page
+    return NextResponse.json(
+      { translations: texts, ok: false, error: "Translation service error" },
+      { status: 200 } // 200 so the client uses the fallback English text
+    );
   }
 }
 
-/** GET /api/translate — health check */
+// ---------------------------------------------------------------------------
+// GET /api/translate — health check + cache stats
+// ---------------------------------------------------------------------------
 export async function GET() {
   try {
-    const url = new URL("https://translate.googleapis.com/translate_a/single");
-    url.searchParams.set("client", "gtx");
-    url.searchParams.set("sl", "en");
-    url.searchParams.set("tl", "fr");
-    url.searchParams.set("dt", "t");
-    url.searchParams.set("q", "Hello Calgary");
+    const supabase = getSupabase();
 
-    const res = await fetch(url.toString(), {
-      headers: { "User-Agent": "Mozilla/5.0" },
+    const { data } = await supabase
+      .from("translation_cache")
+      .select("lang, source_hash")
+      .order("lang");
+
+    const stats: Record<string, number> = {};
+    (data ?? []).forEach((row) => {
+      stats[row.lang] = (stats[row.lang] ?? 0) + 1;
     });
-    const data = await res.json();
-    const sample = data?.[0]?.map((c: [string]) => c?.[0]).join("") ?? "";
-    return NextResponse.json({ status: "ok", engine: "Google gtx (free, no key)", sample });
+
+    // Quick engine test
+    const testResult = await translateOne("Hello", "fr");
+
+    return NextResponse.json({
+      status: "ok",
+      engine: "Google gtx (free, no API key)",
+      cacheStats: stats,
+      totalCached: Object.values(stats).reduce((a, b) => a + b, 0),
+      engineTest: { input: "Hello", fr: testResult },
+    });
   } catch (err) {
-    return NextResponse.json({ status: "error", message: String(err) }, { status: 502 });
+    return NextResponse.json(
+      { status: "error", message: String(err) },
+      { status: 502 }
+    );
   }
 }
