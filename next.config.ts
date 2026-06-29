@@ -16,9 +16,11 @@ const nextConfig: NextConfig = {
   // Key moved to top-level per Next.js 16 docs
   reactCompiler: true,
 
-  // Strip console.* in production builds
+  // Strip console.log/info/debug in production but KEEP console.error and console.warn
   compiler: {
-    removeConsole: process.env.NODE_ENV === "production",
+    removeConsole: process.env.NODE_ENV === "production"
+      ? { exclude: ["error", "warn"] }
+      : false,
   },
 };
 

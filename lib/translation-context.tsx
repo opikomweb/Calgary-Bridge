@@ -96,28 +96,16 @@ function subscribeRegistry(fn: () => void): () => void {
   };
 }
 
-// ---------------------------------------------------------------------------
-// Helper: Fix common translation API issues (e.g., malformed Spanish punctuation)
-// ---------------------------------------------------------------------------
-function cleanTranslation(text: string, lang: Language): string {
-  if (lang !== "es") return text;
 
-  // If ¿ appears somewhere other than the start, move it to the front.
-  // e.g. "Qué es lo que tú ¿necesidad?" → "¿Qué es lo que tú necesidad?"
-  if (text.includes("¿") && !text.startsWith("¿")) {
-    const stripped = text.split("¿").join("");
-    return "¿" + stripped;
-  }
-
-  return text;
-}
 
 // ---------------------------------------------------------------------------
-// Batch API call
+// Batch API call — with AbortSignal so stale requests are cancelled on
+// rapid language switches (prevents race conditions and wasted bandwidth).
 // ---------------------------------------------------------------------------
 async function fetchTranslations(
   strings: string[],
   lang: Language,
+  signal?: AbortSignal,
 ): Promise<Map<string, string>> {
   const map = new Map<string, string>();
   if (!strings.length || lang === "en") return map;
@@ -126,18 +114,20 @@ async function fetchTranslations(
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ texts: strings, target: lang }),
+      signal,
     });
     if (!res.ok) return map;
     const data = (await res.json()) as { translations: string[] };
     strings.forEach((s, i) => {
       const tx = data.translations[i];
-      if (tx && tx !== s) {
-        // Clean up any malformed translations before caching
-        const cleaned = cleanTranslation(tx, lang);
-        map.set(s, cleaned);
-      }
+      if (tx && tx !== s) map.set(s, tx);
     });
-  } catch { /* network error — return empty, fallback to English */ }
+  } catch (err) {
+    // AbortError is expected on language switch — don't log it
+    if (err instanceof Error && err.name !== "AbortError") {
+      console.error("[translation] fetch error:", err.message);
+    }
+  }
   return map;
 }
 
@@ -164,6 +154,8 @@ export function TranslationProvider({ children }: { children: React.ReactNode })
   const runRef = useRef(0);
   const txMapRef = useRef(txMap);
   txMapRef.current = txMap;
+  // AbortController ref — cancelled whenever language changes to kill stale fetches.
+  const abortRef = useRef<AbortController | null>(null);
   // Keep a ref of the current language so registry-subscription callbacks
   // always read the live value even if the effect closure is stale.
   const activeLangRef = useRef(activeLanguage);
@@ -185,8 +177,12 @@ export function TranslationProvider({ children }: { children: React.ReactNode })
       );
       if (!pending.length) return;
       const run = runRef.current;
+      // Create a new AbortController for this fetch, cancel any previous one
+      if (abortRef.current) abortRef.current.abort();
+      const controller = new AbortController();
+      abortRef.current = controller;
       setLoading(true);
-      fetchTranslations(pending, lang).then((fresh) => {
+      fetchTranslations(pending, lang, controller.signal).then((fresh) => {
         if (run !== runRef.current) return;
         pending.forEach((s) => pendingRef.current.delete(s));
         if (fresh.size > 0) {
@@ -206,10 +202,14 @@ export function TranslationProvider({ children }: { children: React.ReactNode })
     document.documentElement.lang = meta.googleCode;
     document.documentElement.dir = meta.rtl ? "rtl" : "ltr";
 
-    // Cancel any in-flight debounce from the previous language.
+    // Cancel any in-flight debounce and fetch from the previous language.
     if (flushTimerRef.current) {
       clearTimeout(flushTimerRef.current);
       flushTimerRef.current = null;
+    }
+    if (abortRef.current) {
+      abortRef.current.abort();
+      abortRef.current = null;
     }
     pendingRef.current.clear();
     runRef.current++;
