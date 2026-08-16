@@ -343,7 +343,7 @@ export const categoryLabels: Record<ResourceCategory, Record<Language, string>> 
     am: "ወጣቶች", ar: "الشباب", so: "Dhalinyarada", sw: "Vijana",
   },
   arts: {
-    en: "Arts & Culture", pa: "ਕਲਾ ਅਤੇ ਸੱਭਿਆਚਾਰ", tl: "Sining at Kultura", zh: "藝術與文化", "zh-CN": "艺术和文化",
+    en: "Arts & Culture", pa: "ਕਲਾ ਅਤੇ ਸੱਭਿਆਚਾਰ", tl: "Sining at Kultura", zh: "藝術與文化", "zh-CN": "艺��和文化",
     es: "Artes y Cultura", uk: "Мистецтво та культура", ru: "Искусство и культура",
     am: "ጥበብ እና ባህል", ar: "الفنون والثقافة", so: "Fanka iyo Dhaqanka", sw: "Sanaa na Utamaduni",
   },
@@ -358,6 +358,12 @@ export const categoryLabels: Record<ResourceCategory, Record<Language, string>> 
     zh: "遊客與訪客", "zh-CN": "游客与访客", es: "Turistas y Visitantes",
     uk: "Туристи та відвідувачі", ru: "Туристы и посетители",
     am: "ቱሪስቶች እና ጎብኚዎች", ar: "السياح والزوار", so: "Dalxiisayaasha iyo Martida", sw: "Watalii na Wageni",
+  },
+  sports: {
+    en: "Sports & Recreation", pa: "ਖੇਡਾਂ ਅਤੇ ਮਨੋਰੰਜਨ", tl: "Sports at Recreation",
+    zh: "體育與娛樂", "zh-CN": "体育与娱乐", es: "Deportes y Recreación",
+    uk: "Спорт та відпочинок", ru: "Спорт и отдых",
+    am: "ስፖርት እና መዝናኛ", ar: "الرياضة والترفيه", so: "Ciyaaraha iyo Madadaalada", sw: "Michezo na Burudani",
   },
   workspace: {
     en: "Workspaces", pa: "ਵਰਕਸਪੇਸ", tl: "Mga Workspace", zh: "辦公空間", "zh-CN": "办公空间",

@@ -15,7 +15,11 @@ import { useTranslations, registerStrings } from "@/lib/translation-context";
 import { getLangMeta } from "@/lib/languages";
 import { useRef, useState, useEffect } from "react";
 import Footer from "@/components/footer";
+import dynamic from "next/dynamic";
 import type { ResourceCategory } from "@/lib/types";
+
+const PartnershipInquiryForm = dynamic(() => import("@/components/partnership-inquiry-form"), { ssr: false });
+const VolunteerForm = dynamic(() => import("@/components/volunteer-form"), { ssr: false });
 
 // Register all landing page strings for translation
 registerStrings(
@@ -207,6 +211,8 @@ export default function LandingPage() {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileGroup, setMobileGroup] = useState<string | null>(null);
   const [query, setQuery] = useState("");
+  const [showPartnershipModal, setShowPartnershipModal] = useState(false);
+  const [showVolunteerModal, setShowVolunteerModal] = useState(false);
 
   const { scrollYProgress } = useScroll({
     offset: ["start start", "end start"],
@@ -951,6 +957,20 @@ export default function LandingPage() {
       <Footer
         onOpenSubmitBusiness={() => enterApp("explore")}
         onOpenGetFeatured={() => enterApp("explore")}
+        onOpenPartnership={() => setShowPartnershipModal(true)}
+        onOpenVolunteer={() => setShowVolunteerModal(true)}
+      />
+
+      {/* Partnership Inquiry Modal */}
+      <PartnershipInquiryForm
+        isOpen={showPartnershipModal}
+        onClose={() => setShowPartnershipModal(false)}
+      />
+
+      {/* Volunteer With Us Modal */}
+      <VolunteerForm
+        isOpen={showVolunteerModal}
+        onClose={() => setShowVolunteerModal(false)}
       />
     </div>
   );

@@ -61,6 +61,28 @@ const KEYWORD_TO_CATEGORY: Record<string, ResourceCategory[]> = {
   dementia: ["senior"],
   // Childcare (child, kids, family, daycare already above)
   montessori: ["family", "education"],
+  // Education finance: loans, scholarships, grants, sponsorship
+  loan: ["education", "newcomer"], loans: ["education", "newcomer"],
+  microlending: ["education", "newcomer", "business"], windmill: ["education", "newcomer", "business"],
+  credential: ["education", "newcomer"], licensing: ["education", "newcomer"],
+  scholarship: ["education"], scholarships: ["education"], bursary: ["education"],
+  grant: ["education"], grants: ["education"], rutherford: ["education"],
+  resp: ["education", "family"], futurpreneur: ["business", "education"],
+  sponsorship: ["newcomer", "family", "legal"], sponsor: ["newcomer", "family", "legal"],
+  undertaking: ["newcomer", "family", "legal"],
+  resettlement: ["newcomer"], rap: ["newcomer"],
+  cesg: ["education", "family"], nslsc: ["education"], msfaa: ["education"],
+  repayment: ["education"], bdc: ["business", "education"],
+  // Essentials: tires, lawn, snow, income support
+  tire: ["essentials"], tires: ["essentials"], flat: ["essentials"], puncture: ["essentials"],
+  winter: ["essentials"], lawn: ["essentials"], mow: ["essentials"], mowing: ["essentials"],
+  grass: ["essentials"], yard: ["essentials"], snow: ["essentials"], shovel: ["essentials"],
+  shovelling: ["essentials"], shoveling: ["essentials"], sidewalk: ["essentials", "legal"],
+  bylaw: ["essentials", "legal"], unemployed: ["jobs", "essentials"], unemployment: ["jobs", "essentials"],
+  ei: ["jobs", "essentials"], "income": ["jobs", "essentials"],
+  cheap: ["essentials"], affordable: ["essentials"], honest: ["essentials"],
+  swap: ["essentials"], changeover: ["essentials"], driveway: ["essentials"],
+  movers: ["essentials"], dealer: ["essentials"],
 };
 
 const STOPWORDS = new Set([

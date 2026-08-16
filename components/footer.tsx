@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { CalgaryConnectLogo } from "./calgary-connect-logo";
 import { LanguageToggle } from "./language-toggle";
+import NewsletterCta from "./newsletter-cta";
 import { useTranslations, useTranslationContext, registerStrings } from "@/lib/translation-context";
 import { 
   MapPin, 
@@ -25,6 +26,8 @@ import {
 interface FooterProps {
   onOpenSubmitBusiness?: () => void;
   onOpenGetFeatured?: () => void;
+  onOpenPartnership?: () => void;
+  onOpenVolunteer?: () => void;
 }
 
 // Register footer link labels for translation
@@ -363,61 +366,6 @@ function buildPageContent(t: (s: string) => string): Record<string, { title: str
         </div>
       ),
     },
-    volunteer: {
-      title: t("Volunteer With Us"),
-      content: (
-        <div className="space-y-6">
-          <p className="text-white/70 leading-relaxed">{t("Help us make Calgary Konnect even better! We are always looking for passionate volunteers.")}</p>
-          <h3 className="text-xl font-bold text-white">{t("Volunteer Opportunities")}</h3>
-          <div className="space-y-4">
-            {([
-              [t("Resource Verification"), t("Help verify and update resource listings in your community.")],
-              [t("Translation"), t("Translate content to help serve diverse communities.")],
-              [t("Community Outreach"), t("Spread the word about Calgary Konnect in your network.")],
-            ] as [string, string][]).map(([h, p]) => (
-              <div key={h} className="p-5 rounded-xl bg-white/[0.03] border border-white/[0.08]">
-                <h4 className="font-bold text-white mb-2">{h}</h4>
-                <p className="text-white/60">{p}</p>
-              </div>
-            ))}
-          </div>
-          <h3 className="text-xl font-bold text-white">{t("Get Involved")}</h3>
-          <p className="text-white/60 leading-relaxed">
-            {t("Contact us at")} <a href="mailto:tech@wilglobo.com" className="text-sky-400 font-semibold hover:underline">tech@wilglobo.com</a> {t("to learn more about volunteer opportunities.")}
-          </p>
-        </div>
-      ),
-    },
-    partnership: {
-      title: t("Partnership Inquiry"),
-      content: (
-        <div className="space-y-6">
-          <p className="text-white/70 leading-relaxed">{t("Calgary Konnect welcomes partnerships with organizations that share our mission of helping Calgarians access vital services and resources.")}</p>
-          <h3 className="text-xl font-bold text-white">{t("Partnership Opportunities")}</h3>
-          <ul className="space-y-3 text-white/60">
-            {[
-              t("Non-profit organizations seeking to expand their reach"),
-              t("Government agencies looking to improve service delivery"),
-              t("Community organizations wanting to connect with residents"),
-              t("Tech companies interested in civic innovation"),
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-3">
-                <ChevronRight className="w-5 h-5 text-sky-400 flex-shrink-0 mt-0.5" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-          <div className="p-6 rounded-2xl bg-gradient-to-br from-sky-500/10 to-sky-500/5 border border-sky-500/20 mt-6">
-            <h3 className="text-xl font-bold text-white mb-3">{t("Partner With Calgary Konnect")}</h3>
-            <p className="text-white/60 mb-4">{t("For partnership inquiries and business opportunities, reach out to our team.")}</p>
-            <a href="mailto:tech@wilglobo.com" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-sky-500 text-white font-semibold hover:bg-sky-600 transition-colors">
-              <Mail className="w-5 h-5" />
-              tech@wilglobo.com
-            </a>
-          </div>
-        </div>
-      ),
-    },
     contact: {
       title: t("Contact Us"),
       content: (
@@ -503,7 +451,12 @@ function ContentModal({
   );
 }
 
-export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: FooterProps) {
+export default function Footer({
+  onOpenSubmitBusiness,
+  onOpenGetFeatured,
+  onOpenPartnership,
+  onOpenVolunteer,
+}: FooterProps) {
   const currentYear = new Date().getFullYear();
   const [activeModal, setActiveModal] = useState<string | null>(null);
   const [disclaimerOpen, setDisclaimerOpen] = useState(false);
@@ -564,11 +517,11 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
   const businessLinks = [
     { label: tx.listYourBusiness, onClick: onOpenSubmitBusiness },
     { label: tx.getFeatured, onClick: onOpenGetFeatured },
-    { label: tx.partnershipInquiry, key: "partnership" },
+    { label: tx.partnershipInquiry, onClick: onOpenPartnership },
   ];
 
   const communityLinks = [
-    { label: tx.volunteerWithUs, key: "volunteer" },
+    { label: tx.volunteerWithUs, onClick: onOpenVolunteer },
     { label: tx.contactUs, key: "contact" },
   ];
 
@@ -593,6 +546,13 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
             backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
             backgroundSize: '40px 40px'
           }} />
+
+          {/* Newsletter / content CTA — three tiers, see Part 5 */}
+          <div className="relative border-b border-white/[0.04] py-8 px-4 md:px-8 bg-[#0b1d33]">
+            <div className="max-w-[1200px] mx-auto">
+              <NewsletterCta source="Footer" />
+            </div>
+          </div>
 
           {/* Badge row — single flex row at all sizes */}
           <div className="relative border-b border-white/[0.04] py-4 px-4 md:px-8 bg-[#0b1d33]">
@@ -699,7 +659,7 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
                         {businessLinks.map((link) => (
                           <li key={link.label}>
                             <button
-                              onClick={link.onClick ?? (() => openModal(link.key!))}
+                              onClick={link.onClick}
                               className="text-sm text-white/50 hover:text-[#E1251B] transition-colors text-left flex items-center gap-1.5 group"
                             >
                               <ChevronRight className="w-3 h-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-[#E1251B]" />
@@ -736,7 +696,7 @@ export default function Footer({ onOpenSubmitBusiness, onOpenGetFeatured }: Foot
                         {communityLinks.map((link) => (
                           <li key={link.label}>
                             <button
-                              onClick={() => openModal(link.key)}
+                              onClick={link.onClick ?? (() => openModal(link.key!))}
                               className="text-sm text-white/50 hover:text-[#E1251B] transition-colors text-left flex items-center gap-1.5 group"
                             >
                               <ChevronRight className="w-3 h-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all text-[#E1251B]" />

@@ -26,6 +26,8 @@ const EmergencyHub   = dynamic(() => import("./emergency-hub"),     { ssr: false
 const RentShield     = dynamic(() => import("./rentshield"),        { ssr: false });
 const Footer         = dynamic(() => import("./footer"),            { ssr: false });
 const BusinessSubmission = dynamic(() => import("./business-submission"), { ssr: false });
+const PartnershipInquiryForm = dynamic(() => import("./partnership-inquiry-form"), { ssr: false });
+const VolunteerForm = dynamic(() => import("./volunteer-form"), { ssr: false });
 
 // Register navigation item labels for translation
 registerStrings(
@@ -42,6 +44,8 @@ export default function MainApp() {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [showBusinessModal, setShowBusinessModal] = React.useState(false);
   const [businessModalMode, setBusinessModalMode] = React.useState<"submit" | "featured">("submit");
+  const [showPartnershipModal, setShowPartnershipModal] = React.useState(false);
+  const [showVolunteerModal, setShowVolunteerModal] = React.useState(false);
 
   const goToLanding = () => {
     setMobileMenuOpen(false);
@@ -314,6 +318,8 @@ export default function MainApp() {
             setBusinessModalMode("featured");
             setShowBusinessModal(true);
           }}
+          onOpenPartnership={() => setShowPartnershipModal(true)}
+          onOpenVolunteer={() => setShowVolunteerModal(true)}
         />
 
         {/* Spacer so mobile bottom nav never overlaps the footer */}
@@ -402,6 +408,18 @@ export default function MainApp() {
         isOpen={showBusinessModal}
         onClose={() => setShowBusinessModal(false)}
         mode={businessModalMode}
+      />
+
+      {/* Partnership Inquiry Modal */}
+      <PartnershipInquiryForm
+        isOpen={showPartnershipModal}
+        onClose={() => setShowPartnershipModal(false)}
+      />
+
+      {/* Volunteer With Us Modal */}
+      <VolunteerForm
+        isOpen={showVolunteerModal}
+        onClose={() => setShowVolunteerModal(false)}
       />
     </div>
   );

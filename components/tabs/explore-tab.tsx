@@ -8,10 +8,11 @@ import {
   Search, ChevronDown, X, Home, Briefcase, Heart, Users, 
   AlertTriangle, Building2, Baby, GraduationCap, Bus,
   Scale, Accessibility, Utensils, Brain, Check, Truck, MapPin,
-  Laptop, Package, Store, Sprout, Wrench
+  Laptop, Package, Store, Sprout, Wrench, Rainbow, Trophy
 } from "lucide-react";
 import ResourceCard from "../resource-card";
 import LiveResults from "../live-results";
+import EventsCalendarCard from "../events-calendar-card";
 import { filterResources } from "@/lib/search";
 import type { ResourceCategory } from "@/lib/types";
 import { useTranslations, registerStrings } from "@/lib/translation-context";
@@ -41,6 +42,8 @@ const CATEGORY_DEFS: { id: ResourceCategory | "all"; icon: React.ElementType; tx
   { id: "tourism", icon: MapPin, txKey: "tourism" },
   { id: "logistics", icon: Truck, txKey: "logistics" },
   { id: "community", icon: Users, txKey: "community" },
+  { id: "sports", icon: Trophy, txKey: "sports" },
+  { id: "lgbtq", icon: Rainbow, txKey: "lgbtq" },
 ];
 
 // 4 Hero categories — labels are injected from translation context at render time.
@@ -58,6 +61,7 @@ registerStrings(
   "Education", "Legal Help", "Business & Licensing", "Workspaces",
   "Storage Facilities", "Cultural & Ethnic Stores", "Farmers Markets",
   "Local Essentials", "Tourists & Visitors", "Shipping & Logistics", "Community",
+  "Sports & Recreation", "LGBTQ+ Support",
   "Explore", "Resources",
   "Every verified Calgary service and program, searchable and filterable.",
   "Search resources...",
@@ -99,6 +103,8 @@ export default function ExploreTab() {
     tourism: "Tourists & Visitors",
     logistics: "Shipping & Logistics",
     community: "Community",
+    sports: "Sports & Recreation",
+    lgbtq: "LGBTQ+ Support",
     housing12: "12 programs",
     jobs340: "340+ openings",
     health247: "24/7 available",
@@ -318,6 +324,21 @@ export default function ExploreTab() {
                 </div>
               </motion.button>
             ))}
+          </motion.div>
+        </div>
+      </section>
+      )}
+
+      {/* ========== SEASONAL EVENTS CALENDAR — default view only ========== */}
+      {showHeroCards && (
+      <section className="relative pb-8 md:pb-12">
+        <div className="max-w-[1200px] mx-auto px-5 md:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            <EventsCalendarCard />
           </motion.div>
         </div>
       </section>

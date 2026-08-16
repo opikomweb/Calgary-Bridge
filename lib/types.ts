@@ -42,6 +42,7 @@ export type ResourceCategory =
   | "arts"
   | "logistics"
   | "tourism"
+  | "sports"
   | "workspace"
   | "storage"
   | "ethnic-market"
