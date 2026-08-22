@@ -1,7 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getLangMeta } from "@/lib/languages";
+import { generateText, Output } from "ai";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
+import { z } from "zod";
+import { getLangMeta, LANGUAGES } from "@/lib/languages";
 import type { Language } from "@/lib/types";
 import { createClient } from "@supabase/supabase-js";
+
+// ---------------------------------------------------------------------------
+// Direct Gemini provider using the project's own GEMINI_API_KEY.
+// We deliberately call Google directly instead of routing through the
+// Vercel AI Gateway: this account's Gateway tier rate-limits / blocks the
+// higher-quality Gemini models (403/429 on burst traffic), which would
+// silently degrade translation quality back to literal MT. The dedicated
+// Gemini API key has its own, separate quota and is not subject to the
+// Gateway's free-tier throttling.
+// ---------------------------------------------------------------------------
+const google = createGoogleGenerativeAI({
+  apiKey: process.env.GEMINI_API_KEY,
+});
 
 // ---------------------------------------------------------------------------
 // Direct Supabase admin client — NO cookie overhead, NO RLS round-trips.
@@ -31,12 +47,85 @@ function hashText(text: string): string {
 }
 
 // ---------------------------------------------------------------------------
-// Translate via the unofficial Google Translate endpoint (gtx client).
-// No API key required. Used by thousands of open-source tools.
-// With the Supabase cache this is called at most ONCE per unique string
-// per language — ever. After that Supabase serves everyone for free.
+// PRIMARY ENGINE — Gemini via Vercel AI Gateway.
+// This translates for MEANING and CONTEXT, not word-for-word, and is given
+// an explicit, unambiguous description of the exact target dialect/script
+// (see llmLabel in lib/languages.ts) so it never confuses e.g. Cantonese
+// with Mandarin, or MSA with a regional Arabic dialect.
+//
+// Strings are sent as an INDEXED batch and the model must return the SAME
+// indices back — this guarantees translations can never silently misalign
+// with their source strings even if the model drops or reorders an entry.
+//
+// Because every string is translated AT MOST ONCE PER LANGUAGE EVER (the
+// Supabase cache serves every subsequent request), the added LLM latency/
+// cost only affects true cache misses — never repeat traffic.
 // ---------------------------------------------------------------------------
-async function translateOne(text: string, targetLang: string): Promise<string> {
+const BatchSchema = z.object({
+  translations: z.array(
+    z.object({
+      i: z.number().describe("The original index of this string in the input batch"),
+      t: z.string().describe("The natural, contextually-accurate translation"),
+    })
+  ),
+});
+
+// gemini-2.5-flash is no longer available to new Gemini API keys (Google
+// returns a 404 directing to the current model). gemini-3.6-flash is the
+// current replacement.
+const TRANSLATE_MODEL_ID = "gemini-3.6-flash";
+
+async function translateBatchWithGemini(
+  texts: string[],
+  llmLabel: string
+): Promise<Map<number, string> | null> {
+  if (texts.length === 0) return new Map();
+  if (!process.env.GEMINI_API_KEY) {
+    console.error("[translate] GEMINI_API_KEY is not set — falling back to literal engine");
+    return null;
+  }
+
+  const numbered = texts.map((t, i) => `[${i}] ${t}`).join("\n");
+
+  try {
+    const { output } = await generateText({
+      model: google(TRANSLATE_MODEL_ID),
+      system: `You are an expert human translator localizing a settlement-services web app for newcomers, immigrants, and refugees in Calgary, Canada. The app connects people to housing, jobs, healthcare, childcare, legal aid, and community resources.
+
+Translate each numbered English string into ${llmLabel}.
+
+Rules:
+- Translate for MEANING and NATURAL PHRASING, never literal word-for-word. A native speaker reading your translation should feel it was written originally in that language, not machine-translated.
+- Keep the tone warm, clear, and simple — many readers are newcomers who may not be fluent readers even in their own first language. Prefer plain, common words over formal/literary vocabulary.
+- Preserve the intent of UI labels, buttons, and short phrases exactly — do not add or remove information.
+- NEVER translate: organization/business proper names, phone numbers, email addresses, URLs, dollar amounts, dates, or numeric codes. Copy those through unchanged.
+- Preserve any punctuation that conveys UI meaning (e.g. "?", "→", "...").
+- Return EVERY input index exactly once, with no extra commentary.`,
+      prompt: numbered,
+      output: Output.object({ schema: BatchSchema }),
+      temperature: 0.2,
+      abortSignal: AbortSignal.timeout(25000),
+    });
+
+    const map = new Map<number, string>();
+    for (const row of output.translations) {
+      if (typeof row.i === "number" && typeof row.t === "string" && row.t.trim()) {
+        map.set(row.i, row.t);
+      }
+    }
+    return map;
+  } catch (err) {
+    console.error("[translate] Gemini batch error:", err instanceof Error ? err.message : err);
+    return null;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// FALLBACK ENGINE — unofficial Google Translate endpoint (gtx client).
+// Only used per-string when Gemini fails outright (rare: outage / rate
+// limit). Literal but always available, no API key required.
+// ---------------------------------------------------------------------------
+async function translateOneFallback(text: string, targetLang: string): Promise<string> {
   if (!text.trim()) return text;
   try {
     const url = new URL("https://translate.googleapis.com/translate_a/single");
@@ -63,18 +152,73 @@ async function translateOne(text: string, targetLang: string): Promise<string> {
 }
 
 // ---------------------------------------------------------------------------
+// Translate a full list of cache-miss strings: try Gemini as ONE batch call
+// (chunked at 40 strings to keep prompts small and indices easy to verify),
+// falling back per-string to the literal engine only for anything Gemini
+// didn't return.
+// ---------------------------------------------------------------------------
+const BATCH_CHUNK_SIZE = 40;
+
+async function translateMisses(
+  missTexts: string[],
+  target: Language,
+  fallbackLangCode: string
+): Promise<string[]> {
+  const meta = getLangMeta(target);
+  const results = new Array<string>(missTexts.length);
+  const stillMissing: number[] = [];
+
+  // Chunk into batches so prompts stay small and index-verification stays cheap.
+  const chunks: { offset: number; texts: string[] }[] = [];
+  for (let i = 0; i < missTexts.length; i += BATCH_CHUNK_SIZE) {
+    chunks.push({ offset: i, texts: missTexts.slice(i, i + BATCH_CHUNK_SIZE) });
+  }
+
+  await Promise.all(
+    chunks.map(async ({ offset, texts }) => {
+      const map = await translateBatchWithGemini(texts, meta.llmLabel);
+      texts.forEach((text, localIdx) => {
+        const globalIdx = offset + localIdx;
+        const hit = map?.get(localIdx);
+        if (hit) {
+          results[globalIdx] = hit;
+        } else {
+          stillMissing.push(globalIdx);
+        }
+      });
+    })
+  );
+
+  // Anything Gemini didn't cover (outage, malformed output, dropped index)
+  // gets the literal fallback engine so the user never sees English-only gaps.
+  if (stillMissing.length > 0) {
+    console.warn(
+      `[translate] ${stillMissing.length}/${missTexts.length} strings fell back to literal engine for ${target}`
+    );
+    const fallbacks = await Promise.all(
+      stillMissing.map((idx) => translateOneFallback(missTexts[idx], fallbackLangCode))
+    );
+    stillMissing.forEach((idx, i) => {
+      results[idx] = fallbacks[i];
+    });
+  }
+
+  return results;
+}
+
+// ---------------------------------------------------------------------------
 // POST /api/translate
 // Body:    { texts: string[], target: Language }
 // Returns: { translations: string[], ok: boolean, fromCache: number }
 //
 // Flow:
 //  1. Bulk-read Supabase cache for ALL requested strings (single query)
-//  2. Translate ONLY cache misses — in PARALLEL (Promise.all, not a for-loop)
+//  2. Translate ONLY cache misses via Gemini (contextual, batched, parallel)
 //  3. Bulk-upsert new translations back to Supabase
 //  4. Return ordered result with HTTP cache headers
 //
 // At 1,000 users/hour requesting the same 11 languages:
-//  - Step 1 serves 100 % of requests from DB once warmed up
+//  - Step 1 serves 100% of requests from DB once warmed up
 //  - Steps 2-3 run only for brand-new strings (extremely rare)
 // ---------------------------------------------------------------------------
 export async function POST(req: NextRequest) {
@@ -156,11 +300,10 @@ export async function POST(req: NextRequest) {
       }
     });
 
-    // 4. Translate all misses IN PARALLEL — not a sequential for-loop
+    // 4. Translate all misses via Gemini (contextual, batched) with
+    //    literal-engine fallback for anything Gemini couldn't cover.
     if (missTexts.length > 0) {
-      const freshTranslations = await Promise.all(
-        missTexts.map((text) => translateOne(text, langCode))
-      );
+      const freshTranslations = await translateMisses(missTexts, target, langCode);
 
       // 5. Bulk-upsert all new translations in one DB call
       const rows = missTexts.map((text, i) => ({
@@ -224,25 +367,30 @@ export async function GET() {
   try {
     const supabase = getSupabase();
 
-    const { data } = await supabase
-      .from("translation_cache")
-      .select("lang, source_hash")
-      .order("lang");
+    // Per-language counts via a grouped count query — NOT a row select,
+    // which silently truncates at Supabase's default 1000-row page size
+    // and would under-report cache stats once any language exceeds that.
+    const meta = await Promise.all(
+      LANGUAGES.filter((l) => l.code !== "en").map(async (l) => {
+        const { count } = await supabase
+          .from("translation_cache")
+          .select("*", { count: "exact", head: true })
+          .eq("lang", l.code);
+        return [l.code, count ?? 0] as const;
+      })
+    );
+    const stats: Record<string, number> = Object.fromEntries(meta);
 
-    const stats: Record<string, number> = {};
-    (data ?? []).forEach((row) => {
-      stats[row.lang] = (stats[row.lang] ?? 0) + 1;
-    });
-
-    // Quick engine test
-    const testResult = await translateOne("Hello", "fr");
+    // Quick engine test — direct Gemini call, independent of AI Gateway.
+    const testMap = await translateBatchWithGemini(["Hello", "Find nearby resources"], "French");
 
     return NextResponse.json({
       status: "ok",
-      engine: "Google gtx (free, no API key)",
+      engine: `${TRANSLATE_MODEL_ID} (direct Gemini API, contextual translation) with literal gtx fallback`,
+      geminiKeyConfigured: Boolean(process.env.GEMINI_API_KEY),
       cacheStats: stats,
       totalCached: Object.values(stats).reduce((a, b) => a + b, 0),
-      engineTest: { input: "Hello", fr: testResult },
+      engineTest: testMap && testMap.size > 0 ? Object.fromEntries(testMap) : "Gemini engine unreachable — check GEMINI_API_KEY and server logs",
     });
   } catch (err) {
     return NextResponse.json(

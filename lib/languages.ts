@@ -22,21 +22,28 @@ export interface LanguageMeta {
   label: string;
   /** Whether the language is RTL */
   rtl?: boolean;
+  /**
+   * Precise, unambiguous English description of the target language/dialect/script
+   * used to prompt the translation LLM. This is what prevents the model from
+   * picking the wrong regional variant (e.g. Mandarin vs Cantonese, MSA vs a
+   * specific Arabic dialect, Latin-American vs European Spanish).
+   */
+  llmLabel: string;
 }
 
 export const LANGUAGES: LanguageMeta[] = [
-  { code: "en",    googleCode: "en",    myMemoryCode: "en-GB",  flag: "🇨🇦", countryCode: "CA", label: "EN",  nativeName: "English",     name: "English" },
-  { code: "pa",    googleCode: "pa",    myMemoryCode: "pa-IN",  flag: "🇮🇳", countryCode: "IN", label: "PA",  nativeName: "ਪੰਜਾਬੀ",      name: "ਪੰਜਾਬੀ" },
-  { code: "tl",    googleCode: "tl",    myMemoryCode: "tl-PH",  flag: "🇵🇭", countryCode: "PH", label: "TL",  nativeName: "Filipino",     name: "Filipino" },
-  { code: "zh",    googleCode: "zh-TW", myMemoryCode: "zh-TW",  flag: "🇭🇰", countryCode: "HK", label: "廣",  nativeName: "廣東話",       name: "廣東話" },
-  { code: "zh-CN", googleCode: "zh-CN", myMemoryCode: "zh-CN",  flag: "🇨🇳", countryCode: "CN", label: "普",  nativeName: "普通话",       name: "普通话" },
-  { code: "es",    googleCode: "es",    myMemoryCode: "es-MX",  flag: "🇲🇽", countryCode: "MX", label: "ES",  nativeName: "Español",      name: "Español" },
-  { code: "uk",    googleCode: "uk",    myMemoryCode: "uk-UA",  flag: "🇺🇦", countryCode: "UA", label: "УК",  nativeName: "Українська",   name: "Українська" },
-  { code: "ru",    googleCode: "ru",    myMemoryCode: "ru-RU",  flag: "🇷🇺", countryCode: "RU", label: "РУ",  nativeName: "Русский",      name: "Русский" },
-  { code: "am",    googleCode: "am",    myMemoryCode: "am-ET",  flag: "🇪🇹", countryCode: "ET", label: "AM",  nativeName: "አማርኛ",        name: "አማርኛ" },
-  { code: "ar",    googleCode: "ar",    myMemoryCode: "ar-SA",  flag: "🇸🇦", countryCode: "SA", label: "AR",  nativeName: "العربية",      name: "العربية",  rtl: true },
-  { code: "so",    googleCode: "so",    myMemoryCode: "so-SO",  flag: "🇸🇴", countryCode: "SO", label: "SO",  nativeName: "Soomaali",     name: "Soomaali" },
-  { code: "sw",    googleCode: "sw",    myMemoryCode: "sw-KE",  flag: "🇰🇪", countryCode: "KE", label: "SW",  nativeName: "Kiswahili",    name: "Kiswahili" },
+  { code: "en",    googleCode: "en",    myMemoryCode: "en-GB",  flag: "🇨🇦", countryCode: "CA", label: "EN",  nativeName: "English",     name: "English", llmLabel: "English" },
+  { code: "pa",    googleCode: "pa",    myMemoryCode: "pa-IN",  flag: "🇮🇳", countryCode: "IN", label: "PA",  nativeName: "ਪੰਜਾਬੀ",      name: "ਪੰਜਾਬੀ", llmLabel: "Punjabi, written in Gurmukhi script, as spoken by Indian Punjabi immigrant communities in Canada" },
+  { code: "tl",    googleCode: "tl",    myMemoryCode: "tl-PH",  flag: "🇵🇭", countryCode: "PH", label: "TL",  nativeName: "Filipino",     name: "Filipino", llmLabel: "Filipino (Tagalog-based national language of the Philippines)" },
+  { code: "zh",    googleCode: "zh-TW", myMemoryCode: "zh-TW",  flag: "🇭🇰", countryCode: "HK", label: "廣",  nativeName: "廣東話",       name: "廣東話", llmLabel: "Cantonese (廣東話), written in Traditional Chinese characters, as spoken in Hong Kong — NOT Mandarin" },
+  { code: "zh-CN", googleCode: "zh-CN", myMemoryCode: "zh-CN",  flag: "🇨🇳", countryCode: "CN", label: "普",  nativeName: "普通话",       name: "普通话", llmLabel: "Mandarin Chinese (普通话), written in Simplified Chinese characters — NOT Cantonese" },
+  { code: "es",    googleCode: "es",    myMemoryCode: "es-MX",  flag: "🇲🇽", countryCode: "MX", label: "ES",  nativeName: "Español",      name: "Español", llmLabel: "Latin American Spanish (neutral register understood across Mexico and Central/South America, NOT Castilian/European Spanish)" },
+  { code: "uk",    googleCode: "uk",    myMemoryCode: "uk-UA",  flag: "🇺🇦", countryCode: "UA", label: "УК",  nativeName: "Українська",   name: "Українська", llmLabel: "Ukrainian" },
+  { code: "ru",    googleCode: "ru",    myMemoryCode: "ru-RU",  flag: "🇷🇺", countryCode: "RU", label: "РУ",  nativeName: "Русский",      name: "Русский", llmLabel: "Russian" },
+  { code: "am",    googleCode: "am",    myMemoryCode: "am-ET",  flag: "🇪🇹", countryCode: "ET", label: "AM",  nativeName: "አማርኛ",        name: "አማርኛ", llmLabel: "Amharic, official language of Ethiopia" },
+  { code: "ar",    googleCode: "ar",    myMemoryCode: "ar-SA",  flag: "🇸🇦", countryCode: "SA", label: "AR",  nativeName: "العربية",      name: "العربية",  rtl: true, llmLabel: "Modern Standard Arabic (فصحى), understandable across all Arabic-speaking regions" },
+  { code: "so",    googleCode: "so",    myMemoryCode: "so-SO",  flag: "🇸🇴", countryCode: "SO", label: "SO",  nativeName: "Soomaali",     name: "Soomaali", llmLabel: "Somali" },
+  { code: "sw",    googleCode: "sw",    myMemoryCode: "sw-KE",  flag: "🇰🇪", countryCode: "KE", label: "SW",  nativeName: "Kiswahili",    name: "Kiswahili", llmLabel: "Swahili (Kiswahili), as spoken in Kenya and East Africa" },
 ];
 
 export const LANGUAGE_MAP = new Map<Language, LanguageMeta>(
