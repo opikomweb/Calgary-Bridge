@@ -53,10 +53,38 @@ function tokenOverlapScore(a: string, b: string): number {
   if (ta.size === 0 || tb.size === 0) return 0;
   let shared = 0;
   ta.forEach((t) => { if (tb.has(t)) shared++; });
-  return shared / Math.max(ta.size, tb.size);
+  // Use the SMALLER set as the denominator, not the larger one. Catalog
+  // titles routinely carry a descriptive subtitle a canonical map/dataset
+  // name never has ("Calgary Tower — Observation Deck" vs "Calgary Tower",
+  // "Studio Bell — National Music Centre" vs "Studio Bell"). A max-based
+  // denominator scores that full, correct containment as a low ~0.3 and
+  // silently rejects it as "no match" even though the map name is entirely
+  // present. Min-based scoring correctly gives a full containment match a
+  // perfect 1.0, while still requiring every token of the shorter name to
+  // be present for anything above a partial score.
+  return shared / Math.min(ta.size, tb.size);
 }
 
 const MATCH_THRESHOLD = 0.5; // require a meaningfully strong token overlap
+
+// ---------------------------------------------------------------------------
+// Overpass's `~` regex operator requires the OSM name tag to CONTAIN a
+// substring matching the full pattern — it is not a fuzzy/token search.
+// Many catalog titles carry a descriptive subtitle the canonical map name
+// never has (e.g. "Calgary Tower — Observation Deck" vs OSM's "Calgary
+// Tower", "Studio Bell — National Music Centre" vs "Studio Bell", "Heritage
+// Park Historical Village" vs "Heritage Park"). Searching with the full
+// title as the regex pattern makes those substring checks impossible and
+// silently returns zero elements every time — not a scoring miss, a query
+// that can never match. Strip everything from the first em/en-dash, colon,
+// or opening parenthesis onward so the regex search uses the same short
+// "core" name a map database would actually use, while the full original
+// name is still used for token-overlap scoring once candidates come back.
+// ---------------------------------------------------------------------------
+function coreSearchName(name: string): string {
+  const core = name.split(/[—–:(]/)[0].trim();
+  return core.length >= 3 ? core : name;
+}
 
 // ---------------------------------------------------------------------------
 // 1. Calgary Open Data (Socrata) — try a couple of relevant datasets.
@@ -118,7 +146,7 @@ const CALGARY_BBOX = "50.84,-114.31,51.25,-113.86"; // south,west,north,east
 
 async function tryOverpass(name: string) {
   try {
-    const escaped = name.replace(/"/g, '\\"');
+    const escaped = coreSearchName(name).replace(/"/g, '\\"');
     // NOTE: capped at 20, not 5 — for a multi-branch org (a library system, a
     // chain), the regex name match can return far more than 5 candidates, and
     // Overpass does not return them in relevance order. A tight cap here means
