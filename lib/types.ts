@@ -106,6 +106,10 @@ export interface ChatMessage {
   resources?: string[];
   /** Live web / Google Maps / government search links the guide suggests. */
   webLinks?: WebLink[];
+  /** SearXNG-sourced live web results — only populated when the curated
+   *  catalog had zero matches. Never merged with curated resources; render
+   *  as a clearly separate, explicitly-labeled "unverified" section. */
+  liveResults?: { title: string; url: string; snippet?: string }[];
 }
 
 export type TabType = "home" | "explore" | "ai" | "do-good" | "shortlist" | "profile";

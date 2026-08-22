@@ -5,6 +5,7 @@ import {
   serializeForPrompt,
   ALL_CATEGORIES,
 } from "@/lib/resource-search";
+import { searchSearXNG } from "@/lib/searxng";
 
 // Never use the edge runtime with the AI SDK.
 export const runtime = "nodejs";
@@ -120,6 +121,8 @@ ACCURACY RULES:
 
 Grounding: Prefer the CATALOG below for vetted Calgary resources. Put catalog IDs you used in "resourceIds". Add 1-3 "webSearches" for live/hyper-local info (real Google search URLs, Google Maps URLs, or official .gc.ca/.alberta.ca/.calgary.ca pages). Never invent URLs.
 
+If NOTHING in the catalog genuinely fits this question (resourceIds will be empty), write your reply as a brief, honest "I don't have a verified answer for that in Calgary Konnect" — then suggest 1-2 of the closest matching categories from the list below and, if truly nothing fits, suggest calling 211 for general guidance. Do not pad this out or pretend to know something you don't; a live web search may be attached separately after your reply is generated, so keep your own reply short and don't try to answer the unmatched question yourself.
+
 Resource categories: ${ALL_CATEGORIES.join(", ")}.
 
 Respond in ${langName}.
@@ -149,10 +152,23 @@ ${catalog}`;
       .filter((w) => typeof w.url === "string" && w.url.startsWith("http"))
       .slice(0, 3);
 
+    // Only reach for live SearXNG results when the curated catalog produced
+    // zero matches — never called when curation already answered. Failure,
+    // timeout, or an unconfigured SEARXNG_INSTANCE_URL all resolve to
+    // `null` here, so `liveResults` simply stays absent from the response
+    // and the model's own graceful "no verified answer" reply (see system
+    // prompt) is what the user sees.
+    let liveResults: { title: string; url: string; snippet?: string }[] | undefined;
+    if (resourceIds.length === 0) {
+      const results = await searchSearXNG(message);
+      if (results && results.length > 0) liveResults = results;
+    }
+
     return Response.json({
       reply: experimental_output.reply,
       resourceIds,
       webSearches,
+      ...(liveResults ? { liveResults } : {}),
     });
   } catch (err) {
     console.log("[v0] chat route error:", err instanceof Error ? err.message : err);

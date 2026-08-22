@@ -184,6 +184,12 @@ Rules:
     output: Output.object({ schema: BatchSchema }),
     temperature: 0.2,
     abortSignal: AbortSignal.timeout(45000),
+    // The AI SDK's own internal retry (default: 2 retries = 3 requests per
+    // call) was silently tripling our effective request rate against
+    // Gemini free-tier's 20 req/min quota even with throttle() spacing
+    // outer calls correctly. One request per call; translateWithRetry
+    // above already owns retry/backoff with the quota-aware delay.
+    maxRetries: 0,
   });
 
   const map = new Map();
@@ -196,21 +202,50 @@ Rules:
 }
 
 const CHUNK_SIZE = 30;
-const MAX_RETRIES = 3;
+const MAX_RETRIES = 4;
+
+// Free-tier Gemini quota is 20 requests/min. One request per batch chunk,
+// so a floor of ~3.5s between requests keeps us just under that ceiling
+// even with zero retries; MIN_REQUEST_GAP_MS is enforced globally (not
+// per-language) via nextRequestAt below.
+const MIN_REQUEST_GAP_MS = 4000;
+let nextRequestAt = 0;
+
+async function throttle() {
+  const wait = nextRequestAt - Date.now();
+  if (wait > 0) await new Promise((r) => setTimeout(r, wait));
+  nextRequestAt = Date.now() + MIN_REQUEST_GAP_MS;
+}
+
+/** Parses "Please retry in 45.11507013s." out of a Gemini quota error message. */
+function parseRetryDelayMs(err) {
+  const msg = err?.message ?? String(err ?? "");
+  const match = msg.match(/retry in ([\d.]+)s/i);
+  if (match) return Math.ceil(parseFloat(match[1]) * 1000) + 500; // +buffer
+  return null;
+}
 
 async function translateWithRetry(items, llmLabel) {
   for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    await throttle();
     try {
       const map = await translateBatchWithGemini(items, llmLabel);
       if (map.size >= items.length * 0.9) return map; // accept if ~all resolved
       console.warn(`  attempt ${attempt}: only ${map.size}/${items.length} resolved, retrying...`);
     } catch (err) {
-      console.warn(`  attempt ${attempt} failed: ${err?.message ?? err}`);
+      const quotaDelay = parseRetryDelayMs(err);
+      console.warn(`  attempt ${attempt} failed: ${(err?.message ?? err)?.toString().slice(0, 120)}`);
+      if (quotaDelay) {
+        console.warn(`  respecting quota retry hint: waiting ${(quotaDelay / 1000).toFixed(1)}s`);
+        nextRequestAt = Date.now() + quotaDelay;
+        continue;
+      }
     }
-    await new Promise((r) => setTimeout(r, 1500 * attempt));
+    await new Promise((r) => setTimeout(r, 2000 * attempt));
   }
   // Final attempt result, even if partial — better than nothing.
   try {
+    await throttle();
     return await translateBatchWithGemini(items, llmLabel);
   } catch {
     return new Map();

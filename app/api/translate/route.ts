@@ -121,6 +121,11 @@ Rules:
       output: Output.object({ schema: BatchSchema }),
       temperature: 0.2,
       abortSignal: AbortSignal.timeout(25000),
+      // The AI SDK's own internal retry (default: 2 retries = 3 requests)
+      // silently multiplies request volume against Gemini's free-tier
+      // per-minute quota. maxRetries: 0 means exactly one HTTP request per
+      // call here; the gtx fallback below already covers failure.
+      maxRetries: 0,
     });
 
     const map = new Map<number, string>();
@@ -145,7 +150,7 @@ Rules:
 // unparseable body) so the caller can tell "this really failed, don't cache
 // it" apart from "this legitimately translates to the same text" (proper
 // nouns, numbers, units like "24/7", "km/h", "Askonnect"). Silently
-// returning the English source on failure — the previous behavior — gets
+// returning the English source on failure — the previous behavior ��� gets
 // persisted to the Supabase cache as if it were a real translation, which
 // permanently poisons that string for that language: every future request
 // serves the English echo as a "cache hit" and never retries translation.
