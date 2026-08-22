@@ -135,7 +135,17 @@ html {
 }
 
 body {
-  font-family: var(--font-sans);
+  /* NOTE: --font-sans (from @theme inline) does not reliably resolve on
+     :root at runtime in this build, silently falling back to the browser's
+     generic sans-serif and dropping the brand font entirely. We reference
+     --font-poppins directly (verified working) and append every script
+     fallback the translation system needs so no language ever renders as
+     empty "tofu" boxes. */
+  font-family:
+    var(--font-poppins), "Poppins",
+    "Noto Sans Arabic", "Noto Sans Gurmukhi", "Noto Sans Ethiopic",
+    "Noto Sans SC", "Noto Sans TC", "Noto Sans",
+    system-ui, -apple-system, sans-serif;
   background: var(--background);
   color: var(--foreground);
   min-height: 100vh;
@@ -150,7 +160,13 @@ body {
 
 /* PREMIUM TYPOGRAPHY SYSTEM - Airbnb/Apple/Stripe quality */
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading);
+  /* Same --font-heading resolution issue as body above — reference
+     --font-poppins directly with full multi-script fallback coverage. */
+  font-family:
+    var(--font-poppins), "Poppins",
+    "Noto Sans Arabic", "Noto Sans Gurmukhi", "Noto Sans Ethiopic",
+    "Noto Sans SC", "Noto Sans TC", "Noto Sans",
+    system-ui, -apple-system, sans-serif;
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.15;
@@ -770,22 +786,11 @@ p {
   .flex-row { flex-direction: row-reverse; }
 }
 
-/* Multi-script font stack for language picker — Gurmukhi, Ethiopic, Arabic.
-   Fonts are loaded via <link> in layout.tsx to avoid PostCSS @import errors. */
-.notranslate,
-[translate="no"] {
-  font-family:
-    'Noto Sans Gurmukhi',
-    'Noto Sans Ethiopic',
-    'Noto Sans Arabic',
-    var(--font-sans),
-    sans-serif;
-}
-
-/* RTL body font override */
-[dir="rtl"] body {
-  font-family: 'Noto Sans Arabic', var(--font-sans), sans-serif;
-}
+/* Multi-script coverage for .notranslate elements (e.g. native-script names
+   in the language picker) and RTL body text is now handled by the universal
+   font stack on body/headings above, which already lists every script the
+   app needs ahead of the Latin-only Poppins fallback. No override needed
+   here beyond bidi isolation for mixed-direction proper names. */
 
 /* Community pulse animation */
 @keyframes pulse-ring {

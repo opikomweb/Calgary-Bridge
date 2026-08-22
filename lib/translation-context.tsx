@@ -154,8 +154,12 @@ export function TranslationProvider({ children }: { children: React.ReactNode })
   const runRef = useRef(0);
   const txMapRef = useRef(txMap);
   txMapRef.current = txMap;
-  // AbortController ref — cancelled whenever language changes to kill stale fetches.
-  const abortRef = useRef<AbortController | null>(null);
+  // In-flight AbortControllers — one per concurrent flush batch. Different
+  // components (hero, pathway cards, footer, lazy chunks) register strings
+  // at different times and each schedules its own debounced flush; those
+  // batches must be able to complete independently. All are aborted together
+  // only on an actual language switch (see the language-switch effect below).
+  const abortControllersRef = useRef<Set<AbortController>>(new Set());
   // Keep a ref of the current language so registry-subscription callbacks
   // always read the live value even if the effect closure is stale.
   const activeLangRef = useRef(activeLanguage);
@@ -177,13 +181,19 @@ export function TranslationProvider({ children }: { children: React.ReactNode })
       );
       if (!pending.length) return;
       const run = runRef.current;
-      // Create a new AbortController for this fetch, cancel any previous one
-      if (abortRef.current) abortRef.current.abort();
+      // Each batch gets its own controller so unrelated sibling batches
+      // (e.g. footer strings registering after hero strings) never cancel
+      // each other. All controllers are aborted together on language switch.
       const controller = new AbortController();
-      abortRef.current = controller;
+      abortControllersRef.current.add(controller);
       setLoading(true);
       fetchTranslations(pending, lang, controller.signal).then((fresh) => {
+        abortControllersRef.current.delete(controller);
         if (run !== runRef.current) return;
+        // If this batch was aborted (language switch), leave its strings in
+        // pendingRef so the next language's flush picks them up — don't
+        // drop them silently.
+        if (controller.signal.aborted) return;
         pending.forEach((s) => pendingRef.current.delete(s));
         if (fresh.size > 0) {
           const merged = new Map(txMapRef.current);
@@ -191,7 +201,7 @@ export function TranslationProvider({ children }: { children: React.ReactNode })
           persistCache(lang, merged);
           setTxMap(merged);
         }
-        setLoading(false);
+        setLoading(abortControllersRef.current.size > 0);
       });
     }, 80);
   }, []);
@@ -207,10 +217,8 @@ export function TranslationProvider({ children }: { children: React.ReactNode })
       clearTimeout(flushTimerRef.current);
       flushTimerRef.current = null;
     }
-    if (abortRef.current) {
-      abortRef.current.abort();
-      abortRef.current = null;
-    }
+    abortControllersRef.current.forEach((c) => c.abort());
+    abortControllersRef.current.clear();
     pendingRef.current.clear();
     runRef.current++;
 
