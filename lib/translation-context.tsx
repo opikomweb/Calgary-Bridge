@@ -120,7 +120,16 @@ async function fetchTranslations(
     const data = (await res.json()) as { translations: string[] };
     strings.forEach((s, i) => {
       const tx = data.translations[i];
-      if (tx && tx !== s) map.set(s, tx);
+      // Any string the server actually answered for is RESOLVED, even if
+      // the translation happens to equal the source (legitimate for proper
+      // nouns/numbers, e.g. "24/7", "Askonnect"). Treating identical-value
+      // responses as "no answer" (dropping them here) left those keys
+      // permanently missing from txMap — every render's t() call would
+      // then re-queue them and reschedule a flush forever, since nothing
+      // could ever mark them done. Only a genuinely missing/falsy entry
+      // (network failure, malformed response) should stay unresolved so
+      // it gets retried.
+      if (typeof tx === "string" && tx) map.set(s, tx);
     });
   } catch (err) {
     // AbortError is expected on language switch — don't log it
@@ -154,8 +163,12 @@ export function TranslationProvider({ children }: { children: React.ReactNode })
   const runRef = useRef(0);
   const txMapRef = useRef(txMap);
   txMapRef.current = txMap;
-  // AbortController ref — cancelled whenever language changes to kill stale fetches.
-  const abortRef = useRef<AbortController | null>(null);
+  // In-flight AbortControllers — one per concurrent flush batch. Different
+  // components (hero, pathway cards, footer, lazy chunks) register strings
+  // at different times and each schedules its own debounced flush; those
+  // batches must be able to complete independently. All are aborted together
+  // only on an actual language switch (see the language-switch effect below).
+  const abortControllersRef = useRef<Set<AbortController>>(new Set());
   // Keep a ref of the current language so registry-subscription callbacks
   // always read the live value even if the effect closure is stale.
   const activeLangRef = useRef(activeLanguage);
@@ -177,13 +190,19 @@ export function TranslationProvider({ children }: { children: React.ReactNode })
       );
       if (!pending.length) return;
       const run = runRef.current;
-      // Create a new AbortController for this fetch, cancel any previous one
-      if (abortRef.current) abortRef.current.abort();
+      // Each batch gets its own controller so unrelated sibling batches
+      // (e.g. footer strings registering after hero strings) never cancel
+      // each other. All controllers are aborted together on language switch.
       const controller = new AbortController();
-      abortRef.current = controller;
+      abortControllersRef.current.add(controller);
       setLoading(true);
       fetchTranslations(pending, lang, controller.signal).then((fresh) => {
+        abortControllersRef.current.delete(controller);
         if (run !== runRef.current) return;
+        // If this batch was aborted (language switch), leave its strings in
+        // pendingRef so the next language's flush picks them up — don't
+        // drop them silently.
+        if (controller.signal.aborted) return;
         pending.forEach((s) => pendingRef.current.delete(s));
         if (fresh.size > 0) {
           const merged = new Map(txMapRef.current);
@@ -191,7 +210,7 @@ export function TranslationProvider({ children }: { children: React.ReactNode })
           persistCache(lang, merged);
           setTxMap(merged);
         }
-        setLoading(false);
+        setLoading(abortControllersRef.current.size > 0);
       });
     }, 80);
   }, []);
@@ -207,10 +226,8 @@ export function TranslationProvider({ children }: { children: React.ReactNode })
       clearTimeout(flushTimerRef.current);
       flushTimerRef.current = null;
     }
-    if (abortRef.current) {
-      abortRef.current.abort();
-      abortRef.current = null;
-    }
+    abortControllersRef.current.forEach((c) => c.abort());
+    abortControllersRef.current.clear();
     pendingRef.current.clear();
     runRef.current++;
 
@@ -246,24 +263,37 @@ export function TranslationProvider({ children }: { children: React.ReactNode })
     });
   }, [scheduleFlush]);
 
+  // `t`'s identity is deliberately independent of `loading`. Every consumer
+  // (useTranslations/useT) memoizes its own return value against `t`'s
+  // reference — if `t` changed every time a fetch started/settled (loading
+  // true<->false), EVERY consumer across the tree would recompute on every
+  // toggle, re-invoking t() for every one of its strings. Any string that
+  // is still unresolved gets re-added to pendingRef and reschedules a flush
+  // from that recompute — which itself flips loading again once it settles,
+  // triggering another recompute. That feedback loop refetches the exact
+  // same batch forever, roughly once per debounce+request round-trip, for
+  // ANY string that can't yet resolve (transient failure or, worse, a
+  // permanently unresolvable one). Keeping `t` stable across loading
+  // changes breaks this loop at the source.
+  const t = React.useCallback(
+    (english: string) => {
+      if (activeLanguage === "en") return english;
+      const key = english.trim();
+      const hit = txMap.get(key);
+      if (hit) return hit;
+      // Render-time cache miss — queue and flush.
+      if (key) {
+        pendingRef.current.add(key);
+        scheduleFlush(activeLanguage);
+      }
+      return english;
+    },
+    [txMap, activeLanguage, scheduleFlush],
+  );
+
   const value = useMemo<TranslationContextValue>(
-    () => ({
-      t: (english: string) => {
-        if (activeLanguage === "en") return english;
-        const key = english.trim();
-        const hit = txMap.get(key);
-        if (hit) return hit;
-        // Render-time cache miss — queue and flush.
-        if (key) {
-          pendingRef.current.add(key);
-          scheduleFlush(activeLanguage);
-        }
-        return english;
-      },
-      loading,
-      language: activeLanguage,
-    }),
-    [txMap, loading, activeLanguage, scheduleFlush],
+    () => ({ t, loading, language: activeLanguage }),
+    [t, loading, activeLanguage],
   );
 
   return (

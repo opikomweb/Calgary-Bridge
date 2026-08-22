@@ -135,6 +135,20 @@ export default function ExploreTab() {
   }));
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const exampleQuery = "I need childcare";
+
+  // Both the empty-state icon and the example chip are meant as shortcuts
+  // into the real search input above — focus it (and pre-fill it, for the
+  // chip) instead of just sitting there as an inert decoration.
+  const focusSearchInput = () => {
+    searchInputRef.current?.focus();
+    searchInputRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
+  const applyExampleQuery = () => {
+    setSearchQuery(exampleQuery);
+    focusSearchInput();
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -201,6 +215,7 @@ export default function ExploreTab() {
             <div className="relative flex-1">
               <Search className="absolute left-4 md:left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-[#1D4ED8] dark:text-[#38BDF8]" />
               <input
+                ref={searchInputRef}
                 type="text"
                 placeholder={tx.searchPlaceholder}
                 value={searchQuery}
@@ -440,8 +455,13 @@ export default function ExploreTab() {
               transition={{ delay: 0.25 }}
               className="flex flex-col items-center text-center pt-6 pb-10"
             >
-              {/* Icon with animated pulse ring — signals this is an active input area */}
-              <div className="relative mb-5">
+              {/* Icon — real button that jumps to & focuses the search input above */}
+              <button
+                type="button"
+                onClick={focusSearchInput}
+                aria-label="Go to the search field above"
+                className="relative mb-5 group cursor-pointer"
+              >
                 {/* Outer pulse ring */}
                 <motion.div
                   animate={{ scale: [1, 1.18, 1], opacity: [0.18, 0.06, 0.18] }}
@@ -450,10 +470,10 @@ export default function ExploreTab() {
                   style={{ margin: "-8px" }}
                 />
                 {/* Icon container — sharp edges, strong blue */}
-                <div className="relative w-20 h-20 rounded-2xl bg-[#1D4ED8] shadow-lg shadow-[#1D4ED8]/30 flex items-center justify-center">
+                <div className="relative w-20 h-20 rounded-2xl bg-[#1D4ED8] shadow-lg shadow-[#1D4ED8]/30 flex items-center justify-center transition-transform group-hover:scale-105 group-active:scale-95">
                   <Search className="w-9 h-9 text-white" strokeWidth={2} />
                 </div>
-              </div>
+              </button>
 
               {/* Primary label — high contrast */}
               <p className="text-lg font-bold text-foreground mb-2">
@@ -465,16 +485,24 @@ export default function ExploreTab() {
                 {tx.typeKeyword}
               </p>
 
-              {/* Animated typing caret — reinforces "type something here" */}
-              <div className="mt-5 flex items-center gap-1.5 px-4 py-2 rounded-lg bg-foreground/[0.04] border border-foreground/[0.08]">
-                <Search className="w-3.5 h-3.5 text-foreground/30 flex-shrink-0" />
-                <span className="text-sm text-foreground/30 font-medium">Try &quot;I need childcare&quot;</span>
+              {/* Example chip — clickable, fills the real search input above.
+                  High-contrast (white bg + visible border) so it reads as a
+                  real, tappable suggestion instead of a faint, disabled hint. */}
+              <button
+                type="button"
+                onClick={applyExampleQuery}
+                className="mt-5 flex items-center gap-2 px-4 py-2.5 rounded-lg bg-white dark:bg-[rgba(15,23,42,0.9)] border-2 border-[#1D4ED8]/25 hover:border-[#1D4ED8] hover:shadow-md transition-all"
+              >
+                <Search className="w-3.5 h-3.5 text-[#1D4ED8] dark:text-[#38BDF8] flex-shrink-0" />
+                <span className="text-sm text-foreground/80 font-medium">
+                  Try &quot;{exampleQuery}&quot;
+                </span>
                 <motion.span
                   animate={{ opacity: [1, 0, 1] }}
                   transition={{ duration: 1, repeat: Infinity }}
                   className="w-0.5 h-4 bg-[#1D4ED8] rounded-full ml-0.5"
                 />
-              </div>
+              </button>
             </motion.div>
           </div>
         </section>

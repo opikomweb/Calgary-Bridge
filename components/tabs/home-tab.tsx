@@ -327,59 +327,66 @@ export default function HomeTab() {
               </motion.div>
             </div>
 
-            {/* 2x2 grid of large pathway cards - GLASSY PREMIUM */}
-            <div className="grid grid-cols-2 gap-4 md:gap-6">
+            {/* Compact horizontal pathway rows - space-efficient, professional */}
+            <div className="grid sm:grid-cols-2 gap-3 md:gap-4">
               {pathways.map((pathway, index) => {
                 const Icon = pathway.icon;
                 return (
                   <motion.button
                     key={pathway.id}
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.35 + index * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                    whileHover={{ scale: 1.02, y: -4 }}
+                    transition={{ delay: 0.35 + index * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                    whileHover={{ y: -2 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => setActiveTab("explore")}
-                    className={`group relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-br ${pathway.bgGradient} border border-white/10 hover:border-white/20 transition-all duration-500`}
-                    style={{ 
-                      boxShadow: `0 0 60px -20px ${pathway.accent}15`
+                    className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br ${pathway.bgGradient} border border-white/10 hover:border-white/20 transition-all duration-300`}
+                    style={{
+                      boxShadow: `0 0 40px -18px ${pathway.accent}15`,
                     }}
                   >
-                    {/* Accent glow */}
-                    <div 
-                      className="absolute -top-16 -right-16 w-32 h-32 rounded-full opacity-20 blur-2xl transition-opacity group-hover:opacity-30"
-                      style={{ background: pathway.accent }}
-                    />
-
-                    <div className="relative z-10 p-5 md:p-8 lg:p-10 flex flex-col items-center text-center">
+                    <div className="relative z-10 flex items-center gap-4 p-4 md:p-5">
                       {/* Icon */}
-                      <div 
-                        className="w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-xl md:rounded-2xl flex items-center justify-center mb-4 md:mb-6 border border-white/15 transition-transform group-hover:scale-110"
+                      <div
+                        className="w-11 h-11 md:w-12 md:h-12 rounded-xl flex items-center justify-center flex-shrink-0 border border-white/15 transition-transform group-hover:scale-105"
                         style={{ backgroundColor: `${pathway.accent}15` }}
                       >
-                        <Icon className="w-6 h-6 md:w-7 md:h-7" style={{ color: pathway.accent }} />
+                        <Icon className="w-5 h-5 md:w-6 md:h-6" style={{ color: pathway.accent }} />
                       </div>
-                      
-                      <div className="flex-1 flex flex-col items-center">
-                        <h3 className="text-lg md:text-2xl lg:text-[28px] font-bold text-white mb-2 md:mb-3 leading-tight tracking-[-0.02em]">{pathway.solution}</h3>
-                        <p className="text-sm md:text-base text-white/80 leading-relaxed line-clamp-2 md:line-clamp-none">{pathway.description}</p>
+
+                      {/* Text */}
+                      {/* Global CSS applies text-wrap: balance/pretty to h3/p, which
+                          overrides Tailwind's `truncate` (a longhand of the same
+                          white-space shorthand) and defeats single-line clipping.
+                          Force it back with an inline style, which wins the cascade. */}
+                      <div className="flex-1 min-w-0 text-left">
+                        <h3
+                          className="text-sm md:text-base font-bold text-white leading-snug tracking-[-0.01em] truncate"
+                          style={{ textWrap: "nowrap" }}
+                        >
+                          {pathway.solution}
+                        </h3>
+                        <p
+                          className="text-xs md:text-sm text-white/65 leading-snug truncate mt-0.5"
+                          style={{ textWrap: "nowrap" }}
+                        >
+                          {pathway.description}
+                        </p>
                       </div>
-                      
-                      <div className="flex flex-col items-center gap-3 mt-4 md:mt-6">
-                        <span 
-                          className="text-xs md:text-sm font-bold px-3 py-1.5 md:px-4 md:py-2 rounded-full border"
-                          style={{ 
-                            backgroundColor: `${pathway.accent}18`, 
+
+                      {/* Stat + chevron */}
+                      <div className="flex flex-col items-end gap-1.5 flex-shrink-0">
+                        <span
+                          className="text-[10px] md:text-xs font-bold px-2 md:px-2.5 py-1 rounded-full border whitespace-nowrap"
+                          style={{
+                            backgroundColor: `${pathway.accent}18`,
                             borderColor: `${pathway.accent}35`,
-                            color: pathway.accent 
+                            color: pathway.accent,
                           }}
                         >
                           {pathway.stats}
                         </span>
-                        <div className="hidden md:flex items-center gap-2 text-white/70 group-hover:text-white transition-colors">
-                          <span className="text-base font-semibold">{tx.explore}</span>
-                          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                        </div>
+                        <ChevronRight className="w-4 h-4 text-white/40 group-hover:text-white/80 group-hover:translate-x-0.5 transition-all" />
                       </div>
                     </div>
                   </motion.button>

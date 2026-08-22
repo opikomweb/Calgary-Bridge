@@ -7,7 +7,7 @@ import { useAppStore } from "@/lib/store";
 import { resources, categoryLabels } from "@/lib/data";
 import {
   Send, User, ArrowRight, Phone, ExternalLink,
-  TrendingUp, PanelRightClose, PanelRightOpen, Search, MapPin,
+  TrendingUp, PanelRightClose, PanelRightOpen, Search, MapPin, Globe,
 } from "lucide-react";
 import type { Resource, Language } from "@/lib/types";
 import { useTranslations, registerStrings, translateDynamic } from "@/lib/translation-context";
@@ -38,6 +38,7 @@ registerStrings(
   "What programs help with childcare costs?",
   "How do I find ESL classes near me?",
   "Popular questions",
+  "Live web result — not verified by Calgary Konnect",
 );
 
 // Popular chat questions shown below the pulse panel
@@ -76,6 +77,7 @@ export default function AITab() {
     q2: "Where can I get free tax help?",
     q3: "What programs help with childcare costs?",
     q4: "How do I find ESL classes near me?",
+    liveResultsLabel: "Live web result — not verified by Calgary Konnect",
   });
   const translatedPrompts = [tx.prompt1, tx.prompt2, tx.prompt3, tx.prompt4];
   const translatedQuestions = [tx.q1, tx.q2, tx.q3, tx.q4];
@@ -159,6 +161,7 @@ export default function AITab() {
         content: data.reply,
         resources: Array.isArray(data.resourceIds) ? data.resourceIds : [],
         webLinks: Array.isArray(data.webSearches) ? data.webSearches : [],
+        liveResults: Array.isArray(data.liveResults) ? data.liveResults : undefined,
       });
     } catch (err) {
       // Graceful fallback — the guide always responds with vetted local
@@ -361,6 +364,35 @@ export default function AITab() {
                                     </a>
                                   );
                                 })}
+                              </div>
+                            </div>
+                          )}
+
+                          {/* SearXNG live web results — only shown when the curated
+                              catalog had zero matches. Kept visually and structurally
+                              separate from vetted resources/webSearches above: distinct
+                              header, muted card style, explicit "not verified" label. */}
+                          {message.role === "assistant" && message.liveResults && message.liveResults.length > 0 && (
+                            <div className="mt-4">
+                              <p className="flex items-center gap-1.5 text-xs font-medium text-amber-600 dark:text-amber-400 uppercase tracking-wider mb-2">
+                                <Globe className="h-3.5 w-3.5" />
+                                {tx.liveResultsLabel}
+                              </p>
+                              <div className="flex flex-col gap-2">
+                                {message.liveResults.map((result, i) => (
+                                  <a
+                                    key={i}
+                                    href={result.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="block rounded-lg border border-dashed border-amber-500/30 bg-amber-500/5 px-3 py-2 hover:bg-amber-500/10 transition-colors"
+                                  >
+                                    <p className="text-sm font-semibold text-foreground line-clamp-1">{result.title}</p>
+                                    {result.snippet && (
+                                      <p className="text-xs text-[var(--foreground-muted)] line-clamp-2 mt-0.5">{result.snippet}</p>
+                                    )}
+                                  </a>
+                                ))}
                               </div>
                             </div>
                           )}
