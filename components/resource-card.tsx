@@ -42,6 +42,8 @@ import {
   BookOpen,
   Wrench,
   HandHeart,
+  Trophy,
+  Rainbow,
 } from "lucide-react";
 
 /** Maps each resource category key to a compact icon */
@@ -65,6 +67,8 @@ const CATEGORY_ICONS: Record<string, React.ElementType> = {
   community:      HandHeart,
   culture:        BookOpen,
   services:       Wrench,
+  sports:         Trophy,
+  lgbtq:          Rainbow,
 };
 
 interface ResourceCardProps {

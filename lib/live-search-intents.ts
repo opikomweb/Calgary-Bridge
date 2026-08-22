@@ -232,6 +232,13 @@ export const LIVE_SEARCH_INTENTS: Record<ResourceCategory, LiveSearchIntent> = {
     ],
     exclude: [],
   },
+  sports: {
+    label: "Sports leagues, teams & recreation",
+    query: "sports league recreation centre and adult sports team",
+    allowTypes: ["stadium", "gym", "point_of_interest", "establishment"],
+    mustMatch: ["sport", "league", "team", "recreation", "arena", "stadium", "fitness", "gym", "club", "field house"],
+    exclude: ["pet", "veterinary"],
+  },
   workspace: {
     label: "Coworking & workspaces",
     query: "coworking space and shared office workspace",

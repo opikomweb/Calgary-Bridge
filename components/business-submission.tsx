@@ -18,9 +18,32 @@ import {
   FileText,
   Crown,
   Zap,
-  Shield
+  Shield,
+  AlertTriangle,
+  Loader2
 } from "lucide-react";
 import { useTranslations, registerStrings } from "@/lib/translation-context";
+import type { BusinessListingCategory } from "@/lib/airtable";
+
+// Local category options map to a fixed Airtable single-select — this keeps
+// the on-site categories rich/specific while writing into the smaller set
+// of values the CRM (and site owner's review workflow) actually uses.
+const CATEGORY_TO_AIRTABLE: Record<string, BusinessListingCategory> = {
+  "Housing & Rent": "Housing",
+  "Jobs & Career": "Employment",
+  Healthcare: "Healthcare",
+  "Family & Childcare": "Family & Kids",
+  Education: "Other",
+  "Legal Services": "Other",
+  "Food & Meals": "Food & Nutrition",
+  Transportation: "Other",
+  "Mental Health": "Healthcare",
+  "Senior Services": "Seniors",
+  "Newcomer Services": "Newcomer Services",
+  "Small Business": "Other",
+  Community: "Other",
+  Other: "Other",
+};
 
 // Register business submission strings for translation
 registerStrings(
@@ -59,11 +82,18 @@ registerStrings(
   "Select pricing", "Low Cost", "Sliding Scale", "Paid",
   "Back",
   // Step 3
-  "Most Popular", "Submit Listing",
+  "Most Popular", "Submit Listing", "Submitting...",
   // Step 4
   "Listing Submitted!", "Thank you for submitting your listing.",
   "Our team will review your submission within 2-3 business days.",
   "Close",
+  // Featured pitch (mode === "featured" only)
+  "What makes you worth featuring? *",
+  "Tell us what sets your business apart — awards, reviews, community impact...",
+  // Error / partial-success states
+  "We received it, but...", "Something went wrong",
+  "Please try submitting again, or email us directly at",
+  "Try Again",
 );
 
 interface BusinessSubmissionProps {
@@ -78,6 +108,7 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
     businessName: "",
     category: "",
     description: "",
+    featuredPitch: "",
     phone: "",
     email: "",
     website: "",
@@ -89,6 +120,9 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
     contactEmail: "",
     package: "basic",
   });
+  const [submitState, setSubmitState] = useState<"idle" | "submitting" | "error">("idle");
+  const [crmWarning, setCrmWarning] = useState(false);
+  const [crmWarningMessage, setCrmWarningMessage] = useState("");
   
   const tx = useTranslations({
     basicName: "Basic Listing",
@@ -150,11 +184,20 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
     // Step 3
     mostPopular: "Most Popular",
     submitListing: "Submit Listing",
+    submitting: "Submitting...",
     // Step 4
     submitted: "Listing Submitted!",
     submittedDesc: "Thank you for submitting your listing.",
     submittedNote: "Our team will review your submission within 2-3 business days.",
     close: "Close",
+    // Featured pitch
+    featuredPitchLabel: "What makes you worth featuring? *",
+    featuredPitchPlaceholder: "Tell us what sets your business apart — awards, reviews, community impact...",
+    // Error / partial-success
+    receivedButTitle: "We received it, but...",
+    somethingWrong: "Something went wrong",
+    tryAgainMessage: "Please try submitting again, or email us directly at",
+    tryAgain: "Try Again",
   });
 
   const packages = [
@@ -210,9 +253,39 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
     categoryTx.c13, categoryTx.c14,
   ];
 
-  const handleSubmit = () => {
-    // In a real app, this would submit to an API
-    setStep(4); // Success state
+  const handleSubmit = async () => {
+    setSubmitState("submitting");
+    try {
+      const res = await fetch("/api/business-listing", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          businessName: formData.businessName,
+          contactEmail: formData.email,
+          contactPhone: formData.phone || undefined,
+          category: CATEGORY_TO_AIRTABLE[formData.category] || "Other",
+          submittedVia: mode === "featured" ? "Get Featured" : "List Your Business",
+          website: formData.website || undefined,
+          description: formData.description || undefined,
+          featuredPitch: mode === "featured" ? formData.featuredPitch : undefined,
+        }),
+      });
+
+      if (!res.ok) {
+        setSubmitState("error");
+        return;
+      }
+
+      const json = await res.json();
+      if (json.crmWarning) {
+        setCrmWarning(true);
+        setCrmWarningMessage(json.message || "");
+      }
+      setSubmitState("idle");
+      setStep(4); // Success (or honest partial-success) state
+    } catch {
+      setSubmitState("error");
+    }
   };
 
   if (!isOpen) return null;
@@ -327,9 +400,27 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
                   />
                 </div>
 
+                {mode === "featured" && (
+                  <div>
+                    <label className="block text-sm font-semibold text-white mb-3">{tx.featuredPitchLabel}</label>
+                    <textarea
+                      value={formData.featuredPitch}
+                      onChange={(e) => setFormData({ ...formData, featuredPitch: e.target.value })}
+                      placeholder={tx.featuredPitchPlaceholder}
+                      rows={3}
+                      className="w-full bg-white/[0.04] border border-white/[0.08] rounded-2xl p-5 text-white placeholder:text-white/30 focus:border-sky-500/50 focus:outline-none transition-all resize-none"
+                    />
+                  </div>
+                )}
+
                 <button
                   onClick={() => setStep(2)}
-                  disabled={!formData.businessName || !formData.category || !formData.description}
+                  disabled={
+                    !formData.businessName ||
+                    !formData.category ||
+                    !formData.description ||
+                    (mode === "featured" && !formData.featuredPitch)
+                  }
                   className="w-full h-14 rounded-2xl bg-gradient-to-r from-sky-500 to-sky-600 text-white font-bold flex items-center justify-center gap-3 hover:shadow-lg hover:shadow-sky-500/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {tx.continueBtn} <ArrowRight className="w-5 h-5" />
@@ -361,10 +452,11 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
                   <div>
                     <label className="block text-sm font-semibold text-white mb-3">
                       <Mail className="w-4 h-4 inline mr-2" />
-                      {tx.emailLabel}
+                      {tx.emailLabel} *
                     </label>
                     <input
                       type="email"
+                      required
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="hello@yourbusiness.com"
@@ -443,7 +535,8 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
                   </button>
                   <button
                     onClick={() => setStep(3)}
-                    className="flex-1 h-14 rounded-2xl bg-gradient-to-r from-sky-500 to-sky-600 text-white font-bold flex items-center justify-center gap-3 hover:shadow-lg hover:shadow-sky-500/30 transition-all"
+                    disabled={!formData.email}
+                    className="flex-1 h-14 rounded-2xl bg-gradient-to-r from-sky-500 to-sky-600 text-white font-bold flex items-center justify-center gap-3 hover:shadow-lg hover:shadow-sky-500/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {tx.continueBtn} <ArrowRight className="w-5 h-5" />
                   </button>
@@ -499,40 +592,74 @@ export default function BusinessSubmission({ isOpen, onClose, mode }: BusinessSu
                   ))}
                 </div>
 
+                {submitState === "error" && (
+                  <div className="flex items-start gap-3 p-4 rounded-2xl bg-red-500/10 border border-red-500/20">
+                    <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+                    <p className="text-sm text-red-200">
+                      {tx.somethingWrong} — {tx.tryAgainMessage}{" "}
+                      <a href="mailto:tech@wilglobo.com" className="font-semibold underline">tech@wilglobo.com</a>
+                    </p>
+                  </div>
+                )}
+
                 <div className="flex gap-4">
                   <button
                     onClick={() => setStep(2)}
-                    className="flex-1 h-14 rounded-2xl bg-white/[0.06] border border-white/[0.08] text-white font-bold hover:bg-white/[0.1] transition-all"
+                    disabled={submitState === "submitting"}
+                    className="flex-1 h-14 rounded-2xl bg-white/[0.06] border border-white/[0.08] text-white font-bold hover:bg-white/[0.1] transition-all disabled:opacity-50"
                   >
                     {tx.backBtn}
                   </button>
                   <button
                     onClick={handleSubmit}
-                    className="flex-1 h-14 rounded-2xl bg-gradient-to-r from-sky-500 to-sky-600 text-white font-bold flex items-center justify-center gap-3 hover:shadow-lg hover:shadow-sky-500/30 transition-all"
+                    disabled={submitState === "submitting"}
+                    className="flex-1 h-14 rounded-2xl bg-gradient-to-r from-sky-500 to-sky-600 text-white font-bold flex items-center justify-center gap-3 hover:shadow-lg hover:shadow-sky-500/30 transition-all disabled:opacity-70 disabled:cursor-not-allowed"
                   >
-                    {tx.submitListing} <Check className="w-5 h-5" />
+                    {submitState === "submitting" ? (
+                      <>
+                        <Loader2 className="w-5 h-5 animate-spin" /> {tx.submitting}
+                      </>
+                    ) : (
+                      <>
+                        {tx.submitListing} <Check className="w-5 h-5" />
+                      </>
+                    )}
                   </button>
                 </div>
               </motion.div>
             )}
 
-            {/* Step 4: Success */}
+            {/* Step 4: Success (or honest partial-success if the CRM write failed) */}
             {step === 4 && (
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 className="text-center py-12"
               >
-                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-sky-500 to-sky-600 flex items-center justify-center mx-auto mb-8">
-                  <Check className="w-12 h-12 text-white" />
+                <div
+                  className={`w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-8 ${
+                    crmWarning
+                      ? "bg-gradient-to-br from-amber-500 to-amber-600"
+                      : "bg-gradient-to-br from-sky-500 to-sky-600"
+                  }`}
+                >
+                  {crmWarning ? (
+                    <AlertTriangle className="w-12 h-12 text-white" />
+                  ) : (
+                    <Check className="w-12 h-12 text-white" />
+                  )}
                 </div>
-                <h3 className="text-3xl font-bold text-white mb-4">{tx.submitted}</h3>
-                <p className="text-lg text-white/60 max-w-md mx-auto mb-2">
-                  {tx.submittedDesc}
-                </p>
-                <p className="text-white/40 max-w-md mx-auto mb-8">
-                  {tx.submittedNote}
-                </p>
+                <h3 className="text-3xl font-bold text-white mb-4">
+                  {crmWarning ? tx.receivedButTitle : tx.submitted}
+                </h3>
+                {crmWarning ? (
+                  <p className="text-lg text-white/60 max-w-md mx-auto mb-8">{crmWarningMessage}</p>
+                ) : (
+                  <>
+                    <p className="text-lg text-white/60 max-w-md mx-auto mb-2">{tx.submittedDesc}</p>
+                    <p className="text-white/40 max-w-md mx-auto mb-8">{tx.submittedNote}</p>
+                  </>
+                )}
                 <button
                   onClick={onClose}
                   className="h-14 px-10 rounded-2xl bg-gradient-to-r from-sky-500 to-sky-600 text-white font-bold hover:shadow-lg hover:shadow-sky-500/30 transition-all"

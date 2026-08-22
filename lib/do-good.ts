@@ -104,6 +104,16 @@ export const doGoodCategories: DoGoodCategory[] = [
         href: "https://www.calgaryhumane.ca/volunteer/",
         action: "Apply to volunteer",
       },
+      {
+        id: "unison-kerby-vol",
+        name: "Unison at Kerby Centre",
+        description:
+          "Calgary's largest senior-serving organization. Volunteers support reception and admin for seniors' programs, help prepare tax returns during tax season, and assist with wellness and social programs for adults 55+.",
+        need: "Reception, admin & tax-prep volunteers",
+        commitment: "Weekly shift, seasonal tax roles available",
+        href: "https://www.unisonalberta.com/get-involved/volunteer/",
+        action: "Apply to volunteer",
+      },
     ],
   },
   {
@@ -166,6 +176,15 @@ export const doGoodCategories: DoGoodCategory[] = [
           "Calgary's largest family shelter, helping families with children find emergency shelter and a path to stable housing.",
         need: "Funds for family shelter beds",
         href: "https://innfromthecold.org/donate/",
+        action: "Donate now",
+      },
+      {
+        id: "unison-kerby-donate",
+        name: "Unison at Kerby Centre",
+        description:
+          "Funds housing supports, benefits navigation, free tax filing, transportation, and wellness programs for Calgary seniors 55+. Donations over $20 receive a tax receipt.",
+        need: "Funds for senior housing, food security & transport programs",
+        href: "https://www.unisonalberta.com/get-involved/donate/",
         action: "Donate now",
       },
     ],
@@ -255,6 +274,16 @@ export const doGoodCategories: DoGoodCategory[] = [
         need: "Share input on city decisions",
         href: "https://engage.calgary.ca",
         action: "Have your say",
+      },
+      {
+        id: "speak-at-council",
+        name: "Speak at a Council or Committee Meeting",
+        description:
+          "Any Calgarian can register to speak (in person or by phone) at a Council or Committee meeting on an agenda item, or submit written comments if speaking isn't for you. Council also runs an annual public hearing on the operating and capital budgets where residents can weigh in directly on spending priorities.",
+        need: "Register online before the meeting's deadline",
+        commitment: "Usually a few minutes to speak; written submissions any length",
+        href: "https://www.calgary.ca/council/meetings-and-attend.html",
+        action: "See how to register",
       },
       {
         id: "adopt-a-park",

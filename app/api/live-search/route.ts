@@ -205,14 +205,18 @@ export async function POST(req: Request) {
   const cacheKey = intent.query.toLowerCase().trim();
   const cached = getCached(cacheKey);
   if (cached) {
-    return NextResponse.json(cached, { headers: { "X-Cache": "HIT" } });
+    return NextResponse.json(cached, {
+      headers: { "X-Cache": "HIT", "Cache-Control": "no-store" },
+    });
   }
 
   try {
     const results = await searchPlaces(intent, apiKey);
     const response = { label: intent.label, results };
     setCached(cacheKey, response);
-    return NextResponse.json(response, { headers: { "X-Cache": "MISS" } });
+    return NextResponse.json(response, {
+      headers: { "X-Cache": "MISS", "Cache-Control": "no-store" },
+    });
   } catch (err) {
     console.error("[v0] live-search error:", err);
     return NextResponse.json({ error: "Live search failed. Please try again." }, { status: 502 });
