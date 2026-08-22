@@ -125,7 +125,15 @@ Rules:
 // Only used per-string when Gemini fails outright (rare: outage / rate
 // limit). Literal but always available, no API key required.
 // ---------------------------------------------------------------------------
-async function translateOneFallback(text: string, targetLang: string): Promise<string> {
+// Returns null on a GENUINE failure (network error, timeout, non-OK response,
+// unparseable body) so the caller can tell "this really failed, don't cache
+// it" apart from "this legitimately translates to the same text" (proper
+// nouns, numbers, units like "24/7", "km/h", "Askonnect"). Silently
+// returning the English source on failure — the previous behavior — gets
+// persisted to the Supabase cache as if it were a real translation, which
+// permanently poisons that string for that language: every future request
+// serves the English echo as a "cache hit" and never retries translation.
+async function translateOneFallback(text: string, targetLang: string): Promise<string | null> {
   if (!text.trim()) return text;
   try {
     const url = new URL("https://translate.googleapis.com/translate_a/single");
@@ -140,14 +148,15 @@ async function translateOneFallback(text: string, targetLang: string): Promise<s
       signal: AbortSignal.timeout(8000),
     });
 
-    if (!res.ok) return text;
+    if (!res.ok) return null;
 
     const data = await res.json();
-    const translated =
-      data?.[0]?.map((chunk: [string]) => chunk?.[0] ?? "").join("") ?? text;
-    return translated || text;
+    const translated = data?.[0]?.map((chunk: [string]) => chunk?.[0] ?? "").join("");
+    // An empty/missing result from a 200 response is still a failure to
+    // extract a translation, not a legitimate "translates to nothing".
+    return translated || null;
   } catch {
-    return text;
+    return null;
   }
 }
 

@@ -120,7 +120,16 @@ async function fetchTranslations(
     const data = (await res.json()) as { translations: string[] };
     strings.forEach((s, i) => {
       const tx = data.translations[i];
-      if (tx && tx !== s) map.set(s, tx);
+      // Any string the server actually answered for is RESOLVED, even if
+      // the translation happens to equal the source (legitimate for proper
+      // nouns/numbers, e.g. "24/7", "Askonnect"). Treating identical-value
+      // responses as "no answer" (dropping them here) left those keys
+      // permanently missing from txMap — every render's t() call would
+      // then re-queue them and reschedule a flush forever, since nothing
+      // could ever mark them done. Only a genuinely missing/falsy entry
+      // (network failure, malformed response) should stay unresolved so
+      // it gets retried.
+      if (typeof tx === "string" && tx) map.set(s, tx);
     });
   } catch (err) {
     // AbortError is expected on language switch — don't log it
@@ -254,24 +263,37 @@ export function TranslationProvider({ children }: { children: React.ReactNode })
     });
   }, [scheduleFlush]);
 
+  // `t`'s identity is deliberately independent of `loading`. Every consumer
+  // (useTranslations/useT) memoizes its own return value against `t`'s
+  // reference — if `t` changed every time a fetch started/settled (loading
+  // true<->false), EVERY consumer across the tree would recompute on every
+  // toggle, re-invoking t() for every one of its strings. Any string that
+  // is still unresolved gets re-added to pendingRef and reschedules a flush
+  // from that recompute — which itself flips loading again once it settles,
+  // triggering another recompute. That feedback loop refetches the exact
+  // same batch forever, roughly once per debounce+request round-trip, for
+  // ANY string that can't yet resolve (transient failure or, worse, a
+  // permanently unresolvable one). Keeping `t` stable across loading
+  // changes breaks this loop at the source.
+  const t = React.useCallback(
+    (english: string) => {
+      if (activeLanguage === "en") return english;
+      const key = english.trim();
+      const hit = txMap.get(key);
+      if (hit) return hit;
+      // Render-time cache miss — queue and flush.
+      if (key) {
+        pendingRef.current.add(key);
+        scheduleFlush(activeLanguage);
+      }
+      return english;
+    },
+    [txMap, activeLanguage, scheduleFlush],
+  );
+
   const value = useMemo<TranslationContextValue>(
-    () => ({
-      t: (english: string) => {
-        if (activeLanguage === "en") return english;
-        const key = english.trim();
-        const hit = txMap.get(key);
-        if (hit) return hit;
-        // Render-time cache miss — queue and flush.
-        if (key) {
-          pendingRef.current.add(key);
-          scheduleFlush(activeLanguage);
-        }
-        return english;
-      },
-      loading,
-      language: activeLanguage,
-    }),
-    [txMap, loading, activeLanguage, scheduleFlush],
+    () => ({ t, loading, language: activeLanguage }),
+    [t, loading, activeLanguage],
   );
 
   return (
