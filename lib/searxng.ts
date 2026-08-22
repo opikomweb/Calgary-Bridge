@@ -25,20 +25,7 @@ const MAX_RESULTS = 5;
  */
 export async function searchSearXNG(query: string): Promise<SearXNGResult[] | null> {
   const baseUrl = process.env.SEARXNG_INSTANCE_URL;
-  if (!baseUrl) {
-    console.log("[v0] searchSearXNG: SEARXNG_INSTANCE_URL is not set in this runtime");
-    return null;
-  }
-  // TEMP DEBUG — remove once the live-search path is confirmed working in
-  // production. Masks everything but the host so we never log a full
-  // internal URL/credentials, while still confirming exactly what value
-  // this runtime resolved (stale deployment, typo, trailing slash, etc).
-  try {
-    const u = new URL(baseUrl);
-    console.log(`[v0] searchSearXNG: resolved SEARXNG_INSTANCE_URL host=${u.hostname} port=${u.port || "(default)"} protocol=${u.protocol}`);
-  } catch {
-    console.log("[v0] searchSearXNG: SEARXNG_INSTANCE_URL is set but failed to parse as a URL");
-  }
+  if (!baseUrl) return null;
 
   try {
     const url = `${baseUrl.replace(/\/+$/, "")}/search?q=${encodeURIComponent(query)}&format=json`;
@@ -49,14 +36,10 @@ export async function searchSearXNG(query: string): Promise<SearXNGResult[] | nu
       },
       signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
     });
-    if (!res.ok) {
-      console.log(`[v0] searchSearXNG: non-OK response status=${res.status} statusText=${res.statusText}`);
-      return null;
-    }
+    if (!res.ok) return null;
 
     const data = await res.json();
     const rawResults: any[] = Array.isArray(data?.results) ? data.results : [];
-    console.log(`[v0] searchSearXNG: received ${rawResults.length} raw results from instance`);
     if (rawResults.length === 0) return null;
 
     const results: SearXNGResult[] = rawResults
@@ -69,9 +52,8 @@ export async function searchSearXNG(query: string): Promise<SearXNGResult[] | nu
       }));
 
     return results.length > 0 ? results : null;
-  } catch (err) {
+  } catch {
     // Network error, timeout, invalid JSON — all treated as "no live answer".
-    console.log(`[v0] searchSearXNG: caught error — ${err instanceof Error ? `${err.name}: ${err.message}` : String(err)}`);
     return null;
   }
 }
