@@ -265,15 +265,34 @@ export default function ResourceCard({
                 <p translate="no" className="notranslate text-sm md:text-base text-foreground/75 leading-relaxed md:leading-loose">
                   {resource.summary?.[activeLanguage] || description}
                 </p>
-                {resource.cost && (
-                  <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${costLabels[resource.cost]?.color || ""}`}>
-                    <DollarSign className="w-3 h-3" />
-                    {costLabels[resource.cost]?.label || resource.cost}
-                  </span>
+
+                {/* Cost + Hours + Distance */}
+                {(resource.cost || displayHours || distanceLabel) && (
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    {resource.cost && (
+                      <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${costLabels[resource.cost]?.color || ""}`}>
+                        <DollarSign className="w-3 h-3" />
+                        {costLabels[resource.cost]?.label || resource.cost}
+                      </span>
+                    )}
+                    {displayHours && (
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-foreground/[0.06] text-[var(--foreground-muted)]">
+                        <Clock className="w-3 h-3" />
+                        <span className="truncate max-w-[140px]">{displayHours}</span>
+                      </span>
+                    )}
+                    {distanceLabel && (
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-foreground/[0.06] text-[var(--foreground-muted)]">
+                        <MapPin className="w-3 h-3" />
+                        {distanceLabel}
+                      </span>
+                    )}
+                  </div>
                 )}
+
                 <div className="flex flex-wrap gap-1.5">
-                  {resource.phone && (
-                    <a href={`tel:${resource.phone}`} className="flex items-center gap-1 rounded-lg bg-[#1D4ED8] px-2.5 py-1.5 text-xs font-semibold text-white active:scale-95">
+                  {displayPhone && (
+                    <a href={`tel:${displayPhone}`} className="flex items-center gap-1 rounded-lg bg-[#1D4ED8] px-2.5 py-1.5 text-xs font-semibold text-white active:scale-95">
                       <Phone className="h-3 w-3" /> Call
                     </a>
                   )}
@@ -288,6 +307,21 @@ export default function ResourceCard({
                     </a>
                   )}
                 </div>
+
+                {enrichment?.source === "openstreetmap" && (
+                  <p className="text-[9px] text-foreground/40">
+                    Hours/contact via{" "}
+                    <a
+                      href="https://www.openstreetmap.org/copyright"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline"
+                    >
+                      OpenStreetMap
+                    </a>{" "}
+                    contributors — verify before visiting
+                  </p>
+                )}
               </div>
             </motion.div>
           )}

@@ -61,6 +61,17 @@ const MATCH_THRESHOLD = 0.5; // require a meaningfully strong token overlap
 // ---------------------------------------------------------------------------
 // 1. Calgary Open Data (Socrata) — try a couple of relevant datasets.
 // City-run facilities dataset is the most reliable for civic services.
+//
+// COVERAGE NOTE: dataset x34e-bcjz ("Community Services") only covers
+// Attractions, Community Centres, Courts, Defibrillators, Health Clinics,
+// Hospitals, Internet Access points, Libraries, Skate Parks, Social
+// Development Centres, and Visitor Info — i.e. CITY-RUN civic amenities.
+// It will never match the majority of this app's catalog (NGOs, shelters,
+// legal aid clinics, food banks, immigrant-serving orgs), because those
+// simply aren't in this dataset. That's expected, not a bug — Overpass
+// (tried next) has much broader community-maintained coverage. Do not
+// "fix" a miss here by loosening the match threshold; it's very likely a
+// genuine absence, not a scoring failure.
 // ---------------------------------------------------------------------------
 async function tryCalgaryOpenData(name: string, address?: string) {
   try {
@@ -108,13 +119,19 @@ const CALGARY_BBOX = "50.84,-114.31,51.25,-113.86"; // south,west,north,east
 async function tryOverpass(name: string) {
   try {
     const escaped = name.replace(/"/g, '\\"');
+    // NOTE: capped at 20, not 5 — for a multi-branch org (a library system, a
+    // chain), the regex name match can return far more than 5 candidates, and
+    // Overpass does not return them in relevance order. A tight cap here means
+    // the actual best match can be silently excluded from the pool before the
+    // token-overlap scoring below ever sees it. 20 keeps the query cheap while
+    // giving the real match a realistic chance of being included.
     const query = `
       [out:json][timeout:10];
       (
         node["name"~"${escaped}",i](${CALGARY_BBOX});
         way["name"~"${escaped}",i](${CALGARY_BBOX});
       );
-      out center 5;
+      out center 20;
     `;
     const res = await fetch("https://overpass-api.de/api/interpreter", {
       method: "POST",
