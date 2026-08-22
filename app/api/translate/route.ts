@@ -77,7 +77,8 @@ const TRANSLATE_MODEL_ID = "gemini-3.6-flash";
 
 async function translateBatchWithGemini(
   texts: string[],
-  llmLabel: string
+  llmLabel: string,
+  contexts?: (string | undefined)[]
 ): Promise<Map<number, string> | null> {
   if (texts.length === 0) return new Map();
   if (!process.env.GEMINI_API_KEY) {
@@ -85,7 +86,19 @@ async function translateBatchWithGemini(
     return null;
   }
 
-  const numbered = texts.map((t, i) => `[${i}] ${t}`).join("\n");
+  // Per-string context (e.g. "button label", "eligibility requirements for
+  // a housing program", "AI chat disclaimer") sharpens ambiguous short
+  // strings that read very differently depending on where they appear —
+  // "Apply" as a button vs. "Apply" as in "apply sunscreen" is the classic
+  // failure mode for word-for-word MT. Context is optional per-string; when
+  // present it's inlined right after the index so the model can't lose the
+  // association between a hint and its string during batching.
+  const numbered = texts
+    .map((t, i) => {
+      const ctx = contexts?.[i];
+      return ctx ? `[${i}] (context: ${ctx}) ${t}` : `[${i}] ${t}`;
+    })
+    .join("\n");
 
   try {
     const { output } = await generateText({
@@ -94,8 +107,11 @@ async function translateBatchWithGemini(
 
 Translate each numbered English string into ${llmLabel}.
 
+Some strings include a "(context: ...)" hint describing where the string appears in the app (e.g. a button label, a program's eligibility requirements, an AI chat disclaimer). Use that hint to resolve ambiguity — the same English word can require a completely different translation depending on whether it's a UI action, a legal/eligibility statement, or a health/safety instruction. The context hint itself is never part of the string to translate — translate only the string after it.
+
 Rules:
 - Translate for MEANING and NATURAL PHRASING, never literal word-for-word. A native speaker reading your translation should feel it was written originally in that language, not machine-translated.
+- For eligibility criteria, tenant-rights, healthcare, and emergency-service content specifically: prioritize LITERAL ACCURACY of any condition, threshold, deadline, or requirement over smoothness of phrasing. A warm tone should never soften or blur a hard requirement (e.g. an income cap, an age minimum, a document that is mandatory) — getting these details wrong could cause someone to be wrongly turned away from help they qualify for, or wrongly believe they qualify when they don't.
 - Keep the tone warm, clear, and simple — many readers are newcomers who may not be fluent readers even in their own first language. Prefer plain, common words over formal/literary vocabulary.
 - Preserve the intent of UI labels, buttons, and short phrases exactly — do not add or remove information.
 - NEVER translate: organization/business proper names, phone numbers, email addresses, URLs, dollar amounts, dates, or numeric codes. Copy those through unchanged.
@@ -174,21 +190,26 @@ const BATCH_CHUNK_SIZE = 40;
 async function translateMisses(
   missTexts: string[],
   target: Language,
-  fallbackLangCode: string
+  fallbackLangCode: string,
+  missContexts?: (string | undefined)[]
 ): Promise<(string | null)[]> {
   const meta = getLangMeta(target);
   const results = new Array<string | null>(missTexts.length);
   const stillMissing: number[] = [];
 
   // Chunk into batches so prompts stay small and index-verification stays cheap.
-  const chunks: { offset: number; texts: string[] }[] = [];
+  const chunks: { offset: number; texts: string[]; contexts?: (string | undefined)[] }[] = [];
   for (let i = 0; i < missTexts.length; i += BATCH_CHUNK_SIZE) {
-    chunks.push({ offset: i, texts: missTexts.slice(i, i + BATCH_CHUNK_SIZE) });
+    chunks.push({
+      offset: i,
+      texts: missTexts.slice(i, i + BATCH_CHUNK_SIZE),
+      contexts: missContexts?.slice(i, i + BATCH_CHUNK_SIZE),
+    });
   }
 
   await Promise.all(
-    chunks.map(async ({ offset, texts }) => {
-      const map = await translateBatchWithGemini(texts, meta.llmLabel);
+    chunks.map(async ({ offset, texts, contexts }) => {
+      const map = await translateBatchWithGemini(texts, meta.llmLabel, contexts);
       texts.forEach((text, localIdx) => {
         const globalIdx = offset + localIdx;
         const hit = map?.get(localIdx);
@@ -234,7 +255,13 @@ async function translateMisses(
 //  - Steps 2-3 run only for brand-new strings (extremely rare)
 // ---------------------------------------------------------------------------
 export async function POST(req: NextRequest) {
-  let body: { texts?: string[]; target?: Language };
+  // `contexts[i]`, when present, is an optional hint for `texts[i]` only —
+  // e.g. "button label" or "housing program eligibility requirement" — used
+  // to disambiguate short/ambiguous strings during translation. It is NOT
+  // part of the cache key (the same string reuses its cached translation
+  // across contexts), only stored alongside the first Gemini translation for
+  // that string as an audit trail of what disambiguation, if any, was used.
+  let body: { texts?: string[]; target?: Language; contexts?: (string | undefined)[] };
   try {
     body = await req.json();
   } catch {
@@ -244,7 +271,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { texts, target } = body;
+  const { texts, target, contexts } = body;
 
   if (!Array.isArray(texts) || texts.length === 0) {
     return NextResponse.json(
@@ -305,17 +332,19 @@ export async function POST(req: NextRequest) {
     // 3. Identify cache misses
     const missIndexes: number[] = [];
     const missTexts: string[] = [];
+    const missContexts: (string | undefined)[] = [];
     texts.forEach((text, i) => {
       if (!cacheMap.has(hashes[i]) && text.trim()) {
         missIndexes.push(i);
         missTexts.push(text);
+        missContexts.push(contexts?.[i]);
       }
     });
 
     // 4. Translate all misses via Gemini (contextual, batched) with
     //    literal-engine fallback for anything Gemini couldn't cover.
     if (missTexts.length > 0) {
-      const freshTranslations = await translateMisses(missTexts, target, langCode);
+      const freshTranslations = await translateMisses(missTexts, target, langCode, missContexts);
 
       // 5. Bulk-upsert only GENUINE successes. A `null` entry means both
       // engines failed outright — persisting that as a row (previously
@@ -329,8 +358,9 @@ export async function POST(req: NextRequest) {
           source_hash: hashes[missIndexes[i]],
           source_text: text,
           translated: freshTranslations[i],
+          context: missContexts[i] ?? null,
         }))
-        .filter((row): row is { lang: Language; source_hash: string; source_text: string; translated: string } =>
+        .filter((row): row is { lang: Exclude<Language, "en">; source_hash: string; source_text: string; translated: string; context: string | null } =>
           typeof row.translated === "string" && row.translated.length > 0
         );
 

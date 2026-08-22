@@ -13,18 +13,10 @@ export const calgaryResources: Resource[] = [
     category: ["housing"],
     userTypes: ["newcomer", "family", "senior"],
     title: {
-      en: "Calgary Housing Company",
-      tl: "Calgary Housing Company",
-      es: "Compañía de Vivienda de Calgary",
-      ar: "شركة كالجاري للإسكان",
-      zh: "卡尔加里住房公司",
+      en: "Calgary Housing Company"
     },
     description: {
-      en: "Manages subsidized and affordable housing programs in Calgary. Offers rent-geared-to-income community housing, rent supplements, and near-market housing. Applications done through online portal. Eligibility requires income below specific thresholds and household assets under $25,000.",
-      tl: "Namamahala ng subsidized at affordable housing programs sa Calgary.",
-      es: "Gestiona programas de vivienda subsidiada y asequible en Calgary.",
-      ar: "يدير برامج الإسكان المدعوم وبأسعار معقولة في كالجاري.",
-      zh: "管理卡尔加里的补贴和经济适用房项目。",
+      en: "Manages subsidized and affordable housing programs in Calgary. Offers rent-geared-to-income community housing, rent supplements, and near-market housing. Applications done through online portal. Eligibility requires income below specific thresholds and household assets under $25,000."
     },
     servicesOffered: [
       "Rent-geared-to-income housing",
@@ -34,11 +26,7 @@ export const calgaryResources: Resource[] = [
       "Tenant services"
     ],
     eligibility: {
-      en: "Income below specific thresholds, household assets under $25,000, Calgary residency",
-      tl: "Kita na mas mababa sa mga takdang threshold",
-      es: "Ingresos por debajo de umbrales específicos",
-      ar: "الدخل أقل من الحدود المحددة",
-      zh: "收入低于特定门槛",
+      en: "Income below specific thresholds, household assets under $25,000, Calgary residency"
     },
     phone: "403-221-6430",
     address: "800 Macleod Trail SE, Calgary, AB",
@@ -54,18 +42,10 @@ export const calgaryResources: Resource[] = [
     category: ["housing", "emergency"],
     userTypes: ["newcomer", "family", "senior"],
     title: {
-      en: "Homeward Trust Calgary",
-      tl: "Homeward Trust Calgary",
-      es: "Homeward Trust Calgary",
-      ar: "Homeward Trust Calgary",
-      zh: "Homeward Trust Calgary",
+      en: "Homeward Trust Calgary"
     },
     description: {
-      en: "Coordinates Calgary's homeless-serving system. Provides housing-first programs, emergency shelter coordination, prevention services, and the Find Housing Digital Service for those seeking housing support.",
-      tl: "Nag-coordinate ng sistema para sa mga walang tirahan sa Calgary.",
-      es: "Coordina el sistema de servicios para personas sin hogar.",
-      ar: "ينسق نظام خدمة المشردين في كالجاري.",
-      zh: "协调卡尔加里的无家可归者服务系统。",
+      en: "Coordinates Calgary's homeless-serving system. Provides housing-first programs, emergency shelter coordination, prevention services, and the Find Housing Digital Service for those seeking housing support."
     },
     servicesOffered: [
       "Housing First programs",
@@ -87,18 +67,10 @@ export const calgaryResources: Resource[] = [
     category: ["housing", "emergency", "mental-health"],
     userTypes: ["newcomer", "family", "senior"],
     title: {
-      en: "Alpha House Calgary",
-      tl: "Alpha House Calgary",
-      es: "Alpha House Calgary",
-      ar: "Alpha House Calgary",
-      zh: "Alpha House Calgary",
+      en: "Alpha House Calgary"
     },
     description: {
-      en: "Provides shelter, detox, and outreach services for individuals affected by alcohol and drug dependencies. Operates DOAP (Downtown Outreach Addictions Partnership) Team that helps people on the streets.",
-      tl: "Nagbibigay ng shelter at detox services.",
-      es: "Proporciona refugio y servicios de desintoxicación.",
-      ar: "يوفر المأوى وخدمات إزالة السموم.",
-      zh: "提供住所和戒毒服务。",
+      en: "Provides shelter, detox, and outreach services for individuals affected by alcohol and drug dependencies. Operates DOAP (Downtown Outreach Addictions Partnership) Team that helps people on the streets."
     },
     servicesOffered: [
       "Emergency shelter",
@@ -119,18 +91,10 @@ export const calgaryResources: Resource[] = [
     category: ["housing", "food", "emergency"],
     userTypes: ["newcomer", "family", "senior"],
     title: {
-      en: "The Mustard Seed Calgary",
-      tl: "The Mustard Seed Calgary",
-      es: "The Mustard Seed Calgary",
-      ar: "The Mustard Seed Calgary",
-      zh: "The Mustard Seed Calgary",
+      en: "The Mustard Seed Calgary"
     },
     description: {
-      en: "Christian charity providing emergency shelter, meals, housing support, job training, and wellness programs for those experiencing homelessness or poverty. Multiple locations in Calgary.",
-      tl: "Christian charity na nagbibigay ng emergency shelter at pagkain.",
-      es: "Organización benéfica cristiana que ofrece refugio de emergencia.",
-      ar: "مؤسسة خيرية مسيحية توفر المأوى الطارئ والوجبات.",
-      zh: "提供紧急住所和餐食的基督教慈善机构。",
+      en: "Christian charity providing emergency shelter, meals, housing support, job training, and wellness programs for those experiencing homelessness or poverty. Multiple locations in Calgary."
     },
     servicesOffered: [
       "Emergency shelter",
@@ -151,18 +115,10 @@ export const calgaryResources: Resource[] = [
     category: ["housing", "legal"],
     userTypes: ["newcomer", "family", "student"],
     title: {
-      en: "Rental Scam Prevention Guide",
-      tl: "Gabay sa Pag-iwas sa Rental Scam",
-      es: "Guía de Prevención de Estafas de Alquiler",
-      ar: "دليل منع الاحتيال في الإيجار",
-      zh: "租房诈骗预防指南",
+      en: "Rental Scam Prevention Guide"
     },
     description: {
-      en: "Essential tips to avoid rental scams in Calgary: Never send money before viewing the property, verify landlord identity, beware of prices too good to be true, use secure payment methods, and get everything in writing.",
-      tl: "Mahahalagang tips para maiwasan ang rental scams sa Calgary.",
-      es: "Consejos esenciales para evitar estafas de alquiler en Calgary.",
-      ar: "نصائح أساسية لتجنب عمليات الاحتيال في الإيجار في كالجاري.",
-      zh: "避免卡尔加里租房诈骗的基本提示。",
+      en: "Essential tips to avoid rental scams in Calgary: Never send money before viewing the property, verify landlord identity, beware of prices too good to be true, use secure payment methods, and get everything in writing."
     },
     hiddenGem: true,
     website: "https://www.servicealberta.ca/housing",
@@ -180,18 +136,10 @@ export const calgaryResources: Resource[] = [
     category: ["jobs"],
     userTypes: ["student", "creator", "family", "senior"],
     title: {
-      en: "Job Bank Canada",
-      tl: "Job Bank Canada",
-      es: "Banco de Empleos de Canadá",
-      ar: "بنك الوظائف الكندي",
-      zh: "加拿大职位银行",
+      en: "Job Bank Canada"
     },
     description: {
-      en: "Official Government of Canada job search database with thousands of active job listings in Calgary across all industries. Free to use, no account required. Search by job title, location, skills, and salary. Includes apprenticeships and training programs.",
-      tl: "Opisyal na job search database ng Government of Canada.",
-      es: "Base de datos oficial de empleos del Gobierno de Canadá.",
-      ar: "قاعدة بيانات الوظائف الرسمية للحكومة الكندية.",
-      zh: "加拿大政府官方职位数据库。",
+      en: "Official Government of Canada job search database with thousands of active job listings in Calgary across all industries. Free to use, no account required. Search by job title, location, skills, and salary. Includes apprenticeships and training programs."
     },
     servicesOffered: ["Job search", "Apprenticeships", "Training programs", "Career insights"],
     website: "https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=calgary",
@@ -204,18 +152,10 @@ export const calgaryResources: Resource[] = [
     category: ["jobs"],
     userTypes: ["student", "creator", "family", "senior"],
     title: {
-      en: "Indeed Calgary Jobs",
-      tl: "Indeed Calgary Jobs",
-      es: "Indeed - Empleos en Calgary",
-      ar: "Indeed وظائف كالجاري",
-      zh: "Indeed 卡尔加里职位",
+      en: "Indeed Calgary Jobs"
     },
     description: {
-      en: "Largest job search engine with thousands of active listings in Calgary. Post your resume, set up job alerts by salary and industry, apply directly to employers. Free profile. Search entry-level to executive roles across all sectors.",
-      tl: "Pinakamalaking job search engine na may libu-libong active listings.",
-      es: "Motor de búsqueda de empleos más grande con miles de ofertas activas.",
-      ar: "أكبر محرك بحث عن الوظائف مع آلاف الوظائف النشطة.",
-      zh: "拥有数千个活跃职位的最大职位搜索引擎。",
+      en: "Largest job search engine with thousands of active listings in Calgary. Post your resume, set up job alerts by salary and industry, apply directly to employers. Free profile. Search entry-level to executive roles across all sectors."
     },
     servicesOffered: ["Job search", "Resume posting", "Job alerts", "Employer reviews"],
     website: "https://www.indeed.com/jobs?q=&l=Calgary%2C+AB",
@@ -228,18 +168,10 @@ export const calgaryResources: Resource[] = [
     category: ["jobs"],
     userTypes: ["student", "creator", "family"],
     title: {
-      en: "LinkedIn Calgary Jobs",
-      tl: "LinkedIn Calgary Jobs",
-      es: "LinkedIn - Empleos en Calgary",
-      ar: "LinkedIn وظائف كالجاري",
-      zh: "LinkedIn 卡尔加里职位",
+      en: "LinkedIn Calgary Jobs"
     },
     description: {
-      en: "Professional network with 10,000+ active job listings in Calgary. Build a professional profile, connect with recruiters, get job alerts, and apply directly. Many employers actively recruit here. Learn skill recommendations based on jobs you're interested in.",
-      tl: "Professional network na may libu-libong active job listings.",
-      es: "Red profesional con miles de ofertas de empleo activas.",
-      ar: "شبكة احترافية مع آلاف عروض الوظائف النشطة.",
-      zh: "拥有数千个活跃职位列表的专业网络。",
+      en: "Professional network with 10,000+ active job listings in Calgary. Build a professional profile, connect with recruiters, get job alerts, and apply directly. Many employers actively recruit here. Learn skill recommendations based on jobs you're interested in."
     },
     servicesOffered: ["Job search", "Profile building", "Recruiter connections", "Skill recommendations"],
     website: "https://www.linkedin.com/jobs/search/?keywords=&location=Calgary%2C%20AB",
@@ -252,18 +184,10 @@ export const calgaryResources: Resource[] = [
     category: ["jobs", "business"],
     userTypes: ["creator", "business", "student"],
     title: {
-      en: "Calgary Economic Development - Careers",
-      tl: "Calgary Economic Development - Careers",
-      es: "Desarrollo Económico de Calgary - Carreras",
-      ar: "التنمية الاقتصادية في كالجاري - الوظائف",
-      zh: "卡尔加里经济发展 - 职业",
+      en: "Calgary Economic Development - Careers"
     },
     description: {
-      en: "Official Calgary business development organization providing job market insights, hiring trends, major employers, and sector information. Lists companies actively hiring in Calgary with growth projections for major industries (energy, tech, healthcare, construction).",
-      tl: "Opisyal na Calgary business development organization.",
-      es: "Organización oficial de desarrollo empresarial de Calgary.",
-      ar: "منظمة تطوير الأعمال الرسمية في كالجاري.",
-      zh: "卡尔加里官方业务发展组织。",
+      en: "Official Calgary business development organization providing job market insights, hiring trends, major employers, and sector information. Lists companies actively hiring in Calgary with growth projections for major industries (energy, tech, healthcare, construction)."
     },
     servicesOffered: ["Employer directory", "Hiring trends", "Sector insights", "Career guidance"],
     website: "https://www.calgaryeconomicdevelopment.com",
@@ -276,18 +200,10 @@ export const calgaryResources: Resource[] = [
     category: ["jobs"],
     userTypes: ["student", "creator", "family"],
     title: {
-      en: "Calgary Job Fairs & Recruitment Events",
-      tl: "Calgary Job Fairs & Recruitment Events",
-      es: "Ferias de Empleo y Eventos de Reclutamiento de Calgary",
-      ar: "معارض الوظائف وأحداث التوظيف في كالجاري",
-      zh: "卡尔加里招聘会和招聘活动",
+      en: "Calgary Job Fairs & Recruitment Events"
     },
     description: {
-      en: "Monthly job fairs in Calgary where hundreds of employers meet with job seekers directly. Network with hiring managers, submit applications on-site, and attend workshops. Usually free to attend. Check EventBrite, employer websites, and Calgary Community Resources for dates.",
-      tl: "Bulwan ng buwan na job fairs sa Calgary.",
-      es: "Ferias de empleo mensuales en Calgary.",
-      ar: "معارض وظائف شهرية في كالجاري.",
-      zh: "卡尔加里每月招聘会。",
+      en: "Monthly job fairs in Calgary where hundreds of employers meet with job seekers directly. Network with hiring managers, submit applications on-site, and attend workshops. Usually free to attend. Check EventBrite, employer websites, and Calgary Community Resources for dates."
     },
     servicesOffered: ["Employer meetings", "Direct applications", "Workshops", "Networking"],
     website: "https://www.eventbrite.ca/d/calgary-ab/job-fair/",
@@ -300,18 +216,10 @@ export const calgaryResources: Resource[] = [
     category: ["jobs"],
     userTypes: ["student", "creator", "family"],
     title: {
-      en: "Calgary Staffing & Recruitment Agencies",
-      tl: "Calgary Staffing & Recruitment Agencies",
-      es: "Agencias de Personal y Reclutamiento de Calgary",
-      ar: "وكالات التوظيف والتجنيد في كالجاري",
-      zh: "卡尔加里人员配备和招聘机构",
+      en: "Calgary Staffing & Recruitment Agencies"
     },
     description: {
-      en: "Top Calgary staffing agencies specializing in permanent and temporary positions. Agencies include: Kelly Services, Manpower, Randstad, Iqvia, Robert Half, Hudson Global. Register with multiple agencies to access exclusive job listings. Many specialize in healthcare, trades, IT, finance, or administrative roles.",
-      tl: "Pangunahing staffing agencies sa Calgary.",
-      es: "Principales agencias de personal de Calgary.",
-      ar: "أفضل وكالات التوظيف في كالجاري.",
-      zh: "卡尔加里顶级人员配备机构。",
+      en: "Top Calgary staffing agencies specializing in permanent and temporary positions. Agencies include: Kelly Services, Manpower, Randstad, Iqvia, Robert Half, Hudson Global. Register with multiple agencies to access exclusive job listings. Many specialize in healthcare, trades, IT, finance, or administrative roles."
     },
     servicesOffered: ["Temp jobs", "Permanent placement", "Career counseling", "Specialized recruitment"],
     website: "https://www.kellyservices.ca",
@@ -324,18 +232,10 @@ export const calgaryResources: Resource[] = [
     category: ["jobs", "education"],
     userTypes: ["student", "student", "creator"],
     title: {
-      en: "Calgary Trades & Apprenticeships",
-      tl: "Calgary Trades & Apprenticeships",
-      es: "Oficios y Aprendizajes de Calgary",
-      ar: "الحرف اليدوية والتدريب المهني في كالجاري",
-      zh: "卡尔加�����贸易和学徒",
+      en: "Calgary Trades & Apprenticeships"
     },
     description: {
-      en: "Alberta offers high-demand apprenticeships in trades: electrician, plumbing, carpentry, welding, HVAC, and more. Average apprentice earning $60,000-$90,000. Register through Alberta Apprenticeship, connect with local employers, earn while you learn. Opportunities in construction, energy, and maintenance sectors.",
-      tl: "Alberta ay nag-aalok ng high-demand apprenticeships sa trades.",
-      es: "Alberta ofrece aprendizajes muy demandados en oficios.",
-      ar: "تقدم ألبرتا تدريبات عملية عالية الطلب في الحرف.",
-      zh: "艾伯塔提供贸易高需求学徒。",
+      en: "Alberta offers high-demand apprenticeships in trades: electrician, plumbing, carpentry, welding, HVAC, and more. Average apprentice earning $60,000-$90,000. Register through Alberta Apprenticeship, connect with local employers, earn while you learn. Opportunities in construction, energy, and maintenance sectors."
     },
     servicesOffered: ["Apprenticeships", "Trade training", "Earn while learning", "Career pathways"],
     website: "https://www.alberta.ca/apprenticeship-industry-training",
@@ -348,18 +248,10 @@ export const calgaryResources: Resource[] = [
     category: ["jobs"],
     userTypes: ["creator", "family"],
     title: {
-      en: "City of Calgary Careers",
-      tl: "City of Calgary Careers",
-      es: "Carreras en la Ciudad de Calgary",
-      ar: "وظائف مدينة كالجاري",
-      zh: "卡尔加里市职业",
+      en: "City of Calgary Careers"
     },
     description: {
-      en: "Stable employment with City of Calgary in dozens of departments: police, fire, transit, parks, planning, engineering, administration. Competitive salaries, benefits, pension, and job security. Apply online to posted positions. Recruitment events held regularly.",
-      tl: "Stable employment sa City of Calgary.",
-      es: "Empleo estable en la Ciudad de Calgary.",
-      ar: "التوظيف المستقر مع مدينة كالجاري.",
-      zh: "卡尔加里市稳定就业。",
+      en: "Stable employment with City of Calgary in dozens of departments: police, fire, transit, parks, planning, engineering, administration. Competitive salaries, benefits, pension, and job security. Apply online to posted positions. Recruitment events held regularly."
     },
     servicesOffered: ["Government jobs", "Competitive salaries", "Benefits", "Pension"],
     phone: "311",
@@ -373,18 +265,10 @@ export const calgaryResources: Resource[] = [
     category: ["jobs"],
     userTypes: ["student", "creator", "family"],
     title: {
-      en: "Workopolis Calgary",
-      tl: "Workopolis Calgary",
-      es: "Workopolis Calgary",
-      ar: "Workopolis كالجاري",
-      zh: "Workopolis 卡尔加里",
+      en: "Workopolis Calgary"
     },
     description: {
-      en: "Canadian job search site with 8,000+ active listings in Calgary. Browse by job title, company, location. Post resume for free. Get job recommendations based on your profile. Many exclusive listings not found on other sites.",
-      tl: "Canadian job search site na may libu-libong listings sa Calgary.",
-      es: "Sitio canadiense de búsqueda de empleo con miles de anuncios.",
-      ar: "موقع بحث عن الوظائف الكندي مع آلاف الإدراجات.",
-      zh: "拥有数千个卡尔加里职位列表的加拿大职位搜索网站。",
+      en: "Canadian job search site with 8,000+ active listings in Calgary. Browse by job title, company, location. Post resume for free. Get job recommendations based on your profile. Many exclusive listings not found on other sites."
     },
     servicesOffered: ["Job search", "Resume posting", "Job recommendations"],
     website: "https://www.workopolis.com/jobsearch/job-listing/?l=calgary",
@@ -399,18 +283,10 @@ export const calgaryResources: Resource[] = [
     category: ["newcomer", "jobs"],
     userTypes: ["newcomer"],
     title: {
-      en: "Centre for Newcomers - Employment Services",
-      tl: "Centre for Newcomers - Employment Services",
-      es: "Centro para Recién Llegados - Servicios de Empleo",
-      ar: "مركز القادمين الجدد - خدمات التوظيف",
-      zh: "新移民中心 - 就业服务",
+      en: "Centre for Newcomers - Employment Services"
     },
     description: {
-      en: "Comprehensive employment services for newcomers including job search assistance, resume writing, interview preparation, career counseling, and connections to employers. Free for eligible newcomers.",
-      tl: "Komprehensibong employment services para sa mga bagong dating.",
-      es: "Servicios de empleo integrales para recién llegados.",
-      ar: "خدمات توظيف شاملة للقادمين الجدد.",
-      zh: "为新移民提供全面的就业服务。",
+      en: "Comprehensive employment services for newcomers including job search assistance, resume writing, interview preparation, career counseling, and connections to employers. Free for eligible newcomers."
     },
     servicesOffered: [
       "Job search assistance",
@@ -434,18 +310,10 @@ export const calgaryResources: Resource[] = [
     category: ["newcomer", "jobs"],
     userTypes: ["newcomer"],
     title: {
-      en: "CCIS Employment Services",
-      tl: "CCIS Employment Services",
-      es: "Servicios de Empleo CCIS",
-      ar: "خدمات التوظيف CCIS",
-      zh: "CCIS就业服务",
+      en: "CCIS Employment Services"
     },
     description: {
-      en: "Calgary Catholic Immigration Society offers employment programs including job readiness workshops, occupation-specific training, mentorship programs, and direct employer connections for immigrants and refugees.",
-      tl: "Nag-aalok ang CCIS ng employment programs para sa immigrants at refugees.",
-      es: "CCIS ofrece programas de empleo para inmigrantes y refugiados.",
-      ar: "تقدم CCIS برامج توظيف للمهاجرين واللاجئين.",
-      zh: "CCIS为移民和难民提供就业项目。",
+      en: "Calgary Catholic Immigration Society offers employment programs including job readiness workshops, occupation-specific training, mentorship programs, and direct employer connections for immigrants and refugees."
     },
     servicesOffered: [
       "Job readiness workshops",
@@ -467,18 +335,10 @@ export const calgaryResources: Resource[] = [
     category: ["newcomer", "jobs"],
     userTypes: ["newcomer"],
     title: {
-      en: "Calgary Region Immigrant Employment Council (CRIEC)",
-      tl: "Calgary Region Immigrant Employment Council",
-      es: "Consejo de Empleo de Inmigrantes de la Región de Calgary",
-      ar: "مجلس توظيف المهاجرين في منطقة كالجاري",
-      zh: "卡尔加里地区移民就业委员会",
+      en: "Calgary Region Immigrant Employment Council (CRIEC)"
     },
     description: {
-      en: "Mentorship and career bridging programs for internationally trained professionals. Connects newcomers with established professionals in their field for guidance and networking.",
-      tl: "Mentorship programs para sa internationally trained professionals.",
-      es: "Programas de mentoría para profesionales capacitados internacionalmente.",
-      ar: "برامج الإرشاد للمهنيين المدربين دوليًا.",
-      zh: "为国际培训专业人员提供指导和职业桥梁项目。",
+      en: "Mentorship and career bridging programs for internationally trained professionals. Connects newcomers with established professionals in their field for guidance and networking."
     },
     servicesOffered: [
       "Professional mentorship",
@@ -499,18 +359,10 @@ export const calgaryResources: Resource[] = [
     category: ["newcomer", "family", "jobs"],
     userTypes: ["newcomer", "family"],
     title: {
-      en: "CIWA - Employment Programs for Women",
-      tl: "CIWA - Employment Programs para sa mga Kababaihan",
-      es: "CIWA - Programas de Empleo para Mujeres",
-      ar: "CIWA - برامج التوظيف للنساء",
-      zh: "CIWA - 女性就业项目",
+      en: "CIWA - Employment Programs for Women"
     },
     description: {
-      en: "Calgary Immigrant Women's Association provides industry-specific training and bridge-to-work programs specifically for immigrant and refugee women. Includes childcare support during training.",
-      tl: "Training at employment programs para sa immigrant women.",
-      es: "Capacitación y programas de empleo para mujeres inmigrantes.",
-      ar: "التدريب وبرامج التوظيف للنساء المهاجرات.",
-      zh: "专门为移民和难民妇女提供行业特定培训。",
+      en: "Calgary Immigrant Women's Association provides industry-specific training and bridge-to-work programs specifically for immigrant and refugee women. Includes childcare support during training."
     },
     servicesOffered: [
       "Industry-specific training",
@@ -531,18 +383,10 @@ export const calgaryResources: Resource[] = [
     category: ["jobs", "emergency"],
     userTypes: ["newcomer", "family", "senior"],
     title: {
-      en: "Alberta Supports",
-      tl: "Alberta Supports",
-      es: "Alberta Supports",
-      ar: "Alberta Supports",
-      zh: "Alberta Supports",
+      en: "Alberta Supports"
     },
     description: {
-      en: "Government-funded employment and income support services. Provides job search assistance, training funding, income support, health benefits, and child care subsidies for eligible Albertans.",
-      tl: "Government-funded employment at income support services.",
-      es: "Servicios de empleo y apoyo al ingreso financiados por el gobierno.",
-      ar: "خدمات التوظيف ودعم الدخل الممولة من الحكومة.",
-      zh: "政府资助的就业和收入支持服务。",
+      en: "Government-funded employment and income support services. Provides job search assistance, training funding, income support, health benefits, and child care subsidies for eligible Albertans."
     },
     servicesOffered: [
       "Job search assistance",
@@ -563,18 +407,10 @@ export const calgaryResources: Resource[] = [
     category: ["jobs", "education"],
     userTypes: ["newcomer", "student", "family"],
     title: {
-      en: "Bow Valley College Career Services",
-      tl: "Bow Valley College Career Services",
-      es: "Servicios de Carrera de Bow Valley College",
-      ar: "خدمات التوظيف في كلية باو فالي",
-      zh: "博瓦���学院职业服务",
+      en: "Bow Valley College Career Services"
     },
     description: {
-      en: "Free career counseling, resume writing workshops, interview preparation, and job search support for all Calgarians - not just students. Includes access to job postings and employer events.",
-      tl: "Libreng career counseling at job search support para sa lahat.",
-      es: "Asesoramiento profesional gratuito y apoyo en búsqueda de empleo.",
-      ar: "استشارات مهنية مجانية ودعم في البحث عن عمل للجميع.",
-      zh: "为所有卡尔加里人提供免费职业咨询和求职支持。",
+      en: "Free career counseling, resume writing workshops, interview preparation, and job search support for all Calgarians - not just students. Includes access to job postings and employer events."
     },
     servicesOffered: [
       "Career counseling",
@@ -596,18 +432,10 @@ export const calgaryResources: Resource[] = [
     category: ["jobs", "education"],
     userTypes: ["newcomer", "student", "family", "senior"],
     title: {
-      en: "Calgary Public Library - Job Resources",
-      tl: "Calgary Public Library - Job Resources",
-      es: "Biblioteca Pública de Calgary - Recursos de Empleo",
-      ar: "مكتبة كالجاري العامة - موارد التوظيف",
-      zh: "卡尔加里公共图书馆 - 就业资源",
+      en: "Calgary Public Library - Job Resources"
     },
     description: {
-      en: "Free access to resume templates, job search databases, career exploration tools, interview practice software, and one-on-one help from library staff. Available at all library locations.",
-      tl: "Libreng access sa resume templates at job search databases.",
-      es: "Acceso gratuito a plantillas de currículum y bases de datos de empleo.",
-      ar: "وصول مجاني إلى قوالب السيرة الذاتية وقواعد بيانات البحث عن عمل.",
-      zh: "免费访问简历模板和求职数据库。",
+      en: "Free access to resume templates, job search databases, career exploration tools, interview practice software, and one-on-one help from library staff. Available at all library locations."
     },
     servicesOffered: [
       "Resume templates",
@@ -629,18 +457,10 @@ export const calgaryResources: Resource[] = [
     category: ["newcomer", "jobs"],
     userTypes: ["newcomer"],
     title: {
-      en: "TIES - Employment Programs",
-      tl: "TIES - Employment Programs",
-      es: "TIES - Programas de Empleo",
-      ar: "TIES - برامج التوظيف",
-      zh: "TIES - 就业项目",
+      en: "TIES - Employment Programs"
     },
     description: {
-      en: "Specialized job readiness and English-for-employment programs for newcomers. Provides crisis support, financial literacy training, and community navigation services.",
-      tl: "Job readiness at English-for-employment programs para sa newcomers.",
-      es: "Programas de preparación laboral e inglés para el empleo.",
-      ar: "برامج الاستعداد للعمل والإنجليزية للتوظيف للقادمين الجدد.",
-      zh: "为新移民提供就业准备和就业英语项目。",
+      en: "Specialized job readiness and English-for-employment programs for newcomers. Provides crisis support, financial literacy training, and community navigation services."
     },
     servicesOffered: [
       "Job readiness training",
@@ -664,18 +484,10 @@ export const calgaryResources: Resource[] = [
     category: ["mental-health", "emergency"],
     userTypes: ["newcomer", "family", "senior", "student"],
     title: {
-      en: "Distress Centre Calgary",
-      tl: "Distress Centre Calgary",
-      es: "Centro de Angustia de Calgary",
-      ar: "مركز الأزمات في كالجاري",
-      zh: "卡尔加里危机中心",
+      en: "Distress Centre Calgary"
     },
     description: {
-      en: "24/7 crisis support line providing confidential support for anyone in distress. Services include crisis intervention, suicide prevention, short-term counselling (1-6 sessions), and 211 information referral. 89% of clients report improved coping after service.",
-      tl: "24/7 crisis support line para sa sinumang nasa distress.",
-      es: "Línea de apoyo de crisis 24/7.",
-      ar: "خط دعم الأزمات على مدار الساعة.",
-      zh: "全天候危机支持热线。",
+      en: "24/7 crisis support line providing confidential support for anyone in distress. Services include crisis intervention, suicide prevention, short-term counselling (1-6 sessions), and 211 information referral. 89% of clients report improved coping after service."
     },
     servicesOffered: [
       "24/7 crisis line",
@@ -697,18 +509,10 @@ export const calgaryResources: Resource[] = [
     category: ["mental-health", "healthcare"],
     userTypes: ["newcomer", "family", "senior", "student"],
     title: {
-      en: "AHS Mental Health Help Line",
-      tl: "AHS Mental Health Help Line",
-      es: "Línea de Ayuda de Salud Mental de AHS",
-      ar: "خط مساعدة الصحة النفسية AHS",
-      zh: "AHS心理健康帮助热线",
+      en: "AHS Mental Health Help Line"
     },
     description: {
-      en: "24/7 mental health crisis line operated by Alberta Health Services. Free, confidential support for anxiety, depression, addiction, and other mental health concerns. No Alberta Health Card required.",
-      tl: "24/7 mental health crisis line ng AHS.",
-      es: "Línea de crisis de salud mental 24/7 de AHS.",
-      ar: "خط أزمات الصحة النفسية 24/7 من AHS.",
-      zh: "AHS运营的24/7心理健康危机热线。",
+      en: "24/7 mental health crisis line operated by Alberta Health Services. Free, confidential support for anxiety, depression, addiction, and other mental health concerns. No Alberta Health Card required."
     },
     servicesOffered: [
       "24/7 crisis support",
@@ -729,18 +533,10 @@ export const calgaryResources: Resource[] = [
     category: ["mental-health"],
     userTypes: ["newcomer", "family", "senior", "student"],
     title: {
-      en: "Access Mental Health Calgary",
-      tl: "Access Mental Health Calgary",
-      es: "Acceso Salud Mental Calgary",
-      ar: "الوصول للصحة النفسية كالجاري",
-      zh: "卡尔加里心理健康通道",
+      en: "Access Mental Health Calgary"
     },
     description: {
-      en: "Single point of entry for publicly funded mental health services in Calgary. Provides assessment, connects to appropriate level of care, and offers same-day urgent appointments when needed.",
-      tl: "Single point of entry para sa publicly funded mental health services.",
-      es: "Punto único de entrada para servicios de salud mental públicos.",
-      ar: "نقطة دخول واحدة لخدمات الصحة النفسية الممولة من الحكومة.",
-      zh: "卡尔加里公共资助心理健康服务的单一入口点。",
+      en: "Single point of entry for publicly funded mental health services in Calgary. Provides assessment, connects to appropriate level of care, and offers same-day urgent appointments when needed."
     },
     servicesOffered: [
       "Mental health assessment",
@@ -760,18 +556,10 @@ export const calgaryResources: Resource[] = [
     category: ["mental-health", "education"],
     userTypes: ["student"],
     title: {
-      en: "UCalgary Counselling Centre",
-      tl: "UCalgary Counselling Centre",
-      es: "Centro de Consejería UCalgary",
-      ar: "مركز الاستشارات UCalgary",
-      zh: "卡尔加里大学咨询中心",
+      en: "UCalgary Counselling Centre"
     },
     description: {
-      en: "Free counselling for UCalgary students. Also offers low-cost counselling to public through practicum students supervised by licensed psychologists.",
-      tl: "Libreng counselling para sa mga estudyante ng UCalgary.",
-      es: "Consejería gratuita para estudiantes de UCalgary.",
-      ar: "استشارات مجانية لطلاب UCalgary.",
-      zh: "为卡尔加里大学学生提供免费咨询。",
+      en: "Free counselling for UCalgary students. Also offers low-cost counselling to public through practicum students supervised by licensed psychologists."
     },
     servicesOffered: [
       "Individual counselling",
@@ -796,18 +584,10 @@ export const calgaryResources: Resource[] = [
     category: ["food", "emergency"],
     userTypes: ["newcomer", "family", "senior"],
     title: {
-      en: "Calgary Food Bank",
-      tl: "Calgary Food Bank",
-      es: "Banco de Alimentos de Calgary",
-      ar: "بنك الغذاء في كالجاري",
-      zh: "卡尔加里食品银行",
+      en: "Calgary Food Bank"
     },
     description: {
-      en: "Calgary's main emergency food bank providing food hampers to individuals and families in need. Screening and appointments required. Also operates satellite distribution points across the city.",
-      tl: "Pangunahing emergency food bank ng Calgary.",
-      es: "Principal banco de alimentos de emergencia de Calgary.",
-      ar: "بنك الغذاء الطارئ الرئيسي في كالجاري.",
-      zh: "卡尔加里主要的紧急食品银行。",
+      en: "Calgary's main emergency food bank providing food hampers to individuals and families in need. Screening and appointments required. Also operates satellite distribution points across the city."
     },
     servicesOffered: [
       "Emergency food hampers",
@@ -829,18 +609,10 @@ export const calgaryResources: Resource[] = [
     category: ["food"],
     userTypes: ["newcomer", "family", "senior"],
     title: {
-      en: "Community Food Pantries",
-      tl: "Community Food Pantries",
-      es: "Despensas Comunitarias",
-      ar: "خزائن الطعام المجتمعية",
-      zh: "社区食品储藏室",
+      en: "Community Food Pantries"
     },
     description: {
-      en: "Free community pantries across Calgary operating on mutual aid principles - take what you need, donate what you can. Includes Acadia Pantry, Dalhousie Community Pantry, Brentwood Community Pantry, and Ranchlands Food Pantry.",
-      tl: "Libreng community pantries sa Calgary.",
-      es: "Despensas comunitarias gratuitas en Calgary.",
-      ar: "خزائن طعام مجتمعية مجانية في كالجاري.",
-      zh: "卡尔加里各地的免费社区食品储藏室。",
+      en: "Free community pantries across Calgary operating on mutual aid principles - take what you need, donate what you can. Includes Acadia Pantry, Dalhousie Community Pantry, Brentwood Community Pantry, and Ranchlands Food Pantry."
     },
     servicesOffered: [
       "Non-perishable food",
@@ -859,18 +631,10 @@ export const calgaryResources: Resource[] = [
     category: ["food", "senior"],
     userTypes: ["senior"],
     title: {
-      en: "Seniors Meal Programs",
-      tl: "Seniors Meal Programs",
-      es: "Programas de Comidas para Mayores",
-      ar: "برامج وجبات كبار السن",
-      zh: "老年人餐食项目",
+      en: "Seniors Meal Programs"
     },
     description: {
-      en: "Various meal programs for seniors including Kerby Centre Lunch Program, Meals on Wheels Calgary, and community center lunch programs. Provides nutritious meals and social connection.",
-      tl: "Iba't ibang meal programs para sa mga senior.",
-      es: "Varios programas de comidas para mayores.",
-      ar: "برامج وجبات متنوعة لكبار السن.",
-      zh: "为老年人提供各种餐食项目。",
+      en: "Various meal programs for seniors including Kerby Centre Lunch Program, Meals on Wheels Calgary, and community center lunch programs. Provides nutritious meals and social connection."
     },
     servicesOffered: [
       "Hot meals",
@@ -893,18 +657,10 @@ export const calgaryResources: Resource[] = [
     category: ["healthcare", "emergency"],
     userTypes: ["newcomer", "family", "senior", "student"],
     title: {
-      en: "Health Link 811",
-      tl: "Health Link 811",
-      es: "Health Link 811",
-      ar: "Health Link 811",
-      zh: "Health Link 811",
+      en: "Health Link 811"
     },
     description: {
-      en: "24/7 health advice line staffed by registered nurses. Get health advice, find healthcare services, and determine if you need to see a doctor or go to emergency. Free, confidential service.",
-      tl: "24/7 health advice line na pinamumunuan ng mga registered nurses.",
-      es: "Línea de asesoramiento de salud 24/7.",
-      ar: "خط نصائح صحية 24/7.",
-      zh: "由注册护士提供24/7健康咨询热线。",
+      en: "24/7 health advice line staffed by registered nurses. Get health advice, find healthcare services, and determine if you need to see a doctor or go to emergency. Free, confidential service."
     },
     servicesOffered: [
       "Health advice",
@@ -925,18 +681,10 @@ export const calgaryResources: Resource[] = [
     category: ["healthcare", "newcomer"],
     userTypes: ["newcomer", "family", "student"],
     title: {
-      en: "Alberta Health Care Insurance Plan (AHCIP)",
-      tl: "Alberta Health Care Insurance Plan",
-      es: "Plan de Seguro de Salud de Alberta",
-      ar: "خطة التأمين الصحي في ألبرتا",
-      zh: "艾伯塔省医疗保险计划",
+      en: "Alberta Health Care Insurance Plan (AHCIP)"
     },
     description: {
-      en: "Register for Alberta Health Care coverage to access publicly funded healthcare services. Essential for newcomers - apply within 3 months of arrival. Coverage begins after 3-month waiting period for some newcomers.",
-      tl: "Mag-register para sa Alberta Health Care coverage.",
-      es: "Regístrese para la cobertura de salud de Alberta.",
-      ar: "سجل للحصول على تغطية الرعاية الصحية في ألبرتا.",
-      zh: "注册艾伯塔省医疗保险以获得公共医疗服务。",
+      en: "Register for Alberta Health Care coverage to access publicly funded healthcare services. Essential for newcomers - apply within 3 months of arrival. Coverage begins after 3-month waiting period for some newcomers."
     },
     servicesOffered: [
       "Health card registration",
@@ -955,18 +703,10 @@ export const calgaryResources: Resource[] = [
     category: ["healthcare"],
     userTypes: ["newcomer", "family", "senior", "student"],
     title: {
-      en: "Find a Family Doctor",
-      tl: "Maghanap ng Family Doctor",
-      es: "Encontrar un Médico de Familia",
-      ar: "البحث عن طبيب عائلة",
-      zh: "寻找家庭医生",
+      en: "Find a Family Doctor"
     },
     description: {
-      en: "Use Alberta Health Services' physician finder to locate family doctors accepting new patients. Many clinics in Calgary currently accepting patients including Aurora Clinic, Now Medical, Calgary Medical Centre, and OptimaCare.",
-      tl: "Gamitin ang physician finder ng AHS.",
-      es: "Use el buscador de médicos de AHS.",
-      ar: "استخدم أداة البحث عن الأطباء من AHS.",
-      zh: "使用AHS的医生查找工具。",
+      en: "Use Alberta Health Services' physician finder to locate family doctors accepting new patients. Many clinics in Calgary currently accepting patients including Aurora Clinic, Now Medical, Calgary Medical Centre, and OptimaCare."
     },
     servicesOffered: [
       "Doctor search tool",
@@ -983,18 +723,10 @@ export const calgaryResources: Resource[] = [
     category: ["healthcare", "emergency"],
     userTypes: ["newcomer", "family", "senior", "student"],
     title: {
-      en: "Urgent Care Centres",
-      tl: "Urgent Care Centres",
-      es: "Centros de Atención de Urgencia",
-      ar: "مراكز الرعاية العاجلة",
-      zh: "紧急护理中心",
+      en: "Urgent Care Centres"
     },
     description: {
-      en: "For non-life-threatening urgent care needs. Shorter wait times than emergency rooms. Locations include Sheldon M. Chumir Health Centre (downtown), South Health Campus, and Peter Lougheed Centre.",
-      tl: "Para sa urgent care needs na hindi life-threatening.",
-      es: "Para necesidades de atención urgente no mortales.",
-      ar: "لاحتياجات الرعاية العاجلة غير المهددة للحياة.",
-      zh: "用于非危及生命的紧急护理需求。",
+      en: "For non-life-threatening urgent care needs. Shorter wait times than emergency rooms. Locations include Sheldon M. Chumir Health Centre (downtown), South Health Campus, and Peter Lougheed Centre."
     },
     servicesOffered: [
       "Urgent care",
@@ -1018,18 +750,10 @@ export const calgaryResources: Resource[] = [
     category: ["newcomer", "jobs", "housing", "education"],
     userTypes: ["newcomer"],
     title: {
-      en: "Calgary Catholic Immigration Society (CCIS)",
-      tl: "Calgary Catholic Immigration Society",
-      es: "Sociedad Católica de Inmigración de Calgary",
-      ar: "جمعية كالجاري الكاثوليكية للهجرة",
-      zh: "卡尔加里天主教移民协会",
+      en: "Calgary Catholic Immigration Society (CCIS)"
     },
     description: {
-      en: "Calgary's largest settlement agency serving newcomers since 1981. Comprehensive services including housing support, employment programs, language training, family services, youth programs, and refugee resettlement.",
-      tl: "Pinakamalaking settlement agency ng Calgary mula 1981.",
-      es: "La agencia de asentamiento más grande de Calgary desde 1981.",
-      ar: "أكبر وكالة استيطان في كالجاري منذ عام 1981.",
-      zh: "卡尔加里最大的移民安置机构，自1981年起为新移民提供服务。",
+      en: "Calgary's largest settlement agency serving newcomers since 1981. Comprehensive services including housing support, employment programs, language training, family services, youth programs, and refugee resettlement."
     },
     servicesOffered: [
       "Settlement services",
@@ -1054,18 +778,10 @@ export const calgaryResources: Resource[] = [
     category: ["newcomer", "jobs", "education", "family"],
     userTypes: ["newcomer"],
     title: {
-      en: "Centre for Newcomers",
-      tl: "Centre for Newcomers",
-      es: "Centro para Recién Llegados",
-      ar: "مركز القادمين الجدد",
-      zh: "新移民中心",
+      en: "Centre for Newcomers"
     },
     description: {
-      en: "Full-service settlement agency with multiple Calgary locations. Services include LINC language classes, daycare, job search support, newcomer orientation, family programs, and community connections.",
-      tl: "Full-service settlement agency na may maraming lokasyon sa Calgary.",
-      es: "Agencia de asentamiento completa con múltiples ubicaciones en Calgary.",
-      ar: "وكالة استيطان شاملة مع عدة مواقع في كالجاري.",
-      zh: "全方位移民安置机构，在卡尔加里��多个地点。",
+      en: "Full-service settlement agency with multiple Calgary locations. Services include LINC language classes, daycare, job search support, newcomer orientation, family programs, and community connections."
     },
     servicesOffered: [
       "LINC language classes",
@@ -1088,18 +804,10 @@ export const calgaryResources: Resource[] = [
     category: ["newcomer"],
     userTypes: ["newcomer"],
     title: {
-      en: "Immigrant Services Calgary",
-      tl: "Immigrant Services Calgary",
-      es: "Servicios para Inmigrantes Calgary",
-      ar: "خدمات المهاجرين كالجاري",
-      zh: "卡尔加里移民服务",
+      en: "Immigrant Services Calgary"
     },
     description: {
-      en: "Provides newcomer planning services, language testing (CELPIP, IELTS preparation), settlement assistance, and community integration programs for immigrants and refugees.",
-      tl: "Newcomer planning services at language testing para sa immigrants.",
-      es: "Servicios de planificación para recién llegados y pruebas de idioma.",
-      ar: "خدمات تخطيط للقادمين الجدد واختبارات اللغة للمهاجرين.",
-      zh: "为��民提供新移民规划服务和语言测试。",
+      en: "Provides newcomer planning services, language testing (CELPIP, IELTS preparation), settlement assistance, and community integration programs for immigrants and refugees."
     },
     servicesOffered: [
       "Newcomer planning",
@@ -1123,18 +831,10 @@ export const calgaryResources: Resource[] = [
     category: ["senior", "community"],
     userTypes: ["senior"],
     title: {
-      en: "Unison at Kerby Centre",
-      tl: "Unison at Kerby Centre",
-      es: "Unison en el Centro Kerby",
-      ar: "Unison في مركز كيربي",
-      zh: "Kerby中心的Unison",
+      en: "Unison at Kerby Centre"
     },
     description: {
-      en: "Comprehensive services for Calgary seniors 55+. Services include housing assistance, benefits navigation, free tax filing, transportation (Veiner Vintage Transport), wellness programs, food security, and monthly housing information sessions.",
-      tl: "Komprehensibong serbisyo para sa Calgary seniors 55+.",
-      es: "Servicios integrales para mayores de Calgary de 55+.",
-      ar: "خدمات شاملة لكبار السن في كالجاري 55+.",
-      zh: "为55岁以上卡尔加里老年人提供全面服务。",
+      en: "Comprehensive services for Calgary seniors 55+. Services include housing assistance, benefits navigation, free tax filing, transportation (Veiner Vintage Transport), wellness programs, food security, and monthly housing information sessions."
     },
     servicesOffered: [
       "Housing assistance",
@@ -1160,18 +860,10 @@ export const calgaryResources: Resource[] = [
     category: ["senior"],
     userTypes: ["senior"],
     title: {
-      en: "Free Tax Clinic for Seniors",
-      tl: "Free Tax Clinic para sa Seniors",
-      es: "Clínica de Impuestos Gratuita para Mayores",
-      ar: "عيادة ضرائب مجانية لكبار السن",
-      zh: "老年人免费报税服务",
+      en: "Free Tax Clinic for Seniors"
     },
     description: {
-      en: "Free tax preparation for seniors with modest income. Available at Kerby Centre and various locations during tax season. Volunteers help file simple returns and apply for benefits.",
-      tl: "Libreng tax preparation para sa seniors na may katamtamang kita.",
-      es: "Preparación de impuestos gratuita para mayores con ingresos modestos.",
-      ar: "��ع��اد ضرائب مجاني لكبار السن ذوي الدخل المتواضع.",
-      zh: "为收入中等的老年人提供免费报税服务。",
+      en: "Free tax preparation for seniors with modest income. Available at Kerby Centre and various locations during tax season. Volunteers help file simple returns and apply for benefits."
     },
     servicesOffered: [
       "Tax return filing",
@@ -1191,18 +883,10 @@ export const calgaryResources: Resource[] = [
     category: ["senior", "emergency", "healthcare"],
     userTypes: ["senior", "family"],
     title: {
-      en: "Unison Elder Abuse Shelter & Resource Line",
-      tl: "Unison Elder Abuse Shelter at Resource Line",
-      es: "Refugio y Línea de Recursos contra el Abuso de Mayores (Unison)",
-      ar: "ملجأ ووحدة دعم إساءة معاملة كبار السن (Unison)",
-      zh: "Unison 老年人受虐庇护所及求助热线",
+      en: "Unison Elder Abuse Shelter & Resource Line"
     },
     description: {
-      en: "Canada's first elder abuse shelter, run by Unison Alberta. Provides 24/7 emergency refuge, safety planning, trauma recovery, case management, and outreach for adults 55+ experiencing physical, emotional, financial, or other abuse. The 24/7 Elder Abuse Resource Line offers confidential help and reporting — you do not need to be in a shelter to call.",
-      tl: "Unang elder abuse shelter sa Canada, pinapatakbo ng Unison Alberta. 24/7 emergency refuge at suporta para sa 55+.",
-      es: "El primer refugio de Canadá contra el abuso de mayores, de Unison Alberta. Refugio de emergencia 24/7 y apoyo para mayores de 55+.",
-      ar: "أول ملجأ في كندا لضحايا إساءة معاملة كبار السن، تديره Unison Alberta. ملجأ طارئ على مدار الساعة ودعم لمن هم 55+.",
-      zh: "由 Unison Alberta 运营的加拿大首个老年人受虐庇护所，为55岁以上人士提供24/7紧急庇护与支持。",
+      en: "Canada's first elder abuse shelter, run by Unison Alberta. Provides 24/7 emergency refuge, safety planning, trauma recovery, case management, and outreach for adults 55+ experiencing physical, emotional, financial, or other abuse. The 24/7 Elder Abuse Resource Line offers confidential help and reporting — you do not need to be in a shelter to call."
     },
     servicesOffered: [
       "24/7 emergency shelter",
@@ -1224,18 +908,10 @@ export const calgaryResources: Resource[] = [
     category: ["senior", "community"],
     userTypes: ["senior", "family"],
     title: {
-      en: "Calgary Seniors' Resource Society",
-      tl: "Calgary Seniors' Resource Society",
-      es: "Sociedad de Recursos para Mayores de Calgary",
-      ar: "جمعية موارد كبار السن في كالجاري",
-      zh: "卡尔加里老年人资源协会",
+      en: "Calgary Seniors' Resource Society"
     },
     description: {
-      en: "Non-profit offering free social work, friendly visiting, and volunteer-based support so older adults can age with dignity at home. The Way In Network connects seniors to benefits, housing, and community programs; SeniorConnect provides urgent crisis support through the Distress Centre (403-266-4357).",
-      tl: "Non-profit na nagbibigay ng libreng social work at suporta para makapamuhay nang may dignidad ang mga senior sa tahanan.",
-      es: "Organización sin fines de lucro que ofrece trabajo social gratuito y apoyo de voluntarios para que los mayores vivan con dignidad en casa.",
-      ar: "منظمة غير ربحية تقدم خدمة اجتماعية مجانية ودعماً تطوعياً لمساعدة كبار السن على العيش بكرامة في منازلهم.",
-      zh: "非营利机构，提供免费社工与志愿者支持，帮助长者有尊严地在家安老。",
+      en: "Non-profit offering free social work, friendly visiting, and volunteer-based support so older adults can age with dignity at home. The Way In Network connects seniors to benefits, housing, and community programs; SeniorConnect provides urgent crisis support through the Distress Centre (403-266-4357)."
     },
     servicesOffered: [
       "Social work support",
@@ -1257,18 +933,10 @@ export const calgaryResources: Resource[] = [
     category: ["senior", "community"],
     userTypes: ["senior", "family"],
     title: {
-      en: "City of Calgary — Seniors & Age-Friendly Calgary",
-      tl: "City of Calgary — Seniors at Age-Friendly Calgary",
-      es: "Ciudad de Calgary — Servicios para Mayores (Age-Friendly Calgary)",
-      ar: "مدينة كالجاري — خدمات كبار السن (مدينة صديقة للمسنين)",
-      zh: "卡尔加里市 — 长者及长者友好城市服务",
+      en: "City of Calgary — Seniors & Age-Friendly Calgary"
     },
     description: {
-      en: "The City's hub for seniors: low-income transit passes, recreation fee subsidies, property tax assistance, age-friendly programs, and connections to community supports. Call 311 for City services or 211 to be connected to senior programs across Calgary.",
-      tl: "Hub ng Lungsod para sa seniors: transit passes, subsidies, tax assistance, at age-friendly programs. Tumawag sa 311 o 211.",
-      es: "Centro municipal para mayores: pases de transporte, subsidios, ayuda fiscal y programas adaptados. Llame al 311 o al 211.",
-      ar: "مركز المدينة لكبار السن: تذاكر نقل وإعانات ومساعدة ضريبية وبرامج ملائمة للمسنين. اتصل بـ 311 أو 211.",
-      zh: "市政长者服务中心：交通优惠、费用补贴、地税援助及长者友好项目。拨打311或211。",
+      en: "The City's hub for seniors: low-income transit passes, recreation fee subsidies, property tax assistance, age-friendly programs, and connections to community supports. Call 311 for City services or 211 to be connected to senior programs across Calgary."
     },
     servicesOffered: [
       "Low-income transit pass",
@@ -1289,18 +957,10 @@ export const calgaryResources: Resource[] = [
     category: ["senior"],
     userTypes: ["senior", "family"],
     title: {
-      en: "Alberta Seniors Benefit & Financial Assistance",
-      tl: "Alberta Seniors Benefit at Financial Assistance",
-      es: "Beneficio para Mayores de Alberta y Asistencia Financiera",
-      ar: "إعانة كبار السن في ألبرتا والمساعدة المالية",
-      zh: "阿尔伯塔省长者津贴及财务援助",
+      en: "Alberta Seniors Benefit & Financial Assistance"
     },
     description: {
-      en: "Government of Alberta programs for low- to moderate-income seniors 65+: the Alberta Seniors Benefit (monthly income support), Special Needs Assistance, Dental and Optical Assistance, and the Seniors Property Tax Deferral program. One application covers several benefits.",
-      tl: "Mga programa ng Gobyerno ng Alberta para sa low-income seniors 65+: income support, dental at optical assistance, at property tax deferral.",
-      es: "Programas del Gobierno de Alberta para mayores de 65+ con ingresos modestos: apoyo de ingresos, asistencia dental y óptica.",
-      ar: "برامج حكومة ألبرتا لكبار السن 65+ من ذوي الدخل المحدود: دعم الدخل والمساعدة السنية والبصرية.",
-      zh: "阿尔伯塔省政府为65岁以上低收入长者提供���项目：收入补助、牙科和视光援助及地税延付。",
+      en: "Government of Alberta programs for low- to moderate-income seniors 65+: the Alberta Seniors Benefit (monthly income support), Special Needs Assistance, Dental and Optical Assistance, and the Seniors Property Tax Deferral program. One application covers several benefits."
     },
     servicesOffered: [
       "Monthly income support",
@@ -1320,18 +980,10 @@ export const calgaryResources: Resource[] = [
     category: ["senior", "housing"],
     userTypes: ["senior", "family"],
     title: {
-      en: "Silvera for Seniors (Seniors Housing)",
-      tl: "Silvera for Seniors (Pabahay para sa Seniors)",
-      es: "Silvera for Seniors (Vivienda para Mayores)",
-      ar: "Silvera for Seniors (سكن كبار السن)",
-      zh: "Silvera for Seniors（长者住房）",
+      en: "Silvera for Seniors (Seniors Housing)"
     },
     description: {
-      en: "Long-standing non-profit providing affordable independent and supportive living communities for Calgary seniors, including subsidized options, meals, wellness programs, and on-site social activities across multiple communities.",
-      tl: "Non-profit na nagbibigay ng abot-kayang independent at supportive living para sa mga senior sa Calgary.",
-      es: "Organización sin fines de lucro que ofrece vivienda asequible, independiente y con apoyo para mayores de Calgary.",
-      ar: "منظمة غير ربحية توفر سكناً ميسور التكلفة ومستقلاً وداعماً لكبار السن في كالجاري.",
-      zh: "历史悠久的非营利机构，为卡尔加里长者提供可负担的独立及支持型养老社区。",
+      en: "Long-standing non-profit providing affordable independent and supportive living communities for Calgary seniors, including subsidized options, meals, wellness programs, and on-site social activities across multiple communities."
     },
     servicesOffered: [
       "Affordable independent living",
@@ -1351,18 +1003,10 @@ export const calgaryResources: Resource[] = [
     category: ["senior", "community"],
     userTypes: ["senior", "family"],
     title: {
-      en: "Unison News (Seniors Publication)",
-      tl: "Unison News (Publikasyon para sa Seniors)",
-      es: "Unison News (Publicación para Mayores)",
-      ar: "Unison News (مجلة كبار السن)",
-      zh: "Unison News（长者刊物）",
+      en: "Unison News (Seniors Publication)"
     },
     description: {
-      en: "A free monthly publication from Unison Alberta for adults 50+ in Southern Alberta. Covers senior programs, benefits changes, community stories, events, and trusted resources. Available in print at senior centres and online — a great way to stay informed and connected.",
-      tl: "Libreng buwanang publikasyon ng Unison Alberta para sa 50+ sa Southern Alberta: programa, benepisyo, events, at resources.",
-      es: "Publicación mensual gratuita de Unison Alberta para mayores de 50+ en el sur de Alberta: programas, beneficios, eventos y recursos.",
-      ar: "نشرة شهرية مجانية من Unison Alberta لمن هم 50+ في جنوب ألبرتا: برامج وإعانات وفعاليات وموارد.",
-      zh: "Unison Alberta 为南阿尔伯塔50岁以上人士出版的免费月刊：项目、福利、社区故事、活动及资源。",
+      en: "A free monthly publication from Unison Alberta for adults 50+ in Southern Alberta. Covers senior programs, benefits changes, community stories, events, and trusted resources. Available in print at senior centres and online — a great way to stay informed and connected."
     },
     servicesOffered: [
       "Monthly senior news",
@@ -1386,18 +1030,10 @@ export const calgaryResources: Resource[] = [
     category: ["legal"],
     userTypes: ["newcomer", "family", "senior"],
     title: {
-      en: "Calgary Legal Guidance",
-      tl: "Calgary Legal Guidance",
-      es: "Calgary Legal Guidance",
-      ar: "Calgary Legal Guidance",
-      zh: "卡尔加里法律指导",
+      en: "Calgary Legal Guidance"
     },
     description: {
-      en: "Free legal advice clinic for low-income Calgarians. Covers tenant rights, family law, immigration, employment, and more. Appointments required - call to schedule.",
-      tl: "Libreng legal advice clinic para sa low-income Calgarians.",
-      es: "Clínica de asesoría legal gratuita para calgarianos de bajos ingresos.",
-      ar: "عيادة استشارات قانونية مجانية لذوي الدخل المنخفض في كالجاري.",
-      zh: "为低收入卡尔加里人提供免费法律咨询。",
+      en: "Free legal advice clinic for low-income Calgarians. Covers tenant rights, family law, immigration, employment, and more. Appointments required - call to schedule."
     },
     servicesOffered: [
       "Tenant rights advice",
@@ -1419,18 +1055,10 @@ export const calgaryResources: Resource[] = [
     category: ["legal"],
     userTypes: ["newcomer", "family", "student"],
     title: {
-      en: "Student Legal Assistance (SLA)",
-      tl: "Student Legal Assistance",
-      es: "Asistencia Legal Estudiantil",
-      ar: "المساعدة القانونية للطلاب",
-      zh: "学生法律援助",
+      en: "Student Legal Assistance (SLA)"
     },
     description: {
-      en: "Pro-bono legal clinic staffed by law students under lawyer supervision. Handles rental disputes, security deposit issues, tenancy agreement breaches, and other civil matters.",
-      tl: "Pro-bono legal clinic na pinamumunuan ng law students.",
-      es: "Clínica legal pro bono con estudiantes de derecho.",
-      ar: "عيادة قانونية مجانية يديرها طلاب القانون.",
-      zh: "由法学生在律师监督下运营的免费法律诊所。",
+      en: "Pro-bono legal clinic staffed by law students under lawyer supervision. Handles rental disputes, security deposit issues, tenancy agreement breaches, and other civil matters."
     },
     servicesOffered: [
       "Rental disputes",
@@ -1452,18 +1080,10 @@ export const calgaryResources: Resource[] = [
     category: ["legal", "housing"],
     userTypes: ["newcomer", "family", "senior", "student"],
     title: {
-      en: "Residential Tenancy Dispute Resolution Service (RTDRS)",
-      tl: "Residential Tenancy Dispute Resolution Service",
-      es: "Servicio de Resolución de Disputas de Arrendamiento",
-      ar: "خدمة حل النزاعات السكنية",
-      zh: "住宅租赁纠纷解决服务",
+      en: "Residential Tenancy Dispute Resolution Service (RTDRS)"
     },
     description: {
-      en: "Alberta government tribunal for resolving landlord-tenant disputes. Handles rent issues, damage deposits, repairs, and evictions. Faster and less formal than court. Filing fee applies but may be waived for low income.",
-      tl: "Alberta government tribunal para sa landlord-tenant disputes.",
-      es: "Tribunal del gobierno de Alberta para disputas entre propietarios e inquilinos.",
-      ar: "محكمة حكومة ألبرتا لحل النزاعات بين الملاك والمستأجرين.",
-      zh: "艾伯塔省政府解决房东-租户纠纷的法庭。",
+      en: "Alberta government tribunal for resolving landlord-tenant disputes. Handles rent issues, damage deposits, repairs, and evictions. Faster and less formal than court. Filing fee applies but may be waived for low income."
     },
     servicesOffered: [
       "Dispute resolution",
@@ -1487,18 +1107,10 @@ export const calgaryResources: Resource[] = [
     category: ["business"],
     userTypes: ["business", "newcomer"],
     title: {
-      en: "Business Link Alberta",
-      tl: "Business Link Alberta",
-      es: "Business Link Alberta",
-      ar: "Business Link Alberta",
-      zh: "艾伯塔商业链接",
+      en: "Business Link Alberta"
     },
     description: {
-      en: "Free one-on-one business advice for entrepreneurs starting or growing a business in Alberta. Services include business planning, financing guidance, regulatory navigation, and webinars.",
-      tl: "Libreng one-on-one business advice para sa mga entrepreneur sa Alberta.",
-      es: "Asesoramiento empresarial gratuito para emprendedores en Alberta.",
-      ar: "نصائح تجارية مجانية لرواد الأعمال في ألبرتا.",
-      zh: "为在艾伯塔省创业的企业家提供免费一对一商业建议。",
+      en: "Free one-on-one business advice for entrepreneurs starting or growing a business in Alberta. Services include business planning, financing guidance, regulatory navigation, and webinars."
     },
     servicesOffered: [
       "Business planning",
@@ -1519,18 +1131,10 @@ export const calgaryResources: Resource[] = [
     category: ["business"],
     userTypes: ["business"],
     title: {
-      en: "Platform Calgary",
-      tl: "Platform Calgary",
-      es: "Platform Calgary",
-      ar: "Platform Calgary",
-      zh: "Platform Calgary",
+      en: "Platform Calgary"
     },
     description: {
-      en: "Calgary's innovation hub for tech-enabled startups. Offers pre-accelerator and incubator programs, mentorship, coworking space, and resources for raising capital.",
-      tl: "Innovation hub ng Calgary para sa tech startups.",
-      es: "Centro de innovación de Calgary para startups tecnológicas.",
-      ar: "مركز الابتكار في كالجاري للشركات الناشئة التقنية.",
-      zh: "卡尔加里科技创业公司的创新中心。",
+      en: "Calgary's innovation hub for tech-enabled startups. Offers pre-accelerator and incubator programs, mentorship, coworking space, and resources for raising capital."
     },
     servicesOffered: [
       "Pre-accelerator programs",
@@ -1551,18 +1155,10 @@ export const calgaryResources: Resource[] = [
     category: ["business"],
     userTypes: ["business"],
     title: {
-      en: "Calgary Chamber of Commerce",
-      tl: "Calgary Chamber of Commerce",
-      es: "Cámara de Comercio de Calgary",
-      ar: "غرفة التجارة في كالجاري",
-      zh: "卡尔加里商会",
+      en: "Calgary Chamber of Commerce"
     },
     description: {
-      en: "Membership organization supporting Calgary businesses. Offers networking events, advocacy, business resources, and member discounts.",
-      tl: "Organization na sumusuporta sa Calgary businesses.",
-      es: "Organización que apoya a las empresas de Calgary.",
-      ar: "منظمة تدعم الشركات في كالجاري.",
-      zh: "支持卡尔加里企业的会员组织。",
+      en: "Membership organization supporting Calgary businesses. Offers networking events, advocacy, business resources, and member discounts."
     },
     servicesOffered: [
       "Networking events",
@@ -1582,18 +1178,10 @@ export const calgaryResources: Resource[] = [
     category: ["business"],
     userTypes: ["business"],
     title: {
-      en: "Promote My Calgary Business - Local Advertising Channels",
-      tl: "Promote My Calgary Business",
-      es: "Promover mi negocio en Calgary",
-      ar: "الترويج لعملي في كالجاري",
-      zh: "推广我的卡尔加里业务",
+      en: "Promote My Calgary Business - Local Advertising Channels"
     },
     description: {
-      en: "Comprehensive guide to local advertising options for Calgary businesses: Print media (Unison News, Calgary Herald), digital channels (Facebook, Instagram, Google Local), community partnerships (libraries, community centres, faith communities), radio, and transit ads. Choose the best channels for your budget and target audience.",
-      tl: "Complete guide sa local advertising channels para sa businesses.",
-      es: "Guía completa de canales publicitarios locales para empresas.",
-      ar: "دليل شامل لقنوات الإعلان المحلية للشركات.",
-      zh: "本地企业广告渠道的完整指南。",
+      en: "Comprehensive guide to local advertising options for Calgary businesses: Print media (Unison News, Calgary Herald), digital channels (Facebook, Instagram, Google Local), community partnerships (libraries, community centres, faith communities), radio, and transit ads. Choose the best channels for your budget and target audience."
     },
     servicesOffered: [
       "Print media guidance (Unison News, Calgary Herald, community newsletters)",
@@ -1614,18 +1202,10 @@ export const calgaryResources: Resource[] = [
     category: ["business"],
     userTypes: ["business"],
     title: {
-      en: "Calgary Local Media & Broadcasting",
-      tl: "Calgary Local Media & Broadcasting",
-      es: "Medios locales y radiodifusión de Calgary",
-      ar: "وسائل الإعلام المحلية والبث في كالجاري",
-      zh: "卡尔加里当地媒体和广播",
+      en: "Calgary Local Media & Broadcasting"
     },
     description: {
-      en: "Contact information and advertising rates for local Calgary news, radio, and television stations. Includes CKFM, CJAY, Q100, AM660, CTV Calgary, Citytv, Global Calgary, and Calgary Herald. Choose media partners based on your target audience and marketing budget.",
-      tl: "Local advertising options para sa Calgary businesses.",
-      es: "Opciones publicitarias locales para empresas de Calgary.",
-      ar: "خيارات إعلانية محلية للشركات في كالجاري.",
-      zh: "卡尔加里企业的本地广告选项。",
+      en: "Contact information and advertising rates for local Calgary news, radio, and television stations. Includes CKFM, CJAY, Q100, AM660, CTV Calgary, Citytv, Global Calgary, and Calgary Herald. Choose media partners based on your target audience and marketing budget."
     },
     servicesOffered: [
       "Radio advertising (CKFM, CJAY, Q100, AM660, AC 920)",
@@ -1650,18 +1230,10 @@ export const calgaryResources: Resource[] = [
     category: ["emergency", "community"],
     userTypes: ["newcomer", "family", "senior", "student"],
     title: {
-      en: "211 Alberta",
-      tl: "211 Alberta",
-      es: "211 Alberta",
-      ar: "211 Alberta",
-      zh: "211 Alberta",
+      en: "211 Alberta"
     },
     description: {
-      en: "Free information and referral service connecting Calgarians to community and social services 24/7. Dial 2-1-1 or visit website to find help with food, housing, employment, health, and more.",
-      tl: "Libreng information service na nagkokonekta sa Calgarians sa community services.",
-      es: "Servicio de información gratuito que conecta a los calgarianos con servicios sociales.",
-      ar: "خدمة معلومات مجانية تربط سكان كالجاري بالخدمات الاجتماعية.",
-      zh: "免费信息服务，全天候连接卡尔加里人与社区服务。",
+      en: "Free information and referral service connecting Calgarians to community and social services 24/7. Dial 2-1-1 or visit website to find help with food, housing, employment, health, and more."
     },
     servicesOffered: [
       "Information and referral",
@@ -1681,18 +1253,10 @@ export const calgaryResources: Resource[] = [
     category: ["emergency", "housing"],
     userTypes: ["newcomer", "family", "senior"],
     title: {
-      en: "HELP Team (Formerly DOAP Team)",
-      tl: "HELP Team",
-      es: "Equipo HELP",
-      ar: "فريق HELP",
-      zh: "HELP团队",
+      en: "HELP Team (Formerly DOAP Team)"
     },
     description: {
-      en: "Mobile outreach team helping vulnerable people on Calgary streets. Provides wellness checks, transportation to shelters, harm reduction supplies, and connections to services. Call if you see someone in distress.",
-      tl: "Mobile outreach team na tumutulong sa vulnerable people sa Calgary streets.",
-      es: "Equipo móvil que ayuda a personas vulnerables en las calles de Calgary.",
-      ar: "فريق متنقل يساعد الأشخاص الضعفاء في شوارع كالجاري.",
-      zh: "帮助卡尔加里街头弱势群体的移动外展团队。",
+      en: "Mobile outreach team helping vulnerable people on Calgary streets. Provides wellness checks, transportation to shelters, harm reduction supplies, and connections to services. Call if you see someone in distress."
     },
     servicesOffered: [
       "Wellness checks",
@@ -1712,18 +1276,10 @@ export const calgaryResources: Resource[] = [
     category: ["emergency"],
     userTypes: ["newcomer", "family", "senior"],
     title: {
-      en: "Extreme Weather Response",
-      tl: "Extreme Weather Response",
-      es: "Respuesta a Clima Extremo",
-      ar: "استجابة الطقس القاسي",
-      zh: "极端天气响应",
+      en: "Extreme Weather Response"
     },
     description: {
-      en: "Calgary's coordinated response during extreme cold or heat. Includes warming centres, daytime drop-in spaces, and emergency shelter shuttle (10:30 PM - 4:00 AM daily).",
-      tl: "Coordinated response ng Calgary sa extreme weather.",
-      es: "Respuesta coordinada de Calgary durante clima extremo.",
-      ar: "استجابة كالجاري المنسقة خلال الطقس القاسي.",
-      zh: "卡尔加里在极端寒冷或炎热时的协调响应。",
+      en: "Calgary's coordinated response during extreme cold or heat. Includes warming centres, daytime drop-in spaces, and emergency shelter shuttle (10:30 PM - 4:00 AM daily)."
     },
     servicesOffered: [
       "Warming centres",
@@ -1745,18 +1301,10 @@ export const calgaryResources: Resource[] = [
     category: ["education", "newcomer"],
     userTypes: ["newcomer"],
     title: {
-      en: "LINC Language Classes",
-      tl: "LINC Language Classes",
-      es: "Clases de Idioma LINC",
-      ar: "دروس اللغة LINC",
-      zh: "LINC语言课程",
+      en: "LINC Language Classes"
     },
     description: {
-      en: "Free English language classes for permanent residents and refugees. Multiple levels from beginner to advanced. Offered at CCIS, Centre for Newcomers, Bow Valley College, and other locations. Free childcare available at some sites.",
-      tl: "Libreng English classes para sa permanent residents at refugees.",
-      es: "Clases de inglés gratuitas para residentes permanentes y refugiados.",
-      ar: "دروس لغة إنجليزية مجانية للمقيمين الدائمين واللاجئين.",
-      zh: "为永久居民和难民提供免费英语课程。",
+      en: "Free English language classes for permanent residents and refugees. Multiple levels from beginner to advanced. Offered at CCIS, Centre for Newcomers, Bow Valley College, and other locations. Free childcare available at some sites."
     },
     servicesOffered: [
       "English language instruction",
@@ -1776,18 +1324,10 @@ export const calgaryResources: Resource[] = [
     category: ["education", "newcomer"],
     userTypes: ["newcomer", "family"],
     title: {
-      en: "Calgary Public Library - Language Learning",
-      tl: "Calgary Public Library - Language Learning",
-      es: "Biblioteca Pública - Aprendizaje de Idiomas",
-      ar: "مكتبة كالجاري - تعلم اللغات",
-      zh: "卡尔加里公共图书馆 - 语言学习",
+      en: "Calgary Public Library - Language Learning"
     },
     description: {
-      en: "Free language learning resources including conversation circles, language software (Mango Languages, Rosetta Stone), and newcomer conversation programs. No library card needed for in-library use.",
-      tl: "Libreng language learning resources sa library.",
-      es: "Recursos gratuitos de aprendizaje de idiomas en la biblioteca.",
-      ar: "موارد مجانية لتعلم اللغات في المكتبة.",
-      zh: "图书馆免费语言学习资源。",
+      en: "Free language learning resources including conversation circles, language software (Mango Languages, Rosetta Stone), and newcomer conversation programs. No library card needed for in-library use."
     },
     servicesOffered: [
       "Conversation circles",
@@ -1812,18 +1352,10 @@ export const calgaryResources: Resource[] = [
     category: ["transit"],
     userTypes: ["newcomer", "family", "senior", "student"],
     title: {
-      en: "Calgary Transit",
-      tl: "Calgary Transit",
-      es: "Calgary Transit",
-      ar: "Calgary Transit",
-      zh: "卡尔加��公交",
+      en: "Calgary Transit"
     },
     description: {
-      en: "Public transportation including buses and CTrain light rail. Low-income transit passes available through Fair Entry program. Plan trips using Google Maps or Calgary Transit app.",
-      tl: "Public transportation kasama ang buses at CTrain.",
-      es: "Transporte público incluyendo autobuses y CTrain.",
-      ar: "وسائل النقل العام بما في ذلك الحافلات و CTrain.",
-      zh: "公共交通，包括公交车和轻轨。",
+      en: "Public transportation including buses and CTrain light rail. Low-income transit passes available through Fair Entry program. Plan trips using Google Maps or Calgary Transit app."
     },
     servicesOffered: [
       "Bus service",
@@ -1844,18 +1376,10 @@ export const calgaryResources: Resource[] = [
     category: ["transit", "community"],
     userTypes: ["newcomer", "family", "senior", "student"],
     title: {
-      en: "Fair Entry - Low Income Programs",
-      tl: "Fair Entry - Low Income Programs",
-      es: "Fair Entry - Programas de Bajos Ingresos",
-      ar: "Fair Entry - برامج الدخل المنخفض",
-      zh: "Fair Entry - 低收入项目",
+      en: "Fair Entry - Low Income Programs"
     },
     description: {
-      en: "City of Calgary program providing discounted transit passes, recreation, and other services for low-income residents. Apply online or at any Calgary Recreation facility.",
-      tl: "Program na nagbibigay ng discounts sa low-income residents.",
-      es: "Programa que ofrece descuentos a residentes de bajos ingresos.",
-      ar: "برنامج ��قدم خصومات للمقيمين ذوي الدخل المنخفض.",
-      zh: "为低收入居民提供折扣交通和娱乐的市政项目。",
+      en: "City of Calgary program providing discounted transit passes, recreation, and other services for low-income residents. Apply online or at any Calgary Recreation facility."
     },
     servicesOffered: [
       "Discounted transit passes",
@@ -1879,18 +1403,10 @@ export const calgaryResources: Resource[] = [
     category: ["family", "education", "community"],
     userTypes: ["family", "student"],
     title: {
-      en: "Calgary Public Library - Family Programs",
-      tl: "Calgary Public Library - Family Programs",
-      es: "Biblioteca Pública de Calgary - Programas Familiares",
-      ar: "مكتبة كالجاري العامة - برامج عائلية",
-      zh: "卡尔加里公共图书馆 - 家庭项目",
+      en: "Calgary Public Library - Family Programs"
     },
     description: {
-      en: "Free library programs for families: storytimes for ages 0-5, youth programs for ages 6-18, movies, activities, summer reading programs, homework help. 20+ locations across Calgary. No membership fee.",
-      tl: "Free library programs para sa mga pamilya: storytimes, movies, activities.",
-      es: "Programas gratuitos de biblioteca para familias.",
-      ar: "برامج مجانية للمكتبات للعائلات.",
-      zh: "针对家庭的免费图书馆项目。",
+      en: "Free library programs for families: storytimes for ages 0-5, youth programs for ages 6-18, movies, activities, summer reading programs, homework help. 20+ locations across Calgary. No membership fee."
     },
     servicesOffered: [
       "Storytimes (ages 0-5)",
@@ -1912,18 +1428,10 @@ export const calgaryResources: Resource[] = [
     category: ["family", "community"],
     userTypes: ["family"],
     title: {
-      en: "Calgary Zoo",
-      tl: "Calgary Zoo",
-      es: "Zoo de Calgary",
-      ar: "حديقة حيوان كالجاري",
-      zh: "卡尔加里动物园",
+      en: "Calgary Zoo"
     },
     description: {
-      en: "World-class zoo with 4,000+ animals, interactive exhibits, and seasonal activities. Discounted rates for low-income families. Outdoor activities year-round. Perfect for ages 2-12.",
-      tl: "World-class zoo na may libu-libong animals.",
-      es: "Zoo de clase mundial con miles de animales.",
-      ar: "حديقة حيوانات من الدرجة الأولى بآلاف الحيوانات.",
-      zh: "拥有数千只动物的世界级动物园。",
+      en: "World-class zoo with 4,000+ animals, interactive exhibits, and seasonal activities. Discounted rates for low-income families. Outdoor activities year-round. Perfect for ages 2-12."
     },
     servicesOffered: [
       "Animal exhibits",
@@ -1944,18 +1452,10 @@ export const calgaryResources: Resource[] = [
     category: ["family", "education"],
     userTypes: ["family"],
     title: {
-      en: "TELUS SPARK - Science & Innovation",
-      tl: "TELUS SPARK - Science & Innovation",
-      es: "TELUS SPARK - Ciencia e Innovación",
-      ar: "TELUS SPARK - العلوم والابتكار",
-      zh: "TELUS SPARK - 科学和创新",
+      en: "TELUS SPARK - Science & Innovation"
     },
     description: {
-      en: "Interactive science centre with hands-on exhibits for kids ages 2+. Topics include robotics, coding, space exploration, energy, health. Drop-in programs and birthday parties. Discounted admission available.",
-      tl: "Interactive science centre na may hands-on exhibits.",
-      es: "Centro de ciencias interactivo con exposiciones prácticas.",
-      ar: "مركز العلوم التفاعلي مع المعارض العملية.",
-      zh: "互动科学中心，配有实践展品。",
+      en: "Interactive science centre with hands-on exhibits for kids ages 2+. Topics include robotics, coding, space exploration, energy, health. Drop-in programs and birthday parties. Discounted admission available."
     },
     servicesOffered: [
       "Hands-on science exhibits",
@@ -1976,18 +1476,10 @@ export const calgaryResources: Resource[] = [
     category: ["family", "community"],
     userTypes: ["family"],
     title: {
-      en: "Calgary Indoor Play Centres",
-      tl: "Calgary Indoor Play Centres",
-      es: "Centros de juegos interiores de Calgary",
-      ar: "مراكز اللعب الداخلية في كالجاري",
-      zh: "卡尔加里室内游乐场",
+      en: "Calgary Indoor Play Centres"
     },
     description: {
-      en: "Year-round indoor play spaces perfect for rainy/winter days. Options include: soft play areas (ages 0-5), trampoline parks, climbing gyms, activity centres. Many offer birthday party packages. Drop-in rates or memberships available.",
-      tl: "Year-round indoor play spaces para sa mga bata.",
-      es: "Espacios de juego interiores disponibles todo el año.",
-      ar: "مساحات لعب داخلية متاحة على مدار السنة.",
-      zh: "全年可用的室内游乐场。",
+      en: "Year-round indoor play spaces perfect for rainy/winter days. Options include: soft play areas (ages 0-5), trampoline parks, climbing gyms, activity centres. Many offer birthday party packages. Drop-in rates or memberships available."
     },
     servicesOffered: [
       "Soft play areas",
@@ -2006,18 +1498,10 @@ export const calgaryResources: Resource[] = [
     category: ["family", "community"],
     userTypes: ["family"],
     title: {
-      en: "Calgary Parks & Playgrounds",
-      tl: "Calgary Parks & Playgrounds",
-      es: "Parques y áreas de juego de Calgary",
-      ar: "حدائق وساحات لعب كالجاري",
-      zh: "卡尔加里公园和游乐场",
+      en: "Calgary Parks & Playgrounds"
     },
     description: {
-      en: "500+ parks with playgrounds, splash pads (summer), picnic areas, and walking trails. Popular family parks: Eau Claire, Bow Habitat Station, Fish Creek Park, Bridgeland. Free access, perfect for all ages and budgets.",
-      tl: "500+ parks na may playgrounds at trails.",
-      es: "500+ parques con terrenos de juego y senderos.",
-      ar: "500+ حديقة بها ساحات لعب وممرات.",
-      zh: "500多个公园，配有游乐场和步道。",
+      en: "500+ parks with playgrounds, splash pads (summer), picnic areas, and walking trails. Popular family parks: Eau Claire, Bow Habitat Station, Fish Creek Park, Bridgeland. Free access, perfect for all ages and budgets."
     },
     servicesOffered: [
       "Playgrounds",
@@ -2037,18 +1521,10 @@ export const calgaryResources: Resource[] = [
     category: ["family", "community"],
     userTypes: ["family"],
     title: {
-      en: "Calgary Family Events Calendar",
-      tl: "Calgary Family Events Calendar",
-      es: "Calendario de eventos familiares de Calgary",
-      ar: "تقويم أحداث عائلة كالجاري",
-      zh: "卡尔加里家庭活动日历",
+      en: "Calgary Family Events Calendar"
     },
     description: {
-      en: "Seasonal family events throughout Calgary: festivals, markets, holiday events, outdoor movies, concerts. Check calgary.ca/events, library events, and community centre schedules. Many free or low-cost options.",
-      tl: "Seasonal family events sa buong Calgary.",
-      es: "Eventos familiares estacionales en todo Calgary.",
-      ar: "فعاليات عائلية موسمية في جميع أنحاء كالجاري.",
-      zh: "整个卡尔加里的季节性家庭活动。",
+      en: "Seasonal family events throughout Calgary: festivals, markets, holiday events, outdoor movies, concerts. Check calgary.ca/events, library events, and community centre schedules. Many free or low-cost options."
     },
     servicesOffered: [
       "Festivals",
@@ -2067,18 +1543,10 @@ export const calgaryResources: Resource[] = [
     category: ["family", "community"],
     userTypes: ["family"],
     title: {
-      en: "YMCA of Calgary - Family Programs",
-      tl: "YMCA of Calgary - Family Programs",
-      es: "YMCA de Calgary - Programas Familiares",
-      ar: "YMCA كالجاري - برامج عائلية",
-      zh: "卡尔加里基督教青年会 - 家庭项目",
+      en: "YMCA of Calgary - Family Programs"
     },
     description: {
-      en: "Fitness, swimming lessons, youth programs, camps, family programs. Financial assistance available for low-income families. Multiple locations in Calgary.",
-      tl: "Fitness, swimming lessons, youth programs, camps.",
-      es: "Fitness, lecciones de natación, programas para jóvenes.",
-      ar: "اللياقة البدنية ودروس السباحة والبرامج الشبابية.",
-      zh: "健身、游泳课程、青年项目。",
+      en: "Fitness, swimming lessons, youth programs, camps, family programs. Financial assistance available for low-income families. Multiple locations in Calgary."
     },
     servicesOffered: [
       "Swimming lessons",
@@ -2098,25 +1566,13 @@ export const calgaryResources: Resource[] = [
     category: ["family"],
     userTypes: ["family", "newcomer"],
     title: {
-      en: "Find Licensed Child Care & Daycare (Alberta)",
-      tl: "Maghanap ng Lisensyadong Child Care at Daycare (Alberta)",
-      es: "Encuentre guardería con licencia (Alberta)",
-      ar: "ابحث عن رعاية أطفال مرخصة (ألبرتا)",
-      zh: "查找持牌托儿所和日托中心（阿尔伯塔）",
+      en: "Find Licensed Child Care & Daycare (Alberta)"
     },
     description: {
-      en: "Official Government of Alberta tool to search and compare licensed daycare centres, out-of-school care, preschools, and approved family day homes near you. Every listing is government-licensed and inspected, with monitoring reports you can review before choosing.",
-      tl: "Opisyal na tool para maghanap ng lisensyadong daycare at family day homes.",
-      es: "Herramienta oficial para buscar guarderías con licencia e inspeccionadas.",
-      ar: "أداة رسمية للبحث عن مراكز رعاية الأطفال المرخصة والمفتشة.",
-      zh: "搜索和比较持牌、经检查的日托中心的官方工具。",
+      en: "Official Government of Alberta tool to search and compare licensed daycare centres, out-of-school care, preschools, and approved family day homes near you. Every listing is government-licensed and inspected, with monitoring reports you can review before choosing."
     },
     summary: {
-      en: "Search government-licensed daycares, preschools, and family day homes near you.",
-      tl: "Maghanap ng lisensyadong daycare malapit sa iyo.",
-      es: "Busque guarderías con licencia cerca de usted.",
-      ar: "ابحث عن دور الحضانة المرخصة بالقرب منك.",
-      zh: "搜索您附近的持牌日托中心。",
+      en: "Search government-licensed daycares, preschools, and family day homes near you."
     },
     servicesOffered: [
       "Licensed daycare centres",
@@ -2126,11 +1582,7 @@ export const calgaryResources: Resource[] = [
       "Inspection & monitoring reports",
     ],
     eligibility: {
-      en: "Open to all Calgary families. Subsidy may be available for eligible low-income families.",
-      tl: "Bukas sa lahat ng pamilya sa Calgary.",
-      es: "Abierto a todas las familias de Calgary.",
-      ar: "متاح لجميع العائلات في كالجاري.",
-      zh: "向所有卡尔加里家庭开放。",
+      en: "Open to all Calgary families. Subsidy may be available for eligible low-income families."
     },
     phone: "1-844-644-5165",
     website: "https://www.alberta.ca/childcare",
@@ -2145,25 +1597,13 @@ export const calgaryResources: Resource[] = [
     category: ["family"],
     userTypes: ["family", "newcomer"],
     title: {
-      en: "Calgary Child Care Resource & Referral",
-      tl: "Calgary Child Care Resource at Referral",
-      es: "Recursos y referencias de cuidado infantil de Calgary",
-      ar: "موارد وإحالات رعاية الأطفال في كالجاري",
-      zh: "卡尔加里托儿资源和��介",
+      en: "Calgary Child Care Resource & Referral"
     },
     description: {
-      en: "Free help connecting Calgary families with quality, licensed child care that fits their needs and budget. Get personalized referrals to daycares, dayhomes, and preschools, plus guidance on subsidies, choosing a provider, and what to look for in a safe centre.",
-      tl: "Libreng tulong para makahanap ng quality, licensed child care.",
-      es: "Ayuda gratuita para conectar a las familias con cuidado infantil de calidad.",
-      ar: "مساعدة مجانية لربط العائلات برعاي�� ����طفا���� مرخصة وجيدة.",
-      zh: "免费帮助家庭联系优质持牌托儿服务。",
+      en: "Free help connecting Calgary families with quality, licensed child care that fits their needs and budget. Get personalized referrals to daycares, dayhomes, and preschools, plus guidance on subsidies, choosing a provider, and what to look for in a safe centre."
     },
     summary: {
-      en: "Free, personalized referrals to vetted daycares, dayhomes, and preschools.",
-      tl: "Libreng personalized referrals sa vetted daycares.",
-      es: "Referencias personalizadas gratuitas a guarderías verificadas.",
-      ar: "إحالات مجانية مخصصة لدور حضانة موثوقة.",
-      zh: "免费向经审核的日托中心提供个性化转介。",
+      en: "Free, personalized referrals to vetted daycares, dayhomes, and preschools."
     },
     servicesOffered: [
       "Child care referrals",
@@ -2184,18 +1624,10 @@ export const calgaryResources: Resource[] = [
     category: ["family"],
     userTypes: ["family"],
     title: {
-      en: "Calgary Child Care Subsidy Program",
-      tl: "Calgary Child Care Subsidy Program",
-      es: "Programa de subsidio de cuidado infantil de Calgary",
-      ar: "برنامج إعانة ��عاية الأطفال في كالجاري",
-      zh: "卡尔加里儿童保育补贴计划",
+      en: "Calgary Child Care Subsidy Program"
     },
     description: {
-      en: "Government subsidy program for low-income families to access affordable child care. Eligible families can receive up to $1,700/month subsidy. Apply through Government of Alberta.",
-      tl: "Government subsidy program para sa low-income families.",
-      es: "Programa de subsidio gubernamental para familias de bajos ingresos.",
-      ar: "برنامج إعانة حكومي للعائلات ذات الدخل المنخفض.",
-      zh: "政府为低收入家庭提供的补贴计划。",
+      en: "Government subsidy program for low-income families to access affordable child care. Eligible families can receive up to $1,700/month subsidy. Apply through Government of Alberta."
     },
     servicesOffered: [
       "Child care subsidies",
@@ -2215,18 +1647,10 @@ export const calgaryResources: Resource[] = [
     category: ["volunteering", "community"],
     userTypes: ["newcomer", "family", "senior", "student"],
     title: {
-      en: "Volunteer Calgary",
-      tl: "Volunteer Calgary",
-      es: "Voluntariado Calgary",
-      ar: "تطوع كالجاري",
-      zh: "卡尔加里志愿者",
+      en: "Volunteer Calgary"
     },
     description: {
-      en: "Connect with volunteer opportunities across Calgary. Great way to build Canadian experience, practice English, make community connections, and contribute to causes you care about.",
-      tl: "Kumonekta sa mga volunteer opportunities sa Calgary.",
-      es: "Conéctese con oportunidades de voluntariado en Calgary.",
-      ar: "تواصل مع فرص التطوع في جميع أنحاء كالجاري.",
-      zh: "连接卡尔加里各地的志愿服务机会。",
+      en: "Connect with volunteer opportunities across Calgary. Great way to build Canadian experience, practice English, make community connections, and contribute to causes you care about."
     },
     servicesOffered: [
       "Volunteer matching",
@@ -2245,18 +1669,10 @@ export const calgaryResources: Resource[] = [
     category: ["community", "family"],
     userTypes: ["newcomer", "family", "senior", "student"],
     title: {
-      en: "Calgary Recreation",
-      tl: "Calgary Recreation",
-      es: "Recreación de Calgary",
-      ar: "ترفيه كالجاري",
-      zh: "卡尔加里康乐",
+      en: "Calgary Recreation"
     },
     description: {
-      en: "City-operated recreation centres, pools, fitness facilities, and programs across Calgary. Discounted access through Fair Entry program for low-income residents.",
-      tl: "City-operated recreation centres at programs sa Calgary.",
-      es: "Centros de recreación, piscinas y programas de la ciudad.",
-      ar: "مراكز الترفيه والمسابح والبرامج التابعة للمدينة.",
-      zh: "全市运营的康乐中心、游泳池和项目。",
+      en: "City-operated recreation centres, pools, fitness facilities, and programs across Calgary. Discounted access through Fair Entry program for low-income residents."
     },
     servicesOffered: [
       "Fitness centres",
@@ -2276,18 +1692,10 @@ export const calgaryResources: Resource[] = [
     category: ["community"],
     userTypes: ["newcomer", "family", "senior"],
     title: {
-      en: "Community Associations",
-      tl: "Community Associations",
-      es: "Asociaciones Comunitarias",
-      ar: "الجمعيات المجتمعية",
-      zh: "社区协会",
+      en: "Community Associations"
     },
     description: {
-      en: "Calgary has over 150 community associations offering local programs, events, sports leagues, and neighbourhood connections. Find yours to discover hidden programs and discounts.",
-      tl: "May higit sa 150 community associations ang Calgary.",
-      es: "Calgary tiene más de 150 asociaciones comunitarias.",
-      ar: "لدى كالجاري أكثر من 150 جمعية مجتمعية.",
-      zh: "卡尔加里有超过150个社区协会。",
+      en: "Calgary has over 150 community associations offering local programs, events, sports leagues, and neighbourhood connections. Find yours to discover hidden programs and discounts."
     },
     servicesOffered: [
       "Local programs",
@@ -2310,18 +1718,10 @@ export const calgaryResources: Resource[] = [
     category: ["housing"],
     userTypes: ["newcomer", "family", "senior", "student"],
     title: {
-      en: "RentFaster.ca",
-      tl: "RentFaster.ca",
-      es: "RentFaster.ca",
-      ar: "RentFaster.ca",
-      zh: "RentFaster.ca",
+      en: "RentFaster.ca"
     },
     description: {
-      en: "Calgary-founded and the most-used rental listing site in the city. Thousands of verified apartments, condos, basements, and houses for rent with photos, maps, prices, and direct landlord contact. Free to search and apply, with filters for pets, utilities included, and price range.",
-      tl: "Ang pinaka-ginagamit na rental site sa Calgary, itinatag dito. Libo-libong verified na listing.",
-      es: "El sitio de alquiler más usado en Calgary, fundado localmente. Miles de anuncios verificados.",
-      ar: "أكثر موقع لتأجير العقارات استخدامًا في كالجاري، تأسس محليًا. آلاف القوائم الموثقة.",
-      zh: "卡尔加里本地创建、使用最广泛的租房网站。数千个经核实的房源。",
+      en: "Calgary-founded and the most-used rental listing site in the city. Thousands of verified apartments, condos, basements, and houses for rent with photos, maps, prices, and direct landlord contact. Free to search and apply, with filters for pets, utilities included, and price range."
     },
     servicesOffered: [
       "Apartment rentals",
@@ -2343,18 +1743,10 @@ export const calgaryResources: Resource[] = [
     category: ["housing"],
     userTypes: ["newcomer", "family", "senior", "student"],
     title: {
-      en: "liv.rent",
-      tl: "liv.rent",
-      es: "liv.rent",
-      ar: "liv.rent",
-      zh: "liv.rent",
+      en: "liv.rent"
     },
     description: {
-      en: "Safety-first rental platform with pre-screened landlords and ID-verified listings to protect you from scams. Apply, sign digital contracts, and message landlords securely in one place — ideal for newcomers renting sight-unseen.",
-      tl: "Rental platform na nakatuon sa kaligtasan, may pre-screened na landlord at ID-verified na listing.",
-      es: "Plataforma centrada en la seguridad con propietarios preverificados y anuncios con identidad confirmada.",
-      ar: "منصة تأجير تركز على الأمان مع ملاك تم فحصهم مسبقًا وقوائم موثقة الهوية.",
-      zh: "以安全为先的租房平台，房东经预先审核、房源经身份验证，防止诈骗。",
+      en: "Safety-first rental platform with pre-screened landlords and ID-verified listings to protect you from scams. Apply, sign digital contracts, and message landlords securely in one place — ideal for newcomers renting sight-unseen."
     },
     servicesOffered: [
       "ID-verified listings",
@@ -2375,18 +1767,10 @@ export const calgaryResources: Resource[] = [
     category: ["housing"],
     userTypes: ["newcomer", "family", "senior", "student"],
     title: {
-      en: "Boardwalk",
-      tl: "Boardwalk",
-      es: "Boardwalk",
-      ar: "Boardwalk",
-      zh: "Boardwalk",
+      en: "Boardwalk"
     },
     description: {
-      en: "One of Calgary's largest and most trusted residential landlords, offering professionally managed, well-maintained apartment communities across the city. Rent directly from the owner with transparent pricing, on-site staff, and reliable maintenance.",
-      tl: "Isa sa pinakamalaki at pinagkakatiwalaang landlord sa Calgary, propesyonal na pamamahala.",
-      es: "Uno de los arrendadores residenciales más grandes y confiables de Calgary, gestión profesional.",
-      ar: "أحد أكبر وأوثق ملاك العقارات السكنية في كالجاري، إدارة احترافية.",
-      zh: "卡尔加里最大、最受信赖的住宅业主之一，提供专业管理、维护良好的公寓社区。",
+      en: "One of Calgary's largest and most trusted residential landlords, offering professionally managed, well-maintained apartment communities across the city. Rent directly from the owner with transparent pricing, on-site staff, and reliable maintenance."
     },
     servicesOffered: [
       "Professionally managed apartments",
@@ -2407,18 +1791,10 @@ export const calgaryResources: Resource[] = [
     category: ["housing"],
     userTypes: ["newcomer", "family", "student"],
     title: {
-      en: "Rentals.ca",
-      tl: "Rentals.ca",
-      es: "Rentals.ca",
-      ar: "Rentals.ca",
-      zh: "Rentals.ca",
+      en: "Rentals.ca"
     },
     description: {
-      en: "National rental marketplace with a strong Calgary inventory of apartments and condos. Publishes the monthly Canada Rent Report so you can compare average Calgary rents before signing. Free search with verified listings and neighbourhood filters.",
-      tl: "Pambansang rental marketplace na may maraming listing sa Calgary. Buwanang ulat ng upa.",
-      es: "Mercado nacional de alquileres con gran inventario en Calgary. Informe mensual de rentas.",
-      ar: "سوق تأجير وطني مع قوائم كثيرة في كالجاري. تقرير شهري عن الإيجارات.",
-      zh: "全国性租房平台，卡尔加里房源丰富。每月发布租金报告。",
+      en: "National rental marketplace with a strong Calgary inventory of apartments and condos. Publishes the monthly Canada Rent Report so you can compare average Calgary rents before signing. Free search with verified listings and neighbourhood filters."
     },
     servicesOffered: [
       "Apartment rentals",
@@ -2437,18 +1813,10 @@ export const calgaryResources: Resource[] = [
     category: ["housing"],
     userTypes: ["newcomer", "family", "student"],
     title: {
-      en: "Apartments.com Calgary",
-      tl: "Apartments.com Calgary",
-      es: "Apartments.com Calgary",
-      ar: "Apartments.com Calgary",
-      zh: "Apartments.com 卡尔加里",
+      en: "Apartments.com Calgary"
     },
     description: {
-      en: "Large rental network with detailed Calgary apartment and condo listings, high-quality photos, 3D tours, floor plans, and verified pricing. Strong search filters and map view make it easy to compare professionally managed buildings.",
-      tl: "Malaking rental network na may detalyadong listing sa Calgary, larawan, at 3D tour.",
-      es: "Gran red de alquiler con anuncios detallados en Calgary, fotos y recorridos 3D.",
-      ar: "شبكة تأجير كبيرة مع قوائم مفصلة في كالجاري وصور وجولات ثلاثية الأبعاد.",
-      zh: "大型租房网络，提供卡尔加里详细房源、高清照片、3D 导览和户型图。",
+      en: "Large rental network with detailed Calgary apartment and condo listings, high-quality photos, 3D tours, floor plans, and verified pricing. Strong search filters and map view make it easy to compare professionally managed buildings."
     },
     servicesOffered: [
       "Apartment rentals",
@@ -2468,18 +1836,10 @@ export const calgaryResources: Resource[] = [
     category: ["housing"],
     userTypes: ["newcomer", "student", "family"],
     title: {
-      en: "PadMapper Calgary",
-      tl: "PadMapper Calgary",
-      es: "PadMapper Calgary",
-      ar: "PadMapper Calgary",
-      zh: "PadMapper 卡尔加里",
+      en: "PadMapper Calgary"
     },
     description: {
-      en: "Map-based rental search that aggregates listings from many sources onto one Calgary map. Great for comparing prices by neighbourhood and commute. Set custom alerts for new rentals that match your budget and bedrooms.",
-      tl: "Map-based na paghahanap ng paupahan na pinagsasama ang maraming source para sa Calgary.",
-      es: "Búsqueda de alquileres en mapa que reúne múltiples fuentes para Calgary.",
-      ar: "بحث عن الإيجارات عبر الخريطة يجمع مصادر متعددة لكالجاري.",
-      zh: "基于地图的租房搜索，汇集卡尔加里多个来源的房源。",
+      en: "Map-based rental search that aggregates listings from many sources onto one Calgary map. Great for comparing prices by neighbourhood and commute. Set custom alerts for new rentals that match your budget and bedrooms."
     },
     servicesOffered: [
       "Map-based rental search",
@@ -2498,18 +1858,10 @@ export const calgaryResources: Resource[] = [
     category: ["housing"],
     userTypes: ["newcomer", "student", "family"],
     title: {
-      en: "Kijiji Calgary Rentals",
-      tl: "Kijiji Calgary Rentals",
-      es: "Alquileres Kijiji Calgary",
-      ar: "��يج��ر��ت Kijiji كالجاري",
-      zh: "Kijiji 卡尔加里租房",
+      en: "Kijiji Calgary Rentals"
     },
     description: {
-      en: "One of Canada's busiest classifieds, widely used for Calgary rentals, rooms, and shared accommodation — often with budget-friendly and private-landlord options. Always view in person and never send a deposit before signing a lease (see RentShield for scam checks).",
-      tl: "Isa sa pinaka-abalang classifieds, ginagamit para sa rentals sa Calgary. Mag-ingat sa scam.",
-      es: "Clasificados muy usados para alquileres en Calgary. Cuidado con las estafas.",
-      ar: "إعلانات مبوبة شائعة لإيجارات كالجاري. احذر من عمليات الاحتيال.",
-      zh: "加拿大最繁忙的分类信息之一，常用于卡尔加里租房。谨防诈骗。",
+      en: "One of Canada's busiest classifieds, widely used for Calgary rentals, rooms, and shared accommodation — often with budget-friendly and private-landlord options. Always view in person and never send a deposit before signing a lease (see RentShield for scam checks)."
     },
     servicesOffered: [
       "Apartment rentals",
@@ -2528,18 +1880,10 @@ export const calgaryResources: Resource[] = [
     category: ["housing"],
     userTypes: ["newcomer", "student", "family"],
     title: {
-      en: "Facebook Marketplace — Calgary Rentals",
-      tl: "Facebook Marketplace — Calgary Rentals",
-      es: "Facebook Marketplace — Alquileres Calgary",
-      ar: "Facebook Marketplace — إيجارات كالجاري",
-      zh: "Facebook Marketplace — 卡尔加里租房",
+      en: "Facebook Marketplace — Calgary Rentals"
     },
     description: {
-      en: "Hugely popular for Calgary rentals and roommate searches, with many listings posted directly by landlords and current tenants. Free to browse. Rental scams are common here — verify the unit in person, meet the landlord, and use RentShield before paying anything.",
-      tl: "Napakapopular para sa rentals sa Calgary. I-verify bago magbayad.",
-      es: "Muy popular para alquileres en Calgary. Verifique antes de pagar.",
-      ar: "شائع جدًا لإيجارات كالجاري. تحقق قبل الدفع.",
-      zh: "在卡尔加里租房中非常流行。付款前请核实。",
+      en: "Hugely popular for Calgary rentals and roommate searches, with many listings posted directly by landlords and current tenants. Free to browse. Rental scams are common here — verify the unit in person, meet the landlord, and use RentShield before paying anything."
     },
     servicesOffered: [
       "Apartment rentals",
@@ -2557,18 +1901,10 @@ export const calgaryResources: Resource[] = [
     category: ["housing"],
     userTypes: ["newcomer", "student", "family"],
     title: {
-      en: "Zumper Calgary",
-      tl: "Zumper Calgary",
-      es: "Zumper Calgary",
-      ar: "Zumper Calgary",
-      zh: "Zumper 卡尔加里",
+      en: "Zumper Calgary"
     },
     description: {
-      en: "Modern rental platform with verified Calgary apartment and condo listings, instant alerts, and the ability to apply online. Useful for newcomers who want a streamlined, photo-rich search with transparent pricing.",
-      tl: "Modernong rental platform na may verified na listing sa Calgary at online application.",
-      es: "Plataforma moderna con anuncios verificados en Calgary y solicitud en línea.",
-      ar: "منصة تأجير حديثة مع قوائم موثقة في كالجاري وتقديم عبر ال��نترنت.",
-      zh: "现代租房平台，提供卡尔加里经核实房源和在线申请。",
+      en: "Modern rental platform with verified Calgary apartment and condo listings, instant alerts, and the ability to apply online. Useful for newcomers who want a streamlined, photo-rich search with transparent pricing."
     },
     servicesOffered: [
       "Apartment rentals",
@@ -2587,18 +1923,10 @@ export const calgaryResources: Resource[] = [
     category: ["housing", "education"],
     userTypes: ["student", "newcomer"],
     title: {
-      en: "Places4Students",
-      tl: "Places4Students",
-      es: "Places4Students",
-      ar: "Places4Students",
-      zh: "Places4Students",
+      en: "Places4Students"
     },
     description: {
-      en: "Official off-campus housing service partnered with the University of Calgary, SAIT, and Mount Royal University. Lists student-friendly rentals near campuses and helps match roommates. Free for students to use.",
-      tl: "Opisyal na off-campus housing service kasama ang U of Calgary, SAIT, at MRU.",
-      es: "Servicio oficial de vivienda fuera del campus con U of Calgary, SAIT y MRU.",
-      ar: "خدمة سكن رسمية خارج الحرم الجامعي بالشراكة مع جامعات كالجاري وSAIT وMRU.",
-      zh: "与卡尔加里大学、SAIT 和 MRU 合作的官方校外住房服务。",
+      en: "Official off-campus housing service partnered with the University of Calgary, SAIT, and Mount Royal University. Lists student-friendly rentals near campuses and helps match roommates. Free for students to use."
     },
     servicesOffered: [
       "Student rentals",
@@ -2621,18 +1949,10 @@ export const calgaryResources: Resource[] = [
     category: ["legal"],
     userTypes: ["newcomer", "family", "senior", "student"],
     title: {
-      en: "Legal Aid Alberta",
-      tl: "Legal Aid Alberta",
-      es: "Asistencia Legal de Alberta",
-      ar: "المساعدة القانونية في ألبرتا",
-      zh: "艾伯塔法律援助",
+      en: "Legal Aid Alberta"
     },
     description: {
-      en: "Province-wide legal help for low-income Albertans covering family, immigration, tenancy, and criminal matters. Free legal advice by phone and representation if you qualify financially. Calgary office and a toll-free intake line.",
-      tl: "Tulong legal para sa low-income na Albertans: pamilya, imigrasyon, pabahay.",
-      es: "Ayuda legal para albertanos de bajos ingresos: familia, inmigración, vivienda.",
-      ar: "مساعدة قانونية لذوي الدخل المنخفض في ألبرتا: الأسرة والهجرة والإيجار.",
-      zh: "为低收入艾伯塔人提供家庭、移民、租房等法律帮助。",
+      en: "Province-wide legal help for low-income Albertans covering family, immigration, tenancy, and criminal matters. Free legal advice by phone and representation if you qualify financially. Calgary office and a toll-free intake line."
     },
     servicesOffered: [
       "Free legal advice",
@@ -2653,18 +1973,10 @@ export const calgaryResources: Resource[] = [
     category: ["legal"],
     userTypes: ["newcomer", "family", "senior", "student"],
     title: {
-      en: "CPLEA / LawCentral Alberta",
-      tl: "CPLEA / LawCentral Alberta",
-      es: "CPLEA / LawCentral Alberta",
-      ar: "CPLEA / LawCentral Alberta",
-      zh: "CPLEA / LawCentral Alberta",
+      en: "CPLEA / LawCentral Alberta"
     },
     description: {
-      en: "The Centre for Public Legal Education Alberta provides free, plain-language guides on tenant rights, employment, family law, and more through LawCentral Alberta. The trusted first stop to understand your rights before you act.",
-      tl: "Libreng plain-language na gabay sa karapatan ng nangungupahan, trabaho, at iba pa.",
-      es: "Guías legales gratuitas en lenguaje sencillo sobre derechos del inquilino y empleo.",
-      ar: "أدلة قانونية مجانية مبسطة حول حقوق المستأجر والعمل وغيرها.",
-      zh: "提供关于租客权利、就业、家庭法等的免费通俗法律指南。",
+      en: "The Centre for Public Legal Education Alberta provides free, plain-language guides on tenant rights, employment, family law, and more through LawCentral Alberta. The trusted first stop to understand your rights before you act."
     },
     servicesOffered: [
       "Tenant rights guides",
@@ -2687,18 +1999,10 @@ export const calgaryResources: Resource[] = [
     category: ["business"],
     userTypes: ["business", "newcomer"],
     title: {
-      en: "Alberta Corporate Registry",
-      tl: "Alberta Corporate Registry",
-      es: "Registro Corporativo de Alberta",
-      ar: "سجل الشركات في ألبرتا",
-      zh: "艾伯塔公司注册处",
+      en: "Alberta Corporate Registry"
     },
     description: {
-      en: "The mandatory provincial body where all Alberta corporations, trade names, and partnerships are filed. Start here to register your business structure on the official Alberta 'Starting a Business' portal before applying for a city licence.",
-      tl: "Ang sapilitang provincial body kung saan nakarehistro ang lahat ng korporasyon at trade name sa Alberta.",
-      es: "El organismo provincial obligatorio donde se registran todas las corporaciones y nombres comerciales de Alberta.",
-      ar: "الهيئة الإقليمية الإلزامية حيث تُسجَّل جميع الشركات والأسماء التجارية في ألبرتا.",
-      zh: "所有艾伯塔公司、商号和合伙企业必须注册的省级机构。",
+      en: "The mandatory provincial body where all Alberta corporations, trade names, and partnerships are filed. Start here to register your business structure on the official Alberta 'Starting a Business' portal before applying for a city licence."
     },
     servicesOffered: [
       "Incorporation filing",
@@ -2718,18 +2022,10 @@ export const calgaryResources: Resource[] = [
     category: ["business"],
     userTypes: ["business", "newcomer"],
     title: {
-      en: "City of Calgary Business Licence (myID)",
-      tl: "City of Calgary Business Licence (myID)",
-      es: "Licencia de negocio de la Ciudad de Calgary (myID)",
-      ar: "رخصة الأعمال لمدينة كالجاري (myID)",
-      zh: "卡尔加里市营业执照 (myID)",
+      en: "City of Calgary Business Licence (myID)"
     },
     description: {
-      en: "Once your provincial registration is complete, you must secure a local municipal business licence. Apply digitally using a personal or corporate myID account through the City of Calgary's online portal.",
-      tl: "Kapag kumpleto na ang provincial registration, kailangan mong kumuha ng lokal na business licence.",
-      es: "Una vez completado el registro provincial, debe obtener una licencia municipal de negocio.",
-      ar: "بعد إتما�� التسجيل الإقليمي، يجب الحصول على رخصة أعمال بلدية محلية.",
-      zh: "完成省级注册后，您必须通过市级 myID 账户申请本地营业执照。",
+      en: "Once your provincial registration is complete, you must secure a local municipal business licence. Apply digitally using a personal or corporate myID account through the City of Calgary's online portal."
     },
     servicesOffered: [
       "Municipal business licence application",
@@ -2749,18 +2045,10 @@ export const calgaryResources: Resource[] = [
     category: ["business", "newcomer"],
     userTypes: ["business", "newcomer"],
     title: {
-      en: "Business Link Alberta",
-      tl: "Business Link Alberta",
-      es: "Business Link Alberta",
-      ar: "Business Link Alberta",
-      zh: "Business Link 艾伯塔",
+      en: "Business Link Alberta"
     },
     description: {
-      en: "Government-funded non-profit offering FREE, structured guidance to help entrepreneurs navigate legal structures, registration, and provincial compliance. Specialized advisors support newcomers, women, and Indigenous entrepreneurs starting a business in Alberta.",
-      tl: "Government-funded na non-profit na nag-aalok ng LIBRENG gabay sa mga entrepreneur.",
-      es: "Organización sin fines de lucro financiada por el gobierno que ofrece orientación GRATUITA a emprendedores.",
-      ar: "منظمة غير ربحية ممولة حكوميًا تقدم إرشادًا مجانيًا لرواد الأعمال.",
-      zh: "由政府资助的非营利组织，为创业者提供免费的结构化指导。",
+      en: "Government-funded non-profit offering FREE, structured guidance to help entrepreneurs navigate legal structures, registration, and provincial compliance. Specialized advisors support newcomers, women, and Indigenous entrepreneurs starting a business in Alberta."
     },
     servicesOffered: [
       "Free business advice",
@@ -2782,18 +2070,10 @@ export const calgaryResources: Resource[] = [
     category: ["business"],
     userTypes: ["business", "newcomer"],
     title: {
-      en: "Ownr — Online Business Registration",
-      tl: "Ownr — Online na Pagrehistro ng Negosyo",
-      es: "Ownr — Registro de negocios en línea",
-      ar: "Ownr — تسجيل الأعمال عبر الإنترنت",
-      zh: "Ownr — 在线企业注册",
+      en: "Ownr — Online Business Registration"
     },
     description: {
-      en: "Popular online platform that lets you register a sole proprietorship/trade name or incorporate in Alberta in minutes, with guided forms, name (NUANS) search, legal documents, and minute books. RBC business-account holders often get registration rebates.",
-      tl: "Sikat na online platform para magparehistro o mag-incorporate ng negosyo sa Alberta sa ilang minuto.",
-      es: "Plataforma en línea popular para registrar o incorporar un negocio en Alberta en minutos.",
-      ar: "منصة شهيرة عبر الإنترنت لتسجيل أو تأسيس شركة في ألبرتا في دقائق.",
-      zh: "热门在线平台，可在几分钟内于艾伯塔注册个体经营或成立公司。",
+      en: "Popular online platform that lets you register a sole proprietorship/trade name or incorporate in Alberta in minutes, with guided forms, name (NUANS) search, legal documents, and minute books. RBC business-account holders often get registration rebates."
     },
     servicesOffered: [
       "Online incorporation",
@@ -2812,18 +2092,10 @@ export const calgaryResources: Resource[] = [
     category: ["business"],
     userTypes: ["business", "newcomer"],
     title: {
-      en: "AMA Registry — Business Services",
-      tl: "AMA Registry — Business Services",
-      es: "Registro AMA — Servicios empresariales",
-      ar: "سجل AMA — خدمات الأعمال",
-      zh: "AMA 注册处 — 企业服务",
+      en: "AMA Registry — Business Services"
     },
     description: {
-      en: "The Alberta Motor Association is a highly reputable authorized registry agent providing complete corporate registry services through trained specialists. Book an appointment to file incorporations, trade names, and NUANS reports securely in person.",
-      tl: "Ang AMA ay isang mapagkakatiwalaang authorized registry agent na nagbibigay ng kumpletong serbisyo.",
-      es: "La AMA es un agente de registro autorizado muy reputado que ofrece servicios completos de registro corporativo.",
-      ar: "AMA وكيل سجل معتمد وموثوق يقدم خدمات سجل الشركات الكاملة.",
-      zh: "艾伯塔汽车协会是信誉良好的授权注册代理，提供完整的公司注册服务。",
+      en: "The Alberta Motor Association is a highly reputable authorized registry agent providing complete corporate registry services through trained specialists. Book an appointment to file incorporations, trade names, and NUANS reports securely in person."
     },
     servicesOffered: [
       "Corporate registry services",
@@ -2843,18 +2115,10 @@ export const calgaryResources: Resource[] = [
     category: ["business"],
     userTypes: ["business", "newcomer"],
     title: {
-      en: "NUANS Alberta Business Name Report",
-      tl: "NUANS Alberta Business Name Report",
-      es: "Informe NUANS de nombre comercial de Alberta",
-      ar: "تقرير NUANS لاسم النشاط التجاري",
-      zh: "NUANS 艾伯塔企业名称报告",
+      en: "NUANS Alberta Business Name Report"
     },
     description: {
-      en: "An official Alberta Business Name Report (NUANS) proves your chosen business name does not conflict with existing companies or trademarks — a required step before incorporating. Order through an authorized registry agent or online platform.",
-      tl: "Ang opisyal na NUANS report ay nagpapatunay na walang kasalungat ang piniling pangalan ng negosyo.",
-      es: "Un informe NUANS oficial demuestra que el nombre elegido no entra en conflicto con empresas existentes.",
-      ar: "يثبت تقرير NUANS الرسمي أن الاسم المختار لا يتعارض مع شركات قائمة.",
-      zh: "官方 NUANS 报告证明您选择的企业名称不与现有公司冲突，是注册前的必要步骤。",
+      en: "An official Alberta Business Name Report (NUANS) proves your chosen business name does not conflict with existing companies or trademarks — a required step before incorporating. Order through an authorized registry agent or online platform."
     },
     servicesOffered: [
       "Business name search",
@@ -2876,18 +2140,10 @@ export const calgaryResources: Resource[] = [
     category: ["logistics", "business"],
     userTypes: ["business", "newcomer", "family"],
     title: {
-      en: "Chit Chats",
-      tl: "Chit Chats",
-      es: "Chit Chats",
-      ar: "Chit Chats",
-      zh: "Chit Chats",
+      en: "Chit Chats"
     },
     description: {
-      en: "One of the cheapest all-round parcel shippers for everyday Calgarians and small online sellers. Ships within Canada, to the United States, and to over 200 countries worldwide at deeply discounted rates versus the big carriers.",
-      tl: "Isa sa pinakamurang parcel shipper para sa mga ordinaryong taga-Calgary at maliliit na online seller.",
-      es: "Uno de los servicios de envío de paquetes más baratos para calgarianos y pequeños vendedores en línea.",
-      ar: "أحد أرخص خدمات شحن الطرود لسكان كالجاري والبائعين عبر الإنترنت.",
-      zh: "为普通卡尔加里人和小型网店卖家提供的最便宜的全方位包裹运输商之一。",
+      en: "One of the cheapest all-round parcel shippers for everyday Calgarians and small online sellers. Ships within Canada, to the United States, and to over 200 countries worldwide at deeply discounted rates versus the big carriers."
     },
     servicesOffered: [
       "Domestic Canada shipping",
@@ -2908,18 +2164,10 @@ export const calgaryResources: Resource[] = [
     category: ["logistics", "business"],
     userTypes: ["business", "newcomer", "family"],
     title: {
-      en: "Stallion Express",
-      tl: "Stallion Express",
-      es: "Stallion Express",
-      ar: "Stallion Express",
-      zh: "Stallion Express",
+      en: "Stallion Express"
     },
     description: {
-      en: "Budget-friendly shipping built for Canadian online sellers and individuals. Ships within Canada, to the United States, and internationally with discounted postage, easy label printing, and drop-off/pickup options.",
-      tl: "Abot-kayang shipping para sa mga Canadian online seller at indibidwal.",
-      es: "Envíos económicos para vendedores en línea e individuos canadienses.",
-      ar: "شحن اقتصادي مصمم للبائعين عبر الإنترنت والأفراد في كندا.",
-      zh: "为加拿大网店卖家和个人打造的经济实惠运输服务。",
+      en: "Budget-friendly shipping built for Canadian online sellers and individuals. Ships within Canada, to the United States, and internationally with discounted postage, easy label printing, and drop-off/pickup options."
     },
     servicesOffered: [
       "Domestic Canada shipping",
@@ -2939,18 +2187,10 @@ export const calgaryResources: Resource[] = [
     category: ["logistics", "newcomer"],
     userTypes: ["newcomer", "family", "business"],
     title: {
-      en: "Meest Canada",
-      tl: "Meest Canada",
-      es: "Meest Canada",
-      ar: "Meest Canada",
-      zh: "Meest 加拿大",
+      en: "Meest Canada"
     },
     description: {
-      en: "Specialist in parcels and barrels to Ukraine, Poland, Moldova, the Baltic States, Central Asia, and Eastern Europe. A trusted choice for Calgary's Eastern-European communities sending gifts and care packages home.",
-      tl: "Espesyalista sa parcel papuntang Ukraine, Poland, at Eastern Europe.",
-      es: "Especialista en paquetes a Ucrania, Polonia y Europa del Este.",
-      ar: "متخصص في الطرود إلى أوكرانيا وبولندا وأوروبا الشرقية.",
-      zh: "专门运送包裹至乌克兰、波兰、摩尔多瓦、波罗的海国家及东欧。",
+      en: "Specialist in parcels and barrels to Ukraine, Poland, Moldova, the Baltic States, Central Asia, and Eastern Europe. A trusted choice for Calgary's Eastern-European communities sending gifts and care packages home."
     },
     servicesOffered: [
       "Shipping to Ukraine & Poland",
@@ -2970,18 +2210,10 @@ export const calgaryResources: Resource[] = [
     category: ["logistics", "newcomer"],
     userTypes: ["newcomer", "family"],
     title: {
-      en: "Polonez Parcel Service",
-      tl: "Polonez Parcel Service",
-      es: "Servicio de paquetes Polonez",
-      ar: "خدمة طرود Polonez",
-      zh: "Polonez 包裹服务",
+      en: "Polonez Parcel Service"
     },
     description: {
-      en: "Long-established parcel service to Poland, Ukraine, and over 100 European and global destinations. Popular for affordable food parcels and gift boxes sent by Calgary's Polish and Ukrainian families.",
-      tl: "Matagal nang parcel service papuntang Poland, Ukraine, at 100+ destinasyon.",
-      es: "Servicio de paquetes establecido a Polonia, Ucrania y más de 100 destinos.",
-      ar: "خدمة طرود راسخة إلى بولندا وأوكرانيا وأكثر من 100 وجهة.",
-      zh: "历史悠久的包裹服务，运送至波兰、乌克兰及 100 多个目的地。",
+      en: "Long-established parcel service to Poland, Ukraine, and over 100 European and global destinations. Popular for affordable food parcels and gift boxes sent by Calgary's Polish and Ukrainian families."
     },
     servicesOffered: [
       "Shipping to Poland & Ukraine",
@@ -3000,18 +2232,10 @@ export const calgaryResources: Resource[] = [
     category: ["logistics", "newcomer"],
     userTypes: ["newcomer", "family", "business"],
     title: {
-      en: "SF International (SF Express)",
-      tl: "SF International (SF Express)",
-      es: "SF International (SF Express)",
-      ar: "SF International (SF Express)",
-      zh: "顺丰国际 (SF Express)",
+      en: "SF International (SF Express)"
     },
     description: {
-      en: "Reliable express shipping to Hong Kong, Thailand, Mainland China, and Southeast Asia. A trusted option for Calgary's Asian communities sending documents, gifts, and goods quickly to family overseas.",
-      tl: "Maaasahang express shipping papuntang Hong Kong, Thailand, China, at Southeast Asia.",
-      es: "Envío exprés confiable a Hong Kong, Tailandia, China y el sudeste asiático.",
-      ar: "شحن سريع موثوق إلى هونغ كونغ وتايلاند والصين وجنوب شرق آسيا.",
-      zh: "可靠的快递服务，运送至香港、泰国、中国大陆及东南亚。",
+      en: "Reliable express shipping to Hong Kong, Thailand, Mainland China, and Southeast Asia. A trusted option for Calgary's Asian communities sending documents, gifts, and goods quickly to family overseas."
     },
     servicesOffered: [
       "Shipping to Hong Kong & China",
@@ -3030,18 +2254,10 @@ export const calgaryResources: Resource[] = [
     category: ["logistics", "newcomer"],
     userTypes: ["newcomer", "family"],
     title: {
-      en: "ALiN Cargo Express",
-      tl: "ALiN Cargo Express",
-      es: "ALiN Cargo Express",
-      ar: "ALiN Cargo Express",
-      zh: "ALiN Cargo Express",
+      en: "ALiN Cargo Express"
     },
     description: {
-      en: "Calgary-based cargo service shipping to the Philippines, Thailand, and Southeast Asian ports using affordable flat-rate balikbayan boxes. A community favourite for Filipino families sending goods home.",
-      tl: "Calgary-based na cargo service papuntang Pilipinas gamit ang abot-kayang flat-rate balikbayan box.",
-      es: "Servicio de carga en Calgary a Filipinas y el sudeste asiático con cajas de tarifa fija.",
-      ar: "خدمة شحن في كالجاري إلى الفلبين وجنوب شرق آسيا بصناديق بسعر ثابت.",
-      zh: "总部位于卡尔加里的货运服务，使用经济实惠的统一价箱运往菲律宾及东南亚。",
+      en: "Calgary-based cargo service shipping to the Philippines, Thailand, and Southeast Asian ports using affordable flat-rate balikbayan boxes. A community favourite for Filipino families sending goods home."
     },
     servicesOffered: [
       "Balikbayan boxes",
@@ -3061,18 +2277,10 @@ export const calgaryResources: Resource[] = [
     category: ["logistics", "newcomer"],
     userTypes: ["newcomer", "family", "business"],
     title: {
-      en: "Packaging Depot Calgary",
-      tl: "Packaging Depot Calgary",
-      es: "Packaging Depot Calgary",
-      ar: "Packaging Depot Calgary",
-      zh: "Packaging Depot 卡尔加里",
+      en: "Packaging Depot Calgary"
     },
     description: {
-      en: "Independent consolidation service shipping to Africa, India, the Middle East, and worldwide. Handles larger and special shipments at competitive rates for Calgary families and small importers/exporters.",
-      tl: "Independent consolidation service papuntang Africa, India, Middle East, at buong mundo.",
-      es: "Servicio de consolidación independiente a África, India, Medio Oriente y todo el mundo.",
-      ar: "خدمة تجميع مستقلة للشحن إلى أفريقيا والهند والشرق الأوسط والعالم.",
-      zh: "独立拼箱服务，运送至非洲、印度、中东及全球。",
+      en: "Independent consolidation service shipping to Africa, India, the Middle East, and worldwide. Handles larger and special shipments at competitive rates for Calgary families and small importers/exporters."
     },
     servicesOffered: [
       "Shipping to Africa & India",
@@ -3093,18 +2301,10 @@ export const calgaryResources: Resource[] = [
     category: ["logistics", "newcomer", "education"],
     userTypes: ["newcomer", "student", "family"],
     title: {
-      en: "Pikkol Alberta",
-      tl: "Pikkol Alberta",
-      es: "Pikkol Alberta",
-      ar: "Pikkol Alberta",
-      zh: "Pikkol 艾伯塔",
+      en: "Pikkol Alberta"
     },
     description: {
-      en: "Shipping to India, South Asia, and international student/family routes. Useful for newcomers and students moving belongings or sending parcels between Calgary and South Asia affordably.",
-      tl: "Shipping papuntang India, South Asia, at international student/family routes.",
-      es: "Envíos a India, sur de Asia y rutas internacionales de estudiantes/familias.",
-      ar: "شحن إلى الهند وجنوب آسيا ومسارات الطلاب والعائلات الدولية.",
-      zh: "运送至印度、南亚及国际学生/家庭路线。",
+      en: "Shipping to India, South Asia, and international student/family routes. Useful for newcomers and students moving belongings or sending parcels between Calgary and South Asia affordably."
     },
     servicesOffered: [
       "Shipping to India & South Asia",
@@ -3122,18 +2322,10 @@ export const calgaryResources: Resource[] = [
     category: ["logistics", "business"],
     userTypes: ["business", "newcomer"],
     title: {
-      en: "CBSA — Importing & Exporting",
-      tl: "CBSA — Pag-import at Pag-export",
-      es: "CBSA — Importación y exportación",
-      ar: "CBSA — الاستيراد والتصدير",
-      zh: "加拿大边境服务��� — 进出口",
+      en: "CBSA — Importing & Exporting"
     },
     description: {
-      en: "The Canada Border Services Agency is the official authority for importing and exporting goods. Register for a business import/export (RM) account, learn duty/tariff rules, and check what's restricted — essential before shipping commercial goods, food, liquids, or batteries.",
-      tl: "Ang CBSA ang opisyal na awtoridad para sa pag-import at pag-export ng mga produkto.",
-      es: "La CBSA es la autoridad oficial para importar y exportar bienes en Canadá.",
-      ar: "CBSA هي السلطة الرسمية لاستيراد وتصدير البضائع في كندا.",
-      zh: "加拿大边境服务局是进出口货物的官方主管机构。",
+      en: "The Canada Border Services Agency is the official authority for importing and exporting goods. Register for a business import/export (RM) account, learn duty/tariff rules, and check what's restricted — essential before shipping commercial goods, food, liquids, or batteries."
     },
     servicesOffered: [
       "Import/export (RM) account registration",
@@ -3153,18 +2345,10 @@ export const calgaryResources: Resource[] = [
     category: ["logistics", "business"],
     userTypes: ["business"],
     title: {
-      en: "CFIA — Food Import/Export Licensing",
-      tl: "CFIA — Lisensya sa Pag-import/Export ng Pagkain",
-      es: "CFIA — Licencias de importación/exportación de alimentos",
-      ar: "CFIA — تراخيص استيراد وتصدير الأغذية",
-      zh: "加拿大食品检验局 — 食品进出口许可",
+      en: "CFIA — Food Import/Export Licensing"
     },
     description: {
-      en: "The Canadian Food Inspection Agency licenses and inspects food being imported or exported. If you plan to ship or sell food, get a Safe Food for Canadians (SFC) licence and check inspection and labelling requirements here first.",
-      tl: "Ang CFIA ang naglilisensya at nag-iinspeksyon ng pagkaing iniimport o ini-export.",
-      es: "La CFIA licencia e inspecciona los alimentos importados o exportados.",
-      ar: "CFIA ترخّص وتفتّش الأغذية المستوردة أو المصدّرة.",
-      zh: "加拿大食品检验局对进出口食品进行许可和检验。",
+      en: "The Canadian Food Inspection Agency licenses and inspects food being imported or exported. If you plan to ship or sell food, get a Safe Food for Canadians (SFC) licence and check inspection and labelling requirements here first."
     },
     servicesOffered: [
       "Safe Food for Canadians (SFC) licence",
@@ -3188,18 +2372,10 @@ export const calgaryResources: Resource[] = [
     category: ["jobs", "education"],
     userTypes: ["newcomer", "student", "family"],
     title: {
-      en: "Welding & Pipeline Trades — Always Hiring",
-      tl: "Welding at Pipeline Trades — Laging Naghahanap",
-      es: "Soldadura y oleoductos — siempre contratando",
-      ar: "مهن اللحام والأنابيب — توظيف دائم",
-      zh: "焊接与管道行业 — 全年招聘",
+      en: "Welding & Pipeline Trades — Always Hiring"
     },
     description: {
-      en: "Alberta's energy, pipeline, and construction sectors need welders, pipefitters, and B-pressure welders year-round, especially for upcoming pipeline and plant projects. To qualify: complete a welding program (e.g. SAIT or Columbia College), register as an apprentice with Alberta Apprenticeship, and earn your journeyperson and B-pressure tickets for the highest pay.",
-      tl: "Ang energy at construction sectors ng Alberta ay nangangailangan ng welder buong taon.",
-      es: "Los sectores de energía y construcción de Alberta necesitan soldadores todo el año.",
-      ar: "تحتاج قطاعات الطاقة والبناء في ألبرتا إلى لحّامين على مدار العام.",
-      zh: "艾伯塔的能源、管道和建筑行业全年需要焊������尤其是��将开���的管��项目���",
+      en: "Alberta's energy, pipeline, and construction sectors need welders, pipefitters, and B-pressure welders year-round, especially for upcoming pipeline and plant projects. To qualify: complete a welding program (e.g. SAIT or Columbia College), register as an apprentice with Alberta Apprenticeship, and earn your journeyperson and B-pressure tickets for the highest pay."
     },
     servicesOffered: [
       "Welding & pipefitting careers",
@@ -3219,18 +2395,10 @@ export const calgaryResources: Resource[] = [
     category: ["jobs", "newcomer"],
     userTypes: ["newcomer", "student", "family"],
     title: {
-      en: "Security Guard — Steady Year-Round Work",
-      tl: "Security Guard — Tuloy-tuloy na Trabaho",
-      es: "Guardia de seguridad — trabajo estable todo el año",
-      ar: "حارس أمن — عمل ثابت طوال العام",
-      zh: "保安 — 全年稳定工作",
+      en: "Security Guard — Steady Year-Round Work"
     },
     description: {
-      en: "Security is one of the easiest year-round fields to enter in Calgary, with constant demand. To qualify: take the Alberta Basic Security Training (ABST) course (offered by Columbia College and others), pass the provincial exam, then apply for your Alberta Security Services licence. Entry-level friendly for newcomers.",
-      tl: "Ang security ay isa sa pinakamadaling pasukan na larangan sa Calgary buong taon.",
-      es: "La seguridad es uno de los campos más fáciles de ingresar todo el año en Calgary.",
-      ar: "الأمن من أسهل المجالات للدخول على مدار العام في كالجاري.",
-      zh: "保安是卡尔加里最容易进入的全年行业之一，需求持续。",
+      en: "Security is one of the easiest year-round fields to enter in Calgary, with constant demand. To qualify: take the Alberta Basic Security Training (ABST) course (offered by Columbia College and others), pass the provincial exam, then apply for your Alberta Security Services licence. Entry-level friendly for newcomers."
     },
     servicesOffered: [
       "Alberta Basic Security Training (ABST)",
@@ -3249,18 +2417,10 @@ export const calgaryResources: Resource[] = [
     category: ["education", "jobs"],
     userTypes: ["newcomer", "student", "family"],
     title: {
-      en: "Columbia College — Career Training",
-      tl: "Columbia College — Career Training",
-      es: "Columbia College — Formación profesional",
-      ar: "كلية كولومبيا — التدريب المهني",
-      zh: "哥伦比亚学院 — 职业培训",
+      en: "Columbia College — Career Training"
     },
     description: {
-      en: "Long-running Calgary non-profit college offering affordable, practical training that leads to in-demand jobs — including security (ABST), health-care aide, education assistant, and trades upgrading. Flexible schedules and newcomer support make it a strong first step into the workforce.",
-      tl: "Matagal nang non-profit college sa Calgary na nag-aalok ng abot-kayang training para sa in-demand na trabaho.",
-      es: "Colegio sin fines de lucro de Calgary que ofrece formación práctica asequible hacia empleos demandados.",
-      ar: "كلية غير ربحية في كالجاري تقدم تدريبًا عمليًا ميسور التكلفة نح�� وظائف مطلوبة.",
-      zh: "卡尔加里历史悠久的非营利学院，提供经济实惠的实用培训，通向热门工作。",
+      en: "Long-running Calgary non-profit college offering affordable, practical training that leads to in-demand jobs — including security (ABST), health-care aide, education assistant, and trades upgrading. Flexible schedules and newcomer support make it a strong first step into the workforce."
     },
     servicesOffered: [
       "Security training (ABST)",
@@ -3282,18 +2442,10 @@ export const calgaryResources: Resource[] = [
     category: ["jobs", "education", "healthcare"],
     userTypes: ["newcomer", "student", "family"],
     title: {
-      en: "Health-Care Aide — High Year-Round Demand",
-      tl: "Health-Care Aide — Mataas na Demand Buong Taon",
-      es: "Asistente de salud — alta demanda todo el año",
-      ar: "مساعد رعاية صحية — طلب مرتفع طوال العام",
-      zh: "保健助理 — 全年高需求",
+      en: "Health-Care Aide — High Year-Round Demand"
     },
     description: {
-      en: "Calgary's aging population keeps health-care aides in constant demand at care homes and home-care agencies. To qualify: complete a provincially recognized Health Care Aide certificate (offered by Bow Valley College, Columbia College, and others), often in under a year, with funding sometimes available for newcomers.",
-      tl: "Ang tumatandang populasyon ng Calgary ay patuloy na nangangailangan ng health-care aide.",
-      es: "La población que envejece en Calgary mantiene alta demanda de asistentes de salud.",
-      ar: "يحافظ كبار السن في كالجاري على طلب مستمر على مساعدي الرعاية الصحية.",
-      zh: "卡尔加里老龄化人口使保健助理需求持续旺盛。",
+      en: "Calgary's aging population keeps health-care aides in constant demand at care homes and home-care agencies. To qualify: complete a provincially recognized Health Care Aide certificate (offered by Bow Valley College, Columbia College, and others), often in under a year, with funding sometimes available for newcomers."
     },
     servicesOffered: [
       "Health Care Aide certificate",
@@ -3312,18 +2464,10 @@ export const calgaryResources: Resource[] = [
     category: ["jobs", "logistics", "education"],
     userTypes: ["newcomer", "family"],
     title: {
-      en: "Class 1 Truck Driver — Constant Demand",
-      tl: "Class 1 Truck Driver — Tuloy-tuloy na Demand",
-      es: "Conductor de camión Clase 1 — demanda constante",
-      ar: "سائق شاحنة الفئة 1 — طلب مستمر",
-      zh: "一级卡车司机 — 持续需求",
+      en: "Class 1 Truck Driver — Constant Demand"
     },
     description: {
-      en: "Trucking and logistics keep Calgary's economy moving and need Class 1 drivers year-round. To qualify: complete Mandatory Entry-Level Training (MELT) at an Alberta-approved driving school, pass your Class 1 road test, and many carriers offer paid mentorship for new drivers.",
-      tl: "Ang trucking at logistics ay nangangailangan ng Class 1 driver buong taon.",
-      es: "El transporte y la logística necesitan conductores Clase 1 todo el año.",
-      ar: "يحتاج النقل والخدمات اللوجستية إلى سائقي الفئة 1 طوال العام.",
-      zh: "运输和物流业全年需要一级卡车司机。",
+      en: "Trucking and logistics keep Calgary's economy moving and need Class 1 drivers year-round. To qualify: complete Mandatory Entry-Level Training (MELT) at an Alberta-approved driving school, pass your Class 1 road test, and many carriers offer paid mentorship for new drivers."
     },
     servicesOffered: [
       "MELT Class 1 training",
@@ -3347,25 +2491,13 @@ export const calgaryResources: Resource[] = [
     category: ["tourism"],
     userTypes: ["family", "student", "newcomer"],
     title: {
-      en: "Tourism Calgary — Official Visitor Guide",
-      tl: "Tourism Calgary — Opisyal na Gabay sa Bisita",
-      es: "Tourism Calgary — Guía oficial para visitantes",
-      ar: "السياحة في كالجاري — دليل الزوار الرسمي",
-      zh: "卡尔加里旅游局 — 官方游客指南",
+      en: "Tourism Calgary — Official Visitor Guide"
     },
     description: {
-      en: "The official destination guide for Calgary. Plan your trip with curated lists of top attractions, neighbourhoods, events, festivals, hotels and restaurants — plus seasonal itineraries and a visitor information centre.",
-      tl: "Opisyal na gabay sa Calgary: mga atraksyon, hotel, restaurant at kaganapan.",
-      es: "La guía oficial de Calgary: atracciones, hoteles, restaurantes y eventos.",
-      ar: "الدليل الرسمي لكالجاري: المعالم والفنادق والمطاعم والفعاليات.",
-      zh: "卡尔加里官方目的地指南：景点、酒店、餐厅和活动。",
+      en: "The official destination guide for Calgary. Plan your trip with curated lists of top attractions, neighbourhoods, events, festivals, hotels and restaurants — plus seasonal itineraries and a visitor information centre."
     },
     summary: {
-      en: "Official guide to attractions, hotels, dining and events in Calgary.",
-      tl: "Opisyal na gabay sa atraksyon, hotel at pagkain sa Calgary.",
-      es: "Guía oficial de atracciones, hoteles y restaurantes de Calgary.",
-      ar: "دليل رسمي لمعالم كالجاري وفنادقها ومطاعمها.",
-      zh: "卡尔加里景点、酒店和餐饮官方指南。",
+      en: "Official guide to attractions, hotels, dining and events in Calgary."
     },
     servicesOffered: ["Trip planning", "Attractions & itineraries", "Events calendar", "Visitor information centre"],
     website: "https://www.visitcalgary.com",
@@ -3380,18 +2512,10 @@ export const calgaryResources: Resource[] = [
     category: ["tourism"],
     userTypes: ["family", "student"],
     title: {
-      en: "Calgary Tower — Observation Deck",
-      tl: "Calgary Tower — Observation Deck",
-      es: "Torre de Calgary — Mirador",
-      ar: "برج كالجاري — منصة المراقبة",
-      zh: "卡尔加里塔 — 观景台",
+      en: "Calgary Tower — Observation Deck"
     },
     description: {
-      en: "Calgary's most recognizable landmark. Take in 360-degree views of the city, the Bow River and the Rocky Mountains from the observation deck and glass floor, then dine at the revolving Sky 360 restaurant.",
-      tl: "Ang pinakatanyag na palatandaan ng Calgary na may 360-degree na tanawin.",
-      es: "El monumento más emblemático de Calgary con vistas de 360 grados.",
-      ar: "أشهر معالم كالجاري بإطلالة 360 درجة وأرضي�� زجاجية.",
-      zh: "卡尔加里最具标志性的��标，可俯瞰360度景观。",
+      en: "Calgary's most recognizable landmark. Take in 360-degree views of the city, the Bow River and the Rocky Mountains from the observation deck and glass floor, then dine at the revolving Sky 360 restaurant."
     },
     address: "101 9 Ave SW, Calgary, AB",
     website: "https://www.calgarytower.com",
@@ -3406,18 +2530,10 @@ export const calgaryResources: Resource[] = [
     category: ["tourism"],
     userTypes: ["family", "student"],
     title: {
-      en: "Heritage Park Historical Village",
-      tl: "Heritage Park Historical Village",
-      es: "Heritage Park Historical Village",
-      ar: "قرية هيريتدج بارك التاريخية",
-      zh: "传统公园历史村",
+      en: "Heritage Park Historical Village"
     },
     description: {
-      en: "Canada's largest living-history museum. Experience Calgary's pioneer past with costumed interpreters, a steam train, antique midway and the immersive White Hat Experience for culinary, spirit and heritage journeys.",
-      tl: "Ang pinakamalaking living-history museum sa Canada na may steam train.",
-      es: "El museo de historia viva más grande de Canadá, con tren de vapor.",
-      ar: "أكبر متحف تاريخي حي في كندا مع قطار بخاري.",
-      zh: "加拿大最大的活历史博物馆，设有蒸汽火车。",
+      en: "Canada's largest living-history museum. Experience Calgary's pioneer past with costumed interpreters, a steam train, antique midway and the immersive White Hat Experience for culinary, spirit and heritage journeys."
     },
     address: "1900 Heritage Dr SW, Calgary, AB",
     website: "https://www.heritagepark.ca",
@@ -3432,18 +2548,10 @@ export const calgaryResources: Resource[] = [
     category: ["tourism", "arts"],
     userTypes: ["family", "student"],
     title: {
-      en: "Studio Bell — National Music Centre",
-      tl: "Studio Bell — National Music Centre",
-      es: "Studio Bell — Centro Nacional de Música",
-      ar: "ستوديو بيل — المركز الوطني للموسيقى",
-      zh: "Studio Bell — 国家音乐中心",
+      en: "Studio Bell — National Music Centre"
     },
     description: {
-      en: "A striking architectural landmark in the East Village celebrating music in Canada. Explore interactive exhibits, rare instruments and the Canadian Music Hall of Fame.",
-      tl: "Isang arkitektural na palatandaan na nagdiriwang ng musika sa Canada.",
-      es: "Un hito arquitectónico que celebra la música en Canadá.",
-      ar: "معلم معماري يحتفي بالموسيقى في كندا.",
-      zh: "庆祝加拿大音乐的标志性建筑。",
+      en: "A striking architectural landmark in the East Village celebrating music in Canada. Explore interactive exhibits, rare instruments and the Canadian Music Hall of Fame."
     },
     address: "850 4 St SE, Calgary, AB",
     website: "https://www.studiobell.ca",
@@ -3458,18 +2566,10 @@ export const calgaryResources: Resource[] = [
     category: ["tourism"],
     userTypes: ["family", "student", "newcomer"],
     title: {
-      en: "Toonie Tours — Walking & Bike Tours",
-      tl: "Toonie Tours — Walking at Bike Tours",
-      es: "Toonie Tours — Recorridos a pie y en bici",
-      ar: "Toonie Tours — جولات سير ودراجات",
-      zh: "Toonie Tours — 步行与骑行导览",
+      en: "Toonie Tours — Walking & Bike Tours"
     },
     description: {
-      en: "Highly rated, gratuity-based (free) walking tours and 3-hour bike tours covering Stephen Avenue, Prince's Island Park and the Bow River. A friendly, local introduction to downtown Calgary.",
-      tl: "Mataas ang rating na libreng walking tour at bike tour sa downtown.",
-      es: "Recorridos a pie gratuitos y en bici muy bien valorados por el centro.",
-      ar: "جولات سير مجانية (بالإكرامية) وجولات دراجات عالية التقييم.",
-      zh: "评价极高的免费步行和骑行市中心导览。",
+      en: "Highly rated, gratuity-based (free) walking tours and 3-hour bike tours covering Stephen Avenue, Prince's Island Park and the Bow River. A friendly, local introduction to downtown Calgary."
     },
     servicesOffered: ["Free walking tours", "3-hour bike tours", "Downtown highlights"],
     website: "https://www.toonietours.com",
@@ -3483,18 +2583,10 @@ export const calgaryResources: Resource[] = [
     category: ["tourism"],
     userTypes: ["family", "student"],
     title: {
-      en: "The History Wrangler (Rob Lennard)",
-      tl: "The History Wrangler (Rob Lennard)",
-      es: "The History Wrangler (Rob Lennard)",
-      ar: "ذا هيستوري رانغلر (روب لينارد)",
-      zh: "历史向导（Rob Lennard）",
+      en: "The History Wrangler (Rob Lennard)"
     },
     description: {
-      en: "Award-winning local author and guide Rob Lennard brings Calgary's sandstone architecture and vibrant pioneer history to life through engaging, story-rich tours.",
-      tl: "Award-winning na may-akda at guide na nagbubuhay sa kasaysayan ng Calgary.",
-      es: "Autor y guía galardonado que da vida a la historia pionera de Calgary.",
-      ar: "مؤلف ومرشد حائز على جوائز يحيي تاريخ كالجاري.",
-      zh: "屡获殊荣的本地作家兼向导，讲述卡尔加里历史。",
+      en: "Award-winning local author and guide Rob Lennard brings Calgary's sandstone architecture and vibrant pioneer history to life through engaging, story-rich tours."
     },
     servicesOffered: ["History walking tours", "Sandstone architecture tours", "Storytelling"],
     website: "https://www.thehistorywrangler.com",
@@ -3508,18 +2600,10 @@ export const calgaryResources: Resource[] = [
     category: ["tourism"],
     userTypes: ["family", "senior", "student"],
     title: {
-      en: "CalgaryWalks & Bus Tours",
-      tl: "CalgaryWalks & Bus Tours",
-      es: "CalgaryWalks & Bus Tours",
-      ar: "CalgaryWalks & Bus Tours",
-      zh: "CalgaryWalks 步行与巴士导览",
+      en: "CalgaryWalks & Bus Tours"
     },
     description: {
-      en: "Recommended for exploring historical landmarks like the Eau Claire district and Inglewood at a comfortable pace, with both walking and bus tour options.",
-      tl: "Inirerekomenda para tuklasin ang mga makasaysayang lugar nang komportable.",
-      es: "Recomendado para explorar lugares históricos a un ritmo cómodo.",
-      ar: "موصى به لاستكشاف المعالم التاريخية بوتيرة مريحة.",
-      zh: "推荐以舒适的节奏探索历史地标。",
+      en: "Recommended for exploring historical landmarks like the Eau Claire district and Inglewood at a comfortable pace, with both walking and bus tour options."
     },
     servicesOffered: ["Walking tours", "Bus tours", "Eau Claire & Inglewood"],
     website: "https://www.calgarywalks.com",
@@ -3533,18 +2617,10 @@ export const calgaryResources: Resource[] = [
     category: ["tourism"],
     userTypes: ["family", "student"],
     title: {
-      en: "Alberta Blue Sky Tours — Rockies Day Trips",
-      tl: "Alberta Blue Sky Tours — Rockies Day Trips",
-      es: "Alberta Blue Sky Tours — Excursiones a las Rocosas",
-      ar: "Alberta Blue Sky Tours — رحلات إلى الروكيز",
-      zh: "Alberta Blue Sky Tours — 落基山一日游",
+      en: "Alberta Blue Sky Tours — Rockies Day Trips"
     },
     description: {
-      en: "Founded by Rockies guide Martin Flanagan (guiding since 1995). Widely trusted for small-group trips connecting Calgary to Banff, Jasper and Yoho national parks.",
-      tl: "Mapagkakatiwalaang biyahe mula Calgary patungong Banff, Jasper at Yoho.",
-      es: "Excursiones de confianza que conectan Calgary con Banff, Jasper y Yoho.",
-      ar: "رحلات موثوقة تربط كالجاري ببانف وجاسبر ويوهو.",
-      zh: "可信赖的从卡尔加里前往班夫、贾斯珀和约霍的行程。",
+      en: "Founded by Rockies guide Martin Flanagan (guiding since 1995). Widely trusted for small-group trips connecting Calgary to Banff, Jasper and Yoho national parks."
     },
     servicesOffered: ["Banff day trips", "Jasper & Yoho tours", "Small-group Rockies tours"],
     website: "https://www.albertabluesky.com",
@@ -3558,18 +2634,10 @@ export const calgaryResources: Resource[] = [
     category: ["tourism"],
     userTypes: ["family", "student"],
     title: {
-      en: "Calgary Tours — Sightseeing & Rockies",
-      tl: "Calgary Tours — Sightseeing at Rockies",
-      es: "Calgary Tours — Turismo y Rocosas",
-      ar: "Calgary Tours — جولات سياحية والروكيز",
-      zh: "Calgary Tours — 观光与落基山",
+      en: "Calgary Tours — Sightseeing & Rockies"
     },
     description: {
-      en: "A large, reliable local operator handling inbound and outbound sightseeing and transit, especially trips to the Canadian Rockies and Drumheller's dinosaur country.",
-      tl: "Malaki at maaasahang operator para sa Rockies at Drumheller.",
-      es: "Operador local confiable para las Rocosas y Drumheller.",
-      ar: "مشغل محلي موثوق لرحلات الروكيز ودرملر.",
-      zh: "可靠的本地运营商，提供落基山和德拉姆海勒行程。",
+      en: "A large, reliable local operator handling inbound and outbound sightseeing and transit, especially trips to the Canadian Rockies and Drumheller's dinosaur country."
     },
     servicesOffered: ["Rockies sightseeing", "Drumheller tours", "City sightseeing"],
     website: "https://www.calgary-tours.com",
@@ -3583,18 +2651,10 @@ export const calgaryResources: Resource[] = [
     category: ["tourism"],
     userTypes: ["family", "student"],
     title: {
-      en: "ToursByLocals Calgary — Book Verified Guides",
-      tl: "ToursByLocals Calgary — Verified na Guides",
-      es: "ToursByLocals Calgary — Guías verificados",
-      ar: "ToursByLocals Calgary — مرشدون موثوقون",
-      zh: "ToursByLocals 卡尔加里 — 预订认证向导",
+      en: "ToursByLocals Calgary — Book Verified Guides"
     },
     description: {
-      en: "For more personalized attention, filter and book specific, verified local guides for private and custom tours of Calgary and the surrounding region.",
-      tl: "Mag-book ng verified na lokal na guide para sa pribadong tour.",
-      es: "Reserva guías locales verificados para recorridos privados.",
-      ar: "احجز مرشدين محليين موثوقين لجولات خاصة.",
-      zh: "预订经过认证的本地向导进行私人定制游览。",
+      en: "For more personalized attention, filter and book specific, verified local guides for private and custom tours of Calgary and the surrounding region."
     },
     servicesOffered: ["Private guides", "Custom itineraries", "Verified local experts"],
     website: "https://www.toursbylocals.com/calgary-tours",
@@ -3608,18 +2668,10 @@ export const calgaryResources: Resource[] = [
     category: ["tourism"],
     userTypes: ["family", "student"],
     title: {
-      en: "Stephen Avenue & 17th Ave — Dining Districts",
-      tl: "Stephen Avenue at 17th Ave — Dining Districts",
-      es: "Stephen Avenue y 17th Ave — Distritos gastronómicos",
-      ar: "ستيفن أفينيو و17 أفينيو — مناطق المطاعم",
-      zh: "Stephen Avenue 与 17 大道 — 餐饮区",
+      en: "Stephen Avenue & 17th Ave — Dining Districts"
     },
     description: {
-      en: "Calgary's best-rated restaurant strips. Stephen Avenue (downtown) and the 17th Avenue 'Red Mile', plus Inglewood, are packed with top-rated restaurants, cafes, patios and nightlife.",
-      tl: "Ang pinakamahuhusay na restaurant strip ng Calgary.",
-      es: "Las mejores calles de restaurantes de Calgary.",
-      ar: "أفضل شوارع المطاعم في كالجاري.",
-      zh: "卡尔加里评价最高的餐饮街区。",
+      en: "Calgary's best-rated restaurant strips. Stephen Avenue (downtown) and the 17th Avenue 'Red Mile', plus Inglewood, are packed with top-rated restaurants, cafes, patios and nightlife."
     },
     servicesOffered: ["Top-rated restaurants", "Cafes & patios", "Nightlife"],
     website: "https://www.visitcalgary.com/things-to-do/food-drink",
@@ -3633,18 +2685,10 @@ export const calgaryResources: Resource[] = [
     category: ["tourism"],
     userTypes: ["family", "student", "business"],
     title: {
-      en: "Where to Stay — Downtown Calgary Hotels",
-      tl: "Saan Tutuloy — Downtown Calgary Hotels",
-      es: "Dónde alojarse — Hoteles del centro de Calgary",
-      ar: "أين تقيم — فنادق وسط كالجاري",
-      zh: "住宿推荐 — 卡尔加里市中心酒店",
+      en: "Where to Stay — Downtown Calgary Hotels"
     },
     description: {
-      en: "Best-rated places to stay are clustered downtown near Stephen Avenue — within walking distance of dining, the CTrain (free downtown) and major attractions. Browse and compare highly-rated hotels for your dates.",
-      tl: "Ang pinakamahusay na hotel ay nasa downtown malapit sa Stephen Avenue.",
-      es: "Los mejores hoteles están en el centro, cerca de Stephen Avenue.",
-      ar: "أفضل الفنادق في وسط المدينة قرب ستيفن أفينيو.",
-      zh: "评价最高的酒店集中在市中心 Stephen Avenue 附近。",
+      en: "Best-rated places to stay are clustered downtown near Stephen Avenue — within walking distance of dining, the CTrain (free downtown) and major attractions. Browse and compare highly-rated hotels for your dates."
     },
     servicesOffered: ["Downtown hotels", "Walkable to attractions", "Near free CTrain zone"],
     website: "https://www.visitcalgary.com/places-to-stay",
@@ -3662,25 +2706,13 @@ export const calgaryResources: Resource[] = [
     category: ["workspace", "business"],
     userTypes: ["business", "creator", "student"],
     title: {
-      en: "Work Nicer Coworking (Roxboro Lofts / Beaver House)",
-      tl: "Work Nicer Coworking (Roxboro Lofts / Beaver House)",
-      es: "Work Nicer Coworking (Roxboro Lofts / Beaver House)",
-      ar: "Work Nicer Coworking (Roxboro Lofts / Beaver House)",
-      zh: "Work Nicer Coworking (Roxboro Lofts / Beaver House)",
+      en: "Work Nicer Coworking (Roxboro Lofts / Beaver House)"
     },
     description: {
-      en: "Flexible, community-driven shared desks and meeting rooms with 24/7 access. Offers hot desks, dedicated desks, private offices, high-speed Wi-Fi, and bottomless coffee.",
-      tl: "Flexible na shared desks at meeting rooms na may 24/7 access.",
-      es: "Escritorios compartidos flexibles y salas de reuniones con acceso 24/7.",
-      ar: "مكاتب مشتركة مرنة وغرف اجتماعات مع وصول على مدار الساعة.",
-      zh: "灵活的共享办公桌和会议室，24/7 全天候使用。",
+      en: "Flexible, community-driven shared desks and meeting rooms with 24/7 access. Offers hot desks, dedicated desks, private offices, high-speed Wi-Fi, and bottomless coffee."
     },
     summary: {
-      en: "Flexible, community-driven coworking with hot desks, private offices, and 24/7 access.",
-      tl: "Flexible na coworking na may 24/7 access.",
-      es: "Coworking flexible con acceso 24/7.",
-      ar: "مساحة عمل مشتركة مرنة مع وصول 24/7.",
-      zh: "灵活的共享办公空间，24/7 全天候使用。",
+      en: "Flexible, community-driven coworking with hot desks, private offices, and 24/7 access."
     },
     servicesOffered: ["Hot desks", "Dedicated desks", "Private offices", "High-speed Wi-Fi", "Meeting rooms", "Bottomless coffee"],
     phone: "403-800-3233",
@@ -3695,25 +2727,13 @@ export const calgaryResources: Resource[] = [
     category: ["workspace", "education", "community"],
     userTypes: ["newcomer", "student", "family", "senior"],
     title: {
-      en: "Calgary Public Library (Central Library & Branches)",
-      tl: "Calgary Public Library (Central at mga Sangay)",
-      es: "Biblioteca Pública de Calgary (Central y Sucursales)",
-      ar: "مكتبة كالجاري العامة (المركزية والفروع)",
-      zh: "卡尔加里公共图书馆（中央馆及分馆）",
+      en: "Calgary Public Library (Central Library & Branches)"
     },
     description: {
-      en: "Absolutely free, high-quality study desks, bookable meeting rooms, and digital studios. Includes free Wi-Fi, quiet study spaces, group rooms, and specialized dual-screen workstations.",
-      tl: "Libreng study desks, meeting rooms, at digital studios.",
-      es: "Escritorios de estudio gratuitos, salas reservables y estudios digitales.",
-      ar: "مكاتب دراسة مجانية وغرف اجتماعات واستوديوهات رقمية.",
-      zh: "免费的学习桌、可预订会议室和数字工作室。",
+      en: "Absolutely free, high-quality study desks, bookable meeting rooms, and digital studios. Includes free Wi-Fi, quiet study spaces, group rooms, and specialized dual-screen workstations."
     },
     summary: {
-      en: "100% free study desks, bookable meeting rooms, Wi-Fi, and digital studios across the city.",
-      tl: "Libreng study desks at meeting rooms sa buong lungsod.",
-      es: "Escritorios y salas de estudio gratuitos en toda la ciudad.",
-      ar: "مكاتب دراسة وغرف مجانية في جميع أنحاء المدينة.",
-      zh: "全市免费的学习桌和会议室。",
+      en: "100% free study desks, bookable meeting rooms, Wi-Fi, and digital studios across the city."
     },
     servicesOffered: ["Free Wi-Fi", "Quiet study spaces", "Bookable group rooms", "Dual-screen workstations", "Digital studios"],
     phone: "403-260-2600",
@@ -3733,25 +2753,13 @@ export const calgaryResources: Resource[] = [
     category: ["storage"],
     userTypes: ["newcomer", "family", "business", "student"],
     title: {
-      en: "Bluebird Self Storage",
-      tl: "Bluebird Self Storage",
-      es: "Bluebird Self Storage",
-      ar: "Bluebird Self Storage",
-      zh: "Bluebird 自助仓储",
+      en: "Bluebird Self Storage"
     },
     description: {
-      en: "Affordable, pristine climate-controlled storage units with competitive move-in promotions. Offers varying locker dimensions, indoor heated units, and 24/7 monitored security access.",
-      tl: "Abot-kayang climate-controlled storage units.",
-      es: "Unidades de almacenamiento asequibles con clima controlado.",
-      ar: "وحدات تخزين بأسعار معقولة مع تحكم في المناخ.",
-      zh: "经济实惠的恒温仓储单元。",
+      en: "Affordable, pristine climate-controlled storage units with competitive move-in promotions. Offers varying locker dimensions, indoor heated units, and 24/7 monitored security access."
     },
     summary: {
-      en: "Affordable climate-controlled storage with 24/7 monitored security and move-in promotions.",
-      tl: "Abot-kayang climate-controlled storage na may 24/7 security.",
-      es: "Almacenamiento asequible con clima controlado y seguridad 24/7.",
-      ar: "تخزين بأسعار معقولة مع تحكم في المناخ وأمن 24/7.",
-      zh: "经济实惠的恒温仓储，24/7 监控安保。",
+      en: "Affordable climate-controlled storage with 24/7 monitored security and move-in promotions."
     },
     servicesOffered: ["Climate-controlled units", "Indoor heated storage", "24/7 monitored security", "Varying locker sizes"],
     phone: "587-317-5750",
@@ -3766,25 +2774,13 @@ export const calgaryResources: Resource[] = [
     category: ["storage"],
     userTypes: ["newcomer", "family", "business", "student"],
     title: {
-      en: "Sentinel Storage",
-      tl: "Sentinel Storage",
-      es: "Sentinel Storage",
-      ar: "Sentinel Storage",
-      zh: "Sentinel 仓储",
+      en: "Sentinel Storage"
     },
     description: {
-      en: "Low-cost baseline storage rates across multiple easily accessible city quadrants. Offers drive-up access units, roll-up locker entry, and packing and moving supplies.",
-      tl: "Murang storage rates sa iba't ibang bahagi ng lungsod.",
-      es: "Tarifas de almacenamiento económicas en varios sectores.",
-      ar: "أسعار تخزين منخفضة في عدة أن����اء من المدينة.",
-      zh: "全市多个区域的低价仓储。",
+      en: "Low-cost baseline storage rates across multiple easily accessible city quadrants. Offers drive-up access units, roll-up locker entry, and packing and moving supplies."
     },
     summary: {
-      en: "Low-cost storage with drive-up access across multiple Calgary quadrants.",
-      tl: "Murang storage na may drive-up access.",
-      es: "Almacenamiento económico con acceso en auto.",
-      ar: "تخزين منخفض التكلفة مع وصول بالسيارة.",
-      zh: "可驾车直达的低价仓储。",
+      en: "Low-cost storage with drive-up access across multiple Calgary quadrants."
     },
     servicesOffered: ["Drive-up access units", "Roll-up locker entry", "Packing & moving supplies", "Multiple locations"],
     phone: "403-243-5585",
@@ -3803,25 +2799,13 @@ export const calgaryResources: Resource[] = [
     category: ["ethnic-market", "essentials"],
     userTypes: ["newcomer", "family", "student"],
     title: {
-      en: "A-Mart (Korean & Asian Grocer)",
-      tl: "A-Mart (Korean at Asian Grocer)",
-      es: "A-Mart (Tienda Coreana y Asiática)",
-      ar: "A-Mart (بقالة كورية وآسيوية)",
-      zh: "A-Mart（韩国与亚洲杂货店）",
+      en: "A-Mart (Korean & Asian Grocer)"
     },
     description: {
-      en: "Authentic Korean staples, imported global goods, marinated meats, and pocket-friendly snacks. Carries fresh produce, bulk rice brands, specialty sauces, and traditional housewares.",
-      tl: "Authentic na Korean staples at imported na produkto.",
-      es: "Productos básicos coreanos auténticos y bienes importados.",
-      ar: "مواد غذائية كورية أصيلة وسلع مستوردة.",
-      zh: "正宗的韩国主食和进口商品。",
+      en: "Authentic Korean staples, imported global goods, marinated meats, and pocket-friendly snacks. Carries fresh produce, bulk rice brands, specialty sauces, and traditional housewares."
     },
     summary: {
-      en: "Authentic Korean & Asian groceries — fresh produce, marinated meats, and specialty sauces.",
-      tl: "Authentic na Korean at Asian na grocery.",
-      es: "Comestibles coreanos y asiáticos auténticos.",
-      ar: "بقالة كورية وآسيوية أصيلة.",
-      zh: "正宗的韩国与亚洲杂货。",
+      en: "Authentic Korean & Asian groceries — fresh produce, marinated meats, and specialty sauces."
     },
     servicesOffered: ["Fresh produce", "Bulk rice brands", "Marinated meats", "Specialty sauces", "Traditional housewares"],
     phone: "403-255-7484",
@@ -3836,25 +2820,13 @@ export const calgaryResources: Resource[] = [
     category: ["ethnic-market", "essentials"],
     userTypes: ["newcomer", "family", "student"],
     title: {
-      en: "Unimarket (Latin American Food & Importers)",
-      tl: "Unimarket (Latin American Food at Importers)",
-      es: "Unimarket (Comida Latinoamericana e Importadores)",
-      ar: "Unimarket (أغذية أمريكا اللاتينية)",
-      zh: "Unimarket（拉丁美洲食品与进口商）",
+      en: "Unimarket (Latin American Food & Importers)"
     },
     description: {
-      en: "High-quality, hard-to-find authentic South & Central American culinary products. Carries fresh corn tortillas, specialty cheeses, imported spices, and hot-food deli counters.",
-      tl: "Authentic na South at Central American na produkto.",
-      es: "Productos culinarios auténticos de América Latina.",
-      ar: "منتجات غذائية أصيلة من أمريكا اللاتينية.",
-      zh: "正宗的中南美洲食品。",
+      en: "High-quality, hard-to-find authentic South & Central American culinary products. Carries fresh corn tortillas, specialty cheeses, imported spices, and hot-food deli counters."
     },
     summary: {
-      en: "Authentic Latin American groceries — fresh tortillas, specialty cheeses, and a hot-food deli.",
-      tl: "Authentic na Latin American na grocery.",
-      es: "Comestibles latinoamericanos auténticos.",
-      ar: "بقالة أمريكا لاتينية أصيلة.",
-      zh: "正宗的拉丁美洲杂货。",
+      en: "Authentic Latin American groceries — fresh tortillas, specialty cheeses, and a hot-food deli."
     },
     servicesOffered: ["Fresh corn tortillas", "Specialty cheeses", "Imported spices", "Hot-food deli counter"],
     phone: "403-255-4479",
@@ -3869,25 +2841,13 @@ export const calgaryResources: Resource[] = [
     category: ["ethnic-market", "essentials"],
     userTypes: ["newcomer", "family", "student"],
     title: {
-      en: "Sanaza Fine Foods (South Asian & Halal Grocer)",
-      tl: "Sanaza Fine Foods (South Asian at Halal Grocer)",
-      es: "Sanaza Fine Foods (Tienda Sudasiática y Halal)",
-      ar: "Sanaza Fine Foods (بقالة جنوب آسيوية وحلال)",
-      zh: "Sanaza Fine Foods（南亚与清真杂货店）",
+      en: "Sanaza Fine Foods (South Asian & Halal Grocer)"
     },
     description: {
-      en: "Premium bulk South Asian spices, basmati rice varieties, and verified fresh halal meat. Carries spices, lentils, halal goat, chicken and beef cuts, and frozen convenience meals.",
-      tl: "South Asian spices at fresh na halal meat.",
-      es: "Especias sudasiáticas a granel y carne halal fresca.",
-      ar: "بهارات جنوب آسيوية ولحوم حلال طازجة.",
-      zh: "南亚香料和新鲜清真肉类。",
+      en: "Premium bulk South Asian spices, basmati rice varieties, and verified fresh halal meat. Carries spices, lentils, halal goat, chicken and beef cuts, and frozen convenience meals."
     },
     summary: {
-      en: "South Asian & Halal grocer — bulk spices, basmati rice, and verified fresh halal meat.",
-      tl: "South Asian at Halal na grocery.",
-      es: "Tienda sudasiática y halal.",
-      ar: "بقالة جنوب آسيوية وحلال.",
-      zh: "南亚与清真杂货店。",
+      en: "South Asian & Halal grocer — bulk spices, basmati rice, and verified fresh halal meat."
     },
     servicesOffered: ["Bulk spices", "Lentils", "Basmati rice", "Halal goat, chicken & beef", "Frozen meals"],
     phone: "403-273-9797",
@@ -3904,25 +2864,13 @@ export const calgaryResources: Resource[] = [
     category: ["ethnic-market", "arts", "indigenous"],
     userTypes: ["newcomer", "family"],
     title: {
-      en: "Moonstone Creation (Indigenous Art & Boutique)",
-      tl: "Moonstone Creation (Indigenous Art at Boutique)",
-      es: "Moonstone Creation (Arte y Boutique Indígena)",
-      ar: "Moonstone Creation (فن وبوتيك أصلي)",
-      zh: "Moonstone Creation（原住民艺术精品店）",
+      en: "Moonstone Creation (Indigenous Art & Boutique)"
     },
     description: {
-      en: "An authentic, Indigenous-owned gallery and boutique in Inglewood showcasing traditional handmade art, clothing, and beadwork from over 60 native artists across Turtle Island. One of Calgary's most respected Indigenous cultural destinations.",
-      tl: "Indigenous-owned na gallery sa Inglewood na nagtatampok ng traditional handmade art mula sa mahigit 60 native artists.",
-      es: "Galería y boutique indígena en Inglewood con arte hecho a mano de más de 60 artistas nativos.",
-      ar: "معرض ومتجر مملوك لأبناء السكان الأصليين في إنغلوود، يعرض فنوناً تقليدية من أكثر من 60 فناناً.",
-      zh: "英格伍德原住民自营画廊，展示来自龟岛60多位原住民艺术家的手工艺品。",
+      en: "An authentic, Indigenous-owned gallery and boutique in Inglewood showcasing traditional handmade art, clothing, and beadwork from over 60 native artists across Turtle Island. One of Calgary's most respected Indigenous cultural destinations."
     },
     summary: {
-      en: "Indigenous-owned Inglewood gallery — handmade art, clothing, and beadwork from 60+ Turtle Island artists.",
-      tl: "Indigenous-owned na gallery — handmade art at beadwork mula sa 60+ artists.",
-      es: "Galería indígena en Inglewood — arte hecho a mano de 60+ artistas.",
-      ar: "معرض أصلي في إنغلوود — فنون يدوية من 60+ فناناً.",
-      zh: "英格伍德原住民画廊 — 60多位艺术家的手工艺品。",
+      en: "Indigenous-owned Inglewood gallery — handmade art, clothing, and beadwork from 60+ Turtle Island artists."
     },
     address: "1219 10 Ave SE, Calgary",
     servicesOffered: ["Indigenous art", "Traditional clothing", "Beadwork", "Handmade crafts", "Gift shopping"],
@@ -3938,25 +2886,13 @@ export const calgaryResources: Resource[] = [
     category: ["ethnic-market", "community"],
     userTypes: ["newcomer", "family", "student"],
     title: {
-      en: "Mañana Imports & Gifts (Multicultural Boutique)",
-      tl: "Mañana Imports & Gifts (Multicultural Boutique)",
-      es: "Mañana Imports & Gifts (Boutique Multicultural)",
-      ar: "Mañana Imports & Gifts (متجر متعدد الثقافات)",
-      zh: "Mañana Imports & Gifts（多元文化精品店）",
+      en: "Mañana Imports & Gifts (Multicultural Boutique)"
     },
     description: {
-      en: "A long-standing family business in Kensington carrying multicultural items: handmade clothing, blankets, incense, and altar deities sourced directly from Nepal, Tibet, and Latin America. A beloved neighbourhood fixture for over two decades.",
-      tl: "Matagal nang family business sa Kensington na nagbebenta ng multicultural items mula sa Nepal, Tibet, at Latin America.",
-      es: "Negocio familiar en Kensington con ropa hecha a mano, mantas e incienso de Nepal, Tíbet y América Latina.",
-      ar: "محل عائلي في كينسينغتون يحمل ملابس مصنوعة يدوياً وبخوراً من نيبال والتيبت وأمريكا اللاتينية.",
-      zh: "肯辛顿家族商店，出售来自尼泊尔、西藏和拉丁美洲的手工服装、毯子和香料。",
+      en: "A long-standing family business in Kensington carrying multicultural items: handmade clothing, blankets, incense, and altar deities sourced directly from Nepal, Tibet, and Latin America. A beloved neighbourhood fixture for over two decades."
     },
     summary: {
-      en: "Kensington multicultural boutique — handmade goods from Nepal, Tibet, and Latin America.",
-      tl: "Multicultural boutique sa Kensington — handmade goods mula sa Nepal, Tibet, Latin America.",
-      es: "Boutique multicultural en Kensington — artículos de Nepal, Tíbet y América Latina.",
-      ar: "بوتيك متعدد الثقافات في كينسينغتون.",
-      zh: "肯辛顿多元文化精品店。",
+      en: "Kensington multicultural boutique — handmade goods from Nepal, Tibet, and Latin America."
     },
     address: "Hillhurst / Kensington, Calgary",
     servicesOffered: ["Handmade clothing", "Blankets", "Incense", "Altar deities", "Imported cultural goods"],
@@ -3971,25 +2907,13 @@ export const calgaryResources: Resource[] = [
     category: ["ethnic-market", "arts", "community"],
     userTypes: ["newcomer", "family", "student"],
     title: {
-      en: "Moonlight Books & Gifts (Chinatown)",
-      tl: "Moonlight Books & Gifts (Chinatown)",
-      es: "Moonlight Books & Gifts (Barrio Chino)",
-      ar: "Moonlight Books & Gifts (الحي الصيني)",
-      zh: "月光书坊（唐人街）",
+      en: "Moonlight Books & Gifts (Chinatown)"
     },
     description: {
-      en: "Tucked inside Chinatown's Dragon City Mall, this highly curated shop carries stationery, pins, and accessories crafted by local creators alongside works by Asian-Canadian authors. A perfect stop for unique gifts that celebrate Asian culture.",
-      tl: "Sa Dragon City Mall sa Chinatown, nagbebenta ng stationery, pins, at accessories ng local creators at Asian-Canadian authors.",
-      es: "Dentro del Dragon City Mall en Chinatown, con papelería y accesorios de creadores locales y autores asiático-canadienses.",
-      ar: "داخل Dragon City Mall في الحي الصيني، يبيع القرطاسية وأعمال المبدعين الآسيويين الكنديين.",
-      zh: "位于唐人街龙城广场内，精选本地创作者文具及亚裔加拿大作家作品。",
+      en: "Tucked inside Chinatown's Dragon City Mall, this highly curated shop carries stationery, pins, and accessories crafted by local creators alongside works by Asian-Canadian authors. A perfect stop for unique gifts that celebrate Asian culture."
     },
     summary: {
-      en: "Chinatown's Dragon City Mall gem — curated stationery, pins, and Asian-Canadian authors' books.",
-      tl: "Dragon City Mall — curated stationery at Asian-Canadian authors' books.",
-      es: "Dragon City Mall — papelería y libros de autores asiático-canadienses.",
-      ar: "Dragon City Mall — قرطاسية ومؤلفون آسيويون-كنديون.",
-      zh: "龙城广场精品书坊 — 文具与亚裔加拿大作家作品。",
+      en: "Chinatown's Dragon City Mall gem — curated stationery, pins, and Asian-Canadian authors' books."
     },
     address: "328 Centre St S #122, Calgary (Dragon City Mall)",
     servicesOffered: ["Asian-Canadian literature", "Stationery", "Handmade accessories", "Local creator goods"],
@@ -4004,25 +2928,13 @@ export const calgaryResources: Resource[] = [
     category: ["ethnic-market", "arts"],
     userTypes: ["newcomer", "family", "student"],
     title: {
-      en: "Tigerstedt & Friends Gift Shop",
-      tl: "Tigerstedt & Friends Gift Shop",
-      es: "Tienda de Regalos Tigerstedt & Friends",
-      ar: "متجر هدايا Tigerstedt & Friends",
-      zh: "Tigerstedt & Friends 礼品店",
+      en: "Tigerstedt & Friends Gift Shop"
     },
     description: {
-      en: "A dynamic pop-up retail space in Crescent Heights hosting local makers and specializing in Japanese imports, unique stationery, skincare, and vintage items. A rotating selection of curated finds from Calgary's indie creator community.",
-      tl: "Dynamic na pop-up retail space sa Crescent Heights na may Japanese imports, stationery, skincare, at vintage items.",
-      es: "Espacio pop-up en Crescent Heights con importaciones japonesas, papelería única, cosméticos y artículos vintage.",
-      ar: "متجر منبثق في Crescent Heights مع واردات يابانية وقرطاسية فريدة ومستحضرات تجميل وقطع عتيقة.",
-      zh: "新月高地动态快闪零售店，��营日本进口品、文具、护肤品和复古物品。",
+      en: "A dynamic pop-up retail space in Crescent Heights hosting local makers and specializing in Japanese imports, unique stationery, skincare, and vintage items. A rotating selection of curated finds from Calgary's indie creator community."
     },
     summary: {
-      en: "Crescent Heights pop-up — Japanese imports, unique stationery, skincare, and vintage curated finds.",
-      tl: "Crescent Heights pop-up — Japanese imports, stationery, at vintage.",
-      es: "Pop-up en Crescent Heights — importaciones japonesas, papelería y vintage.",
-      ar: "بوب أب في Crescent Heights — واردات يابانية وقرطاسية وعتيق.",
-      zh: "新月高地快闪店 — 日本进口、文具与复古精选。",
+      en: "Crescent Heights pop-up — Japanese imports, unique stationery, skincare, and vintage curated finds."
     },
     address: "Crescent Heights, Calgary",
     servicesOffered: ["Japanese imports", "Stationery", "Skincare", "Vintage items", "Local maker goods"],
@@ -4039,25 +2951,13 @@ export const calgaryResources: Resource[] = [
     category: ["ethnic-market", "essentials"],
     userTypes: ["newcomer", "family", "student"],
     title: {
-      en: "UniMarket Latin Food — Edmonton Trail NE (Food Hall)",
-      tl: "UniMarket Latin Food — Edmonton Trail NE (Food Hall)",
-      es: "UniMarket Comida Latina — Edmonton Trail NE",
-      ar: "UniMarket للأغذية اللاتينية — Edmonton Trail NE",
-      zh: "UniMarket 拉丁美洲食品 — 埃德蒙顿路东北（美食广场）",
+      en: "UniMarket Latin Food — Edmonton Trail NE (Food Hall)"
     },
     description: {
-      en: "A hybrid cultural destination at 2405 Edmonton Trail NE housing an extensive imported Latin American grocery, a fresh bakery, and an in-house food hall serving authentic Colombian and Mexican dishes. Rated one of Calgary's best Latin food experiences.",
-      tl: "Cultural destination sa 2405 Edmonton Trail NE na may grocery, bakery, at food hall na nagse-serve ng Colombian at Mexican dishes.",
-      es: "Destino cultural híbrido con tienda de abarrotes, panadería y food hall con cocina colombiana y mexicana.",
-      ar: "وجهة ثقافية في Edmonton Trail NE تضم بقالة ومخبزاً وقاعة طعام تقدم أكلات كولومبية ومكسيكية.",
-      zh: "埃德蒙顿路东北综合拉丁美洲文化目的地，内含超市、烘焙坊和提供哥伦比亚、墨西哥菜的美食广场。",
+      en: "A hybrid cultural destination at 2405 Edmonton Trail NE housing an extensive imported Latin American grocery, a fresh bakery, and an in-house food hall serving authentic Colombian and Mexican dishes. Rated one of Calgary's best Latin food experiences."
     },
     summary: {
-      en: "Edmonton Trail NE Latin cultural hub — imported grocery, fresh bakery, and Colombian/Mexican food hall.",
-      tl: "Edmonton Trail NE Latin hub — grocery, bakery, at Colombian/Mexican food hall.",
-      es: "Centro cultural latino en Edmonton Trail NE — comestibles, panadería y food hall.",
-      ar: "مركز لاتيني ثقافي في Edmonton Trail NE.",
-      zh: "埃德蒙顿路东北拉丁文化中心。",
+      en: "Edmonton Trail NE Latin cultural hub — imported grocery, fresh bakery, and Colombian/Mexican food hall."
     },
     address: "2405 Edmonton Trail NE, Calgary",
     servicesOffered: ["Imported Latin groceries", "Fresh bakery", "Colombian dishes", "Mexican cuisine", "Food hall"],
@@ -4072,25 +2972,13 @@ export const calgaryResources: Resource[] = [
     category: ["ethnic-market", "essentials"],
     userTypes: ["newcomer", "family", "student"],
     title: {
-      en: "Latino Food Market",
-      tl: "Latino Food Market",
-      es: "Latino Food Market",
-      ar: "Latino Food Market",
-      zh: "Latino Food Market（拉丁食品市场）",
+      en: "Latino Food Market"
     },
     description: {
-      en: "A premium hub for Latin American ingredients at 4803 Centre St N, highly rated for specialty taco elements including fresh corn tortillas, Oaxaca cheese, and whole dried guajillo peppers. Exceptional for home cooks seeking authentic Mexican and Central American staples.",
-      tl: "Premium na hub para sa Latin American ingredients — fresh corn tortillas, Oaxaca cheese, at guajillo peppers.",
-      es: "Centro premium de ingredientes latinoamericanos — tortillas frescas, queso Oaxaca y chiles guajillo secos.",
-      ar: "مركز متميز للمكونات اللاتينية — تورتيلا طازجة وجبن أواكساكا وفلفل جوليو مجفف.",
-      zh: "优质拉丁美洲食材中心，以新鲜玉米饼、瓦哈卡奶酪和干辣椒著称。",
+      en: "A premium hub for Latin American ingredients at 4803 Centre St N, highly rated for specialty taco elements including fresh corn tortillas, Oaxaca cheese, and whole dried guajillo peppers. Exceptional for home cooks seeking authentic Mexican and Central American staples."
     },
     summary: {
-      en: "Premium Latin ingredients — fresh corn tortillas, Oaxaca cheese, and authentic Mexican staples.",
-      tl: "Premium Latin ingredients — fresh corn tortillas at Oaxaca cheese.",
-      es: "Ingredientes latinos premium — tortillas frescas y queso Oaxaca.",
-      ar: "مكونات لاتينية متميزة — تورتيلا وجبن أواكساكا.",
-      zh: "优质拉丁食材 — 新鲜玉米饼与瓦哈卡奶酪。",
+      en: "Premium Latin ingredients — fresh corn tortillas, Oaxaca cheese, and authentic Mexican staples."
     },
     address: "4803 Centre St N Suite 101, Calgary",
     servicesOffered: ["Fresh corn tortillas", "Oaxaca cheese", "Dried chiles", "Mexican staples", "Central American ingredients"],
@@ -4104,25 +2992,13 @@ export const calgaryResources: Resource[] = [
     category: ["ethnic-market", "essentials"],
     userTypes: ["newcomer", "family", "student"],
     title: {
-      en: "Salsita & The Real Mexican Food Inc.",
-      tl: "Salsita & The Real Mexican Food Inc.",
-      es: "Salsita & The Real Mexican Food Inc.",
-      ar: "Salsita & The Real Mexican Food Inc.",
-      zh: "Salsita 正宗墨西哥食品",
+      en: "Salsita & The Real Mexican Food Inc."
     },
     description: {
-      en: "Known for high-quality Mexican groceries, premium hot sauces, and freshly made tortillas alongside takeout food options. Located at 777 Northmount Dr NW, it serves Calgary's northwest with hard-to-find authentic Mexican products.",
-      tl: "High-quality na Mexican groceries, hot sauces, freshly made tortillas, at takeout options.",
-      es: "Abarrotes mexicanos de calidad, salsas picantes y tortillas frescas con opciones para llevar.",
-      ar: "بقالة مكسيكية عالية الجودة مع صلصات حارة وتورتيلا طازجة وخيارات طعام للاصطحاب.",
-      zh: "高品质墨西哥食品杂货店，供应新鲜玉米饼、热辣酱及外卖选项。",
+      en: "Known for high-quality Mexican groceries, premium hot sauces, and freshly made tortillas alongside takeout food options. Located at 777 Northmount Dr NW, it serves Calgary's northwest with hard-to-find authentic Mexican products."
     },
     summary: {
-      en: "NW Calgary Mexican grocery — premium hot sauces, fresh tortillas, and takeout options.",
-      tl: "NW Calgary Mexican grocery — hot sauces at fresh tortillas.",
-      es: "Abarrotes mexicanos NW — salsas picantes y tortillas frescas.",
-      ar: "بقالة مكسيكية في الشمال الغربي — صلصات حارة وتورتيلا طازجة.",
-      zh: "卡尔加里西北墨西哥杂货店 — 新鲜玉米饼与热辣酱。",
+      en: "NW Calgary Mexican grocery — premium hot sauces, fresh tortillas, and takeout options."
     },
     address: "777 Northmount Dr NW, Calgary",
     servicesOffered: ["Mexican groceries", "Hot sauces", "Fresh tortillas", "Takeout food"],
@@ -4138,25 +3014,13 @@ export const calgaryResources: Resource[] = [
     category: ["ethnic-market", "essentials"],
     userTypes: ["newcomer", "family", "student"],
     title: {
-      en: "Hong Kong Food Market (International Avenue)",
-      tl: "Hong Kong Food Market (International Avenue)",
-      es: "Hong Kong Food Market (Avenida Internacional)",
-      ar: "Hong Kong Food Market (الشارع الدولي)",
-      zh: "香港食品市场（国际大道）",
+      en: "Hong Kong Food Market (International Avenue)"
     },
     description: {
-      en: "A sprawling independent staple on International Avenue at 3215 17 Ave SE. Features massive aisles of noodles, sauces, frozen seafood, and on-premise counters including Filipino BBQ. One of Calgary's most comprehensive Asian grocery destinations.",
-      tl: "Malaking independent na tindahan sa International Avenue — noodles, sauces, frozen seafood, at Filipino BBQ counter.",
-      es: "Gran supermercado independiente en International Avenue — fideos, salsas, mariscos congelados y mostrador de BBQ filipino.",
-      ar: "سوبرماركت كبير مستقل في الشارع الدولي — معكرونة وصلصات ومأكولات بحرية مجمدة وكاونتر BBQ فلبيني.",
-      zh: "国际大道���型独立亚洲超市，设有大量面条、酱料、冷冻海鲜及菲律宾烧烤档口。",
+      en: "A sprawling independent staple on International Avenue at 3215 17 Ave SE. Features massive aisles of noodles, sauces, frozen seafood, and on-premise counters including Filipino BBQ. One of Calgary's most comprehensive Asian grocery destinations."
     },
     summary: {
-      en: "Massive International Ave Asian grocery — noodles, frozen seafood, and Filipino BBQ counter.",
-      tl: "Malaking Asian grocery sa International Ave — noodles, seafood, at Filipino BBQ.",
-      es: "Gran supermercado asiático en International Ave — fideos, mariscos y BBQ filipino.",
-      ar: "سوبرماركت آسيوي كبير في الشارع الدولي.",
-      zh: "国际大道大型亚洲超市 — 面条、冷冻海鲜及菲律宾烧烤。",
+      en: "Massive International Ave Asian grocery — noodles, frozen seafood, and Filipino BBQ counter."
     },
     address: "3215 17 Ave SE, Calgary",
     servicesOffered: ["Asian noodles & sauces", "Frozen seafood", "Filipino BBQ counter", "Asian produce", "Specialty imports"],
@@ -4170,25 +3034,13 @@ export const calgaryResources: Resource[] = [
     category: ["ethnic-market", "essentials"],
     userTypes: ["newcomer", "family", "student"],
     title: {
-      en: "T&T Supermarket — Deerfoot (Asian Chain)",
-      tl: "T&T Supermarket — Deerfoot",
-      es: "T&T Supermarket — Deerfoot",
-      ar: "T&T Supermarket — Deerfoot",
-      zh: "大统华超级市场 — Deerfoot 店",
+      en: "T&T Supermarket — Deerfoot (Asian Chain)"
     },
     description: {
-      en: "Canada's largest Asian grocery chain with a full Deerfoot location offering an extensive range of East Asian, Southeast Asian, and South Asian products, a full fresh bakery, and a prepared foods hot bar. Ideal for families wanting one-stop Asian shopping.",
-      tl: "Pinakamalaking Asian grocery chain sa Canada sa Deerfoot — East at Southeast Asian products, bakery, at hot bar.",
-      es: "La cadena de supermercado asiático más grande de Canadá en Deerfoot — productos asiáticos, panadería y bar de comida caliente.",
-      ar: "أكبر سلسلة بقالة آسيوية في كندا في Deerfoot — منتجات آسيوية ومخبز طازج وبار طعام ساخن.",
-      zh: "加拿大最大亚洲连锁超市Deerfoot分店，提供东亚、东南亚及南亚商品、新鲜烘焙及热食吧。",
+      en: "Canada's largest Asian grocery chain with a full Deerfoot location offering an extensive range of East Asian, Southeast Asian, and South Asian products, a full fresh bakery, and a prepared foods hot bar. Ideal for families wanting one-stop Asian shopping."
     },
     summary: {
-      en: "Canada's top Asian grocery chain — full fresh bakery, hot food bar, and East/SE Asian products.",
-      tl: "Top Asian grocery chain sa Canada — bakery, hot food bar, at Asian products.",
-      es: "Principal cadena asiática de Canadá — panadería, bar de comida y productos asiáticos.",
-      ar: "أكبر سلسلة آسيوية في كندا — مخبز وبار طعام ومنتجات آسيوية.",
-      zh: "加拿大最大亚洲超市连锁 — ���鲜烘焙、热食吧及亚洲商品。",
+      en: "Canada's top Asian grocery chain — full fresh bakery, hot food bar, and East/SE Asian products."
     },
     address: "Deerfoot Meadows, Calgary",
     servicesOffered: ["East Asian groceries", "Southeast Asian products", "Fresh bakery", "Prepared hot foods", "South Asian staples"],
@@ -4203,25 +3055,13 @@ export const calgaryResources: Resource[] = [
     category: ["ethnic-market", "essentials"],
     userTypes: ["newcomer", "family", "student"],
     title: {
-      en: "T&T Supermarket — North Hill Centre",
-      tl: "T&T Supermarket — North Hill Centre",
-      es: "T&T Supermarket — North Hill Centre",
-      ar: "T&T Supermarket — North Hill Centre",
-      zh: "大统华超级市场 — 北山中心店",
+      en: "T&T Supermarket — North Hill Centre"
     },
     description: {
-      en: "A central-north Calgary location of Canada's largest Asian grocery chain inside North Hill Centre mall, making it highly accessible for residents across the inner north. Carries the full T&T range: fresh dim sum, live seafood tanks, Asian produce, and a full bakery.",
-      tl: "North Hill Centre na T&T location — fresh dim sum, live seafood, Asian produce, at bakery.",
-      es: "Ubicación norte en North Hill Centre — dim sum fresco, mariscos vivos, productos asiáticos y panadería.",
-      ar: "موقع شمالي T&T في North Hill Centre — ديم سام طازج وأحواض مأكولات بحرية ومخبز.",
-      zh: "北山中心大统华分店，提供新鲜点心、活海鲜水槽、亚洲蔬果及全套烘焙。",
+      en: "A central-north Calgary location of Canada's largest Asian grocery chain inside North Hill Centre mall, making it highly accessible for residents across the inner north. Carries the full T&T range: fresh dim sum, live seafood tanks, Asian produce, and a full bakery."
     },
     summary: {
-      en: "T&T North Hill — fresh dim sum, live seafood tanks, and full Asian grocery range.",
-      tl: "T&T North Hill — fresh dim sum, live seafood, at Asian grocery.",
-      es: "T&T North Hill — dim sum fresco, mariscos vivos y comestibles asiáticos.",
-      ar: "T&T North Hill — ديم سام ومأكولات بحرية وبقالة آسيوية.",
-      zh: "北山中心大统华 — 新鲜点心、活海鲜及亚洲杂货。",
+      en: "T&T North Hill — fresh dim sum, live seafood tanks, and full Asian grocery range."
     },
     address: "1632 14 Ave NW, Calgary (North Hill Centre)",
     servicesOffered: ["Fresh dim sum", "Live seafood", "Asian produce", "Full bakery", "East/SE Asian groceries"],
@@ -4236,25 +3076,13 @@ export const calgaryResources: Resource[] = [
     category: ["ethnic-market", "essentials"],
     userTypes: ["newcomer", "family", "student"],
     title: {
-      en: "Osaka Supermarket (Japanese & Asian Grocer)",
-      tl: "Osaka Supermarket (Japanese at Asian Grocer)",
-      es: "Osaka Supermarket (Tienda Japonesa y Asiática)",
-      ar: "Osaka Supermarket (بقالة يابانية وآسيوية)",
-      zh: "大阪超市（日本及亚洲食品）",
+      en: "Osaka Supermarket (Japanese & Asian Grocer)"
     },
     description: {
-      en: "Calgary's go-to destination for Japanese specialty groceries: fresh sashimi-grade fish, Japanese snacks, specialty sauces, sake, miso varieties, and hard-to-find Japanese pantry staples. A trusted staple for the Japanese and broader Asian community in Calgary.",
-      tl: "Go-to destination para sa Japanese specialty groceries — fresh sashimi fish, Japanese snacks, at specialty sauces.",
-      es: "Destino principal de comestibles japoneses especializados — pescado sashimi, snacks japoneses y salsas especiales.",
-      ar: "وجهة رئيسية للبقالة اليابانية المتخصصة — سمك سوشي طازج ووجبات خفيفة ويابانية وصلصات خاصة.",
-      zh: "卡尔加里日本专业食品首选 — 新鲜刺身级鱼类、日式零食、酱料、清酒及味噌。",
+      en: "Calgary's go-to destination for Japanese specialty groceries: fresh sashimi-grade fish, Japanese snacks, specialty sauces, sake, miso varieties, and hard-to-find Japanese pantry staples. A trusted staple for the Japanese and broader Asian community in Calgary."
     },
     summary: {
-      en: "Calgary's Japanese grocery hub — sashimi-grade fish, Japanese snacks, sake, and miso.",
-      tl: "Japanese grocery hub ng Calgary — sashimi fish, snacks, at sake.",
-      es: "Centro de comestibles japoneses en Calgary — pescado sashimi, snacks y sake.",
-      ar: "مركز البقالة اليابانية في كالجاري — سمك سوشي وسناك ساكي.",
-      zh: "卡尔加里日本食品中心 — 刺身鱼、零食、清酒。",
+      en: "Calgary's Japanese grocery hub — sashimi-grade fish, Japanese snacks, sake, and miso."
     },
     servicesOffered: ["Sashimi-grade fish", "Japanese snacks", "Specialty sauces", "Sake", "Miso varieties", "Ramen staples"],
     cost: "low-cost",
@@ -4267,25 +3095,13 @@ export const calgaryResources: Resource[] = [
     category: ["ethnic-market", "essentials"],
     userTypes: ["newcomer", "family", "student"],
     title: {
-      en: "Arirang Korean Supermarket",
-      tl: "Arirang Korean Supermarket",
-      es: "Arirang Korean Supermarket",
-      ar: "Arirang Korean Supermarket",
-      zh: "阿里郎韩国超市",
+      en: "Arirang Korean Supermarket"
     },
     description: {
-      en: "A dedicated Korean supermarket carrying a full range of Korean groceries: gochujang, doenjang, kimchi varieties, Korean ramen, tteok (rice cakes), fresh tofu, marinated bulgogi meats, and Korean beauty pantry items. Serves Calgary's growing Korean community.",
-      tl: "Dedicated Korean supermarket — gochujang, kimchi, Korean ramen, tteok, at bulgogi meats.",
-      es: "Supermercado coreano dedicado con gochujang, kimchi, ramen coreano, tteok y carnes bulgogi marinadas.",
-      ar: "سوبرماركت كوري متخصص مع كيمشي ورامن كوري وعجائن أرز ولحوم بولغوغي.",
-      zh: "专业韩国超市，提供辣椒酱、泡菜、韩国拉面、年糕、新鲜豆腐及烤肉食材。",
+      en: "A dedicated Korean supermarket carrying a full range of Korean groceries: gochujang, doenjang, kimchi varieties, Korean ramen, tteok (rice cakes), fresh tofu, marinated bulgogi meats, and Korean beauty pantry items. Serves Calgary's growing Korean community."
     },
     summary: {
-      en: "Full Korean supermarket — kimchi, gochujang, ramen, tteok, and marinated bulgogi meats.",
-      tl: "Kumpleto na Korean supermarket — kimchi, gochujang, ramen, at bulgogi.",
-      es: "Supermercado coreano completo — kimchi, gochujang, ramen y bulgogi.",
-      ar: "سوبرماركت كوري كامل — كيمشي وغوتشوغانغ ورامن وبولغوغي.",
-      zh: "完整韩国超市 — 泡菜、辣椒酱、拉面及烤肉。",
+      en: "Full Korean supermarket — kimchi, gochujang, ramen, tteok, and marinated bulgogi meats."
     },
     servicesOffered: ["Kimchi varieties", "Gochujang & doenjang", "Korean ramen", "Tteok (rice cakes)", "Marinated bulgogi", "Korean pantry staples"],
     cost: "low-cost",
@@ -4298,25 +3114,13 @@ export const calgaryResources: Resource[] = [
     category: ["ethnic-market", "essentials"],
     userTypes: ["newcomer", "family"],
     title: {
-      en: "Continental Spice & Grocery (South Asian & World Foods)",
-      tl: "Continental Spice & Grocery (South Asian at World Foods)",
-      es: "Continental Spice & Grocery (Especias Sudasiáticas y Mundiales)",
-      ar: "Continental Spice & Grocery (بهارات جنوب آسيوية وأطعمة عالمية)",
-      zh: "Continental Spice & Grocery（南亚及全球食品）",
+      en: "Continental Spice & Grocery (South Asian & World Foods)"
     },
     description: {
-      en: "Specializes in a wide selection of South Asian, Middle Eastern, and African grocery staples including bulk spices, lentils, flours, rice varieties, halal meats, and international pantry essentials. A favourite for newcomers from South Asia and East Africa.",
-      tl: "Specializes sa South Asian, Middle Eastern, at African groceries — bulk spices, lentils, at halal meats.",
-      es: "Especializada en comestibles del sur de Asia, Oriente Medio y África — especias a granel, lentejas y carnes halal.",
-      ar: "متخصصة في بقالة جنوب آسيا والشرق الأوسط وأفريقيا — بهارات بالجملة وعدس ولحوم حلال.",
-      zh: "专营南亚、中东及非洲食品杂货，包括散装香料、扁豆、面粉、各类大米及清真肉类。",
+      en: "Specializes in a wide selection of South Asian, Middle Eastern, and African grocery staples including bulk spices, lentils, flours, rice varieties, halal meats, and international pantry essentials. A favourite for newcomers from South Asia and East Africa."
     },
     summary: {
-      en: "South Asian, Middle Eastern & African groceries — bulk spices, lentils, flours, and halal meats.",
-      tl: "South Asian, Middle Eastern, at African groceries — spices, lentils, at halal meats.",
-      es: "Comestibles sudasiáticos, de Oriente Medio y africanos — especias, lentejas y halal.",
-      ar: "بقالة جنوب آسيوية وشرق أوسطية وأفريقية — بهارات وعدس ولحوم حلال.",
-      zh: "南亚、中东及非洲食品 — 散���香料、扁豆及清真肉类。",
+      en: "South Asian, Middle Eastern & African groceries — bulk spices, lentils, flours, and halal meats."
     },
     servicesOffered: ["Bulk spices", "Lentils & legumes", "Specialty flours", "Rice varieties", "Halal meats", "International pantry"],
     cost: "low-cost",
@@ -4329,25 +3133,13 @@ export const calgaryResources: Resource[] = [
     category: ["ethnic-market", "essentials"],
     userTypes: ["newcomer", "family"],
     title: {
-      en: "Sunrise African & Caribbean Market",
-      tl: "Sunrise African & Caribbean Market",
-      es: "Sunrise African & Caribbean Market",
-      ar: "Sunrise African & Caribbean Market",
-      zh: "Sunrise 非洲与加勒比海市场",
+      en: "Sunrise African & Caribbean Market"
     },
     description: {
-      en: "One of Calgary's best-stocked African and Caribbean grocery stores. Carries plantains, yams, cassava flour, suya spices, jerk seasonings, palm oil, dried fish, Scotch bonnet peppers, and specialty drinks from West Africa, East Africa, and the Caribbean.",
-      tl: "Best-stocked African at Caribbean grocery store — plantains, yams, cassava flour, suya spices, at jerk seasonings.",
-      es: "Tienda africana y caribeña bien surtida — plátanos, ñames, harina de yuca, especias suya y condimentos jerk.",
-      ar: "متجر بقالة أفريقية وكاريبية جيد التخزين — موز، يام، دقيق كاسافا، بهارات سويا وتوابل جيرك.",
-      zh: "卡尔加里库存最丰富的非洲和加勒比海食品店，提供大蕉、山药、木薯粉、苏亚香料及牙买加香料。",
+      en: "One of Calgary's best-stocked African and Caribbean grocery stores. Carries plantains, yams, cassava flour, suya spices, jerk seasonings, palm oil, dried fish, Scotch bonnet peppers, and specialty drinks from West Africa, East Africa, and the Caribbean."
     },
     summary: {
-      en: "African & Caribbean grocery — plantains, cassava flour, suya spices, jerk seasonings, and palm oil.",
-      tl: "African at Caribbean grocery — plantains, cassava flour, at suya spices.",
-      es: "Comestibles africanos y caribeños — plátanos, yuca, suya y jerk.",
-      ar: "بقالة أفريقية وكاريبية — موز ومانيوك وبهارات سويا.",
-      zh: "非洲与加勒比海食品 — 大蕉、木薯粉、苏亚香料及牙买加香料。",
+      en: "African & Caribbean grocery — plantains, cassava flour, suya spices, jerk seasonings, and palm oil."
     },
     servicesOffered: ["Plantains & yams", "Cassava flour", "Suya spices", "Jerk seasonings", "Palm oil", "Dried fish", "Scotch bonnet peppers"],
     cost: "low-cost",
@@ -4361,25 +3153,13 @@ export const calgaryResources: Resource[] = [
     category: ["ethnic-market", "essentials"],
     userTypes: ["newcomer", "family"],
     title: {
-      en: "Al Noor Halal Meat & Middle Eastern Groceries",
-      tl: "Al Noor Halal Meat & Middle Eastern Groceries",
-      es: "Al Noor Halal Meat & Middle Eastern Groceries",
-      ar: "Al Noor للحوم الحلال والبقالة الشرق الأوسطية",
-      zh: "Al Noor 清真肉类及中东食品杂货",
+      en: "Al Noor Halal Meat & Middle Eastern Groceries"
     },
     description: {
-      en: "A trusted halal butcher and Middle Eastern grocer serving Calgary's Muslim and Arab communities. Carries fresh-cut halal lamb, goat, beef, and chicken alongside specialty items: feta, labneh, za'atar, dried fruits, nuts, and imported olive oils.",
-      tl: "Trusted halal butcher at Middle Eastern grocer — fresh halal lamb, goat, beef, chicken, feta, labneh, at za'atar.",
-      es: "Carnicería halal y tienda de Oriente Medio — cordero, cabra, res y pollo halal, feta, labneh y za'atar.",
-      ar: "جزار حلال موثوق ومتجر شرق أوسطي — ضأن وماعز ولحم بقر ودجاج حلال مع فيتا ولبنة وزعتر.",
-      zh: "值得信赖的清真屠宰店及中东食品杂货，提供新鲜清真羊肉、山羊肉、牛肉、鸡肉及菲达奶酪、拉布内、扎阿塔等。",
+      en: "A trusted halal butcher and Middle Eastern grocer serving Calgary's Muslim and Arab communities. Carries fresh-cut halal lamb, goat, beef, and chicken alongside specialty items: feta, labneh, za'atar, dried fruits, nuts, and imported olive oils."
     },
     summary: {
-      en: "Halal butcher & Middle Eastern grocer — fresh halal meats, labneh, za'atar, and imported olive oils.",
-      tl: "Halal butcher at Middle Eastern grocer — halal meats, labneh, at za'atar.",
-      es: "Carnicería halal y tienda de Oriente Medio — carnes halal, labneh y za'atar.",
-      ar: "جزار حلال ومتجر شرق أوسطي — لحوم حلال ولبنة وزعتر.",
-      zh: "清真屠宰店及中东食品 — 新鲜清真肉类、拉布内及扎阿塔。",
+      en: "Halal butcher & Middle Eastern grocer — fresh halal meats, labneh, za'atar, and imported olive oils."
     },
     servicesOffered: ["Fresh halal lamb & goat", "Halal beef & chicken", "Feta & labneh", "Za'atar & spices", "Dried fruits & nuts", "Imported olive oils"],
     cost: "low-cost",
@@ -4392,25 +3172,13 @@ export const calgaryResources: Resource[] = [
     category: ["ethnic-market", "essentials"],
     userTypes: ["newcomer", "family"],
     title: {
-      en: "Philam Foods — Filipino Grocery & Deli",
-      tl: "Philam Foods — Filipino Grocery at Deli",
-      es: "Philam Foods — Tienda Filipina y Delicatessen",
-      ar: "Philam Foods — بقالة فلبينية وديلي",
-      zh: "Philam Foods — 菲律宾食�������杂货店",
+      en: "Philam Foods — Filipino Grocery & Deli"
     },
     description: {
-      en: "Calgary's best-known Filipino grocery and deli, stocking a comprehensive range of Filipino pantry staples: bagoong, patis, vinegar varieties, longganisa sausages, frozen tocino, ube products, and ready-to-eat sinagang and adobo packs. A vital resource for Calgary's large Filipino community.",
-      tl: "Calgary's best-known Filipino grocery — bagoong, patis, longganisa, frozen tocino, ube products, at ready-to-eat sinagang.",
-      es: "La tienda filipina más conocida de Calgary — bagoong, patis, longganisa, tocino congelado y productos ube.",
-      ar: "أشهر متجر فلبيني في كالجاري — باغونغ وباتيس ولونغانيسا وتوسينو مجمد ومنتجات أوبي.",
-      zh: "卡尔加里最知名的菲律宾食品杂货店，提供鱼酱、鱼露、香肠、冷冻猪肉及紫薯产品。",
+      en: "Calgary's best-known Filipino grocery and deli, stocking a comprehensive range of Filipino pantry staples: bagoong, patis, vinegar varieties, longganisa sausages, frozen tocino, ube products, and ready-to-eat sinagang and adobo packs. A vital resource for Calgary's large Filipino community."
     },
     summary: {
-      en: "Calgary's top Filipino grocery — bagoong, longganisa, ube products, and ready-to-eat Filipino meals.",
-      tl: "Top Filipino grocery sa Calgary — bagoong, longganisa, ube, at ready-to-eat meals.",
-      es: "La principal tienda filipina de Calgary — bagoong, longganisa y productos ube.",
-      ar: "أفضل متجر فلبيني في كالجاري — باغونغ ولونغانيسا ومنتجات أوبي.",
-      zh: "卡尔加里顶级菲律宾杂货店 — 鱼酱、香肠、紫薯产品及即食菲律宾菜。",
+      en: "Calgary's top Filipino grocery — bagoong, longganisa, ube products, and ready-to-eat Filipino meals."
     },
     servicesOffered: ["Filipino pantry staples", "Bagoong & patis", "Longganisa sausages", "Frozen tocino", "Ube products", "Ready-to-eat meals"],
     cost: "low-cost",
@@ -4427,25 +3195,13 @@ export const calgaryResources: Resource[] = [
     category: ["farmers-market", "essentials"],
     userTypes: ["family", "newcomer", "senior", "student"],
     title: {
-      en: "Calgary Farmers' Market (West & South Locations)",
-      tl: "Calgary Farmers' Market (West at South)",
-      es: "Mercado de Agricultores de Calgary (Oeste y Sur)",
-      ar: "سوق مزارعي كالجاري (الغرب والجنوب)",
-      zh: "卡尔加里农夫市场（西区与南区）",
+      en: "Calgary Farmers' Market (West & South Locations)"
     },
     description: {
-      en: "Direct farm-to-table access with fresh provincial produce, locally raised poultry, and craft preserves. Offers organic seasonal vegetables, pasture-raised poultry, BC orchard fruits, and artisanal meats.",
-      tl: "Direct farm-to-table na fresh na produce at poultry.",
-      es: "Acceso directo de la granja a la mesa con productos frescos.",
-      ar: "وصول مباشر من المزرعة إلى المائدة بمنتجات طازجة.",
-      zh: "农场直达餐桌的新鲜本地农产品。",
+      en: "Direct farm-to-table access with fresh provincial produce, locally raised poultry, and craft preserves. Offers organic seasonal vegetables, pasture-raised poultry, BC orchard fruits, and artisanal meats."
     },
     summary: {
-      en: "Farm-to-table fresh produce, pasture-raised poultry, and artisanal meats year-round.",
-      tl: "Fresh na produce at poultry buong taon.",
-      es: "Productos frescos de la granja a la mesa.",
-      ar: "منتجات طازجة من المزرعة إلى المائدة.",
-      zh: "全年农场直达的新鲜农产品。",
+      en: "Farm-to-table fresh produce, pasture-raised poultry, and artisanal meats year-round."
     },
     servicesOffered: ["Organic seasonal vegetables", "Pasture-raised poultry", "BC orchard fruits", "Artisanal meats", "Craft preserves"],
     phone: "403-243-7440",
@@ -4461,25 +3217,13 @@ export const calgaryResources: Resource[] = [
     category: ["farmers-market", "essentials"],
     userTypes: ["family", "newcomer", "senior", "student"],
     title: {
-      en: "Crossroads Market",
-      tl: "Crossroads Market",
-      es: "Crossroads Market",
-      ar: "Crossroads Market",
-      zh: "Crossroads 市场",
+      en: "Crossroads Market"
     },
     description: {
-      en: "Budget-conscious family farm shopping with historical indoor/outdoor stalls operating year-round. Offers local root vegetables, butcher-cut free-range meats, artisanal baking, and orchard goods.",
-      tl: "Budget-friendly na palengke buong taon.",
-      es: "Mercado familiar económico abierto todo el año.",
-      ar: "سوق عائلي اقتصادي مفتوح طوال العام.",
-      zh: "全年营业的实惠家庭农贸市场。",
+      en: "Budget-conscious family farm shopping with historical indoor/outdoor stalls operating year-round. Offers local root vegetables, butcher-cut free-range meats, artisanal baking, and orchard goods."
     },
     summary: {
-      en: "Year-round budget-friendly market — local produce, free-range meats, and artisanal baking.",
-      tl: "Budget-friendly na palengke buong taon.",
-      es: "Mercado económico todo el año.",
-      ar: "سوق اقتصادي طوال العام.",
-      zh: "全年营业的实惠市场。",
+      en: "Year-round budget-friendly market — local produce, free-range meats, and artisanal baking."
     },
     servicesOffered: ["Local root vegetables", "Free-range meats", "Artisanal baking", "Orchard goods"],
     phone: "403-269-1922",
@@ -4494,25 +3238,13 @@ export const calgaryResources: Resource[] = [
     category: ["farmers-market", "essentials"],
     userTypes: ["family", "newcomer", "senior"],
     title: {
-      en: "TK Ranch (Online Farm Delivery to Calgary)",
-      tl: "TK Ranch (Online Farm Delivery sa Calgary)",
-      es: "TK Ranch (Entrega de Granja en Calgary)",
-      ar: "TK Ranch (توصيل من المزرعة إلى كالجاري)",
-      zh: "TK Ranch（在线农场配送至卡尔加里）",
+      en: "TK Ranch (Online Farm Delivery to Calgary)"
     },
     description: {
-      en: "100% grass-fed, grass-finished heirloom beef, heritage pork, and wild pasture poultry. Offers bulk meat packs, grass-fed beef cuts, soy-free poultry, and direct-to-door temperature-controlled delivery.",
-      tl: "Grass-fed beef at pasture poultry na may home delivery.",
-      es: "Carne de res alimentada con pasto y aves de pastoreo a domicilio.",
-      ar: "لحم بقري يتغذى على العشب ودواجن المراعي مع التوصيل.",
-      zh: "草饲牛肉和牧场家禽，送货上门。",
+      en: "100% grass-fed, grass-finished heirloom beef, heritage pork, and wild pasture poultry. Offers bulk meat packs, grass-fed beef cuts, soy-free poultry, and direct-to-door temperature-controlled delivery."
     },
     summary: {
-      en: "Grass-fed beef, heritage pork, and pasture poultry delivered to your door.",
-      tl: "Grass-fed beef na may home delivery.",
-      es: "Carne alimentada con pasto a domicilio.",
-      ar: "لحم بقري يتغذى على الع��ب مع التوصيل.",
-      zh: "草饲牛肉送货上门。",
+      en: "Grass-fed beef, heritage pork, and pasture poultry delivered to your door."
     },
     servicesOffered: ["Bulk meat packs", "Grass-fed beef cuts", "Soy-free poultry", "Temperature-controlled delivery"],
     phone: "403-854-3300",
@@ -4531,25 +3263,13 @@ export const calgaryResources: Resource[] = [
     category: ["essentials"],
     userTypes: ["newcomer", "family", "senior", "student", "business"],
     title: {
-      en: "The Stitch Room (Local Custom Tailoring)",
-      tl: "The Stitch Room (Custom Tailoring)",
-      es: "The Stitch Room (Sastrería a Medida)",
-      ar: "The Stitch Room (خياطة مخصصة)",
-      zh: "The Stitch Room（本地定制裁缝）",
+      en: "The Stitch Room (Local Custom Tailoring)"
     },
     description: {
-      en: "Flawless, budget-friendly garment alterations, clothing repairs, and custom textile tailoring. Offers suit adjustments, zipper replacements, dress alterations, and heavy denim hemming.",
-      tl: "Abot-kayang alterations at custom tailoring.",
-      es: "Arreglos de ropa económicos y sastrería a medida.",
-      ar: "تعديلات ملابس بأسعار معقولة وخياطة مخصصة.",
-      zh: "实惠的服装修改和定制裁缝。",
+      en: "Flawless, budget-friendly garment alterations, clothing repairs, and custom textile tailoring. Offers suit adjustments, zipper replacements, dress alterations, and heavy denim hemming."
     },
     summary: {
-      en: "Budget-friendly alterations, repairs, and custom tailoring — suits, dresses, and denim.",
-      tl: "Abot-kayang alterations at tailoring.",
-      es: "Arreglos y sastrería a medida económicos.",
-      ar: "تعديلات وخياطة بأسعار معقولة.",
-      zh: "实惠的修改与定制裁缝。",
+      en: "Budget-friendly alterations, repairs, and custom tailoring — suits, dresses, and denim."
     },
     servicesOffered: ["Suit adjustments", "Zipper replacements", "Dress alterations", "Heavy denim hemming"],
     phone: "403-242-2334",
@@ -4564,25 +3284,13 @@ export const calgaryResources: Resource[] = [
     category: ["essentials"],
     userTypes: ["newcomer", "family", "senior", "business"],
     title: {
-      en: "Calgary Affordable Handyman Services",
-      tl: "Calgary Affordable Handyman Services",
-      es: "Servicios de Manitas Económicos de Calgary",
-      ar: "خدمات الصيانة الميسورة في كالجاري",
-      zh: "卡尔加里实惠维修服务",
+      en: "Calgary Affordable Handyman Services"
     },
     description: {
-      en: "Transparently priced, prompt home maintenance, appliance set-ups, and technical quick fixes. Offers drywall repairs, flat-pack furniture assembly, hanging tasks, and minor plumbing work.",
-      tl: "Transparent na presyo para sa home maintenance at repairs.",
-      es: "Mantenimiento del hogar a precio transparente y reparaciones rápidas.",
-      ar: "صيانة منزلية بأسعار شفافة وإصلاحات سريعة.",
-      zh: "价格透明的家居维护和快速维修。",
+      en: "Transparently priced, prompt home maintenance, appliance set-ups, and technical quick fixes. Offers drywall repairs, flat-pack furniture assembly, hanging tasks, and minor plumbing work."
     },
     summary: {
-      en: "Transparently priced home maintenance — drywall, furniture assembly, and minor plumbing.",
-      tl: "Transparent na presyo para sa home maintenance.",
-      es: "Mantenimiento del hogar a precio transparente.",
-      ar: "صيانة منزلية بأسعار شفافة.",
-      zh: "价格透明的家居维护。",
+      en: "Transparently priced home maintenance — drywall, furniture assembly, and minor plumbing."
     },
     servicesOffered: ["Drywall repairs", "Flat-pack furniture assembly", "Hanging tasks", "Minor plumbing work", "Appliance set-ups"],
     phone: "403-903-8845",
@@ -4601,25 +3309,13 @@ export const calgaryResources: Resource[] = [
     category: ["education", "newcomer"],
     userTypes: ["newcomer", "student", "family", "senior"],
     title: {
-      en: "Bow Valley College",
-      tl: "Bow Valley College",
-      es: "Bow Valley College",
-      ar: "كلية بو فالي",
-      zh: "波谷学院",
+      en: "Bow Valley College"
     },
     description: {
-      en: "Calgary's largest public community college, downtown. Offers career diplomas and certificates, academic upgrading and high-school equivalency, English Language Learning (ELL), government-funded LINC classes for newcomers, and continuing-education short courses. Intakes run throughout the year and many programs include work-integrated learning.",
-      tl: "Pinakamalaking public college sa Calgary — diploma, upgrading, at English classes.",
-      es: "El mayor colegio comunitario público de Calgary: diplomas, nivelación y clases de inglés.",
-      ar: "أكبر كلية مجتمعية عامة في كالجاري: دبلومات وتطوير أكاديمي ودروس إنجليزية.",
-      zh: "卡尔加里最大的公立社区学院：文凭、学术提升和英语课程。",
+      en: "Calgary's largest public community college, downtown. Offers career diplomas and certificates, academic upgrading and high-school equivalency, English Language Learning (ELL), government-funded LINC classes for newcomers, and continuing-education short courses. Intakes run throughout the year and many programs include work-integrated learning."
     },
     summary: {
-      en: "Diplomas, academic upgrading, English Language Learning, LINC, and year-round short courses.",
-      tl: "Diploma, upgrading, English classes, at short courses buong taon.",
-      es: "Diplomas, nivelación, inglés y cursos cortos todo el año.",
-      ar: "دبلومات وتطوير ودروس إنجليزية ودورات قصيرة طوال العام.",
-      zh: "文凭、学术提升、英语学习及全年短期课程。",
+      en: "Diplomas, academic upgrading, English Language Learning, LINC, and year-round short courses."
     },
     servicesOffered: ["Career diplomas & certificates", "Academic upgrading", "High-school equivalency", "English Language Learning (ELL)", "Government-funded LINC", "Continuing-education short courses"],
     address: "345 6 Ave SE, Calgary",
@@ -4636,25 +3332,13 @@ export const calgaryResources: Resource[] = [
     category: ["education"],
     userTypes: ["student", "newcomer", "business"],
     title: {
-      en: "SAIT — Continuing Education & Professional Studies",
-      tl: "SAIT — Continuing Education at Professional Studies",
-      es: "SAIT — Educación Continua y Estudios Profesionales",
-      ar: "SAIT — التعليم المستمر والدراسات المهنية",
-      zh: "SAIT — 继续教育与专业进修",
+      en: "SAIT — Continuing Education & Professional Studies"
     },
     description: {
-      en: "Southern Alberta Institute of Technology offers hands-on, job-ready training. Beyond full-time diplomas, its Continuing Education & Professional Studies stream runs part-time evening/weekend short courses and professional certificates year-round — in project management, data, IT, trades, business, and health — designed for working adults and career changers.",
-      tl: "Hands-on na training ng SAIT — diploma, part-time short courses, at professional certificates.",
-      es: "Formación práctica del SAIT: diplomas, cursos cortos a tiempo parcial y certificados profesionales.",
-      ar: "تدريب عملي من SAIT: دبلومات ودورات قصيرة وشهادات مهنية.",
-      zh: "SAIT 实践培训：文凭、兼读短期课程和专业证书。",
+      en: "Southern Alberta Institute of Technology offers hands-on, job-ready training. Beyond full-time diplomas, its Continuing Education & Professional Studies stream runs part-time evening/weekend short courses and professional certificates year-round — in project management, data, IT, trades, business, and health — designed for working adults and career changers."
     },
     summary: {
-      en: "Part-time, year-round professional short courses and certificates for working adults.",
-      tl: "Part-time na professional short courses at certificates buong taon.",
-      es: "Cursos cortos y certificados profesionales a tiempo parcial, todo el año.",
-      ar: "دورات قصيرة وشهادات مهنية بدوام جزئي طوال العام.",
-      zh: "面向在职成人的全年兼读专业短期课程和证书。",
+      en: "Part-time, year-round professional short courses and certificates for working adults."
     },
     servicesOffered: ["Professional certificates", "Evening & weekend short courses", "Project management", "Data & IT", "Trades & business upgrading"],
     address: "1301 16 Ave NW, Calgary",
@@ -4670,25 +3354,13 @@ export const calgaryResources: Resource[] = [
     category: ["education", "business"],
     userTypes: ["student", "business", "newcomer"],
     title: {
-      en: "University of Calgary — Continuing Education",
-      tl: "University of Calgary — Continuing Education",
-      es: "Universidad de Calgary — Educación Continua",
-      ar: "جامعة كالجاري — التعليم المستمر",
-      zh: "卡尔加里大学 — 继续教育",
+      en: "University of Calgary — Continuing Education"
     },
     description: {
-      en: "Flexible, part-time certificates and open-enrolment short courses for adults — most require no prior degree to start. Year-round offerings include business analytics, project management, professional writing, languages, leadership, and personal-interest classes, available in-person and online.",
-      tl: "Flexible na part-time certificates at open short courses — walang degree na kailangan.",
-      es: "Certificados a tiempo parcial y cursos cortos abiertos, sin título previo requerido.",
-      ar: "شهادات بدوام جزئي ودورات قصيرة مفتوحة بدون شهادة سابقة.",
-      zh: "灵活的兼读证书和公开短期���程，多数无需学位即可入读。",
+      en: "Flexible, part-time certificates and open-enrolment short courses for adults — most require no prior degree to start. Year-round offerings include business analytics, project management, professional writing, languages, leadership, and personal-interest classes, available in-person and online."
     },
     summary: {
-      en: "Part-time certificates and open short courses — most need no prior degree, in-person or online.",
-      tl: "Part-time certificates at open short courses, in-person o online.",
-      es: "Certificados a tiempo parcial y cursos cortos abiertos, presencial o en línea.",
-      ar: "شهادات بدوام جزئي ودورات قصيرة حضورياً أو عبر الإنترنت.",
-      zh: "兼读证书和公开短期课程，线下或线上皆可。",
+      en: "Part-time certificates and open short courses — most need no prior degree, in-person or online."
     },
     servicesOffered: ["Open-enrolment certificates", "Business analytics", "Project management", "Professional writing", "Languages & leadership", "Online & in-person"],
     phone: "403-220-2866",
@@ -4703,25 +3375,13 @@ export const calgaryResources: Resource[] = [
     category: ["education", "business"],
     userTypes: ["student", "business", "senior"],
     title: {
-      en: "Mount Royal University — Continuing Education",
-      tl: "Mount Royal University — Continuing Education",
-      es: "Universidad Mount Royal — Educación Continua",
-      ar: "جامعة ماونت رويال — التعليم المستمر",
-      zh: "皇家山大学 — 继续教育",
+      en: "Mount Royal University — Continuing Education"
     },
     description: {
-      en: "Extension certificates and short courses with flexible day, evening, weekend, and online scheduling. Popular areas include business analysis, human resources, interior styling, languages, music, and personal enrichment — built for adults balancing work and study.",
-      tl: "Extension certificates at short courses na may flexible schedule, online o in-person.",
-      es: "Certificados de extensión y cursos cortos con horarios flexibles, en línea o presencial.",
-      ar: "شهادات وتمديد ودورات قصيرة بجداول مرنة عبر الإنترنت أو حضورياً.",
-      zh: "灵活时间的延伸证书和短期课程，线上或线下。",
+      en: "Extension certificates and short courses with flexible day, evening, weekend, and online scheduling. Popular areas include business analysis, human resources, interior styling, languages, music, and personal enrichment — built for adults balancing work and study."
     },
     summary: {
-      en: "Flexible extension certificates and short courses — day, evening, weekend, and online.",
-      tl: "Flexible na extension certificates at short courses.",
-      es: "Certificados de extensión y cursos cortos flexibles.",
-      ar: "شهادات تمديد ودورات قصيرة مرنة.",
-      zh: "灵活的延伸证书和短期课程。",
+      en: "Flexible extension certificates and short courses — day, evening, weekend, and online."
     },
     servicesOffered: ["Extension certificates", "Business analysis", "Human resources", "Languages & music", "Evening, weekend & online classes"],
     address: "4825 Mount Royal Gate SW, Calgary",
@@ -4739,25 +3399,13 @@ export const calgaryResources: Resource[] = [
     category: ["education", "family"],
     userTypes: ["family", "newcomer"],
     title: {
-      en: "Daycare & Childcare — Find One Near You",
-      tl: "Daycare at Childcare — Maghanap Malapit sa Iyo",
-      es: "Guardería — encuentre una cerca de usted",
-      ar: "الحضانة ورعاية الأطفال — ابحث عن واحدة بالقرب منك",
-      zh: "日托与托儿 — 寻找附近的机构",
+      en: "Daycare & Childcare — Find One Near You"
     },
     description: {
-      en: "What parents must know: 1) Confirm the provider holds an active Alberta Child Care Licensing status. 2) Check if it takes part in the $15-a-day affordability grant to lower your fees. 3) Prefer registered Montessori or play-based programs for balanced early development. Tip: Open Google Maps, search 'licensed daycare near me' in your own neighbourhood, and choose places with the most positive recent reviews before you book a tour.",
-      tl: "Dapat malaman: tingnan ang Alberta licence, ang affordability grant, at piliin ang Montessori o play-based. Maghanap malapit sa inyo sa Google Maps at piliin ang may pinakamagandang reviews.",
-      es: "Qué saber: verifique la licencia de Alberta, el subsidio de asequibilidad y prefiera Montessori o aprendizaje por juego. Busque cerca de su casa en Google Maps y elija los mejor valorados.",
-      ar: "ما يجب معرفته: تحق�� من ترخيص ألبرتا ومنحة القدرة على تحمل التكاليف وفضّل برامج مونتيسوري أو التعلم باللعب. ابحث بالقرب منك على خرائط جوجل واختر الأعلى تقييماً.",
-      zh: "家长须知：确认阿尔伯塔牌照、可负担补贴，并优先选择蒙特梭利或游戏式课程。在谷歌地图搜索附近机构并选择评价最高者。",
+      en: "What parents must know: 1) Confirm the provider holds an active Alberta Child Care Licensing status. 2) Check if it takes part in the $15-a-day affordability grant to lower your fees. 3) Prefer registered Montessori or play-based programs for balanced early development. Tip: Open Google Maps, search 'licensed daycare near me' in your own neighbourhood, and choose places with the most positive recent reviews before you book a tour."
     },
     summary: {
-      en: "Licensed infant, toddler & preschool care — search your neighbourhood and pick top-reviewed spots.",
-      tl: "Lisensyadong childcare — maghanap malapit at piliin ang top-reviewed.",
-      es: "Cuidado con licencia — busque cerca y elija los mejor valorados.",
-      ar: "رعاية مرخصة — ابحث بالقرب واختر الأعلى تقييماً.",
-      zh: "持牌托儿 — 搜索附近并选择高��价机构。",
+      en: "Licensed infant, toddler & preschool care — search your neighbourhood and pick top-reviewed spots."
     },
     servicesOffered: ["Infant care", "Toddler rooms", "Preschool spaces", "Out-of-school care"],
     website: "https://www.alberta.ca/childcare",
@@ -4773,25 +3421,13 @@ export const calgaryResources: Resource[] = [
     category: ["education", "family"],
     userTypes: ["family", "newcomer"],
     title: {
-      en: "Primary / Elementary Schools (K–6)",
-      tl: "Primary / Elementary Schools (K–6)",
-      es: "Escuelas primarias (K–6)",
-      ar: "المدارس الابتدائية (الروضة حتى الصف السادس)",
-      zh: "小学（幼儿园至六年级）",
+      en: "Primary / Elementary Schools (K–6)"
     },
     description: {
-      en: "What parents must know: 1) Your home address sets your designated public (CBE) or Catholic (CCSD) school. 2) Registration is free; bring proof of address, your child's ID and immunization records. 3) Ask about before/after-school care and language support if needed. Tip: Open Google Maps, search 'elementary school near me' from your residence, and compare schools with strong recent parent reviews.",
-      tl: "Dapat malaman: ang address ninyo ang nagtatakda ng designated school (CBE/CCSD), libre ang registration (proof of address + immunization). Maghanap malapit sa Google Maps.",
-      es: "Qué saber: su dirección define la escuela designada (CBE o CCSD), la inscripción es gratuita (comprobante de domicilio + vacunas). Busque cerca en Google Maps.",
-      ar: "ما يجب معرفته: عنوانك يحدد المدرسة المخصصة (CBE أو CCSD)، التسجيل مجاني (إثبات العنوان + التطعيمات). ابحث بالقرب على خرائط جوجل.",
-      zh: "家长须知：住址决定指定公立(CBE)或天主教(CCSD)学校，注册免费（需地址证明和疫苗记录）。在谷歌地图搜索附近学校。",
+      en: "What parents must know: 1) Your home address sets your designated public (CBE) or Catholic (CCSD) school. 2) Registration is free; bring proof of address, your child's ID and immunization records. 3) Ask about before/after-school care and language support if needed. Tip: Open Google Maps, search 'elementary school near me' from your residence, and compare schools with strong recent parent reviews."
     },
     summary: {
-      en: "Find your designated K–6 public or Catholic school by neighbourhood.",
-      tl: "Hanapin ang designated K–6 school ayon sa lugar.",
-      es: "Encuentre su escuela primaria designada por barrio.",
-      ar: "اعثر على مدرستك الابتدائية المخصصة حسب الحي.",
-      zh: "按社区查找指定的小学。",
+      en: "Find your designated K–6 public or Catholic school by neighbourhood."
     },
     servicesOffered: ["Kindergarten", "Grades 1–6", "Before/after-school care", "Language support"],
     phone: "403-817-4000",
@@ -4807,25 +3443,13 @@ export const calgaryResources: Resource[] = [
     category: ["education", "family"],
     userTypes: ["family", "newcomer"],
     title: {
-      en: "Secondary Schools — Junior & Senior High (7–12)",
-      tl: "Secondary Schools — Junior at Senior High (7–12)",
-      es: "Escuelas secundarias (7–12)",
-      ar: "المدارس الثانوية — الإعدادية والثانوية (7–12)",
-      zh: "中学 — 初中与高中（7–12年级）",
+      en: "Secondary Schools — Junior & Senior High (7–12)"
     },
     description: {
-      en: "What parents must know: 1) Junior high (7–9) and senior high (10–12) may differ from your elementary designation, so confirm the catchment. 2) Compare programs — IB, AP, sports, arts, trades and bilingual streams vary by school. 3) Senior high diploma requirements and course selection matter for college/university. Tip: Open Google Maps, search 'high school near me' from home, and shortlist schools with the highest recent reviews and the programs your teen needs.",
-      tl: "Dapat malaman: i-confirm ang catchment (iba minsan sa elementary), ikumpara ang programa (IB, AP, sports, trades). Maghanap malapit sa Google Maps.",
-      es: "Qué saber: confirme la zona (puede diferir de la primaria), compare programas (IB, AP, deportes, oficios). Busque cerca en Google Maps.",
-      ar: "ما يجب معرفته: تأكد من النطاق (قد يختلف عن الابتدائي)، قارن البرامج (IB، AP، الرياضة، المهن). ابحث بالقرب على خرائط جوجل.",
-      zh: "家长须知：确认学区（可能与小学不同），比较课程（IB、AP、体育、技工）。在谷歌地图搜索附近中学。",
+      en: "What parents must know: 1) Junior high (7–9) and senior high (10–12) may differ from your elementary designation, so confirm the catchment. 2) Compare programs — IB, AP, sports, arts, trades and bilingual streams vary by school. 3) Senior high diploma requirements and course selection matter for college/university. Tip: Open Google Maps, search 'high school near me' from home, and shortlist schools with the highest recent reviews and the programs your teen needs."
     },
     summary: {
-      en: "Find junior & senior high schools by catchment and compare programs near you.",
-      tl: "Hanapin ang junior/senior high ayon sa catchment at ikumpara ang programa.",
-      es: "Encuentre escuelas secundarias por zona y compare programas.",
-      ar: "اعثر على المدارس الثانوية حسب النطاق وقارن البرامج.",
-      zh: "按学区查找初高中并比较附近课程。",
+      en: "Find junior & senior high schools by catchment and compare programs near you."
     },
     servicesOffered: ["Grades 7–9 (junior high)", "Grades 10–12 (senior high)", "IB / AP streams", "Trades & arts programs", "Diploma prep"],
     phone: "403-817-4000",
@@ -4843,25 +3467,13 @@ export const calgaryResources: Resource[] = [
     category: ["education"],
     userTypes: ["student", "newcomer"],
     title: {
-      en: "University of Calgary (UCalgary)",
-      tl: "University of Calgary (UCalgary)",
-      es: "Universidad de Calgary (UCalgary)",
-      ar: "جامعة كالجاري",
-      zh: "卡尔加里大学",
+      en: "University of Calgary (UCalgary)"
     },
     description: {
-      en: "Top-tier global research university — strong in engineering, business (Haskayne), veterinary medicine, health sciences and the humanities. What students must know: confirm your program is a Designated Learning Institution (DLI) for study-permit and post-graduation work eligibility, and note the main campus sits on the CTrain Red Line for easy transit. Tip: open Google Maps to view the campus footprint and plan your commute.",
-      tl: "Nangungunang research university (engineering, business, vet medicine). Tingnan ang DLI status at CTrain Red Line.",
-      es: "Universidad de investigación de primer nivel (ingeniería, negocios, veterinaria). Verifique el estatus DLI y la línea roja del CTrain.",
-      ar: "جامعة بحثية رائدة (الهندسة والأعمال والطب البيطري). تحقق من حالة DLI وخط CTrain الأحمر.",
-      zh: "顶尖研究型大学（工程、商科、兽医）。确认DLI身份，主校区位于CTrain红线。",
+      en: "Top-tier global research university — strong in engineering, business (Haskayne), veterinary medicine, health sciences and the humanities. What students must know: confirm your program is a Designated Learning Institution (DLI) for study-permit and post-graduation work eligibility, and note the main campus sits on the CTrain Red Line for easy transit. Tip: open Google Maps to view the campus footprint and plan your commute."
     },
     summary: {
-      en: "Global research university — engineering, business, veterinary medicine, health & more.",
-      tl: "Research university — engineering, business, vet medicine.",
-      es: "Universidad de investigación — ingeniería, negocios, veterinaria.",
-      ar: "جامعة بحثية — الهندسة والأعمال والطب البيطري.",
-      zh: "研究型大学 — 工程、商科、兽医等。",
+      en: "Global research university — engineering, business, veterinary medicine, health & more."
     },
     servicesOffered: ["Undergraduate degrees", "Master's programs", "PhD research", "Continuing education", "Designated Learning Institution"],
     address: "2500 University Dr NW, Calgary",
@@ -4879,25 +3491,13 @@ export const calgaryResources: Resource[] = [
     category: ["education"],
     userTypes: ["student", "newcomer"],
     title: {
-      en: "Southern Alberta Institute of Technology (SAIT)",
-      tl: "Southern Alberta Institute of Technology (SAIT)",
-      es: "Instituto de Tecnología del Sur de Alberta (SAIT)",
-      ar: "معهد جنوب ألبرتا للتكنولوجيا (SAIT)",
-      zh: "南阿尔伯塔理工学院（SAIT）",
+      en: "Southern Alberta Institute of Technology (SAIT)"
     },
     description: {
-      en: "Industry-trusted polytechnic known for hands-on, job-ready training — trades, technology, culinary arts, business and health. What students must know: many programs are Designated Learning Institution (DLI) eligible, apprenticeships ladder into journeyperson tickets, and the main Calgary campus is steps from the SAIT/AUArts/Jubilee CTrain station. Tip: open Google Maps to scope the campus and transit.",
-      tl: "Industry-trusted polytechnic (trades, technology, culinary). DLI-eligible at malapit sa CTrain.",
-      es: "Politécnico reconocido (oficios, tecnología, gastronomía). Programas elegibles DLI, cerca del CTrain.",
-      ar: "معهد تقني موثوق (المهن والتكنولوجيا وفنون الطهي). برامج مؤهلة DLI وقريب من CTrain.",
-      zh: "业界信赖的理工学院（技工、技术、烹饪）。多数课程符合DLI，邻近CTrain站。",
+      en: "Industry-trusted polytechnic known for hands-on, job-ready training — trades, technology, culinary arts, business and health. What students must know: many programs are Designated Learning Institution (DLI) eligible, apprenticeships ladder into journeyperson tickets, and the main Calgary campus is steps from the SAIT/AUArts/Jubilee CTrain station. Tip: open Google Maps to scope the campus and transit."
     },
     summary: {
-      en: "Hands-on polytechnic — trades, technology, culinary arts, business & health.",
-      tl: "Hands-on polytechnic — trades, technology, culinary, business.",
-      es: "Politécnico práctico — oficios, tecnología, gastronomía.",
-      ar: "معهد تقني عملي — المهن والتكنولوجيا وفنون الطهي.",
-      zh: "实践型理工学院 — 技工、技术、烹饪、商科。",
+      en: "Hands-on polytechnic — trades, technology, culinary arts, business & health."
     },
     servicesOffered: ["Apprenticeships", "Diplomas", "Applied degrees", "Certificates", "Corporate training"],
     address: "1301 16 Ave NW, Calgary",
@@ -4915,25 +3515,13 @@ export const calgaryResources: Resource[] = [
     category: ["education"],
     userTypes: ["student", "newcomer"],
     title: {
-      en: "Mount Royal University (MRU)",
-      tl: "Mount Royal University (MRU)",
-      es: "Universidad Mount Royal (MRU)",
-      ar: "جامعة ماونت رويال",
-      zh: "皇家山大学（MRU）",
+      en: "Mount Royal University (MRU)"
     },
     description: {
-      en: "Undergraduate-focused university praised for small class sizes and strong teaching — nursing, aviation, communications, business and education. What students must know: degree programs are Designated Learning Institution (DLI) eligible, and the SW campus is served by frequent BRT/MAX bus routes. Tip: open Google Maps to view the campus and plan your transit before applying.",
-      tl: "Undergraduate-focused university (nursing, aviation, communications). DLI-eligible at may MAX bus.",
-      es: "Universidad de pregrado (enfermería, aviación, comunicaciones). Elegible DLI, con buses MAX.",
-      ar: "جامعة تركز على البكالوريوس (التمريض والطيران والإعلام). مؤهلة DLI وتخدمها حافلات MAX.",
-      zh: "本科为主的大学（护理、航空、传媒）。符合DLI，有MAX巴士服务。",
+      en: "Undergraduate-focused university praised for small class sizes and strong teaching — nursing, aviation, communications, business and education. What students must know: degree programs are Designated Learning Institution (DLI) eligible, and the SW campus is served by frequent BRT/MAX bus routes. Tip: open Google Maps to view the campus and plan your transit before applying."
     },
     summary: {
-      en: "Undergraduate university — nursing, aviation, communications, business & education.",
-      tl: "Undergraduate university — nursing, aviation, communications.",
-      es: "Universidad de pregrado — enfermería, aviación, comunicaciones.",
-      ar: "جامعة بكالوريوس — التمريض والطيران والإعلام.",
-      zh: "本科大学 — 护理、航空、传媒、商科。",
+      en: "Undergraduate university — nursing, aviation, communications, business & education."
     },
     servicesOffered: ["Bachelor's degrees", "Credit certificates", "Specialized diplomas", "Aviation program", "Nursing program"],
     address: "4825 Mount Royal Gate SW, Calgary",
@@ -4951,25 +3539,13 @@ export const calgaryResources: Resource[] = [
     category: ["education", "newcomer"],
     userTypes: ["newcomer", "student", "family"],
     title: {
-      en: "Chinook Learning Services (CBE Adult Learning)",
-      tl: "Chinook Learning Services (CBE Adult Learning)",
-      es: "Chinook Learning Services (Educación para Adultos del CBE)",
-      ar: "Chinook Learning Services (تعليم الكبار CBE)",
-      zh: "Chinook 学习服务（CBE 成人教育）",
+      en: "Chinook Learning Services (CBE Adult Learning)"
     },
     description: {
-      en: "The Calgary Board of Education's adult-education arm. Offers high-school upgrading and diploma-credit courses, post-secondary prep, and English as an Additional Language (EAL). A practical path for adults completing their diploma or preparing for the Canadian Adult Education Credential (CAEC) — which has replaced the GED across Canada.",
-      tl: "High-school upgrading, post-secondary prep, at EAL para sa mga adult.",
-      es: "Nivelación de secundaria, preparación postsecundaria y EAL para adultos.",
-      ar: "تطوير الثانوية والتحضير الجامعي ودروس الإنجليزية للكبار.",
-      zh: "成人高中提升、大专预备和英语（EAL）课程。",
+      en: "The Calgary Board of Education's adult-education arm. Offers high-school upgrading and diploma-credit courses, post-secondary prep, and English as an Additional Language (EAL). A practical path for adults completing their diploma or preparing for the Canadian Adult Education Credential (CAEC) — which has replaced the GED across Canada."
     },
     summary: {
-      en: "Adult high-school upgrading, post-secondary prep, EAL, and CAEC (replaces GED) preparation.",
-      tl: "Adult upgrading, post-secondary prep, at EAL.",
-      es: "Nivelación para adultos, preparación postsecundaria y EAL.",
-      ar: "تطوير للكبار وتحضير جامعي ودروس إنجليزية.",
-      zh: "成人高中提升、大专预备和英语课程。",
+      en: "Adult high-school upgrading, post-secondary prep, EAL, and CAEC (replaces GED) preparation."
     },
     servicesOffered: ["High-school upgrading", "Diploma-credit courses", "Post-secondary preparation", "English as an Additional Language (EAL)", "CAEC preparation"],
     phone: "403-817-7777",
