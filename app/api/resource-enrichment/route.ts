@@ -135,7 +135,13 @@ async function tryOverpass(name: string) {
     `;
     const res = await fetch("https://overpass-api.de/api/interpreter", {
       method: "POST",
-      headers: { "Content-Type": "text/plain" },
+      headers: {
+        "Content-Type": "text/plain",
+        // Overpass API's fair-use policy rejects requests with no User-Agent
+        // (returns 406 Not Acceptable) — Node's fetch sends none by default,
+        // so every request silently failed until this was added.
+        "User-Agent": "CalgaryConnect/1.0 (https://calgaryconnect.app; best-effort resource enrichment)",
+      },
       body: query,
       signal: AbortSignal.timeout(9000),
     });
