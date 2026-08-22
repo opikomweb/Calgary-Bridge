@@ -2183,6 +2183,29 @@ export const calgaryResources: Resource[] = [
     source: "Stallion Express",
   },
   {
+    id: "netparcel-shipping",
+    category: ["logistics", "business"],
+    userTypes: ["business", "newcomer", "family"],
+    title: {
+      en: "netParcel"
+    },
+    description: {
+      en: "Free comparison platform that unlocks commercial discount rates on UPS, Purolator, and other name-brand carriers for individuals and small businesses — no subscription or volume commitment needed. Great when you want a premier courier's tracking and reliability without paying their full retail counter price. Also compares against Canada Post and the discount consolidators so you can pick the cheapest option for your exact box size and destination."
+    },
+    servicesOffered: [
+      "Compare rates across carriers",
+      "Discounted UPS & Purolator rates",
+      "No subscription required",
+      "US & international shipping",
+      "Small business + individual accounts",
+    ],
+    website: "https://netparcel.com",
+    priority: 38,
+    cost: "low-cost",
+    lastUpdated: "2026-08",
+    source: "netParcel",
+  },
+  {
     id: "meest-canada-shipping",
     category: ["logistics", "newcomer"],
     userTypes: ["newcomer", "family", "business"],

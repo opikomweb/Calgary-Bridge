@@ -63,6 +63,20 @@ const KEYWORD_TO_CATEGORY: Record<string, ResourceCategory[]> = {
   montessori: ["family", "education"],
 };
 
+// Words that signal the person explicitly wants the cheapest option, not
+// just "a" resource in the right category. Without this, a query like
+// "cheap shipping to the US" scores name-brand full-price carriers (Canada
+// Post, FedEx, UPS, Purolator) the same as the catalog's actual discount
+// consolidators (Chit Chats, Stallion Express, netParcel) purely because
+// they share the same "logistics" category boost — so the model sees them
+// ranked no differently and tends to reach for the biggest/most familiar
+// name first instead of the cheapest one the catalog already has.
+const COST_SENSITIVE_WORDS = new Set([
+  "cheap", "cheapest", "affordable", "budget", "inexpensive", "discount",
+  "discounted", "low-cost", "lowcost", "save", "saving", "cost-effective",
+  "economical", "frugal",
+]);
+
 const STOPWORDS = new Set([
   "the","a","an","and","or","but","to","of","in","on","at","for","with","my","i","is","are",
   "do","how","what","where","can","need","find","get","help","me","you","please","want","im",
@@ -77,6 +91,19 @@ function tokenize(text: string): string[] {
     .filter((w) => w.length > 1 && !STOPWORDS.has(w));
 }
 
+// Short words (2-3 letters, e.g. "no", "us", "art") produce noisy false
+// positives with plain substring matching — "no" matches inside "now",
+// "us" matches inside "bus"/"trust"/"business". Longer words rarely have
+// this problem and substring matching there is a deliberate, useful
+// fuzzy-match for plurals (query "job" matching resource text "jobs").
+// So: word-boundary match for short words, substring match for longer ones.
+function textIncludesWord(haystack: string, word: string): boolean {
+  if (word.length <= 3) {
+    return new RegExp(`\\b${word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`).test(haystack);
+  }
+  return haystack.includes(word);
+}
+
 /**
  * Scores EVERY resource in the catalog against the query and returns the best
  * candidates. This is what lets the AI guide pull from all site content rather
@@ -84,6 +111,7 @@ function tokenize(text: string): string[] {
  */
 export function findCandidateResources(query: string, limit = 28): Resource[] {
   const words = tokenize(query);
+  const wantsCheapest = words.some((w) => COST_SENSITIVE_WORDS.has(w));
 
   // Categories implied by the query keywords.
   const impliedCategories = new Set<ResourceCategory>();
@@ -99,18 +127,39 @@ export function findCandidateResources(query: string, limit = 28): Resource[] {
     const services = (r.servicesOffered ?? []).join(" ").toLowerCase();
     const source = (r.source ?? "").toLowerCase();
 
+    // Whether this resource has a real topical anchor to the query — a
+    // title hit or an implied-category match — versus only having matched
+    // on generic boilerplate words that show up in nearly every resource's
+    // description ("no referral required", "no fee", etc.). Without this
+    // distinction, a single generic word match was enough to unlock the
+    // large priority/featured/cost adjustments below, letting high-priority
+    // but topically-unrelated resources (e.g. a food bank) outrank an
+    // actually relevant but lower-priority one (e.g. a shipping company)
+    // just because both happened to contain the word "no" somewhere.
+    let hasTopicalAnchor = impliedCategories.size > 0 && r.category.some((c) => impliedCategories.has(c));
+
     for (const w of words) {
-      if (title.includes(w)) score += 6;
-      if (services.includes(w)) score += 3;
-      if (desc.includes(w)) score += 2;
-      if (source.includes(w)) score += 1;
+      if (textIncludesWord(title, w)) {
+        score += 6;
+        hasTopicalAnchor = true;
+      }
+      if (textIncludesWord(services, w)) score += 3;
+      if (textIncludesWord(desc, w)) score += 2;
+      if (textIncludesWord(source, w)) score += 1;
     }
     for (const c of r.category) {
       if (impliedCategories.has(c)) score += 5;
     }
-    if (score > 0) {
+    if (score > 0 && hasTopicalAnchor) {
       if (r.featured) score += 1.5;
       if (typeof r.priority === "number") score += r.priority * 0.4;
+      // Only apply the cheapest-option boost to resources that already
+      // matched on their own topical merits above — otherwise every
+      // free/low-cost resource in the catalog would flood unrelated results.
+      if (wantsCheapest) {
+        if (r.cost === "free" || r.cost === "low-cost") score += 8;
+        else if (r.cost === "paid") score -= 3;
+      }
     }
     return { r, score };
   });
