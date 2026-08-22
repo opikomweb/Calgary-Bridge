@@ -168,13 +168,16 @@ async function translateOneFallback(text: string, targetLang: string): Promise<s
 // ---------------------------------------------------------------------------
 const BATCH_CHUNK_SIZE = 40;
 
+// A `null` entry means BOTH engines genuinely failed for that string — the
+// caller must not cache it (see POST handler) so it gets retried on the
+// next request instead of being permanently poisoned as an English echo.
 async function translateMisses(
   missTexts: string[],
   target: Language,
   fallbackLangCode: string
-): Promise<string[]> {
+): Promise<(string | null)[]> {
   const meta = getLangMeta(target);
-  const results = new Array<string>(missTexts.length);
+  const results = new Array<string | null>(missTexts.length);
   const stillMissing: number[] = [];
 
   // Chunk into batches so prompts stay small and index-verification stays cheap.
@@ -314,25 +317,39 @@ export async function POST(req: NextRequest) {
     if (missTexts.length > 0) {
       const freshTranslations = await translateMisses(missTexts, target, langCode);
 
-      // 5. Bulk-upsert all new translations in one DB call
-      const rows = missTexts.map((text, i) => ({
-        lang: target,
-        source_hash: hashes[missIndexes[i]],
-        source_text: text,
-        translated: freshTranslations[i],
-      }));
+      // 5. Bulk-upsert only GENUINE successes. A `null` entry means both
+      // engines failed outright — persisting that as a row (previously
+      // falling back to the English source text) would permanently poison
+      // the cache: every future request would "hit" that row and serve
+      // English forever, with no way to ever retry. Skipping the upsert
+      // for failures leaves them as real cache misses next time.
+      const rows = missTexts
+        .map((text, i) => ({
+          lang: target,
+          source_hash: hashes[missIndexes[i]],
+          source_text: text,
+          translated: freshTranslations[i],
+        }))
+        .filter((row): row is { lang: Language; source_hash: string; source_text: string; translated: string } =>
+          typeof row.translated === "string" && row.translated.length > 0
+        );
 
-      const { error: insertErr } = await supabase
-        .from("translation_cache")
-        .upsert(rows, { onConflict: "lang,source_hash" });
+      if (rows.length > 0) {
+        const { error: insertErr } = await supabase
+          .from("translation_cache")
+          .upsert(rows, { onConflict: "lang,source_hash" });
 
-      if (insertErr) {
-        console.error("[translate] Supabase write error:", insertErr.message);
+        if (insertErr) {
+          console.error("[translate] Supabase write error:", insertErr.message);
+        }
       }
 
-      // Merge fresh translations into the cache map
+      // Merge fresh translations into the cache map — only real ones.
+      // Failures stay absent from cacheMap, so step 6 below falls back to
+      // the English source text for THIS response only, without caching it.
       missIndexes.forEach((originalIdx, missIdx) => {
-        cacheMap.set(hashes[originalIdx], freshTranslations[missIdx]);
+        const tx = freshTranslations[missIdx];
+        if (tx) cacheMap.set(hashes[originalIdx], tx);
       });
     }
 
