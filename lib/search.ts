@@ -322,7 +322,11 @@ const categoryIntent: Record<string, ResourceCategory[]> = {
   ethnic: ["ethnic-market"],
   "ethnic market": ["ethnic-market"],
   international: ["ethnic-market"],
-  grocery: ["ethnic-market", "essentials", "food"],
+  // NOTE: intentionally excludes "essentials" — that category is a
+  // home-repair-services bucket (plumbers, HVAC, movers, locksmiths), which
+  // has nothing to do with buying groceries. Including it here made every
+  // grocery search also surface unrelated plumbing/HVAC/auto-repair results.
+  grocery: ["ethnic-market", "food"],
   essentials: ["essentials"],
   household: ["essentials"],
   basics: ["essentials"],
@@ -350,13 +354,18 @@ const categoryIntent: Record<string, ResourceCategory[]> = {
   unemployment: ["jobs"],
   "employment insurance": ["jobs"],
   ei: ["jobs"],
-  cheap: ["essentials"],
-  affordable: ["essentials"],
-  honest: ["essentials"],
+  // "cheap", "affordable", and "honest" were deliberately removed here.
+  // They're generic adjectives that can appear in almost any query
+  // ("cheap shipment to the US", "affordable childcare", "honest doctor"),
+  // and mapping them to a single category (essentials — home-repair
+  // services: plumbers, HVAC, movers, locksmiths) hijacked unrelated
+  // searches, matching the entire essentials category regardless of what
+  // else was typed. Compound phrases that legitimately mean essentials
+  // ("tire swap", "driveway", etc.) stay mapped below; bare modifiers do
+  // not get their own category.
   "tire swap": ["essentials"],
   "tire changeover": ["essentials"],
   driveway: ["essentials"],
-  "cheap movers": ["essentials"],
   // Sports & recreation
   soccer: ["community"],
   volleyball: ["community"],
