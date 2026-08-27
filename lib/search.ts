@@ -57,6 +57,8 @@ const keywordMappings: Record<string, string[]> = {
   nuans: ["business", "incorporation", "name search"],
   shipping: ["logistics", "courier", "parcel", "freight", "delivery"],
   ship: ["logistics", "courier", "parcel", "shipping"],
+  shipment: ["logistics", "courier", "parcel", "shipping", "freight"],
+  shipments: ["logistics", "courier", "parcel", "shipping", "freight"],
   courier: ["logistics", "shipping", "parcel", "delivery"],
   parcel: ["logistics", "shipping", "courier"],
   freight: ["logistics", "shipping", "cargo", "import", "export"],
@@ -237,6 +239,8 @@ const categoryIntent: Record<string, ResourceCategory[]> = {
   "register business": ["business"],
   shipping: ["logistics"],
   ship: ["logistics"],
+  shipment: ["logistics"],
+  shipments: ["logistics"],
   courier: ["logistics"],
   parcel: ["logistics"],
   freight: ["logistics"],
@@ -444,6 +448,12 @@ const STOPWORDS = new Set([
   "looking", "look", "find", "finding", "help", "helps", "please", "some", "any",
   "near", "with", "how", "do", "does", "can", "get", "getting", "where", "what",
   "there", "here", "service", "services", "resource", "resources",
+  // Common connectors/prepositions — high-frequency filler words that
+  // appear incidentally in tons of unrelated org names/descriptions
+  // (e.g. "from" inside "Inn from the Cold") and must never drive a match.
+  "from", "into", "onto", "about", "using", "via", "that", "this", "these",
+  "those", "it", "its", "be", "was", "were", "have", "has", "had", "will",
+  "would", "could", "should", "just", "very", "really", "one", "all",
 ]);
 
 function tokenize(query: string): string[] {
@@ -552,11 +562,24 @@ function scoreResource(
   // ===== Generic text path: no category intent (e.g. searching a name) =====
   if (r.category.some((c) => c.toLowerCase() === query)) score += 30;
 
+  let tokenScore = 0;
+  let matchedTokenCount = 0;
   for (const t of tokens) {
-    if (titleEn.includes(t) || titleLocal.includes(t)) score += 18;
-    else if (services.some((s) => s.includes(t))) score += 12;
-    else if (summary.includes(t)) score += 6;
-    else if (descEn.includes(t) || descLocal.includes(t)) score += 5;
+    if (titleEn.includes(t) || titleLocal.includes(t)) { tokenScore += 18; matchedTokenCount++; }
+    else if (services.some((s) => s.includes(t))) { tokenScore += 12; matchedTokenCount++; }
+    else if (summary.includes(t)) { tokenScore += 6; matchedTokenCount++; }
+    else if (descEn.includes(t) || descLocal.includes(t)) { tokenScore += 5; matchedTokenCount++; }
+  }
+  // Require a meaningful fraction of the query's tokens to actually match
+  // before counting any of that score. Without this, a single incidental
+  // word shared with a longer query (e.g. "canada" or a generic verb
+  // appearing in an unrelated org's name/description) was enough to pull
+  // whole unrelated resources into the results — the query's OTHER words
+  // never had to match anything. Short (1-2 token) queries still only need
+  // every token to hit; longer queries need a clear majority.
+  const requiredTokenMatches = tokens.length <= 2 ? tokens.length : Math.ceil(tokens.length * 0.6);
+  if (tokens.length > 0 && matchedTokenCount >= requiredTokenMatches) {
+    score += tokenScore;
   }
 
   // Synonym expansion fallback for everyday phrasing, only if nothing matched.
