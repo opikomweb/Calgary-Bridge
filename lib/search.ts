@@ -66,6 +66,12 @@ const keywordMappings: Record<string, string[]> = {
   import: ["logistics", "customs", "freight", "shipping"],
   export: ["logistics", "customs", "freight", "shipping"],
   customs: ["logistics", "import", "export"],
+  package: ["logistics", "courier", "parcel", "shipping"],
+  packages: ["logistics", "courier", "parcel", "shipping"],
+  postage: ["logistics", "shipping", "parcel"],
+  mail: ["logistics", "shipping", "parcel"],
+  mailing: ["logistics", "shipping", "parcel"],
+  "cross-border": ["logistics", "shipping", "parcel"],
   volunteer: ["volunteering", "community"],
   tourist: ["tourism", "visit", "attraction", "sightseeing"],
   tourism: ["visit", "attraction", "sightseeing", "tour"],
@@ -250,6 +256,15 @@ const categoryIntent: Record<string, ResourceCategory[]> = {
   "import export": ["logistics"],
   customs: ["logistics"],
   logistics: ["logistics"],
+  // Everyday ways people phrase "I need to send something somewhere".
+  package: ["logistics"],
+  packages: ["logistics"],
+  postage: ["logistics"],
+  mail: ["logistics"],
+  mailing: ["logistics"],
+  "post office": ["logistics"],
+  "cross-border": ["logistics"],
+  "cross border": ["logistics"],
   volunteer: ["volunteering"],
   volunteering: ["volunteering"],
   tourist: ["tourism"],
@@ -456,6 +471,21 @@ const STOPWORDS = new Set([
   "would", "could", "should", "just", "very", "really", "one", "all",
 ]);
 
+// Words that mean "I want the cheapest option", not "any option". Within a
+// category-gated search these lift low-cost/free providers (e.g. Chit Chats,
+// Stallion Express, netParcel for shipping) above full-price ones that would
+// otherwise win purely on curated priority.
+const COST_SENSITIVE_RE =
+  /\b(cheap|cheaper|cheapest|affordable|budget|inexpensive|discount|discounted|low[- ]?cost|lowest|save|saving|economical)\b/;
+
+// Query explicitly targets the United States (cross-border shipping etc.).
+const US_DESTINATION_RE = /\b(us|u\.s\.?|usa|u\.s\.a\.?|america|united states|the states|cross[- ]border)(?![a-z])/;
+const US_SERVICE_RE = /\b(us|u\.s\.|usa|united states|cross[- ]border)\b/;
+
+/** Minimum query length before any search runs. Single characters match
+ *  almost every resource and made results thrash while typing. */
+export const MIN_QUERY_LENGTH = 2;
+
 function tokenize(query: string): string[] {
   return query
     .split(/[^a-z0-9]+/)
@@ -551,6 +581,15 @@ function scoreResource(
 
     if (r.featured) score += 5;
     if (r.cost === "free") score += 2;
+    // "cheapest way to ship…" — budget providers first, full-price last.
+    if (COST_SENSITIVE_RE.test(query)) {
+      if (r.cost === "free" || r.cost === "low-cost" || r.cost === "sliding-scale") score += 120;
+      else if (r.cost === "paid") score -= 20;
+    }
+    // "…to the US" — prefer providers that actually list US/cross-border service.
+    if (US_DESTINATION_RE.test(query) && US_SERVICE_RE.test(`${services.join(" ")} ${summary}`)) {
+      score += 40;
+    }
     // Trust ranking: vetted platforms (RentFaster, liv.rent, Boardwalk…) rank
     // above social-media classifieds. Priority orders resources WITHIN a tier;
     // it is dampened for secondary matches so a high-priority "related" org
@@ -617,7 +656,7 @@ export function searchResources(
   activeLanguage: Language
 ): Resource[] {
   const query = rawQuery.toLowerCase().trim();
-  if (!query) return [];
+  if (query.length < MIN_QUERY_LENGTH) return [];
 
   const tokens = tokenize(query);
   const intents = detectIntents(query);
@@ -641,8 +680,8 @@ export function filterResources(
       ? list
       : list.filter((r) => r.category.includes(category as ResourceCategory));
 
-  if (!rawQuery.trim()) {
-    // No query: rank so resources that LEAD with this category (and are
+  if (rawQuery.trim().length < MIN_QUERY_LENGTH) {
+    // No (meaningful) query: rank so resources that LEAD with this category (and are
     // single-purpose / featured) appear before tangential matches.
     if (category === "all") return byCategory;
     return [...byCategory].sort((a, b) => categoryRank(b, category) - categoryRank(a, category));

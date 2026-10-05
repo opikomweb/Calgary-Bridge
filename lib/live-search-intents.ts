@@ -276,6 +276,12 @@ export const LIVE_SEARCH_INTENTS: Record<ResourceCategory, LiveSearchIntent> = {
   },
 };
 
+const QUERY_FILLER = new Set([
+  "the", "and", "for", "with", "how", "what", "where", "way", "best", "cheapest",
+  "cheap", "need", "want", "can", "get", "find", "near", "from", "into", "about",
+  "this", "that", "some", "any", "you", "your", "our",
+]);
+
 /**
  * Builds a live-search intent from a free-text query when no category
  * intent fits. We still keep it tightly on-topic by requiring the result
@@ -283,10 +289,12 @@ export const LIVE_SEARCH_INTENTS: Record<ResourceCategory, LiveSearchIntent> = {
  */
 export function buildQueryIntent(rawQuery: string): LiveSearchIntent {
   const q = rawQuery.trim();
+  // Filler words ("the", "way", "how"…) must not count as an on-topic match,
+  // otherwise almost any business name passes the relevance filter.
   const terms = q
     .toLowerCase()
-    .split(/\s+/)
-    .filter((t) => t.length > 2);
+    .split(/[^a-z0-9]+/)
+    .filter((t) => t.length > 2 && !QUERY_FILLER.has(t));
   return {
     label: `Results for "${q}"`,
     query: `${q} in Calgary`,

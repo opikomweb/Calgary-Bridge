@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useAppStore } from "@/lib/store";
+import { useShallow } from "zustand/react/shallow";
 import Image from "next/image";
 import { AlertTriangle, Shield, Menu, X } from "lucide-react";
 import { ThemeToggle } from "./theme-toggle";
@@ -38,7 +39,19 @@ registerStrings(
 );
 
 export default function MainApp() {
-  const { activeTab, setActiveTab, showEmergency, setShowEmergency, setCurrentPage, setHasOnboarded, activeLanguage } = useAppStore();
+  // Narrow selector: the app shell must not re-render on every search
+  // keystroke (searchQuery lives in the same store).
+  const { activeTab, setActiveTab, showEmergency, setShowEmergency, setCurrentPage, setHasOnboarded, activeLanguage } = useAppStore(
+    useShallow((s) => ({
+      activeTab: s.activeTab,
+      setActiveTab: s.setActiveTab,
+      showEmergency: s.showEmergency,
+      setShowEmergency: s.setShowEmergency,
+      setCurrentPage: s.setCurrentPage,
+      setHasOnboarded: s.setHasOnboarded,
+      activeLanguage: s.activeLanguage,
+    })),
+  );
   const isRTL = getLangMeta(activeLanguage).rtl ?? false;
   const [showRentShield, setShowRentShield] = React.useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);

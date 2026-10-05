@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAppStore } from "@/lib/store";
 import { resources } from "@/lib/data";
@@ -13,7 +13,8 @@ import {
 import ResourceCard from "../resource-card";
 import LiveResults from "../live-results";
 import EventsCalendarCard from "../events-calendar-card";
-import { filterResources } from "@/lib/search";
+import { filterResources, MIN_QUERY_LENGTH } from "@/lib/search";
+import { useDebouncedValue } from "@/lib/use-debounced-value";
 import type { ResourceCategory } from "@/lib/types";
 import { useTranslations, registerStrings } from "@/lib/translation-context";
 
@@ -160,11 +161,21 @@ export default function ExploreTab() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // The input stays bound to the live `searchQuery`, but filtering, the
+  // result count and the live-search panel all run off a debounced copy.
+  // Re-ranking + re-mounting the grid on every keystroke made the page
+  // jump around under the cursor (the reported "flicker"). Clearing the
+  // field still applies instantly.
+  const debouncedQuery = useDebouncedValue(searchQuery, 250);
+  const activeQuery = searchQuery.trim() ? debouncedQuery.trim() : "";
+  const hasTextQuery = activeQuery.length >= MIN_QUERY_LENGTH;
+
   // Only filter & show resources when the user has actually queried something
-  const hasQuery = activeCategory !== "all" || searchQuery.trim().length > 0;
-  const filteredResources = hasQuery
-    ? filterResources(resources, activeCategory, searchQuery, activeLanguage)
-    : [];
+  const hasQuery = activeCategory !== "all" || hasTextQuery;
+  const filteredResources = useMemo(
+    () => (hasQuery ? filterResources(resources, activeCategory, activeQuery, activeLanguage) : []),
+    [hasQuery, activeCategory, activeQuery, activeLanguage],
+  );
 
   const currentCategoryInfo = allCategories.find(c => c.id === activeCategory) || allCategories[0];
 
@@ -175,7 +186,7 @@ export default function ExploreTab() {
   // the category they selected, so results were broadened across all categories.
   const fallbackActive =
     activeCategory !== "all" &&
-    searchQuery.trim().length > 0 &&
+    hasTextQuery &&
     filteredResources.length > 0 &&
     !filteredResources.some((r) => r.category.includes(activeCategory as ResourceCategory));
 
@@ -387,7 +398,7 @@ export default function ExploreTab() {
               <Search className="w-4 h-4 text-[#1D4ED8] mt-0.5 flex-shrink-0" />
               <p className="text-sm text-foreground/75 leading-relaxed">
                 No <span className="font-semibold">{currentCategoryInfo.label}</span> matches for
-                {" "}&ldquo;<span className="font-semibold">{searchQuery.trim()}</span>&rdquo;, so we&apos;re showing the
+                {" "}&ldquo;<span className="font-semibold">{activeQuery}</span>&rdquo;, so we&apos;re showing the
                 best results across all categories.{" "}
                 <button
                   onClick={() => setActiveCategory("all")}
@@ -434,10 +445,10 @@ export default function ExploreTab() {
           )}
 
           {/* Live Google Maps results */}
-          {(activeCategory !== "all" || searchQuery.trim().length >= 2) && (
+          {(activeCategory !== "all" || hasTextQuery) && (
             <LiveResults
               category={activeCategory}
-              query={searchQuery}
+              query={activeQuery}
               categoryLabel={currentCategoryInfo.label}
             />
           )}

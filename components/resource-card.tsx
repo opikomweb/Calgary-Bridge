@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAppStore } from "@/lib/store";
+import { useShallow } from "zustand/react/shallow";
 import { categoryLabels } from "@/lib/data";
 import { translateDynamic } from "@/lib/translation-context";
 import { useResourceEnrichment } from "@/lib/use-resource-enrichment";
@@ -110,7 +111,18 @@ export default function ResourceCard({
     resourceNotes,
     setResourceNote,
     toggleResourceComplete,
-  } = useAppStore();
+  } = useAppStore(
+    // Select only what the card uses. Subscribing to the whole store made
+    // EVERY visible card re-render on every keystroke in the search box.
+    useShallow((s) => ({
+      activeLanguage: s.activeLanguage,
+      bookmarkedResources: s.bookmarkedResources,
+      toggleBookmark: s.toggleBookmark,
+      resourceNotes: s.resourceNotes,
+      setResourceNote: s.setResourceNote,
+      toggleResourceComplete: s.toggleResourceComplete,
+    })),
+  );
 
   const isBookmarked = bookmarkedResources.includes(resource.id);
   const note = resourceNotes[resource.id];
