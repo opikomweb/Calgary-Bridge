@@ -6,7 +6,8 @@ import { resources } from "@/lib/data";
 import { Search, ArrowRight, MessageSquare, MapPin, ChevronRight, Home, Briefcase, Heart, Users, ChevronUp } from "lucide-react";
 import ResourceCard from "../resource-card";
 import SearchExtras from "../search-extras";
-import { searchResources, getSimilarResources } from "@/lib/search";
+import { searchResources, getSimilarResources, MIN_QUERY_LENGTH } from "@/lib/search";
+import { useDebouncedValue } from "@/lib/use-debounced-value";
 import React from "react";
 import { useTranslations, registerStrings } from "@/lib/translation-context";
 
@@ -124,12 +125,21 @@ export default function HomeTab() {
   const hiddenGems = resources.filter((r) => r.hiddenGem).slice(0, 3);
 
   // Comprehensive search across all resource fields (shared utility)
-  const filteredResources = searchResources(resources, searchQuery, activeLanguage);
+  // Rank/render results off a debounced copy of the query so typing doesn't
+  // re-rank and re-mount the whole grid on every keystroke (that thrash is
+  // what made the search box appear to flicker). Clearing applies instantly.
+  const debouncedQuery = useDebouncedValue(searchQuery, 250);
+  const activeQuery = searchQuery.trim() ? debouncedQuery.trim() : "";
+  const hasActiveQuery = activeQuery.length >= MIN_QUERY_LENGTH;
+  const filteredResources = React.useMemo(
+    () => searchResources(resources, activeQuery, activeLanguage),
+    [activeQuery, activeLanguage],
+  );
 
   // Resources from adjacent/related categories (shown in the "similar
   // categories" accordion), excluding anything already in the main results.
   const shownIds = new Set(filteredResources.map((r) => r.id));
-  const similarGroups = getSimilarResources(resources, searchQuery, activeLanguage, shownIds);
+  const similarGroups = getSimilarResources(resources, activeQuery, activeLanguage, shownIds);
 
   // Solution-first pathways with icons - GLASSY PREMIUM
   const pathways = [
@@ -251,7 +261,7 @@ export default function HomeTab() {
       </section>
 
       {/* Search results */}
-      {searchQuery && (
+      {hasActiveQuery && (
         <section className="px-6 md:px-8 lg:px-12 pb-16 md:pb-20 max-w-[1200px] mx-auto relative z-10">
           {/* Professional search results header container */}
           <div className="glass-card rounded-2xl md:rounded-3xl p-5 md:p-6 mb-6 md:mb-8">
@@ -259,7 +269,7 @@ export default function HomeTab() {
               <div className="flex-1 min-w-0">
                 <p className="text-xs text-foreground/50 mb-1 uppercase tracking-wider font-medium">{tx.searchResultsLabel}</p>
                 <h2 className="text-xl md:text-2xl font-bold leading-tight truncate">
-                  &quot;{searchQuery}&quot;
+                  &quot;{activeQuery}&quot;
                 </h2>
               </div>
               <button
@@ -306,12 +316,12 @@ export default function HomeTab() {
           )}
 
           {/* Similar categories accordion + live Google / Google Maps search */}
-          <SearchExtras query={searchQuery} similar={similarGroups} />
+          <SearchExtras query={activeQuery} similar={similarGroups} />
         </section>
       )}
 
       {/* ========== MAIN CONTENT ========== */}
-      {!searchQuery && (
+      {!hasActiveQuery && (
         <>
           {/* ========== SOLUTION PATHWAYS ========== */}
           <section className="px-6 md:px-8 lg:px-12 pb-12 md:pb-20 max-w-[1200px] mx-auto relative z-10">

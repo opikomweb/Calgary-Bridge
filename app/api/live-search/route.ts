@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { LIVE_SEARCH_INTENTS, buildQueryIntent, type LiveSearchIntent } from "@/lib/live-search-intents";
 import type { ResourceCategory } from "@/lib/types";
+import { searchSearXNG, type SearXNGResult } from "@/lib/searxng";
 
 export const runtime = "nodejs";
 
@@ -171,7 +172,8 @@ async function searchPlaces(intent: LiveSearchIntent, apiKey: string): Promise<L
 
 export async function POST(req: Request) {
   const apiKey = process.env.GOOGLE_MAPS_API_KEY;
-  if (!apiKey) {
+  const searxConfigured = !!process.env.SEARXNG_INSTANCE_URL;
+  if (!apiKey && !searxConfigured) {
     return NextResponse.json({ error: "Live search is not configured." }, { status: 503 });
   }
 
@@ -189,13 +191,17 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Invalid request." }, { status: 400 });
   }
 
-  const { category, query } = payload;
+  const { category } = payload;
+  const query = typeof payload.query === "string" ? payload.query.trim().slice(0, 200) : "";
 
+  // What the person TYPED wins over the category dropdown. Previously the
+  // category intent always took precedence, so with any category selected
+  // the typed query had zero effect on live results.
   let intent: LiveSearchIntent | undefined;
-  if (category && category !== "all" && LIVE_SEARCH_INTENTS[category as ResourceCategory]) {
-    intent = LIVE_SEARCH_INTENTS[category as ResourceCategory];
-  } else if (query && query.trim().length >= 2) {
+  if (query.length >= 2) {
     intent = buildQueryIntent(query);
+  } else if (category && category !== "all" && LIVE_SEARCH_INTENTS[category as ResourceCategory]) {
+    intent = LIVE_SEARCH_INTENTS[category as ResourceCategory];
   }
 
   if (!intent) {
@@ -210,15 +216,38 @@ export async function POST(req: Request) {
     });
   }
 
-  try {
-    const results = await searchPlaces(intent, apiKey);
-    const response = { label: intent.label, results };
-    setCached(cacheKey, response);
-    return NextResponse.json(response, {
-      headers: { "X-Cache": "MISS", "Cache-Control": "no-store" },
-    });
-  } catch (err) {
-    console.error("[v0] live-search error:", err);
+  // 1) Google Places (verified, rated local businesses) when configured.
+  let results: LivePlace[] = [];
+  let placesFailed = false;
+  if (apiKey) {
+    try {
+      results = await searchPlaces(intent, apiKey);
+    } catch (err) {
+      placesFailed = true;
+      console.error("[live-search] places error:", err);
+    }
+  }
+
+  // 2) SearXNG web results as a fallback when Places isn't configured,
+  //    failed, or found nothing on-topic. Never throws (returns null).
+  let web: SearXNGResult[] = [];
+  if (results.length === 0 && searxConfigured) {
+    web = (await searchSearXNG(intent.query)) ?? [];
+  }
+
+  if (results.length === 0 && web.length === 0 && placesFailed) {
     return NextResponse.json({ error: "Live search failed. Please try again." }, { status: 502 });
   }
+
+  const response = {
+    label: intent.label,
+    results,
+    web,
+    source: results.length > 0 ? "places" : web.length > 0 ? "web" : "none",
+  };
+  // Don't cache an empty answer — the upstream may just have been slow.
+  if (results.length > 0 || web.length > 0) setCached(cacheKey, response);
+  return NextResponse.json(response, {
+    headers: { "X-Cache": "MISS", "Cache-Control": "no-store" },
+  });
 }
