@@ -1,0 +1,5 @@
+node_modules/
+ios/App/Pods/
+ios/App/output/
+*.xcuserstate
+.DS_Store
